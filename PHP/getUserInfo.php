@@ -17,16 +17,38 @@
       }
       
       // Query the database
-      $sql = "SELECT * FROM Users WHERE acct_number LIKE '$account_num' AND password LIKE '$password'";
+      $sql = "SELECT * FROM USERS WHERE acct_number LIKE '$account_num' AND password LIKE '$password'";
+      $result = $con->query($sql);
+      //$row = $result->fetch_row();
+    
+       $row = mysqli_fetch_assoc($result);
+      print (json_encode($row));
+
+
+      //if ($result = $con->query($sql))
       
-      if ($result = $con->query($sql))
-      {
-          print $result;
-          while ($row = $result->mysqli_fetch_row())
-          {
-            print (json_encode($row[0]));
-          }
-      }
+      
+      //if ($result = $con->query($sql))
+      //{
+        //if (!$result) 
+        //{
+        //    die('Query failed: ' . mysql_error());
+        //}
+        
+        //$result = mysql_query($sql);
+        //    if (!$result) {
+        //    echo 'Could not run query: ' . mysql_error();
+        //    exit;
+        //}
+        //$row = mysql_fetch_row($result);
+        //printf(json_encode($row));
+        //print $result;
+        //while ($row = $con->query($result))
+        //{
+          //printf(json_encode($row[0]));
+        //  printf (json_encode("%s (%s)\n",$row[0],$row[1]));
+        //}
+      //}
       
       //$result = $con->query($sql);
       // This queries the connection to the database, and returns a bool value.
@@ -60,6 +82,7 @@
       }
     */ 
     mysqli_free_result($result);
+      //$result->close();
       $con->close();
 //    }
 ?>
