@@ -20,9 +20,42 @@ class HttpURLConnectionATM
 		con.setRequestMethod("GET");
   
 		int responseCode = con.getResponseCode();
-		//System.out.println("\nSending 'GET' request to URL : " + url);
-		//System.out.println("Response Code : " + responseCode);
+		// Testing code
+		System.out.println("\nSending 'GET' request to URL : " + URL);
+		System.out.println("Response Code : " + responseCode);
+		// Testing code
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
  
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+ 
+		return responseCode;
+	}
+	
+	public int sendGET(String url, String params) throws Exception 
+	{
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+ 
+		// optional default is GET
+		con.setRequestMethod("GET");
+		
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(params);
+		wr.flush();
+		wr.close();
+		
+		int responseCode = con.getResponseCode();
+		// Testing code
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+		// Testing code
+		
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
@@ -49,10 +82,11 @@ class HttpURLConnectionATM
 		wr.close();
 	 
 		int responseCode = con.getResponseCode();
-		//System.out.println("\nSending 'POST' request to URL : " + url);
-		//System.out.println("Post parameters : " + params);
-		//System.out.println("Response Code : " + responseCode);
-	 
+		// Testing code
+		System.out.println("\nSending 'POST' request to URL : " + url);
+		System.out.println("Post parameters : " + params);
+		System.out.println("Response Code : " + responseCode);
+		//Testing code
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		response = new StringBuffer();
