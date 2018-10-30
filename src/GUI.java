@@ -753,12 +753,46 @@ public class GUI {
 
 				if (curr.withdraw(withdrawAmount))
 				{
+					HttpURLConnectionATM http = new HttpURLConnectionATM();
+					System.out.println(HttpURLConnectionATM.URL+"php/updateUser.php?"+ 
+							"password=" + curr.getPassword() +
+							"&balance=" + curr.getBalance() + 
+							"firstName=" + curr.gFN() +
+							"middleName=" + curr.gMN() +
+							"lastName=" + curr.gLN() + 
+							"accountNum=" + curr.getAccountNum() +
+							"choice=Withdraw" 
+							);
+					try {
+						http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+								"password=" + curr.getPassword() +
+								"&balance=" + curr.getBalance() + 
+								"firstName=" + curr.gFN() +
+								"middleName=" + curr.gMN() +
+								"lastName=" + curr.gLN() + 
+								"accountNum=" + curr.getAccountNum() +
+								"choice=Withdraw" +
+								""
+								);
+
+						System.out.println(http.response.toString());
+						if (http.response != null)
+						{
+							
+						}
+						else
+						{
+							System.out.println("No User Info Retrieved!");
+						}
+					} 
+					catch (Exception e) { e.printStackTrace(); }
+
 					//System.out.println("eyy thats pretty gud my firend");
 					JOptionPane.showMessageDialog(frame,
 							"Transaction successful.",
 							"Withdrawal",
 							JOptionPane.PLAIN_MESSAGE);
-
+					
 					withdrawJPwithdrawAmtTF.setText("");
 					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
 
@@ -919,7 +953,7 @@ public class GUI {
 				if (curr.deposit(depositAmount))
 				{
 					// I will replace this with pop up messages to tell the user that the deposit was successful
-					//System.out.println("eyy nice desposite");
+					
 					JOptionPane.showMessageDialog(frame,
 							"Deposit successful.",
 							"Deposit",

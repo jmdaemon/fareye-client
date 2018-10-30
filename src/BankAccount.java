@@ -130,6 +130,7 @@ public class BankAccount {
 			//System.out.println("Deposit	of amount $" + amount + " made.\n");
 			message += ("Deposit of amount $" + amount + " made.\n");
 			balance += amount;
+			
 			return true;
 
 		}
@@ -195,6 +196,10 @@ public class BankAccount {
 		}
 	}
 
+	String gFN() { return firstName; }
+	String gMN() { return middleName; }
+	String gLN() { return lastName; } 
+	
 	int getAccountNum() { return accountNum; }
 	
 	boolean resetPassword(String currentPassword, String newPassword)
