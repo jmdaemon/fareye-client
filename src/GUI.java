@@ -757,35 +757,35 @@ public class GUI {
 					System.out.println(HttpURLConnectionATM.URL+"php/updateUser.php?"+ 
 							"password=" + curr.getPassword() +
 							"&balance=" + curr.getBalance() + 
-							"firstName=" + curr.gFN() +
-							"middleName=" + curr.gMN() +
-							"lastName=" + curr.gLN() + 
-							"accountNum=" + curr.getAccountNum() +
-							"choice=Withdraw" 
+							"&firstName=" + curr.gFN() +
+							"&middleName=" + curr.gMN() +
+							"&lastName=" + curr.gLN() + 
+							"&accountNum=" + curr.getAccountNum() +
+							"&choice=Withdraw" 
 							);
 					try {
 						http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
 								"password=" + curr.getPassword() +
 								"&balance=" + curr.getBalance() + 
-								"firstName=" + curr.gFN() +
-								"middleName=" + curr.gMN() +
-								"lastName=" + curr.gLN() + 
-								"accountNum=" + curr.getAccountNum() +
-								"choice=Withdraw" +
-								""
+								"&firstName=" + curr.gFN() +
+								"&middleName=" + curr.gMN() +
+								"&lastName=" + curr.gLN() + 
+								"&accountNum=" + curr.getAccountNum() +
+								"&choice=Withdraw" +
+								"&amount=" + withdrawAmount
 								);
 
 						System.out.println(http.response.toString());
 						if (http.response != null)
 						{
-							
+							System.out.print("Transaction successful.\n");
 						}
 						else
 						{
-							System.out.println("No User Info Retrieved!");
+							System.out.println("Transaction unsuccessful.\n");
 						}
 					} 
-					catch (Exception e) { e.printStackTrace(); }
+					catch (Exception event) { event.printStackTrace(); }
 
 					//System.out.println("eyy thats pretty gud my firend");
 					JOptionPane.showMessageDialog(frame,
