@@ -108,6 +108,12 @@ public class GUI {
 	//
 
 	//
+	
+	void updateUserInfo()
+	{
+		
+	}
+	
 	void parseResult(String result)
 	{	
 		//System.out.println(result);
@@ -751,10 +757,10 @@ public class GUI {
 
 				double withdrawAmount = Double.valueOf(withdrawJPwithdrawAmtTF.getText());
 
-				if (curr.withdraw(withdrawAmount))
+				//if (curr.withdraw(withdrawAmount))
 				{
 					HttpURLConnectionATM http = new HttpURLConnectionATM();
-					System.out.println(HttpURLConnectionATM.URL+"php/updateUser.php?"+ 
+		    		System.out.println(HttpURLConnectionATM.URL+"php/updateUser.php?"+ 
 							"password=" + curr.getPassword() +
 							"&balance=" + curr.getBalance() + 
 							"&firstName=" + curr.gFN() +
@@ -797,7 +803,12 @@ public class GUI {
 					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
 
 				}
-
+				boolean flag = true;
+				if (flag)
+				{
+					flag = false;
+				}
+				
 				else
 				{
 					JOptionPane.showMessageDialog(frame,
@@ -949,7 +960,6 @@ public class GUI {
 				//String amount = depositJPdepositTF.getText();
 				//int depositAmount = Integer.valueOf(amount);
 				int depositAmount = Integer.valueOf(depositJPdepositTF.getText());
-
 				if (curr.deposit(depositAmount))
 				{
 					// I will replace this with pop up messages to tell the user that the deposit was successful

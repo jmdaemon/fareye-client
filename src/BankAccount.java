@@ -195,7 +195,6 @@ public class BankAccount {
 			return fullname;
 		}
 	}
-
 	String gFN() { return firstName; }
 	String gMN() { return middleName; }
 	String gLN() { return lastName; } 
