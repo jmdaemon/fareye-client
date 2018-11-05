@@ -21,8 +21,8 @@ class HttpURLConnectionATM
   
 		int responseCode = con.getResponseCode();
 		// Testing code
-		System.out.println("\nSending 'GET' request to URL : " + URL);
-		System.out.println("Response Code : " + responseCode);
+		//System.out.println("\nSending 'GET' request to URL : " + URL);
+		//System.out.println("Response Code : " + responseCode);
 		// Testing code
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
@@ -52,8 +52,8 @@ class HttpURLConnectionATM
 		
 		int responseCode = con.getResponseCode();
 		// Testing code
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+		//System.out.println("\nSending 'GET' request to URL : " + url);
+		//System.out.println("Response Code : " + responseCode);
 		// Testing code
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -83,9 +83,9 @@ class HttpURLConnectionATM
 	 
 		int responseCode = con.getResponseCode();
 		// Testing code
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + params);
-		System.out.println("Response Code : " + responseCode);
+		//System.out.println("\nSending 'POST' request to URL : " + url);
+		//System.out.println("Post parameters : " + params);
+		//System.out.println("Response Code : " + responseCode);
 		//Testing code
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;

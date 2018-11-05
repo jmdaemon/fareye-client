@@ -44,7 +44,7 @@ import java.util.Random;
  * 
  * 
  * Reminders:
- * 
+ *
  * - SearchAccount isnt working because the number is out of the array's bounds
  * 
  * fix random generator
@@ -92,6 +92,8 @@ public class GUI {
 	private JPasswordField resetPassJPnewPass;
 	private JPasswordField resetPassJPcurpass;
 	private BankAccount curr;
+	private String G_Password;
+	private int A_NUMBER;
 	//private BankAccount testAcct = new BankAccount(1, "aaa", "bbb", "ccc", 5678);
 	private BankAccount users[] = new BankAccount[MAX_COUNT];
 	private int numberOfUsers = 0;
@@ -133,16 +135,7 @@ public class GUI {
 				System.out.println(obj.getString("m_name"));
 				System.out.println(obj.getInt("acct_number"));
 				curr = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number"));
-				/*
-			int markArray[] = new int [TAUser.ASSIGNMENT_NUM_MAX];
-			for (int i = 1; i <= TAUser.ASSIGNMENT_NUM_MAX; i++)
-			{
-				markArray[i-1] = obj.getInt("A" + i);
-			}
 
-			user.setMarks(markArray);
-			frame.setTitle("Java TA  [LEVEL " + user.getStudentLevel() + "]");
-				 */
 			}
 		} 
 		catch (JSONException e) 
@@ -167,7 +160,7 @@ public class GUI {
 					"accountNum=" + acctNumber +
 					"&password=" + pswd);
 
-			System.out.println(http.response.toString());
+			//System.out.println(http.response.toString());
 			if (http.response != null)
 			{
 				System.out.println(http.response.toString());
@@ -190,56 +183,29 @@ public class GUI {
 		//HttpURLConnectionATM http = new HttpURLConnectionATM();
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
 		try {
-			System.out.println(accountNumber);
-			
+			//System.out.println(accountNumber);
 			
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
 					"account_num=" + accountNumber + 
 					"&password=" + pswd);
-
-			/*
-		 http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-				"account_num=" + accountNumber + 
-				"&password=" + pswd);
-			 */
 
 			if (http.response != null)
 			{
 
 				if (http.response.toString().trim().equals("Login successful."))
 				{
+					
 					System.out.println(http.response.toString());
 					// handle success!
 					// We'll just take the user inserted earlier
 					
 					//users[numberOfUsers] = new BankAccount (0.0, fName, mName, lName, acctNum);
+					G_Password = pswd;
+					A_NUMBER = accountNumber;
 					
-					//curr = 
-					//searchAccount(url, http, accountNumber, pswd);
 					getUserInfo(pswd, accountNumber);
 					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
-					/*
-					if(curr!=null && curr.getAccountNum() == accountNumber)
-					{
-
-						if (curr.checkPassword(pswd))
-						{
-							cardLayout.show(frame.getContentPane(), MAIN_PANEL);
-							passwordField.setText("");
-							loginJPloginTF.setText("");
-
-						}
-						//mainPanelJPacctNamelbl.setText(curr.getName());
-						//mainPanelJPacctHolderlbl.setText(curr.getName());
-						else
-						{
-							//custom title, warning icon
-
-							JOptionPane.showMessageDialog(frame, "Your password is incorrect. ", 
-									"Invalid Password", JOptionPane.WARNING_MESSAGE);
-						}
-					 */
-					//System.out.println("You cannot leave the account number field blank. ");
+					
 				}
 
 				else
@@ -758,7 +724,7 @@ public class GUI {
 				double withdrawAmount = Double.valueOf(withdrawJPwithdrawAmtTF.getText());
 
 				//if (curr.withdraw(withdrawAmount))
-				{
+				
 					HttpURLConnectionATM http = new HttpURLConnectionATM();
 		    		System.out.println(HttpURLConnectionATM.URL+"php/updateUser.php?"+ 
 							"password=" + curr.getPassword() +
@@ -785,11 +751,23 @@ public class GUI {
 						if (http.response != null)
 						{
 							System.out.print("Transaction successful.\n");
+							getUserInfo(G_Password, A_NUMBER);
+							System.out.println(curr.getPassword());
+							System.out.println(curr.getAccountNum());
+							System.out.print(curr.getBalance());
 						}
 						else
 						{
 							System.out.println("Transaction unsuccessful.\n");
+							JOptionPane.showMessageDialog(frame,
+									"Transaction unsuccessful.",
+									"Withdrawal Invalid",
+									JOptionPane.ERROR_MESSAGE);
 						}
+						
+						
+						//parseResult(http.response.toString());
+						
 					} 
 					catch (Exception event) { event.printStackTrace(); }
 
@@ -801,21 +779,6 @@ public class GUI {
 					
 					withdrawJPwithdrawAmtTF.setText("");
 					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
-
-				}
-				boolean flag = true;
-				if (flag)
-				{
-					flag = false;
-				}
-				
-				else
-				{
-					JOptionPane.showMessageDialog(frame,
-							"Transaction unsuccessful.",
-							"Withdrawal Invalid",
-							JOptionPane.ERROR_MESSAGE);
-				}
 
 			}
 		});
@@ -960,27 +923,54 @@ public class GUI {
 				//String amount = depositJPdepositTF.getText();
 				//int depositAmount = Integer.valueOf(amount);
 				int depositAmount = Integer.valueOf(depositJPdepositTF.getText());
-				if (curr.deposit(depositAmount))
-				{
-					// I will replace this with pop up messages to tell the user that the deposit was successful
+				
+				HttpURLConnectionATM http = new HttpURLConnectionATM();
+	    		
+				try {
+					http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+							"password=" + curr.getPassword() +
+							"&balance=" + curr.getBalance() + 
+							"&firstName=" + curr.gFN() +
+							"&middleName=" + curr.gMN() +
+							"&lastName=" + curr.gLN() + 
+							"&accountNum=" + curr.getAccountNum() +
+							"&choice=Deposit" +
+							"&amount=" + depositAmount
+							);
+
+					System.out.println(http.response.toString());
+					if (http.response != null)
+					{
+						System.out.print("Transaction successful.\n");
+						getUserInfo(G_Password, A_NUMBER);
+						System.out.println(curr.getPassword());
+						System.out.println(curr.getAccountNum());
+						System.out.print(curr.getBalance());
+						
+						
+
+						//System.out.println("eyy thats pretty gud my firend");
+						JOptionPane.showMessageDialog(frame,
+								"Transaction successful.",
+								"Withdrawal",
+								JOptionPane.PLAIN_MESSAGE);
+						
+						
+					}
 					
-					JOptionPane.showMessageDialog(frame,
-							"Deposit successful.",
-							"Deposit",
-							JOptionPane.PLAIN_MESSAGE);
-
-					depositJPdepositTF.setText("");
-					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
-				}
-
-				else
-				{
+					else
+					{
 					//System.out.println("Please try again.");
 					JOptionPane.showMessageDialog(frame,
 							"Deposit unsuccessful.",
 							"Deposit Invalid",
 							JOptionPane.ERROR_MESSAGE);
+					depositJPdepositTF.setText("");
+					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
+					}
 				}
+				catch (Exception event) { event.printStackTrace(); }
+
 			}
 		});
 		btnDeposit_1.setBounds(161, 150, 89, 40);
@@ -1218,15 +1208,55 @@ public class GUI {
 
 				//BankAccount otherAccount = searchAccount(acctNum, otherAcctPassword);
 
-				HttpURLConnectionATM http = new HttpURLConnectionATM();
-				BankAccount b = searchAccount(HttpURLConnectionATM.URL, http, acctNum, otherAcctPassword);
+				//HttpURLConnectionATM http = new HttpURLConnectionATM();
+				//BankAccount b = searchAccount(HttpURLConnectionATM.URL, http, acctNum, otherAcctPassword);
 
-				if (b != null)
-				{
-					if (curr.transferFrom(withdrawFromAmt, b, otherAcctPassword))
-					{
+				//if (b != null)
+				//{
+					//if (curr.transferFrom(withdrawFromAmt, b, otherAcctPassword))
+					//{
 						//System.out.println("This is working as intended.");
+				HttpURLConnectionATM http = new HttpURLConnectionATM();
+	    		
+				try {
+					http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+							"password=" + curr.getPassword() +
+							"&balance=" + curr.getBalance() + 
+							"&firstName=" + curr.gFN() +
+							"&middleName=" + curr.gMN() +
+							"&lastName=" + curr.gLN() + 
+							"&accountNum=" + curr.getAccountNum() +
+							"&choice=WithdrawFrom" +
+							"&amount=" + withdrawFromAmt +
+							"otherUserNum=" + otherAcctPassword +
+							"otherUserPas=" + acctNum
+							);
 
+					System.out.println(http.response.toString());
+					if (http.response != null)
+					{
+						System.out.print("Transaction successful.\n");
+						getUserInfo(G_Password, A_NUMBER);
+						System.out.println(curr.getPassword());
+						System.out.println(curr.getAccountNum());
+						System.out.print(curr.getBalance());
+					}
+					else
+					{
+						System.out.println("Transaction unsuccessful.\n");
+						JOptionPane.showMessageDialog(frame,
+								"Transaction unsuccessful.",
+								"Withdrawal Invalid",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					
+					
+					//parseResult(http.response.toString());
+					
+				} 
+				catch (Exception event) { event.printStackTrace(); }
+
+				
 						JOptionPane.showMessageDialog(frame,
 								"Funds transferred",
 								"Transaction Processed",
@@ -1237,8 +1267,9 @@ public class GUI {
 						withdrawFromJPwithdrawAmt.setText("");
 						cardLayout.show(frame.getContentPane(), MAIN_PANEL);
 
-					}
+					//}
 
+						/*
 					else
 					{
 						//System.out.println("just y");
@@ -1247,7 +1278,9 @@ public class GUI {
 								"Transaction Invalid",
 								JOptionPane.ERROR_MESSAGE);
 					}
-				}
+					*/
+				//}
+				/*
 				else
 				{
 					JOptionPane.showMessageDialog(frame,
@@ -1255,12 +1288,12 @@ public class GUI {
 							"Transaction Invalid",
 							JOptionPane.ERROR_MESSAGE);
 				}
-
+				 */
 
 			}
 		});
 
-		WithdrawFromJPEnterbtn.setBounds(167, 174, 113, 30);
+		FromJPEnterbtn.setBounds(167, 174, 113, 30);
 		withdrawFromPanel.add(WithdrawFromJPEnterbtn);
 
 		withdrawFromJPwithdrawFromTF = new JTextField();
