@@ -1293,7 +1293,7 @@ public class GUI {
 			}
 		});
 
-		FromJPEnterbtn.setBounds(167, 174, 113, 30);
+		WithdrawFromJPEnterbtn.setBounds(167, 174, 113, 30);
 		withdrawFromPanel.add(WithdrawFromJPEnterbtn);
 
 		withdrawFromJPwithdrawFromTF = new JTextField();
