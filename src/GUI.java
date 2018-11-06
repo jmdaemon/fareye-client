@@ -93,7 +93,7 @@ public class GUI {
 	private JPasswordField resetPassJPcurpass;
 	private BankAccount curr;
 	private BankAccount b;
-	
+
 	private String G_Password;
 	private int A_NUMBER;
 	private String BG_Password;
@@ -126,21 +126,22 @@ public class GUI {
 		//System.out.println(result);
 		try 
 		{
-			System.out.println(result);
+			//System.out.println(result);
 
 			if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
 			{
 				JSONObject obj = new JSONObject(result);
 				//BankAccount b = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number")); 
 				// curr = b;
-				System.out.println("Executing First if block.");
+				//System.out.println("Executing First if block.");
 
 				System.out.println(obj.getDouble("balance"));
 				System.out.println(obj.getString("f_name"));
 				System.out.println(obj.getString("m_name"));
 				System.out.println(obj.getInt("acct_number"));
 				curr = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number"));
-
+				curr.setHistory(obj.getString("history"));
+				System.out.print(obj.getString("history"));
 			}
 		} 
 		catch (JSONException e) 
@@ -157,9 +158,11 @@ public class GUI {
 	void getUserInfo(String pswd, int acctNumber)
 	{
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
+		/*
 		System.out.println(HttpURLConnectionATM.URL+"php/getUserInfo.php?"+ 
 				"accountNum=" + acctNumber +
 				"&password=" + pswd);
+		 */
 		try {
 			http.sendPost(HttpURLConnectionATM.URL+"php/getUserInfo.php?", 
 					"accountNum=" + acctNumber +
@@ -168,9 +171,9 @@ public class GUI {
 			//System.out.println(http.response.toString());
 			if (http.response != null)
 			{
-				System.out.println(http.response.toString());
+				//System.out.println(http.response.toString());
 				// retrieves entire row
-				System.out.println("Running...");
+				//System.out.println("Running...");
 				parseResult(http.response.toString());
 			}
 			else
@@ -200,7 +203,7 @@ public class GUI {
 				if (http.response.toString().trim().equals("Login successful."))
 				{
 
-					System.out.println(http.response.toString());
+					//					System.out.println(http.response.toString());
 					// handle success!
 					// We'll just take the user inserted earlier
 
@@ -928,8 +931,12 @@ public class GUI {
 				//String amount = depositJPdepositTF.getText();
 				//int depositAmount = Integer.valueOf(amount);
 				int depositAmount = Integer.valueOf(depositJPdepositTF.getText());
-
 				HttpURLConnectionATM http = new HttpURLConnectionATM();
+
+				// First we'll try and grab the balance for the other account by pinging getUserInfo
+
+
+
 
 				try {
 					http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
@@ -1027,30 +1034,78 @@ public class GUI {
 
 
 				String newPass = String.valueOf(newPassword);
-				if (curr.resetPassword(currentPassword, newPass))
-				{
-					//System.out.println("Eyy thats pretty good. ");
-					JOptionPane.showMessageDialog(frame,
-							"Password change successful.",
-							"Password Change",
-							JOptionPane.PLAIN_MESSAGE);
 
-					resetPassJPcurpass.setText("");
-					resetPassJPnewPass.setText("");
-					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
-				}
+				HttpURLConnectionATM http = new HttpURLConnectionATM();
 
-				else
-				{
-					//System.out.println("Please try again. ");
-					JOptionPane.showMessageDialog(frame,
-							"Password change unsuccessful.",
-							"Password Change Invalid",
-							JOptionPane.ERROR_MESSAGE);
-					resetPassJPcurpass.setText("");
-					resetPassJPnewPass.setText("");
+				// First we'll try and grab the balance for the other account by pinging getUserInfo
+				try {
+					http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+							"password=" + currentPassword +
+							"&balance=" + curr.getBalance() + 
+							"&firstName=" + curr.gFN() +
+							"&middleName=" + curr.gMN() +
+							"&lastName=" + curr.gLN() + 
+							"&accountNum=" + curr.getAccountNum() +
+							"&choice=ResetPass" +
+							"&newPass=" + newPass
+							);
 
-				}
+					System.out.println(http.response.toString());
+					if (http.response != null)
+					{
+						System.out.print("Password change successful.\n");
+						getUserInfo(G_Password, A_NUMBER);
+						//getUserInfo(BG_Password, BA_NUMBER);
+						System.out.println(curr.getPassword());
+						System.out.println(curr.getAccountNum());
+						System.out.print(curr.getBalance());
+
+						JOptionPane.showMessageDialog(frame,
+								"Password change successful.",
+								"Password Change",
+								JOptionPane.PLAIN_MESSAGE);
+
+					}
+
+					else
+					{
+						System.out.println("Transaction unsuccessful.\n");
+						JOptionPane.showMessageDialog(frame,
+								"Password change unsuccessful.",
+								"Password Change Invalid",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					//parseResult(http.response.toString());
+
+				} catch (Exception event) { event.printStackTrace(); }
+
+				resetPassJPcurpass.setText("");
+				resetPassJPnewPass.setText("");
+				/*
+	if (curr.resetPassword(currentPassword, newPass))
+	{
+		//System.out.println("Eyy thats pretty good. ");
+		JOptionPane.showMessageDialog(frame,
+				"Password change successful.",
+				"Password Change",
+				JOptionPane.PLAIN_MESSAGE);
+
+		resetPassJPcurpass.setText("");
+		resetPassJPnewPass.setText("");
+		cardLayout.show(frame.getContentPane(), MAIN_PANEL);
+	}
+
+	else
+	{
+		//System.out.println("Please try again. ");
+		JOptionPane.showMessageDialog(frame,
+				"Password change unsuccessful.",
+				"Password Change Invalid",
+				JOptionPane.ERROR_MESSAGE);
+		resetPassJPcurpass.setText("");
+		resetPassJPnewPass.setText("");
+
+	}*/
 			}
 		});
 
@@ -1136,8 +1191,92 @@ public class GUI {
 					acctNum = -1;
 				}
 				 */
+				HttpURLConnectionATM http = new HttpURLConnectionATM();
+
+				// First we'll try and grab the balance for the other account by pinging getUserInfo
+				try {
+					http.sendPost(HttpURLConnectionATM.URL+"php/getUserInfoEX.php?",
+							"accountNum=" + acctNum);
+
+					if (http.response != null)
+					{
+						String result = http.response.toString();
+						System.out.print(result);
+						try 
+						{
+							// 	if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
+							if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
+							{
+								JSONObject obj = new JSONObject(http.response.toString());
+
+								System.out.println("Executing inside of withdrawFrom: ");
+								System.out.println(obj.getDouble("balance"));
+								System.out.println(obj.getString("f_name"));
+								System.out.println(obj.getString("m_name"));
+								System.out.println(obj.getInt("acct_number"));
+								b = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number"));
+								System.out.println("Balance of b: " + b.getBalance());
+								BA_NUMBER = b.getAccountNum();
+								BG_Password = b.getPassword();
+								// And we'll assign to to the BA_BAL variable.
+								BA_BAL = b.getBalance();
+
+								try {
+									http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+											"password=" + curr.getPassword() +
+											"&balance=" + curr.getBalance() + 
+											"&firstName=" + curr.gFN() +
+											"&middleName=" + curr.gMN() +
+											"&lastName=" + curr.gLN() + 
+											"&accountNum=" + curr.getAccountNum() +
+											"&choice=DepositTo" +
+											"&amount=" + giveAmount +
+											"&otherUserBal=" + BA_BAL + 
+											"&otherUserNum=" + acctNum +
+											"&otherUserPas=" + BG_Password
+											);
+
+									System.out.println(http.response.toString());
+
+									if (http.response != null)
+									{
+										System.out.print("Transaction successful.\n");
+										getUserInfo(G_Password, A_NUMBER);
+										//getUserInfo(BG_Password, BA_NUMBER);
+										System.out.println(curr.getPassword());
+										System.out.println(curr.getAccountNum());
+										System.out.print(curr.getBalance());
+
+										JOptionPane.showMessageDialog(frame,
+												"Funds transferred",
+												"Transaction Processed",
+												JOptionPane.PLAIN_MESSAGE);
+
+									}
+
+									else
+									{
+										System.out.println("Transaction unsuccessful.\n");
+										JOptionPane.showMessageDialog(frame,
+												"Transaction unsuccessful.",
+												"Withdrawal Invalid",
+												JOptionPane.ERROR_MESSAGE);
+									}
 
 
+									//parseResult(http.response.toString());
+
+								} catch (Exception event) { event.printStackTrace(); }
+
+							}			
+						} catch (JSONException event) { event.printStackTrace(); }
+					}
+
+				} catch (Exception event) { event.printStackTrace(); }
+				depositToJPamountTF.setText("");
+				depositToJPdepositToAcctTF.setText("");
+				cardLayout.show(frame.getContentPane(), MAIN_PANEL);
+				/*
 				BankAccount b = searchAccount(acctNum);
 
 				if (b != null)
@@ -1176,6 +1315,7 @@ public class GUI {
 							JOptionPane.ERROR_MESSAGE);
 
 				}
+				 */
 			}
 		});
 		btnDepositTo_1.setBounds(155, 157, 99, 33);
@@ -1211,6 +1351,7 @@ public class GUI {
 				String otherAcctPassword = String.valueOf(withdrawFromJPpassword.getPassword());
 				int acctNum = Integer.valueOf(withdrawFromJPwithdrawFromTF.getText());
 
+				//System.out.println("Password: " + otherAcctPassword);
 				//BankAccount otherAccount = searchAccount(acctNum, otherAcctPassword);
 
 				//HttpURLConnectionATM http = new HttpURLConnectionATM();
@@ -1223,52 +1364,74 @@ public class GUI {
 				//System.out.println("This is working as intended.");
 				HttpURLConnectionATM http = new HttpURLConnectionATM();
 
+				// First we'll try and grab the balance for the other account by pinging getUserInfo
 				try {
 					http.sendPost(HttpURLConnectionATM.URL+"php/getUserInfo.php?",
-							"account_num=" + acctNum +
+							"accountNum=" + acctNum +
 							"&password=" + otherAcctPassword);
-					} catch (Exception event) { event.printStackTrace(); }
 
-				try 
-				{
-					// 	if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
-					if (http.response.toString() != null && !http.response.toString().equals("[]") && !http.response.toString().equals("") && http.response.toString().startsWith("{"))
-					{
-						JSONObject obj = new JSONObject(http.response.toString());
-
-						b = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number"));
-						System.out.println("Balane of b: " + b.getBalance());
-						BA_NUMBER = b.getAccountNum();
-						BA_BAL = b.getBalance();
-						
-					}			
-				} catch (JSONException e) { e.printStackTrace(); }
-
-				try {
-					http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
-							"password=" + curr.getPassword() +
-							"&balance=" + curr.getBalance() + 
-							"&firstName=" + curr.gFN() +
-							"&middleName=" + curr.gMN() +
-							"&lastName=" + curr.gLN() + 
-							"&accountNum=" + curr.getAccountNum() +
-							"&choice=WithdrawFrom" +
-							"&amount=" + withdrawFromAmt +
-							"&otherUserBal" + BA_BAL + 
-							"&otherUserNum=" + otherAcctPassword +
-							"&otherUserPas=" + acctNum
-							);
-
-					System.out.println(http.response.toString());
-					
 					if (http.response != null)
 					{
-						System.out.print("Transaction successful.\n");
-						getUserInfo(G_Password, A_NUMBER);
-						getUserInfo(BG_Password, BA_NUMBER);
-						System.out.println(curr.getPassword());
-						System.out.println(curr.getAccountNum());
-						System.out.print(curr.getBalance());
+						String result = http.response.toString();
+						System.out.print(result);
+						try 
+						{
+							// 	if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
+							if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
+							{
+								JSONObject obj = new JSONObject(http.response.toString());
+
+								System.out.println("Executing inside of withdrawFrom: ");
+								System.out.println(obj.getDouble("balance"));
+								System.out.println(obj.getString("f_name"));
+								System.out.println(obj.getString("m_name"));
+								System.out.println(obj.getInt("acct_number"));
+								b = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number"));
+								System.out.println("Balance of b: " + b.getBalance());
+								BA_NUMBER = b.getAccountNum();
+
+								// And we'll assign to to the BA_BAL variable.
+								BA_BAL = b.getBalance();
+
+
+								try {
+									http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+											"password=" + curr.getPassword() +
+											"&balance=" + curr.getBalance() + 
+											"&firstName=" + curr.gFN() +
+											"&middleName=" + curr.gMN() +
+											"&lastName=" + curr.gLN() + 
+											"&accountNum=" + curr.getAccountNum() +
+											"&choice=WithdrawFrom" +
+											"&amount=" + withdrawFromAmt +
+											"&otherUserBal=" + BA_BAL + 
+											"&otherUserNum=" + acctNum +
+											"&otherUserPas=" + otherAcctPassword
+											);
+
+									System.out.println(http.response.toString());
+
+									if (http.response != null)
+									{
+										System.out.print("Transaction successful.\n");
+										getUserInfo(G_Password, A_NUMBER);
+										//getUserInfo(BG_Password, BA_NUMBER);
+										System.out.println(curr.getPassword());
+										System.out.println(curr.getAccountNum());
+										System.out.print(curr.getBalance());
+
+										JOptionPane.showMessageDialog(frame,
+												"Funds transferred",
+												"Transaction Processed",
+												JOptionPane.PLAIN_MESSAGE);
+
+									}
+									//parseResult(http.response.toString());
+
+								} catch (Exception event) { event.printStackTrace(); }
+
+							}			
+						} catch (JSONException e) { e.printStackTrace(); }
 					}
 
 					else
@@ -1280,17 +1443,15 @@ public class GUI {
 								JOptionPane.ERROR_MESSAGE);
 					}
 
-
-					//parseResult(http.response.toString());
-
-				} 
-				catch (Exception event) { event.printStackTrace(); }
+				} catch (Exception event) { event.printStackTrace(); }
 
 
-				JOptionPane.showMessageDialog(frame,
-						"Funds transferred",
-						"Transaction Processed",
-						JOptionPane.PLAIN_MESSAGE);
+
+
+
+				/*
+
+				 */
 
 				withdrawFromJPwithdrawFromTF.setText("");
 				withdrawFromJPpassword.setText("");
@@ -1377,9 +1538,79 @@ public class GUI {
 		btnEnter_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 
-
+				System.out.println("Executing");
 				if (rdbtnYes.isSelected())
 				{
+					System.out.println("Executing inside of Radio BTN");
+					HttpURLConnectionATM http = new HttpURLConnectionATM();
+
+					// First we'll try and grab the balance for the other account by pinging getUserInfo
+
+					//String result = http.response.toString();
+					//System.out.print(result);
+					try 
+					{
+						// 	if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
+
+						http.sendPost(HttpURLConnectionATM.URL+"php/updateUser.php?", 
+								"password=" + curr.getPassword() +
+								"&balance=" + curr.getBalance() + 
+								"&firstName=" + curr.gFN() +
+								"&middleName=" + curr.gMN() +
+								"&lastName=" + curr.gLN() + 
+								"&accountNum=" + curr.getAccountNum() +
+								"&choice=EmptyAccount"
+								);
+
+						System.out.println(http.response.toString());
+
+						if (http.response != null)
+						{
+							//System.out.print("Transaction successful.\n");
+							System.out.println("Executing inside HTTP RESPONSE");
+							getUserInfo(G_Password, A_NUMBER);
+							//getUserInfo(BG_Password, BA_NUMBER);
+							System.out.println(curr.getPassword());
+							System.out.println(curr.getAccountNum());
+							System.out.print(curr.getBalance());
+
+							JOptionPane.showMessageDialog(frame,
+									"Account successfully emptied.",
+									"Empty Account",
+									JOptionPane.PLAIN_MESSAGE);
+
+						}
+
+						else
+						{
+							System.out.println("Transaction unsuccessful.\n");
+							JOptionPane.showMessageDialog(frame,
+									"Account not emptied.",
+									"Empty Account ",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						//parseResult(http.response.toString());
+
+					} catch (Exception event) { event.printStackTrace(); }
+
+				}			
+
+
+				else
+				{
+					System.out.println("Transaction unsuccessful.\n");
+					JOptionPane.showMessageDialog(frame,
+							"Account not emptied.",
+							"Empty Account ",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+
+
+
+
+
+				/*
 					curr.emptyAccount();
 					//System.out.println("This is also working as intended.");
 					JOptionPane.showMessageDialog(frame,
@@ -1387,8 +1618,9 @@ public class GUI {
 							"Empty Account",
 							JOptionPane.PLAIN_MESSAGE);
 					cardLayout.show(frame.getContentPane(), MAIN_PANEL);
+				 */
 
-				}
+				//}
 
 				/*
 				else if (rdbtnNo.isSelected())

@@ -128,7 +128,7 @@ public class BankAccount {
 		if (amount >= 0)
 		{
 			//System.out.println("Deposit	of amount $" + amount + " made.\n");
-			message += ("Deposit of amount $" + amount + " made.\n");
+			message += ("Deposit of Amount $" + amount + " made.\n");
 			balance += amount;
 			
 			return true;
@@ -199,6 +199,8 @@ public class BankAccount {
 	String gMN() { return middleName; }
 	String gLN() { return lastName; } 
 	
+	boolean setHistory(String history) { message += history; return true;}
+	
 	int getAccountNum() { return accountNum; }
 	
 	boolean resetPassword(String currentPassword, String newPassword)
@@ -230,7 +232,7 @@ public class BankAccount {
 	
 	String getPassword()
 	{
-		message += ("Ha! If only if it were that easy! ECB will be notified of your attempts to hack us, criminal!\n");
+		//message += ("Ha! If only if it were that easy! ECB will be notified of your attempts to hack us, criminal!\n");
 		return password;
 	}
 	
