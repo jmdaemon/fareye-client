@@ -1,7 +1,6 @@
 <?php
 
     $account_num = $_POST['accountNum'];
-    $password = $_POST['password'];
     
     // Establish a connection
     $con = new mysqli("localhost", "id6011112_joseph", "Password", "id6011112_atm");
@@ -13,7 +12,7 @@
       }
       
       // Query the database
-      $sql = "SELECT * FROM USERS WHERE acct_number=$account_num AND password='$password'";
+      $sql = "SELECT * FROM USERS WHERE acct_number=$account_num";
       $result = $con->query($sql);
       //$row = $result->fetch_row();
     

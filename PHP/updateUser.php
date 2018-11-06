@@ -15,13 +15,13 @@ if ($con->connect_error)
     die("Connection failed: " . $con->connect_error);
   }
   
-function updateHistory($con, $message)
+function updateHistory($con, $message, $account_num)
 {
-    $sql = "UPDATE USERS SET history = CONCAT(ifnull(history, ''), $message) WHERE acct_number=$account_num";
-    
+    //$sql = "UPDATE USERS SET history=CONCAT(history, $message) WHERE acct_number=$account_num";
+    $sql = "UPDATE USERS SET history=CONCAT(history, '$message') WHERE acct_number=$account_num";
     if ($con->query($sql))
     {
-        print "Account history updated\r\n";
+        print "Account history updated.";
         return True;
     }
     
@@ -38,13 +38,13 @@ function processTransaction($con, $sql)
     if ($con->query($sql))
     {
         //print "In processTransaction $amount, $account_num, $password";
-        print "Transaction successful\r\n";
+        print "Transaction successful.";
         return True;
     }
     
     else
     {
-        print("Transaction failed\r\n");
+        print("Transaction failed.");
         echo "Error: " . $sql . "<br>" . $con->error;
         return False;
     }
@@ -53,7 +53,7 @@ function processTransaction($con, $sql)
 
   switch($choice)
   {
-    case "Withdraw": 
+    case 'Withdraw': 
         $amount = $_POST['amount'];
         if ($amount <= $balance)
         {
@@ -61,7 +61,7 @@ function processTransaction($con, $sql)
             if (processTransaction($con, $sql))
             {
                 $message = ("Withdrawal of Amount $" . $amount . " made.\n");
-                updateHistory($con, $message);
+                updateHistory($con, $message, $account_num);
             }
             
         }
@@ -78,7 +78,7 @@ function processTransaction($con, $sql)
                 if (processTransaction($con, $sql))
                 {
                     $message = ("A bank overdraft fee of $25 will be charged to your account. We thank you for your business.\n");
-                    updateHistory($con, $message);
+                    updateHistory($con, $message, $account_num);
                 }
             }
         } break;
@@ -89,36 +89,42 @@ function processTransaction($con, $sql)
         $otherUN = $_POST['otherUserNum'];
         $otherUP = $_POST['otherUserPas'];
         
-        if ($amount <= $otherUB)
+        
+        if($otherUN != $account_num)
         {
-            // Give money to the current bank account
-            $sql = "UPDATE USERS SET balance=balance+$amount WHERE acct_number=$account_num";
-            
-            if (processTransaction($con, $sql))
+            // Make sure to ping the database for the userBalance
+            if ($amount <= $otherUB)
             {
-				// Take money from the other bank account
-                $sql = "UPDATE USERS SET balance=balance-$amount WHERE acct_number=$otherUN";
+                // Give money to the current bank account
+                $sql = "UPDATE USERS SET balance=balance+$amount WHERE acct_number=$account_num";
                 
                 if (processTransaction($con, $sql))
                 {
-                    $message = "Transfer of $" . $amount . " dollars from " .
-						$otherUN . " complete.\n";
-			    	updateHistory($con, $message);
+    				// Take money from the other bank account
+                    $sql = "UPDATE USERS SET balance=balance-$amount WHERE acct_number=$otherUN";
+                    
+                    if (processTransaction($con, $sql))
+                    {
+                        $message = ("Transfer of $" . $amount . " dollars from " . $otherUN . " complete.\n");
+    			    	updateHistory($con, $message, $account_num);
+                    }
+                }
+            }
+            
+            else if ($amount > $otherUB)
+            {
+                $sql = "UPDATE USERS SET balance=balance-25 WHERE acct_number=$account_num";
+                
+                if (processTransaction($con, $sql))
+                {
+                    $message = ("Transfer of $" . $amount . " dollars from account " . $otherUN . " unsuccessful due to insufficient funds. A fee of $25 was applied.\n");
+    				updateHistory($con, $message, $account_num);
                 }
             }
         }
-        
-        else if ($amount > $otherUB)
+        else
         {
-            $sql = "UPDATE USERS SET balance=balance-25 WHERE acct_number=$account_num";
-            
-            if (processTransaction($con, $sql))
-            {
-                $message = ("Transfer of $" . $amount . " dollars from account " 
-						. $otherUN . 
-						" unsuccessful due to insufficient funds. A fee of $25 was applied\n");
-				updateHistory($con, $message);
-            }
+          return;  
         } break;
         
     case 'Deposit': 
@@ -130,8 +136,8 @@ function processTransaction($con, $sql)
             
             if (processTransaction($con, $sql))
             {
-                $message = ("Deposit of amount $" . $amount . " made.\n");
-                updateHistory($con, $message);
+                $message = ("Deposit of Amount $" . $amount . " made.\n");
+                updateHistory($con, $message, $account_num);
             }
             
         }
@@ -148,55 +154,66 @@ function processTransaction($con, $sql)
         $otherUB = $_POST['otherUserBal'];
         $otherUN = $_POST['otherUserNum'];
         $otherUP = $_POST['otherUserPas'];
-        if ($amount <= $otherUB)
+        
+        if ($otherUN != $account_num)
         {
-            // Take money from us
-            $sql = "UPDATE USERS SET balance=balance-$amount WHERE acct_number=$account_num";
-            if (processTransaction($con, $sql))
+            if ($amount <= $otherUB)
             {
-                // Give money to
-                $sql = "UPDATE USERS SET balance=balance+$amountWHERE acct_number=$otherUN";
-                $message = ("Transfer of $" . $amount . " dollars to account " .
-				$otherUN . " complete.\n");
-                updateHistory($con, $message);
+                // Take money from us
+                $sql = "UPDATE USERS SET balance=balance-$amount WHERE acct_number=$account_num";
+                if (processTransaction($con, $sql))
+                {
+                    // Give money to
+                    $sql = "UPDATE USERS SET balance=balance+$amount WHERE acct_number=$otherUN";
+                    
+                    if (processTransaction($con, $sql))
+                    {
+                        $message = ("Transfer of $" . $amount . " dollars to account " . $otherUN . " complete.\n");
+                        updateHistory($con, $message, $account_num);
+                    }
+                }
             }
+            
+            else
+            {
+                $sql = "UPDATE USERS SET balance=balance-25 WHERE acct_number=$account_num";
+                if (processTransaction($sql) == True)
+                {
+                    $message = ("Overdraft during transfer. Transaction not processed. " . "Please contact us for further assistance. A fee of \$25 was applied.\n");   
+    		        updateHistory($con, $message);
+                }
+            } 
         }
         
         else
         {
-            $sql = "UPDATE USERS SET balance=balance-25 WHERE acct_number=$account_num";
-            if (processTransaction($sql) == True)
-            {
-                $message = ("Overdraft during transfer. Transaction not processed. "
-					. "Please contact us for further assistance. A fee of \$25 was applied.\n");   
-		        updateHistory($con, $message);
-            }
+          return;  
         } break;
           
     case 'ResetPass': 
         // Work on this during class
         $newpass = $_POST['newPass'];
-        $sql = "UPDATE USERS SET password=$newpass WHERE acct_number=$account_num AND password='$password'";
+        $sql = "UPDATE USERS SET password='$newpass' WHERE acct_number=$account_num";
         
         if($con->query($sql))
           {
               $message = ("Password successfully updated.\n");
-              updateHistory($con, $message);
+              updateHistory($con, $message, $account_num);
           }
         
         else
           {
             $message = ("Password Reset Unsuccessful . Please Try Again.\n");
-            updateHistory($message);
+            updateHistory($con, $message, $account_num);
           }break;
           
     case 'EmptyAccount': 
-        $sql = "UPDATE USERS SET balance=0 WHERE acct_number='$account_num'"; 
+        $sql = "UPDATE USERS SET balance=0.0 WHERE acct_number=$account_num"; 
         if($con->query($sql))
           {
               echo "Account successfully emptied.";
-              $message = "So much for \"Leaving something for a rainy day!\"";
-              updateHistory($con, $message);
+              $message = "So much for \"Leaving something for a rainy day!\"\n";
+              updateHistory($con, $message, $account_num);
           }
           else
           {
