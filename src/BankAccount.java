@@ -304,9 +304,6 @@ public class BankAccount {
 	{
 		if (otherAcct.checkPassword(pswd))
 		{
-			// This is a problem
-			// otherAcct.withdraw(amount)
-			// amount <= otherAcct.getBalance()
 			if (amount <= otherAcct.getBalance())
 			{
 				otherAcct.withdraw(amount);

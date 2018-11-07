@@ -107,6 +107,9 @@ function processTransaction($con, $sql)
                     {
                         $message = ("Transfer of $" . $amount . " dollars from " . $otherUN . " complete.\n");
     			    	updateHistory($con, $message, $account_num);
+    			    	
+    			    	$message = ("Withdrawal of Amount $" . $amount . " made.\n");
+    			    	updateHistory($con, $message, $otherUN);
                     }
                 }
             }
@@ -170,6 +173,9 @@ function processTransaction($con, $sql)
                     {
                         $message = ("Transfer of $" . $amount . " dollars to account " . $otherUN . " complete.\n");
                         updateHistory($con, $message, $account_num);
+                        
+                        $message = ("Deposit of Amount $" . $amount . " made.\n");
+                        updateHistory($con, $message, $otherUN);
                     }
                 }
             }
