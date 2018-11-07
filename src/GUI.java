@@ -977,12 +977,13 @@ public class GUI {
 								"Deposit unsuccessful.",
 								"Deposit Invalid",
 								JOptionPane.ERROR_MESSAGE);
-						depositJPdepositTF.setText("");
-						cardLayout.show(frame.getContentPane(), MAIN_PANEL);
+						
 					}
 				}
 				catch (Exception event) { event.printStackTrace(); }
 
+				depositJPdepositTF.setText("");
+				cardLayout.show(frame.getContentPane(), MAIN_PANEL);
 			}
 		});
 		btnDeposit_1.setBounds(161, 150, 89, 40);
