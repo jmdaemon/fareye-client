@@ -554,6 +554,34 @@ public class GUI {
 		return null;
 	}
 	 */
+	
+	
+	boolean encryptData()
+	{
+		HttpURLConnectionATM http = new HttpURLConnectionATM();
+		try {
+			http.sendPost(HttpURLConnectionATM.URL+"php/encryptData.php?", 
+					"accountNum=" + "" +
+					"&password=");
+
+			//System.out.println(http.response.toString());
+			if (http.response != null)
+			{
+				//System.out.println(http.response.toString());
+				// retrieves entire row
+				//System.out.println("Running...");
+				//parseResult(http.response.toString());
+				return true;
+			}
+			else
+			{
+				System.out.println("No User Info Retrieved!");
+			}
+		} 
+		catch (Exception e) { e.printStackTrace(); }
+		return false;
+	}
+	
 	int generateAcctNum()
 	{
 		Random randomGenerator = new Random();
@@ -644,7 +672,7 @@ public class GUI {
 
 				//String accountNumberString = ();
 				int acctNumber = (Integer.valueOf(loginJPloginTF.getText()));
-
+				
 				login(password, acctNumber);
 
 				//if (acctNumber == 0)
