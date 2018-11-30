@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.security.AlgorithmParameters;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -20,7 +21,9 @@ import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -73,17 +76,11 @@ public class Encryption
 	{
 		try
 		{
-			// setKey(secret);
-			// secretKey = myKey;
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			AlgorithmParameters params = cipher.getParameters();
 			iv = params.getParameterSpec(IvParameterSpec.class).getIV();
-			// System.out.println("Initialization Vector: " + iv);
-			// byte[] ciphertext = cipher.doFinal(secretKey.getBytes("UTF-8"));
 			ciphertext = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
-			// System.out.println("The Encrypted CipherText: " + ciphertext);
-			//System.out.println(secretKey);
 			return Base64.getEncoder().encodeToString(ciphertext);
 			/*
             FileOutputStream out = new FileOutputStream("Master-key");
@@ -121,22 +118,11 @@ public class Encryption
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
 			String plaintext = new String(cipher.doFinal(ciphertext), "UTF-8");
-			// System.out.println(plaintext);
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-
-			/*
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-			 */
 		} 
-		catch (Exception e) 
-		{
-			System.out.println("Error while decrypting: " + e.toString());
-		}
+		catch (Exception e) { System.out.println("Error while decrypting: " + e.toString()); }
 		return null;
 	}
-
 
 	public static void saveToFile(String fileName,
 			BigInteger mod, BigInteger exp) throws IOException {
@@ -149,10 +135,10 @@ public class Encryption
 	}
 	public static KeyPair createMasterKeys()
 	{
-		KeyPair masterKeys = RSA.generateKeyPair();
+		KeyPair masterKeys = Rsa.generateKeyPair();
 		return masterKeys;
 	}
-
+	
 	public static byte[] transport(String data) throws ClassNotFoundException, IOException
 	{
 		/*	-=--=--=--=- Encryption -=--=--=--=-
@@ -169,14 +155,14 @@ public class Encryption
 		// The key will be generatated later on from SecureRandom
 		String transportData = Encryption.encrypt(data, secretKey);
 		PublicKey pubKey = Encryption.getPubKey();
-		byte[] encryptedData = RSA.encrypt(transportData, pubKey);
+		byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
 		//encryptCipher(transportData, "");
 		return encryptedData;
 	}
 	
-	public static byte[] send(String data)
-	{
-		String transportData = Encryption.encrypt(data, secretKey);
+	// public static byte[] send(String data)
+	// {
+		// String transportData = Encryption.encrypt(data, secretKey);
 		
 		
 		/*
@@ -186,7 +172,7 @@ public class Encryption
 		pubFile.close();
 		return pubKey;
 		 */
-	}
+	// }
 	
 	
 	
@@ -194,7 +180,7 @@ public class Encryption
 	{
 		PrivateKey privKey = Encryption.getPrivKey();
 		System.out.println(privKey.getEncoded());
-		String unencryptedData = RSA.decrypt(encryptedData, privKey);
+		String unencryptedData = Rsa.decrypt(encryptedData, privKey);
 		String finalLayer = Encryption.decrypt(unencryptedData, secret);
 		return finalLayer;
 	}
@@ -236,6 +222,52 @@ public class Encryption
 	
 	public static byte[] getIV() { return iv; }
 	
+	public static byte[] encryptMSG(String data) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	{
+		KeyGenerator generator = KeyGenerator.getInstance("AES");
+		generator.init(256); // The AES key size in number of bits
+		SecretKey secKey = generator.generateKey();
+		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		aesCipher.init(Cipher.ENCRYPT_MODE, secKey);
+		byte[] byteCipherText = aesCipher.doFinal(data.getBytes());
+		return byteCipherText;
+		
+	}
+	private static PrivateKey prKey;
+	
+	public static byte[] encryptRSAKey() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	{
+		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+		kpg.initialize(2048);
+		KeyPair keyPair = kpg.generateKeyPair();
+
+		PublicKey puKey = keyPair.getPublic();
+		prKey = keyPair.getPrivate();
+		
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+		cipher.init(Cipher.PUBLIC_KEY, puKey);
+		byte[] encryptedKey = cipher.doFinal(secretKey.getEncoded()/*Seceret Key From Step 1*/);
+		return encryptedKey;
+	}
+	
+	public static byte[] decryptKey(byte[] encryptedKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	{
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+		cipher.init(Cipher.PRIVATE_KEY, prKey);
+		byte[] decryptedKey = cipher.doFinal(encryptedKey);
+		return decryptedKey;
+	}
+	
+	public static String decryptMSG(byte[] encryptedData) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	{
+		//Convert bytes to AES SecertKey
+		// SecretKey originalKey = new SecretKeySpec(decryptedKey , 0, decryptedKey .length, "AES");
+		Cipher aesCipher = Cipher.getInstance("AES");
+		aesCipher.init(Cipher.DECRYPT_MODE, secretKey);
+		byte[] bytePlainText = aesCipher.doFinal(encryptedData);
+		String plainText = new String(bytePlainText);
+		return plainText;
+	}
 	
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException, ClassNotFoundException
 	{
@@ -282,6 +314,21 @@ public class Encryption
 		 * 5) The PHP then decrypts the AES-256 encrypted data, using the newly unlocked AES-256 key.
 		 * 6) Interpret the results of the data. Fetch user data, or 
 		 */
+		setKey("This is my secretKey");
+		final String data = "SELECT * FROM USERS WHERE acct_number=12345";
+		
+		byte[] encryptedData = Encryption.encryptMSG(data);
+		byte[] encryptedKey = Encryption.encryptRSAKey();
+		
+		
+		System.out.println("Transporting ... ");
+		
+		byte[] decryptedKey = Encryption.decryptKey(encryptedKey);
+		String decryptedMSG = Encryption.decryptMSG(encryptedData);
+		
+		System.out.println("Decrypted Message: " + decryptedMSG);
+		
+		/*
 		final String secretKey = "ssshhhhhhhhhhh!!!!";
 		Encryption.setKey(secretKey);
 		String originalString = "howtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.comhowtodoinjava.coms";
@@ -293,6 +340,7 @@ public class Encryption
 		
 		String unencryptedData = Encryption.receive(transporting, secretKey);
 		System.out.println("My unencrypted Data: " + unencryptedData);
+		*/
 		
 		
 		/*
