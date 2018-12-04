@@ -1,0 +1,5 @@
+<?php
+
+require ("encrypt.php");
+echo get_included_files();
+?>
