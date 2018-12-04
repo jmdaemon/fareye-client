@@ -127,10 +127,11 @@ public class GUI {
 		try 
 		{
 			//System.out.println(result);
-
+			
 			if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
 			{
-				JSONObject obj = new JSONObject(result);
+				String unencryptedResult = Encryption.decrypt(result);
+				JSONObject obj = new JSONObject(unencryptedResult);
 				//BankAccount b = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number")); 
 				// curr = b;
 				//System.out.println("Executing First if block.");
@@ -165,12 +166,26 @@ public class GUI {
 		 */
 		try {
 			
-			
+			/*
 			http.sendPost(HttpURLConnectionATM.URL+"php/getUserInfo.php?", 
 					//("accountNum=" + acctNumber +
 							//"&password=" + pswd)
 					request);
-
+			*/
+			/*
+			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
+					"account_num=" + Encryption.encrypt(Integer.toString(acctNumber)) + 
+					"&password=" + Encryption.encrypt(pswd) +
+					"&secretKey=" + Encryption.getSK() +
+					"&iv=" + Encryption.getIV()
+					);
+					*/
+			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
+					"secretKey=" +  Encryption.getSK()+
+					"&iv=" + Encryption.getIV()  +
+					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
+					"&password=" + Encryption.encrypt(pswd)
+					);
 			//System.out.println(http.response.toString());
 			if (http.response != null)
 			{
@@ -179,6 +194,7 @@ public class GUI {
 				//System.out.println("Running...");
 				parseResult(http.response.toString());
 			}
+			
 			else
 			{
 				System.out.println("No User Info Retrieved!");
@@ -192,18 +208,30 @@ public class GUI {
 	{
 		//String url = "https://josephmdiza.000webhostapp.com/";
 		//HttpURLConnectionATM http = new HttpURLConnectionATM();
+		
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
+		Encryption.setKey("Thisismytemporarykey");
 		try {
+			/*
 			Encryption.setKey("Thisismytemporarykey");
 			String request = (Encryption.transport("accountNum=" + accountNumber + "&password=" + pswd + "&IV=" 
 					+ Encryption.getIV() + "&secretKey=" + Encryption.getSK())).toString();
-			
+			*/
 			/*
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"account_num=" + accountNumber + 
-					"&password=" + pswd);
+					"account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) + 
+					"&password=" + Encryption.encrypt(pswd) +
+					"&secretKey=" + Encryption.getSK() +
+					"&iv=" + Encryption.getIV()
+					);
 			*/
-			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?request=", request);
+			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
+					"secretKey=" +  Encryption.getSK()+
+					"&iv=" + Encryption.getIV()  +
+					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
+					"&password=" + Encryption.encrypt(pswd)
+					);
+			// http.sendPost(HttpURLConnectionATM.URL+"php/login.php?request=", request);
 			if (http.response != null)
 			{
 

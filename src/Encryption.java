@@ -11,7 +11,6 @@ import java.math.BigInteger;
 import java.security.AlgorithmParameters;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -23,7 +22,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -40,7 +38,7 @@ public class Encryption
 {
 
 	private static SecretKeySpec secretKey;
-	private static SecretKeySpec masterKey;
+	//private static SecretKeySpec masterKey;
 	private static byte[] key;
 	private static byte[] iv;
 	private static byte[] ciphertext;
@@ -57,7 +55,7 @@ public class Encryption
 		catch (NoSuchAlgorithmException e) { e.printStackTrace(); } 
 		catch (UnsupportedEncodingException e) {e.printStackTrace();}
 	}
-	
+	/*
 	public static void setMasterKey(String myKey) 
 	{
 		MessageDigest sha = null;
@@ -71,7 +69,7 @@ public class Encryption
 		catch (NoSuchAlgorithmException e) { e.printStackTrace(); } 
 		catch (UnsupportedEncodingException e) {e.printStackTrace();}
 	}
-	
+	*/
 	public static String encrypt(String strToEncrypt, SecretKeySpec myKey) 
 	{
 		try
@@ -111,13 +109,13 @@ public class Encryption
 		catch (Exception e) { System.out.println("Error while encrypting: " + e.toString()); }
 		return null;
 	}
-	public static String decrypt(String strToDecrypt, String secret) 
+	public static String decrypt(String strToDecrypt) 
 	{
 		try
 		{
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
-			String plaintext = new String(cipher.doFinal(ciphertext), "UTF-8");
+			// String plaintext = new String(cipher.doFinal(ciphertext), "UTF-8");
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} 
 		catch (Exception e) { System.out.println("Error while decrypting: " + e.toString()); }
@@ -135,9 +133,11 @@ public class Encryption
 	}
 	public static KeyPair createMasterKeys()
 	{
-		KeyPair masterKeys = Rsa.generateKeyPair();
+		// KeyPair masterKeys = Rsa.generateKeyPair();
+		KeyPair masterKeys = RSA.generateKeyPair();
 		return masterKeys;
 	}
+	
 	
 	public static byte[] transport(String data) throws ClassNotFoundException, IOException
 	{
@@ -155,37 +155,25 @@ public class Encryption
 		// The key will be generatated later on from SecureRandom
 		String transportData = Encryption.encrypt(data, secretKey);
 		PublicKey pubKey = Encryption.getPubKey();
-		byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
+		
+		// byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
+		byte[] encryptedData = RSA.encrypt(transportData, pubKey);
 		//encryptCipher(transportData, "");
 		return encryptedData;
 	}
-	
-	// public static byte[] send(String data)
-	// {
-		// String transportData = Encryption.encrypt(data, secretKey);
-		
-		
-		/*
-		 * FileInputStream pubFile = new FileInputStream("public.key");
-		ObjectInput oi = new ObjectInputStream(pubFile);
-		PublicKey pubKey = (PublicKey) oi.readObject();
-		pubFile.close();
-		return pubKey;
-		 */
-	// }
-	
-	
-	
-	public static String receive(byte[] encryptedData, String secret) throws ClassNotFoundException, IOException
+
+	public static String receive(byte[] encryptedData) throws ClassNotFoundException, IOException
 	{
 		PrivateKey privKey = Encryption.getPrivKey();
 		System.out.println(privKey.getEncoded());
-		String unencryptedData = Rsa.decrypt(encryptedData, privKey);
-		String finalLayer = Encryption.decrypt(unencryptedData, secret);
+		
+		// String unencryptedData = Rsa.decrypt(encryptedData, privKey);
+		String unencryptedData = RSA.decrypt(encryptedData, privKey);
+		String finalLayer = Encryption.decrypt(unencryptedData);
 		return finalLayer;
 	}
 	
-	public static SecretKeySpec getSK() { return secretKey; }
+	public static byte[] getSK() { return secretKey.getEncoded(); }
 	
 	public static boolean write(KeyPair masterKey) throws IOException
 	{
@@ -226,23 +214,18 @@ public class Encryption
 	{
 		KeyGenerator generator = KeyGenerator.getInstance("AES");
 		generator.init(256); // The AES key size in number of bits
-		SecretKey secKey = generator.generateKey();
+		// SecretKey secKey = generator.generateKey();
 		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		aesCipher.init(Cipher.ENCRYPT_MODE, secKey);
+		aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
 		byte[] byteCipherText = aesCipher.doFinal(data.getBytes());
 		return byteCipherText;
 		
 	}
-	private static PrivateKey prKey;
+	// private static PrivateKey prKey;
 	
-	public static byte[] encryptRSAKey() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	public static byte[] encryptRSAKey(PublicKey puKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
 	{
-		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-		kpg.initialize(2048);
-		KeyPair keyPair = kpg.generateKeyPair();
-
-		PublicKey puKey = keyPair.getPublic();
-		prKey = keyPair.getPrivate();
+		
 		
 		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.PUBLIC_KEY, puKey);
@@ -250,17 +233,19 @@ public class Encryption
 		return encryptedKey;
 	}
 	
-	public static byte[] decryptKey(byte[] encryptedKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	public static byte[] decryptKey(byte[] encryptedKey, PrivateKey prKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
 	{
 		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.PRIVATE_KEY, prKey);
-		byte[] decryptedKey = cipher.doFinal(encryptedKey);
+		
+		// byte[] decryptedKey = cipher.doFinal(encryptedKey);
+		byte[] decryptedKey = cipher.doFinal(prKey.getEncoded());
 		return decryptedKey;
 	}
 	
 	public static String decryptMSG(byte[] encryptedData) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
 	{
-		//Convert bytes to AES SecertKey
+		//Convert bytes to AES SecretKey
 		// SecretKey originalKey = new SecretKeySpec(decryptedKey , 0, decryptedKey .length, "AES");
 		Cipher aesCipher = Cipher.getInstance("AES");
 		aesCipher.init(Cipher.DECRYPT_MODE, secretKey);
@@ -314,18 +299,36 @@ public class Encryption
 		 * 5) The PHP then decrypts the AES-256 encrypted data, using the newly unlocked AES-256 key.
 		 * 6) Interpret the results of the data. Fetch user data, or 
 		 */
+		
+		
+		/*	 How this will work.
+		 *   I will set the key at the start of the program.
+		 *   I will send AES-256 Bit encrypted data. And will receive AES-256 Bit Encryption.
+		 * 
+		 */
+		
+		
+		// The finally working set
 		setKey("This is my secretKey");
 		final String data = "SELECT * FROM USERS WHERE acct_number=12345";
 		
-		byte[] encryptedData = Encryption.encryptMSG(data);
-		byte[] encryptedKey = Encryption.encryptRSAKey();
-		
-		
+		// byte[] encryptedData = Encryption.encryptMSG(data);
+		String encryptedData = Encryption.encrypt(data);
+		/*
+		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+		kpg.initialize(2048);
+		KeyPair keyPair = kpg.generateKeyPair();
+
+		PublicKey puKey = keyPair.getPublic();
+		prKey = keyPair.getPrivate();
+		byte[] encryptedKey = Encryption.encryptRSAKey(puKey);
+		*/
 		System.out.println("Transporting ... ");
+		System.out.println(secretKey.getEncoded());
 		
-		byte[] decryptedKey = Encryption.decryptKey(encryptedKey);
-		String decryptedMSG = Encryption.decryptMSG(encryptedData);
-		
+		// byte[] decryptedKey = Encryption.decryptKey(encryptedKey, prKey);
+		// String decryptedMSG = Encryption.decryptMSG(encryptedData.getBytes());
+		String decryptedMSG = new String(Encryption.decrypt(encryptedData));
 		System.out.println("Decrypted Message: " + decryptedMSG);
 		
 		/*
@@ -405,18 +408,3 @@ public class Encryption
 }
 
 
-
-/*
- * TODO:
- * How the whole encryption will work.
- * Encrypt the data in java.
- * Send the encrypted data to the PHP
- * Have two different keys, stored in config files.
- * PHP has the Java decryption key
- * Java has the PHP encryption key, and decryption key.
- * PHP sends the encrypted data back to the Java application.
- * 
- * Interpret the encrypted data, and send the encrypted data back to the Java application.
- * Decrypt the result and use the data.
- * 
- */
