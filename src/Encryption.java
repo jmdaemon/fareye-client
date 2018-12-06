@@ -208,8 +208,8 @@ public class Encryption
 		return privKey;
 	}
 	
+	// public static int getIV() { return iv.hashCode(); }
 	public static byte[] getIV() { return iv; }
-	
 	public static byte[] encryptMSG(String data) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
 	{
 		KeyGenerator generator = KeyGenerator.getInstance("AES");

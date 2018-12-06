@@ -183,7 +183,7 @@ public class GUI {
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
 					"secretKey=" +  Encryption.getSK()+
 					"&iv=" + Encryption.getIV()  +
-					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
+					"&account_num=" + Encryption.encrypt(Integer.toString(acctNumber)) +
 					"&password=" + Encryption.encrypt(pswd)
 					);
 			//System.out.println(http.response.toString());
@@ -212,6 +212,8 @@ public class GUI {
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
 		Encryption.setKey("Thisismytemporarykey");
 		try {
+			
+			
 			/*
 			Encryption.setKey("Thisismytemporarykey");
 			String request = (Encryption.transport("accountNum=" + accountNumber + "&password=" + pswd + "&IV=" 
@@ -231,6 +233,15 @@ public class GUI {
 					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
 					"&password=" + Encryption.encrypt(pswd)
 					);
+			
+			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" + 
+					"secretKey=" +  Encryption.getSK()+
+					"&iv=" + Encryption.getIV()  +
+					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
+					"&password=" + Encryption.encrypt(pswd)
+					);
+			
+			System.out.println(http.response);
 			// http.sendPost(HttpURLConnectionATM.URL+"php/login.php?request=", request);
 			if (http.response != null)
 			{
