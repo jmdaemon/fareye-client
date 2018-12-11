@@ -182,7 +182,7 @@ public class GUI {
 					*/
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
 					"secretKey=" +  Encryption.getSK()+
-					"&iv=" + Encryption.getIV()  +
+					// "&iv=" + Encryption.getIV()  +
 					"&account_num=" + Encryption.encrypt(Integer.toString(acctNumber)) +
 					"&password=" + Encryption.encrypt(pswd)
 					);
@@ -229,14 +229,14 @@ public class GUI {
 			*/
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
 					"secretKey=" +  Encryption.getSK()+
-					"&iv=" + Encryption.getIV()  +
+					// "&iv=" + Encryption.getIV()  +
 					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
 					"&password=" + Encryption.encrypt(pswd)
 					);
 			
 			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" + 
 					"secretKey=" +  Encryption.getSK()+
-					"&iv=" + Encryption.getIV()  +
+					// "&iv=" + Encryption.getIV()  +
 					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
 					"&password=" + Encryption.encrypt(pswd)
 					);

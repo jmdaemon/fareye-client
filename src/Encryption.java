@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.AlgorithmParameters;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
@@ -102,7 +103,7 @@ public class Encryption
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			AlgorithmParameters params = cipher.getParameters();
-			iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+			// iv = params.getParameterSpec(IvParameterSpec.class).getIV();
 			ciphertext = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
 			return Base64.getEncoder().encodeToString(ciphertext);
 		} 
@@ -114,7 +115,8 @@ public class Encryption
 		try
 		{
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
+			// cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
+			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			// String plaintext = new String(cipher.doFinal(ciphertext), "UTF-8");
 			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		} 
@@ -134,7 +136,7 @@ public class Encryption
 	public static KeyPair createMasterKeys()
 	{
 		// KeyPair masterKeys = Rsa.generateKeyPair();
-		KeyPair masterKeys = RSA.generateKeyPair();
+		KeyPair masterKeys = Rsa.generateKeyPair();
 		return masterKeys;
 	}
 	
@@ -157,7 +159,7 @@ public class Encryption
 		PublicKey pubKey = Encryption.getPubKey();
 		
 		// byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
-		byte[] encryptedData = RSA.encrypt(transportData, pubKey);
+		byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
 		//encryptCipher(transportData, "");
 		return encryptedData;
 	}
@@ -168,7 +170,7 @@ public class Encryption
 		System.out.println(privKey.getEncoded());
 		
 		// String unencryptedData = Rsa.decrypt(encryptedData, privKey);
-		String unencryptedData = RSA.decrypt(encryptedData, privKey);
+		String unencryptedData = Rsa.decrypt(encryptedData, privKey);
 		String finalLayer = Encryption.decrypt(unencryptedData);
 		return finalLayer;
 	}
@@ -243,16 +245,29 @@ public class Encryption
 		return decryptedKey;
 	}
 	
-	public static String decryptMSG(byte[] encryptedData) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	public static String decryptMSG(byte[] encryptedData) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
 	{
 		//Convert bytes to AES SecretKey
 		// SecretKey originalKey = new SecretKeySpec(decryptedKey , 0, decryptedKey .length, "AES");
 		Cipher aesCipher = Cipher.getInstance("AES");
-		aesCipher.init(Cipher.DECRYPT_MODE, secretKey);
+		aesCipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
 		byte[] bytePlainText = aesCipher.doFinal(encryptedData);
 		String plainText = new String(bytePlainText);
 		return plainText;
 	}
+	/*
+	public static byte[] generateKey() 
+	{
+		byte[] key = null; // TODO
+		byte[] input = null; // TODO
+		byte[] output = null;
+		SecretKeySpec keySpec = null;
+		keySpec = new SecretKeySpec(key, "AES");
+		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+		cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+		output = cipher.doFinal(input)
+	}
+	*/
 	
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException, ClassNotFoundException
 	{
@@ -309,11 +324,11 @@ public class Encryption
 		
 		
 		// The finally working set
-		setKey("This is my secretKey");
-		final String data = "SELECT * FROM USERS WHERE acct_number=12345";
+		// setKey("This is my secretKey");
+		// final String data = "SELECT * FROM USERS WHERE acct_number=12345";
 		
 		// byte[] encryptedData = Encryption.encryptMSG(data);
-		String encryptedData = Encryption.encrypt(data);
+		// String encryptedData = Encryption.encrypt(data);
 		/*
 		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
 		kpg.initialize(2048);
@@ -323,13 +338,15 @@ public class Encryption
 		prKey = keyPair.getPrivate();
 		byte[] encryptedKey = Encryption.encryptRSAKey(puKey);
 		*/
-		System.out.println("Transporting ... ");
-		System.out.println(secretKey.getEncoded());
+		
+		
+		// System.out.println("Transporting ... ");
+		// System.out.println(secretKey.getEncoded());
 		
 		// byte[] decryptedKey = Encryption.decryptKey(encryptedKey, prKey);
 		// String decryptedMSG = Encryption.decryptMSG(encryptedData.getBytes());
-		String decryptedMSG = new String(Encryption.decrypt(encryptedData));
-		System.out.println("Decrypted Message: " + decryptedMSG);
+		// String decryptedMSG = new String(Encryption.decrypt(encryptedData));
+		// System.out.println("Decrypted Message: " + decryptedMSG);
 		
 		/*
 		final String secretKey = "ssshhhhhhhhhhh!!!!";
