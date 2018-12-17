@@ -235,7 +235,7 @@ public class GUI {
 					);
 			
 			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" + 
-					"secretKey=" +  Encryption.getSK()+
+					"secretKey=" +  Encryption.getSK() +
 					// "&iv=" + Encryption.getIV()  +
 					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
 					"&password=" + Encryption.encrypt(pswd)
