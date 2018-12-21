@@ -229,8 +229,8 @@ public class GUI {
 			*/
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
 					"secretKey=" +  Encryption.getSK()+
-					// "&iv=" + Encryption.getIV()  +
 					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
+					// "&iv=" + Encryption.getIV() + 
 					"&password=" + Encryption.encrypt(pswd)
 					);
 			

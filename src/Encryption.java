@@ -16,6 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.Arrays;
 import java.util.Base64;
 import javax.crypto.BadPaddingException;
@@ -95,6 +96,25 @@ public class Encryption
 		return null;
 	}
 
+	public static boolean setIV() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidParameterSpecException
+	{
+		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		AlgorithmParameters params = cipher.getParameters();
+		iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+		return false;
+	}
+	
+	public static String encryptWithIV(String iv)
+	{
+		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		AlgorithmParameters params = cipher.getParameters();
+		iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+		
+	}
+	
+	
 	public static String encrypt(String strToEncrypt) 
 	{
 		try
@@ -140,6 +160,12 @@ public class Encryption
 		return masterKeys;
 	}
 	
+	public static void setIV(byte[] initVector)
+	{
+		// iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+		iv = initVector;
+		
+	}
 	
 	public static byte[] transport(String data) throws ClassNotFoundException, IOException
 	{
