@@ -80,6 +80,7 @@ public class Encryption
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			AlgorithmParameters params = cipher.getParameters();
 			iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+			System.out.println("Initialization vector" + iv);
 			ciphertext = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
 			return Base64.getEncoder().encodeToString(ciphertext);
 			/*
@@ -123,7 +124,10 @@ public class Encryption
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			AlgorithmParameters params = cipher.getParameters();
-			// iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+			// iv = etParameterSpec(IvParameterSpec.class).getIV();
+			iv =  new byte [16];
+			iv = cipher.getIV();
+			System.out.println("Initialization vector" + iv);
 			ciphertext = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
 			return Base64.getEncoder().encodeToString(ciphertext);
 		} 
