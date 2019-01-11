@@ -26,6 +26,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.sql.Timestamp;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -210,7 +211,7 @@ public class GUI {
 		//HttpURLConnectionATM http = new HttpURLConnectionATM();
 		
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
-		Encryption.setKey("Thisismytemporarykey");
+		Encryption.setKey("myencryptionkey");
 		try {
 			
 			

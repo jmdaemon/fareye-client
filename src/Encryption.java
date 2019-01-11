@@ -16,15 +16,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
+import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /*
@@ -39,11 +47,14 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encryption 
 {
 
-	private static SecretKeySpec secretKey;
+	// private static SecretKeySpec secretKey;
 	//private static SecretKeySpec masterKey;
+	public static byte[] salt;
 	private static byte[] key;
 	private static byte[] iv;
 	private static byte[] ciphertext;
+	public static SecretKey secretKey;
+	
 	public static void setKey(String myKey) 
 	{
 		MessageDigest sha = null;
@@ -57,21 +68,6 @@ public class Encryption
 		catch (NoSuchAlgorithmException e) { e.printStackTrace(); } 
 		catch (UnsupportedEncodingException e) {e.printStackTrace();}
 	}
-	/*
-	public static void setMasterKey(String myKey) 
-	{
-		MessageDigest sha = null;
-		try {
-			key = myKey.getBytes("UTF-8");
-			sha = MessageDigest.getInstance("SHA-256");
-			key = sha.digest(key);
-			key = Arrays.copyOf(key, 16); 
-			masterKey = new SecretKeySpec(key, "AES");
-		} 
-		catch (NoSuchAlgorithmException e) { e.printStackTrace(); } 
-		catch (UnsupportedEncodingException e) {e.printStackTrace();}
-	}
-	*/
 	public static String encrypt(String strToEncrypt, SecretKeySpec myKey) 
 	{
 		try
@@ -106,7 +102,7 @@ public class Encryption
 		return false;
 	}
 	
-	public static String encryptWithIV(String iv)
+	public static void encryptWithIV(byte[] iv) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidParameterSpecException
 	{
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -157,20 +153,21 @@ public class Encryption
 			oout.writeObject(exp);
 		} catch (Exception e) { throw new IOException("Unexpected error", e); } finally { oout.close(); }
 	}
+	/*
 	public static KeyPair createMasterKeys()
 	{
-		// KeyPair masterKeys = Rsa.generateKeyPair();
 		KeyPair masterKeys = Rsa.generateKeyPair();
+		// KeyPair masterKeys = RSA.generateKeyPair();
 		return masterKeys;
 	}
-	
+	*/
 	public static void setIV(byte[] initVector)
 	{
 		// iv = params.getParameterSpec(IvParameterSpec.class).getIV();
 		iv = initVector;
 		
 	}
-	
+	/*
 	public static byte[] transport(String data) throws ClassNotFoundException, IOException
 	{
 		/*	-=--=--=--=- Encryption -=--=--=--=-
@@ -182,7 +179,7 @@ public class Encryption
 		 *  We will now decrypt the final layer of the data, and utilize this in our application.
 		 *  
 		 */
-
+		/*
 		// getSK will not return an actual value.
 		// The key will be generatated later on from SecureRandom
 		String transportData = Encryption.encrypt(data, secretKey);
@@ -193,7 +190,8 @@ public class Encryption
 		//encryptCipher(transportData, "");
 		return encryptedData;
 	}
-
+*/
+	/*
 	public static String receive(byte[] encryptedData) throws ClassNotFoundException, IOException
 	{
 		PrivateKey privKey = Encryption.getPrivKey();
@@ -204,6 +202,7 @@ public class Encryption
 		String finalLayer = Encryption.decrypt(unencryptedData);
 		return finalLayer;
 	}
+	*/
 	
 	public static byte[] getSK() { return secretKey.getEncoded(); }
 	
@@ -285,6 +284,62 @@ public class Encryption
 		String plainText = new String(bytePlainText);
 		return plainText;
 	}
+	
+	public static String encryptWKey(String data) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException
+	{
+		 	byte[] initV = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	        iv = initV; 
+	        Random ran = new SecureRandom();
+	        byte [] Bsalt = new byte[32];
+	        ran.nextBytes(Bsalt);
+	        // String str = new String(salt,"utf-8");
+	        String Esalt = Base64.getEncoder().encodeToString(Bsalt);
+	        
+	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+	        KeySpec spec = new PBEKeySpec((secretKey).toString().toCharArray(), Esalt.getBytes(), 65536, 256);
+	        SecretKey tmp = factory.generateSecret(spec);
+	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+	         
+	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+	        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
+	        return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes("UTF-8")));
+	}
+	
+	public static byte[] getEncryptedPassword(String password, byte[] salt,
+	        int iterations, int derivedKeyLength)
+	        throws NoSuchAlgorithmException, InvalidKeySpecException {
+
+	    KeySpec mKeySpec = new PBEKeySpec(password.toCharArray(), salt,
+	            iterations, derivedKeyLength);
+
+	    SecretKeyFactory mSecretKeyFactory = SecretKeyFactory
+	            .getInstance("PBKDF2WithHmacSHA256");
+
+	    return mSecretKeyFactory.generateSecret(mKeySpec).getEncoded();
+
+	}
+	
+	public static byte[] generateSalt() {
+	    SecureRandom random = new SecureRandom();
+	    byte saltBytes[] = new byte[16];
+	    random.nextBytes(saltBytes);
+	    return saltBytes;
+	}
+	
+	public static String decryptWKey(String data) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+	{
+		byte[] encryptedCombinedBytes = Base64.getDecoder().decode(data);
+	    byte[] mEncryptedPassword = getEncryptedPassword(secretKey.toString(), Encryption.generateSalt(),16384, 128);
+	    byte[] ivbytes = Arrays.copyOfRange(encryptedCombinedBytes,0,16);
+	    SecretKeySpec mSecretKeySpec = new SecretKeySpec(mEncryptedPassword, "AES");
+	    Cipher mCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+	    mCipher.init(Cipher.DECRYPT_MODE, mSecretKeySpec, new IvParameterSpec(ivbytes));    
+	    byte[] encryptedTextBytes = Arrays.copyOfRange(encryptedCombinedBytes, 16, encryptedCombinedBytes.length);
+	    System.out.println(encryptedTextBytes.length);
+	    byte[] decryptedTextBytes = mCipher.doFinal(encryptedTextBytes);
+	    return Base64.getEncoder().encodeToString(decryptedTextBytes);
+
+	}
 	/*
 	public static byte[] generateKey() 
 	{
@@ -299,7 +354,10 @@ public class Encryption
 	}
 	*/
 	
-	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException, ClassNotFoundException
+	
+	
+	
+	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException, ClassNotFoundException, InvalidKeySpecException, InvalidAlgorithmParameterException
 	{
 		/*
     	final String secretKey = "ssshhhhhhhhhhh!!!!";
@@ -377,7 +435,21 @@ public class Encryption
 		// String decryptedMSG = Encryption.decryptMSG(encryptedData.getBytes());
 		// String decryptedMSG = new String(Encryption.decrypt(encryptedData));
 		// System.out.println("Decrypted Message: " + decryptedMSG);
+		/*
+		Encryption.setKey("Testing. ");
 		
+		String data = "If google was a guy.";
+		
+		String encryptedData = Encryption.encryptWKey(data);
+		
+		System.out.println("This is the encrypted traffic, seen over the wire... " + encryptedData);
+		System.out.println("Tranferring data across the wire... ");
+		
+		System.out.println("Decoding message. ");
+		
+		String decryptedData = Encryption.decryptWKey(data);
+		System.out.println("This is the decoded traffic, seen over the server side... " + decryptedData);
+		*/
 		/*
 		final String secretKey = "ssshhhhhhhhhhh!!!!";
 		Encryption.setKey(secretKey);
