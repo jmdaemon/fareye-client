@@ -68,6 +68,7 @@ public class Encryption
 		catch (NoSuchAlgorithmException e) { e.printStackTrace(); } 
 		catch (UnsupportedEncodingException e) {e.printStackTrace();}
 	}
+	
 	public static String encrypt(String strToEncrypt, SecretKeySpec myKey) 
 	{
 		try
@@ -102,34 +103,41 @@ public class Encryption
 		return false;
 	}
 	
-	public static void encryptWithIV(byte[] iv) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidParameterSpecException
+	public static byte[] generateIV()
 	{
-		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-		AlgorithmParameters params = cipher.getParameters();
-		iv = params.getParameterSpec(IvParameterSpec.class).getIV();
-		
+		SecureRandom rand = new SecureRandom();
+		byte[] iv = new byte[32];
+		rand.nextBytes(iv);
+		IvParameterSpec ivspec = new IvParameterSpec(iv);
+		return iv;
 	}
 	
-	
+	/*
 	public static String encrypt(String strToEncrypt) 
 	{
 		try
 		{
-
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			
+			String initVector = (generateIV()).toString();
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+			
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			AlgorithmParameters params = cipher.getParameters();
-			// iv = etParameterSpec(IvParameterSpec.class).getIV();
+			
+			/*
+			iv = getParameterSpec(IvParameterSpec.class).getIV();
 			iv =  new byte [16];
 			iv = cipher.getIV();
-			System.out.println("Initialization vector" + iv);
+			// System.out.println("Initialization vector" + iv);
 			ciphertext = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
 			return Base64.getEncoder().encodeToString(ciphertext);
+			
 		} 
 		catch (Exception e) { System.out.println("Error while encrypting: " + e.toString()); }
 		return null;
-	}
+	}*/
 	public static String decrypt(String strToDecrypt) 
 	{
 		try
@@ -143,7 +151,17 @@ public class Encryption
 		catch (Exception e) { System.out.println("Error while decrypting: " + e.toString()); }
 		return null;
 	}
-
+	
+	public static String encrypt(String data) throws UnsupportedEncodingException
+	{
+		String initVector 	= "TemporaryInitVect";
+		String secKey 		= "TemporarySecretKey";
+		
+		IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+		SecretKeySpec skeySpec = new SecretKeySpec(secKey.getBytes("UTF-8"), "AES");
+		
+	}
+	
 	public static void saveToFile(String fileName,
 			BigInteger mod, BigInteger exp) throws IOException {
 		ObjectOutputStream oout = new ObjectOutputStream(
@@ -167,42 +185,6 @@ public class Encryption
 		iv = initVector;
 		
 	}
-	/*
-	public static byte[] transport(String data) throws ClassNotFoundException, IOException
-	{
-		/*	-=--=--=--=- Encryption -=--=--=--=-
-		 *  We're going to encrypt our already encrypted data, which contains the key to decrypt the package, inside of another encrypted package.
-		 *  Change of plans, instead of encrypted our package with RSA, we will use a second AES master key to encrypt and decrypt it.
-		 *  Grab the AES MK in the Db, and decrypt out package.
-		 *  Then we will interpret the plaintext, and do some tasks, or fetch the encrypted data on our database.
-		 *  We will send this encrypted data back to the application, encrypted with the same AES-256 Encryption.
-		 *  We will now decrypt the final layer of the data, and utilize this in our application.
-		 *  
-		 */
-		/*
-		// getSK will not return an actual value.
-		// The key will be generatated later on from SecureRandom
-		String transportData = Encryption.encrypt(data, secretKey);
-		PublicKey pubKey = Encryption.getPubKey();
-		
-		// byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
-		byte[] encryptedData = Rsa.encrypt(transportData, pubKey);
-		//encryptCipher(transportData, "");
-		return encryptedData;
-	}
-*/
-	/*
-	public static String receive(byte[] encryptedData) throws ClassNotFoundException, IOException
-	{
-		PrivateKey privKey = Encryption.getPrivKey();
-		System.out.println(privKey.getEncoded());
-		
-		// String unencryptedData = Rsa.decrypt(encryptedData, privKey);
-		String unencryptedData = Rsa.decrypt(encryptedData, privKey);
-		String finalLayer = Encryption.decrypt(unencryptedData);
-		return finalLayer;
-	}
-	*/
 	
 	public static byte[] getSK() { return secretKey.getEncoded(); }
 	
@@ -220,7 +202,7 @@ public class Encryption
 		pubOut.close();
 		return true;
 	}
-
+	/*
 	public static PublicKey getPubKey() throws IOException, ClassNotFoundException
 	{
 		FileInputStream pubFile = new FileInputStream("public.key");
@@ -238,108 +220,11 @@ public class Encryption
 		privFile.close();
 		return privKey;
 	}
-	
+	*/
 	// public static int getIV() { return iv.hashCode(); }
-	public static byte[] getIV() { return iv; }
-	public static byte[] encryptMSG(String data) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{
-		KeyGenerator generator = KeyGenerator.getInstance("AES");
-		generator.init(256); // The AES key size in number of bits
-		// SecretKey secKey = generator.generateKey();
-		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		aesCipher.init(Cipher.ENCRYPT_MODE, secretKey);
-		byte[] byteCipherText = aesCipher.doFinal(data.getBytes());
-		return byteCipherText;
-		
-	}
+	
 	// private static PrivateKey prKey;
 	
-	public static byte[] encryptRSAKey(PublicKey puKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{
-		
-		
-		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-		cipher.init(Cipher.PUBLIC_KEY, puKey);
-		byte[] encryptedKey = cipher.doFinal(secretKey.getEncoded()/*Seceret Key From Step 1*/);
-		return encryptedKey;
-	}
-	
-	public static byte[] decryptKey(byte[] encryptedKey, PrivateKey prKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{
-		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-		cipher.init(Cipher.PRIVATE_KEY, prKey);
-		
-		// byte[] decryptedKey = cipher.doFinal(encryptedKey);
-		byte[] decryptedKey = cipher.doFinal(prKey.getEncoded());
-		return decryptedKey;
-	}
-	
-	public static String decryptMSG(byte[] encryptedData) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
-	{
-		//Convert bytes to AES SecretKey
-		// SecretKey originalKey = new SecretKeySpec(decryptedKey , 0, decryptedKey .length, "AES");
-		Cipher aesCipher = Cipher.getInstance("AES");
-		aesCipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
-		byte[] bytePlainText = aesCipher.doFinal(encryptedData);
-		String plainText = new String(bytePlainText);
-		return plainText;
-	}
-	
-	public static String encryptWKey(String data) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException
-	{
-		 	byte[] initV = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	        iv = initV; 
-	        Random ran = new SecureRandom();
-	        byte [] Bsalt = new byte[32];
-	        ran.nextBytes(Bsalt);
-	        // String str = new String(salt,"utf-8");
-	        String Esalt = Base64.getEncoder().encodeToString(Bsalt);
-	        
-	        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-	        KeySpec spec = new PBEKeySpec((secretKey).toString().toCharArray(), Esalt.getBytes(), 65536, 256);
-	        SecretKey tmp = factory.generateSecret(spec);
-	        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
-	         
-	        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-	        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
-	        return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes("UTF-8")));
-	}
-	
-	public static byte[] getEncryptedPassword(String password, byte[] salt,
-	        int iterations, int derivedKeyLength)
-	        throws NoSuchAlgorithmException, InvalidKeySpecException {
-
-	    KeySpec mKeySpec = new PBEKeySpec(password.toCharArray(), salt,
-	            iterations, derivedKeyLength);
-
-	    SecretKeyFactory mSecretKeyFactory = SecretKeyFactory
-	            .getInstance("PBKDF2WithHmacSHA256");
-
-	    return mSecretKeyFactory.generateSecret(mKeySpec).getEncoded();
-
-	}
-	
-	public static byte[] generateSalt() {
-	    SecureRandom random = new SecureRandom();
-	    byte saltBytes[] = new byte[16];
-	    random.nextBytes(saltBytes);
-	    return saltBytes;
-	}
-	
-	public static String decryptWKey(String data) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
-	{
-		byte[] encryptedCombinedBytes = Base64.getDecoder().decode(data);
-	    byte[] mEncryptedPassword = getEncryptedPassword(secretKey.toString(), Encryption.generateSalt(),16384, 128);
-	    byte[] ivbytes = Arrays.copyOfRange(encryptedCombinedBytes,0,16);
-	    SecretKeySpec mSecretKeySpec = new SecretKeySpec(mEncryptedPassword, "AES");
-	    Cipher mCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-	    mCipher.init(Cipher.DECRYPT_MODE, mSecretKeySpec, new IvParameterSpec(ivbytes));    
-	    byte[] encryptedTextBytes = Arrays.copyOfRange(encryptedCombinedBytes, 16, encryptedCombinedBytes.length);
-	    System.out.println(encryptedTextBytes.length);
-	    byte[] decryptedTextBytes = mCipher.doFinal(encryptedTextBytes);
-	    return Base64.getEncoder().encodeToString(decryptedTextBytes);
-
-	}
 	/*
 	public static byte[] generateKey() 
 	{
@@ -356,9 +241,15 @@ public class Encryption
 	
 	
 	
-	
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException, ClassNotFoundException, InvalidKeySpecException, InvalidAlgorithmParameterException
 	{
+		//final String data = "SELECT * FROM USERS WHERE acct_number like '' AND password LIKE ''";
+		//String encrypted = modernEncrypt(data);
+		//String decrypted = modernDecrypt(data);
+		
+		//System.out.println("Original data " + data + "\nEncrypted Data " + encrypted + "\nDecrypted Data " + decrypted);
+		
+		
 		/*
     	final String secretKey = "ssshhhhhhhhhhh!!!!";
 
