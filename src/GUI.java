@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 import javax.swing.JFrame;
 
@@ -211,36 +212,19 @@ public class GUI {
 		//HttpURLConnectionATM http = new HttpURLConnectionATM();
 		
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
-		Encryption.setKey("myencryptionkey");
+		// byte[] key = (Encryption.genKey()).toString().getBytes("UTF-8"); 
+		byte[] account_num = ByteBuffer.allocate(4).putInt(accountNumber).array();
 		try {
-			
-			
-			/*
-			Encryption.setKey("Thisismytemporarykey");
-			String request = (Encryption.transport("accountNum=" + accountNumber + "&password=" + pswd + "&IV=" 
-					+ Encryption.getIV() + "&secretKey=" + Encryption.getSK())).toString();
-			*/
-			/*
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) + 
-					"&password=" + Encryption.encrypt(pswd) +
-					"&secretKey=" + Encryption.getSK() +
-					"&iv=" + Encryption.getIV()
-					);
-			*/
-			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"secretKey=" +  Encryption.getSK() 										+
-					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) 	+
-					"&AccountIV=" + Encryption.getIV() 										+ 
-					"&password=" + Encryption.encrypt(pswd) 								+
-					"&PasswordIV=" + Encryption.getIV()
+					"account_num=" 	+ 	Encryption.encrypt(account_num, Encryption.genKey(), Encryption.genIV()) +
+					"password=" 	+ 	Encryption.encrypt(pswd.getBytes("UTF-8"), Encryption.getKey(), Encryption.getIV()) +
+					"key=" 			+ 	Encryption.getKey()
 					);
 			
-			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" + 
-					"secretKey=" +  Encryption.getSK() +
-					"&iv=" + Encryption.getIV()  +
-					"&account_num=" + Encryption.encrypt(Integer.toString(accountNumber)) +
-					"&password=" + Encryption.encrypt(pswd)
+			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" +
+					"account_num=" 	+ 	Encryption.encrypt(account_num, Encryption.genKey(), Encryption.genIV()) +
+					"password=" 	+ 	Encryption.encrypt(pswd.getBytes("UTF-8"), Encryption.getKey(), Encryption.getIV()) +
+					"key=" 			+ 	Encryption.getKey()
 					);
 			
 			System.out.println(http.response);
