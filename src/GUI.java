@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JFrame;
 
@@ -13,6 +14,9 @@ import java.awt.GridBagLayout;
 import java.awt.CardLayout;
 
 import javax.swing.JPanel;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -132,7 +136,11 @@ public class GUI {
 			
 			if (result!=null && !result.equals("[]") && !result.equals("") && result.startsWith("{"))
 			{
-				String unencryptedResult = Encryption.decrypt(result);
+				SecretKey key;
+				byte[] IV;
+				
+				
+				String unencryptedResult = Encryption.decrypt(result.getBytes(), key, IV);
 				JSONObject obj = new JSONObject(unencryptedResult);
 				//BankAccount b = new BankAccount(obj.getDouble("balance"), obj.getString("f_name"), obj.getString("m_name"), obj.getString("l_name"), obj.getInt("acct_number")); 
 				// curr = b;
@@ -167,28 +175,15 @@ public class GUI {
 				"&password=" + pswd);
 		 */
 		try {
-			
 			/*
-			http.sendPost(HttpURLConnectionATM.URL+"php/getUserInfo.php?", 
-					//("accountNum=" + acctNumber +
-							//"&password=" + pswd)
-					request);
+			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
+					"account_num=" 	+ 	Encryption.encrypt(account_num, key, IV) +
+					"password=" 	+ 	Encryption.encrypt(pswd.getBytes("UTF-8"), key, IV) +
+					"key=" 			+	key +
+					"IV="			+	IV
+					);
 			*/
-			/*
-			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"account_num=" + Encryption.encrypt(Integer.toString(acctNumber)) + 
-					"&password=" + Encryption.encrypt(pswd) +
-					"&secretKey=" + Encryption.getSK() +
-					"&iv=" + Encryption.getIV()
-					);
-					*/
-			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"secretKey=" +  Encryption.getSK()+
-					// "&iv=" + Encryption.getIV()  +
-					"&account_num=" + Encryption.encrypt(Integer.toString(acctNumber)) +
-					"&password=" + Encryption.encrypt(pswd)
-					);
-			//System.out.println(http.response.toString());
+			System.out.println(http.response.toString());
 			if (http.response != null)
 			{
 				//System.out.println(http.response.toString());
@@ -206,27 +201,38 @@ public class GUI {
 	}
 
 
-	void login(String pswd, int accountNumber)
+	void login(String pswd, int accountNumber) throws NoSuchAlgorithmException
 	{
 		//String url = "https://josephmdiza.000webhostapp.com/";
 		//HttpURLConnectionATM http = new HttpURLConnectionATM();
 		
 		HttpURLConnectionATM http = new HttpURLConnectionATM();
 		// byte[] key = (Encryption.genKey()).toString().getBytes("UTF-8"); 
-		byte[] account_num = ByteBuffer.allocate(4).putInt(accountNumber).array();
+		Integer acctNum = Integer.valueOf(accountNumber);
+		byte[] account_num = Integer.toString(acctNum).getBytes();
+		// byte[] account_num = ByteBuffer.allocate().putInt(accountNumber).array();
+		SecretKey key = Encryption.genKey();
+		byte[] IV = Encryption.genIV();
+		// IvParameterSpec ivSpec = Encryption.getIVSpec();
+		// SecretKeySpec keySpec = Encryption.getKeySpec();
 		try {
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"account_num=" 	+ 	Encryption.encrypt(account_num, Encryption.genKey(), Encryption.genIV()) +
-					"password=" 	+ 	Encryption.encrypt(pswd.getBytes("UTF-8"), Encryption.getKey(), Encryption.getIV()) +
-					"key=" 			+ 	Encryption.getKey()
+					"account_num=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(account_num, key, IV)) +
+					"&password=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(pswd.getBytes(), key, IV)) +
+					"&key=" 		+	Base64.getEncoder().encodeToString(key.getEncoded()) +
+					"&IV="			+	Base64.getEncoder().encodeToString(IV)
 					);
 			
 			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" +
-					"account_num=" 	+ 	Encryption.encrypt(account_num, Encryption.genKey(), Encryption.genIV()) +
-					"password=" 	+ 	Encryption.encrypt(pswd.getBytes("UTF-8"), Encryption.getKey(), Encryption.getIV()) +
-					"key=" 			+ 	Encryption.getKey()
+					"account_num=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(account_num, key, IV)) +
+					"&password=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(pswd.getBytes(), key, IV)) +
+					"&key=" 		+	Base64.getEncoder().encodeToString(key.getEncoded()) +
+					"&IV="			+	Base64.getEncoder().encodeToString(IV) +
+					"&Encoding="	+ key.getFormat()
 					);
-			
+			System.out.println(Base64.getEncoder().encodeToString(IV));
+			System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
+			System.out.println(Base64.getEncoder().encodeToString(IV));
 			System.out.println(http.response);
 			// http.sendPost(HttpURLConnectionATM.URL+"php/login.php?request=", request);
 			if (http.response != null)
@@ -705,7 +711,12 @@ public class GUI {
 				//String accountNumberString = ();
 				int acctNumber = (Integer.valueOf(loginJPloginTF.getText()));
 				
-				login(password, acctNumber);
+				try {
+					login(password, acctNumber);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				//if (acctNumber == 0)
 				//System.out.println("You cannot leave the account number field blank. ");

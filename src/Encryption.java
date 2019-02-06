@@ -1,7 +1,5 @@
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Base64;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -20,8 +18,10 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encryption 
 {
 //	private static byte[] data;
-	private static SecretKey key;
-	private static byte[] IV;
+	public static SecretKey key;
+	public static SecretKeySpec keySpec;
+	public static IvParameterSpec ivSpec;
+	public static byte[] IV = new byte[16];
 	
 	public static SecretKey genKey() throws NoSuchAlgorithmException
 	{	 KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -35,10 +35,10 @@ public class Encryption
 	public static byte[] genIV()
 	{
 		// Generating IV.
-        byte[] genIV = new byte[16];
+        // byte[] genIV = new byte[16];
         SecureRandom random = new SecureRandom();
         random.nextBytes(IV);
-        IV = genIV;
+        // IV = genIV;
         return IV;
 	}
 	
@@ -83,8 +83,11 @@ public class Encryption
     }
 	
 	// Getters 
-	public static SecretKey getKey() { return key; }
-	public static byte[] getIV() { return IV; }
+	public static SecretKey getKey() 			{ return key; }
+	public static byte[] getIV() 				{ return IV; }
+	public static IvParameterSpec getIVSpec() 	{ return ivSpec; }
+	public static SecretKeySpec getKeySpec() 		{ return keySpec;}
+	
 	public static void main(String[] args) throws Exception
 	{
 		/*
