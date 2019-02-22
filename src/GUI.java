@@ -212,27 +212,30 @@ public class GUI {
 		byte[] account_num = Integer.toString(acctNum).getBytes();
 		// byte[] account_num = ByteBuffer.allocate().putInt(accountNumber).array();
 		SecretKey key = Encryption.genKey();
-		byte[] IV = Encryption.genIV();
+		byte[] iv = Encryption.genIV();
+		// byte[] IV = new String(iv).getBytes("UTF-8");
 		// IvParameterSpec ivSpec = Encryption.getIVSpec();
 		// SecretKeySpec keySpec = Encryption.getKeySpec();
 		try {
+			
 			http.sendPost(HttpURLConnectionATM.URL+"php/login.php?", 
-					"account_num=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(account_num, key, IV)) +
-					"&password=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(pswd.getBytes(), key, IV)) +
+					"account_num=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(account_num, key, iv)) +
+					"&password=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(pswd.getBytes(), key, iv)) +
 					"&key=" 		+	Base64.getEncoder().encodeToString(key.getEncoded()) +
-					"&IV="			+	Base64.getEncoder().encodeToString(IV)
+					"&IV="			+	Base64.getEncoder().encodeToString(iv)
 					);
 			
 			System.out.println(HttpURLConnectionATM.URL+"php/login.php?" +
-					"account_num=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(account_num, key, IV)) +
-					"&password=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(pswd.getBytes(), key, IV)) +
+					"account_num=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(account_num, key, iv)) +
+					"&password=" 	+ 	Base64.getEncoder().encodeToString(Encryption.encrypt(pswd.getBytes(), key, iv)) +
 					"&key=" 		+	Base64.getEncoder().encodeToString(key.getEncoded()) +
-					"&IV="			+	Base64.getEncoder().encodeToString(IV) +
+					"&IV="			+	Base64.getEncoder().encodeToString(iv) +
 					"&Encoding="	+ key.getFormat()
 					);
-			System.out.println(Base64.getEncoder().encodeToString(IV));
-			System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
-			System.out.println(Base64.getEncoder().encodeToString(IV));
+			// http.sendPost(HttpURLConnectionATM.URL+"php/testEncrypt.php?", "");
+			// System.out.println(Base64.getEncoder().encodeToString(IV));
+//			System.out.println(Base64.getEncoder().encodeToString(key.getEncoded()));
+//			System.out.println(Base64.getEncoder().encodeToString(IV));
 			System.out.println(http.response);
 			// http.sendPost(HttpURLConnectionATM.URL+"php/login.php?request=", request);
 			if (http.response != null)

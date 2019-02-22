@@ -39,6 +39,7 @@ public class Encryption
         SecureRandom random = new SecureRandom();
         random.nextBytes(IV);
         // IV = genIV;
+        // IV = genIV;
         return IV;
 	}
 	
