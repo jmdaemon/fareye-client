@@ -8,4 +8,7 @@
  */
 
 rootProject.name = 'BankApp'
-include('app') 
+
+// Look for build.gradle in following dirs
+include('src')  
+include('lib') 
