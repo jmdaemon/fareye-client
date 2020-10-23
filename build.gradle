@@ -1,0 +1,43 @@
+plugins {
+	id 'java' 
+        id 'java-library'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+        testImplementation 'junit:junit:4.13'
+	testImplementation(platform('org.junit:junit-bom:5.7.0'))
+	testImplementation('org.junit.jupiter:junit-jupiter')
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+}
+
+test {
+	useJUnitPlatform()
+        maxHeapSize = '1G'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(14)
+    }
+}
+
+sourceSets {
+    main {
+         java {
+            //srcDirs = ['src']
+            srcDirs = ['src/main/java/encryption'] // Test encryption directory only
+         }
+    }
+
+    test {
+        java {
+            srcDirs = ['src/test/java/encryption']
+        }
+    }
+}
