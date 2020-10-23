@@ -1,0 +1,23 @@
+= Formatting Standards
+
+== Unit Tests
+Unit test files are named <class>Tests.java and unit tests are named <method>_Should<expected>_When<condition>
+
+Ex: 
+```
+[TestFixture]
+public class BankAccountTests
+{
+  [Test]
+  public void Should_Increase_Balance_When_Deposit_Is_Made()
+  {
+     var bankAccount = new BankAccount();
+     bankAccount.Deposit(100);
+     Assert.That(bankAccount.Balance, Is.EqualTo(100));
+  }
+}
+```
+
+```
+Deposit_ShouldIncreaseBalance_WhenGivenPositiveValue()
+```
