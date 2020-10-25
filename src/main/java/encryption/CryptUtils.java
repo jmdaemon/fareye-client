@@ -1,4 +1,4 @@
-package crypt;
+package crypt.utils;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
