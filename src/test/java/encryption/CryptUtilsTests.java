@@ -1,14 +1,15 @@
 package crypt.test;
-import crypt.*;
+import crypt.utils.*;
 
 //import static org.junit.jupiter.api.Assertions.assertEquals; 
+import static org.junit.jupiter.api.Assertions.*; 
 import static org.junit.jupiter.api.Assertions.*; 
 
 import org.junit.jupiter.api.Test;
 
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
+//import org.junit.runner.JUnitCore;
+//import org.junit.runner.Result;
+//import org.junit.runner.notification.Failure;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -32,14 +33,14 @@ private static final String ENCODING="UTF-8";
   @Test
   void genRandomNonce_ShouldReturnRN_WhenCalled() {
     int bytes=16;
-    byte[] nonce = crypt.CryptUtils.getRandomNonce(bytes);
+    byte[] nonce = crypt.utils.CryptUtils.getRandomNonce(bytes);
     assertTrue((nonce != null), "Random nonce should not be null");
     }
 
   @Test
   void genKey_ShouldReturnAESKey_WhenCalled() throws NoSuchAlgorithmException{
     int size = 256;
-    SecretKey key = crypt.CryptUtils.getAESKey(size);
+    SecretKey key = crypt.utils.CryptUtils.getAESKey(size);
     assertTrue((key != null), "AES Key should not be null");
 
   }
@@ -55,7 +56,7 @@ private static final String ENCODING="UTF-8";
       System.exit(1);
     }
 
-    SecretKey key = crypt.CryptUtils.getAESKeyFromPassword(password, salt);
+    SecretKey key = crypt.utils.CryptUtils.getAESKeyFromPassword(password, salt);
     assertTrue(( key != null), "AES Key should not be null");
   }
 
