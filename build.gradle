@@ -1,6 +1,7 @@
 plugins {
 	id 'java' 
         id 'java-library'
+        id "com.scuilion.syntastic" version "0.3.8"
 }
 
 repositories {
@@ -8,11 +9,11 @@ repositories {
 }
 
 dependencies {
-        testImplementation 'junit:junit:4.13'
 	testImplementation(platform('org.junit:junit-bom:5.7.0'))
-	testImplementation('org.junit.jupiter:junit-jupiter')
+	//testImplementation('org.junit.jupiter:junit-jupiter')
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.0")
 
 }
 
@@ -33,6 +34,7 @@ sourceSets {
             //srcDirs = ['src']
             srcDirs = ['src/main/java/encryption'] // Test encryption directory only
          }
+
     }
 
     test {
