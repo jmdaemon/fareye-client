@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class CryptAES { // AES GCM
+public class CryptAES { 
   private static final String ENCRYPT_ALGO = "AES/GCM/NoPadding";
   private static final int TAG_LENGTH_BIT = 128;
   private static final int IV_LENGTH_BYTE = 12;
@@ -50,6 +50,48 @@ public class CryptAES { // AES GCM
       String plainText = decrypt(cipherText, secret, iv);
       return plainText;
 }
+
+    public static String encryptWithSalt(byte[] pText, String password) throws Exception {
+        byte[] salt = crypt.utils.CryptoUtils.getRandomNonce(SALT_LENGTH_BYTE);
+        byte[] iv = crypt.utils.CryptoUtils.getRandomNonce(IV_LENGTH_BYTE);
+
+        SecretKey aesKeyFromPassword = crypt.utils.CryptoUtils.getAESKeyFromPassword(password.toCharArray(), salt);
+        Cipher cipher = Cipher.getInstance(ENCRYPT_ALGO);
+
+        cipher.init(Cipher.ENCRYPT_MODE, aesKeyFromPassword, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+
+        byte[] cipherText = cipher.doFinal(pText);
+        byte[] cipherTextWithIvSalt = ByteBuffer.allocate(iv.length + salt.length + cipherText.length)
+                .put(iv) // prefix IV and Salt to cipher text
+                .put(salt)
+                .put(cipherText)
+                .array();
+        return Base64.getEncoder().encodeToString(cipherTextWithIvSalt);
+    }
+
+    private static String decrypt(String cText, String password) throws Exception {
+        byte[] decode = Base64.getDecoder().decode(cText.getBytes(UTF_8));
+        ByteBuffer bb = ByteBuffer.wrap(decode);
+
+        byte[] iv = new byte[IV_LENGTH_BYTE];
+        bb.get(iv);
+
+        byte[] salt = new byte[SALT_LENGTH_BYTE];
+        bb.get(salt);
+
+        byte[] cipherText = new byte[bb.remaining()];
+        bb.get(cipherText);
+
+        SecretKey aesKeyFromPassword = CryptoUtils.getAESKeyFromPassword(password.toCharArray(), salt);
+        // TODO: Obtain SecretKey from Java Keystore
+
+        Cipher cipher = Cipher.getInstance(ENCRYPT_ALGO);
+        cipher.init(Cipher.DECRYPT_MODE, aesKeyFromPassword, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+        byte[] plainText = cipher.doFinal(cipherText);
+
+        return new String(plainText, UTF_8);
+
+    }
 
 public static void main(String[] args) { 
 
