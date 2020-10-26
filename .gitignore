@@ -16,6 +16,9 @@ bin/ # other generated files
 gen/
 build/
 
+# Ignore all Asciidoc output files
+*.html
+
 # Eclipse
 /.classpath
 /.settings/
