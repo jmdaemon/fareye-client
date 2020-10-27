@@ -4,11 +4,12 @@
 Unit test files are named <class>Tests.java and unit tests are named <method>_Should<expected>_When<condition>
 
 Ex: 
-```
-[TestFixture]
+.BankAccountTests.java
+[source,java]
+----
 public class BankAccountTests
 {
-  [Test]
+  @Test
   public void Should_Increase_Balance_When_Deposit_Is_Made()
   {
      var bankAccount = new BankAccount();
@@ -16,8 +17,17 @@ public class BankAccountTests
      Assert.That(bankAccount.Balance, Is.EqualTo(100));
   }
 }
-```
+----
 
-```
-Deposit_ShouldIncreaseBalance_WhenGivenPositiveValue()
-```
+Sources: 
+https://stackoverflow.com/questions/155436/unit-test-naming-best-practices[Naming Convention for Unit Tests]
+https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html[Unit Tests Blogpost]
+
+== Git Workflow
+Branches:
+- master
+- develop
+- release-* 
+- feature-*
+- hotfix-*
+
