@@ -34,6 +34,16 @@ javafx {
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' ]
 }
 
+//mainClassName = 'ui.UI'
+jar {
+    manifest {
+        attributes 'Main-Class': 'ui.Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 sourceSets {
     main {
          java {
