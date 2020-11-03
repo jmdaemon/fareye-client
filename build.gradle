@@ -2,6 +2,7 @@ plugins {
 	id 'java' 
         id 'java-library'
         id "com.scuilion.syntastic" version "0.3.8"
+        id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 repositories {
@@ -28,18 +29,25 @@ java {
     }
 }
 
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' ]
+}
+
 sourceSets {
     main {
          java {
             //srcDirs = ['src']
-            srcDirs = ['src/main/java/encryption'] // Test encryption directory only
+            //srcDirs = ['src/main/java/encryption'] // Test encryption directory only
+            srcDirs = ['src/main/java/interface/']
          }
 
     }
 
     test {
         java {
-            srcDirs = ['src/test/java/encryption']
+            //srcDirs = ['src/test/java/encryption']
+            srcDirs = ['src/test/java/interface']
         }
     }
 }
