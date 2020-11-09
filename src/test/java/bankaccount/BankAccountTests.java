@@ -4,6 +4,7 @@ import bankaccount.BankAccount;
 import static org.junit.jupiter.api.Assertions.*; 
 
 import org.junit.jupiter.api.Test;
+import java.lang.Double.*;
 
 
 public class BankAccountTests {
@@ -27,17 +28,40 @@ public class BankAccountTests {
   }
 
   @Test
-  public void Deposit_NegativeAmount_ExceptionThrown() {
+  public void Deposit_NegativeAmount_ReturnsFalse() {
+    boolean res = bankAccount.deposit(-1000);
+    String log = bankAccount.getLog();
+    assertEquals(res, false, "Cannot deposit a negative amount"); 
 
+    // TODO: Cut Timestamp at first tab char
+    // Add Log validation
   }
 
   @Test
   public void Deposit_AmountOverflow_ExceptionThrown() {
+    boolean res = bankAccount.deposit(Double.MAX_VALUE);
+    // TODO: Finish buffer overflow test
+    // Need to check if amount is greater than MAX_VALUE?
+    // Should this throw an Exception?
+    // Or should we use BigDouble
+
+
+
+
+    double bal = bankAccount.getBalance();
+    String log = bankAccount.getLog();
 
   }
 
   @Test
-  public void Deposit_1000_True() {
+  public void Deposit_1000_ReturnsTrue() {
+    boolean res = bankAccount.deposit(1000);
+    String log = bankAccount.getLog();
+
+    // TODO: Strip log function for assert statement.
+
+    assertEquals(res, true, "Deposit of $1000 is successful");
+    //assertEquals(log, "");
 
   }
 
