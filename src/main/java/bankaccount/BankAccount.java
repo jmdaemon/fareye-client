@@ -9,7 +9,6 @@ public class BankAccount {
 	private	int acctNum;
 	private	double balance;
 	private	String fName;
-	private	String mName;
 	private	String lName;
 	private	String pswd;
 	private	String log; 
