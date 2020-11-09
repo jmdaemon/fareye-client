@@ -4,6 +4,7 @@ import bankaccount.BankAccount;
 import static org.junit.jupiter.api.Assertions.*; 
 
 import org.junit.jupiter.api.Test;
+import java.util.StringTokenizer;
 import java.lang.Double.*;
 
 
@@ -11,6 +12,12 @@ public class BankAccountTests {
 
   private final BankAccount bankAccount = new BankAccount();
 
+  private String parseLog(String log, int index) {
+    StringTokenizer st = new StringTokenizer(log, "\\t");
+    String parsedLog = st.split("\\t");
+    String logRes = parseLog[index];
+    return logRes;
+  }
   
   @Test
   void BankAccount_IfInitialized_ReturnsBankAccount() {
@@ -32,9 +39,8 @@ public class BankAccountTests {
     boolean res = bankAccount.deposit(-1000);
     String log = bankAccount.getLog();
     assertEquals(res, false, "Cannot deposit a negative amount"); 
-
-    // TODO: Cut Timestamp at first tab char
-    // Add Log validation
+    String logRes = parseLog(log, 1); // Cut timeStamp from log
+    assertEquals(logRes, "Deposit Unsuccessful", "Account log has successfully recorded the failed deposit");
   }
 
   @Test
@@ -45,9 +51,6 @@ public class BankAccountTests {
     // Should this throw an Exception?
     // Or should we use BigDouble
 
-
-
-
     double bal = bankAccount.getBalance();
     String log = bankAccount.getLog();
 
@@ -57,12 +60,10 @@ public class BankAccountTests {
   public void Deposit_1000_ReturnsTrue() {
     boolean res = bankAccount.deposit(1000);
     String log = bankAccount.getLog();
-
-    // TODO: Strip log function for assert statement.
+    String logRes = parseLog(log, 1);
 
     assertEquals(res, true, "Deposit of $1000 is successful");
-    //assertEquals(log, "");
-
+    assertEquals(log, "Deposit Successful", "Account Log has successfuly recorded the deposit");
   }
 
   @Test
