@@ -1,21 +1,19 @@
-package test.bankaccount
+package test.bankaccount;
 
-import bankaccount.BankAccount;
+import app.bankAccount.*;
 import static org.junit.jupiter.api.Assertions.*; 
 
 import org.junit.jupiter.api.Test;
-import java.util.StringTokenizer;
 import java.lang.Double.*;
 
 
 public class BankAccountTests {
 
-  private final BankAccount bankAccount = new BankAccount();
+  private final BankAccount bankAccount = new BankAccount("Paul", "Allen");
 
   private String parseLog(String log, int index) {
-    StringTokenizer st = new StringTokenizer(log, "\\t");
-    String parsedLog = st.split("\\t");
-    String logRes = parseLog[index];
+    String[] parsedLog = log.split("\\t");
+    String logRes = parsedLog[index];
     return logRes;
   }
   
@@ -28,7 +26,7 @@ public class BankAccountTests {
     String fName = newAcct.getFName();
     String lName = newAcct.getLName();
 
-    assertNotEquals(acctNum, null, "Account Number is initialized");
+    assertNotNull(acctNum, "Account Number is initialized");
     assertEquals(balance, 0, "User has no money in account");
     assertNotEquals(fName, null, "User's first name is: " + fName);
     assertNotEquals(lName, null, "User's last name is: " + lName);
