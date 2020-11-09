@@ -1,4 +1,4 @@
-package bankaccount;
+package app.bankAccount;
 
 import java.util.Random;
 
@@ -13,7 +13,7 @@ public class BankAccount {
 	private	String pswd;
 	private	String log; 
 	
-	BankAccount() {
+	public BankAccount() {
     this.acctNum = genAcctNum(10000); // TODO: Shove all constants into Constants.java and import
     this.balance = 0.0;
     this.fName = null;
@@ -22,7 +22,7 @@ public class BankAccount {
     this.log = "";
   }
 
-  BankAccount(String firstName, String lastName) {
+  public BankAccount(String firstName, String lastName) {
     this.acctNum = genAcctNum(10000);
     this.balance = 0.0;
     this.fName = firstName;
@@ -31,7 +31,7 @@ public class BankAccount {
     this.log = "";
   }
 
-	boolean deposit(double amount) {
+	public boolean deposit(double amount) {
     String timeStamp = genTimeStamp();
 		if (amount >= 0) {
       balance += amount;
@@ -44,7 +44,7 @@ public class BankAccount {
 			return false;
 	}
 
-  boolean withdraw(double amount) {
+  public boolean withdraw(double amount) {
     String timeStamp = genTimeStamp();
 		if (amount < balance) {
       balance -= amount;
@@ -57,7 +57,7 @@ public class BankAccount {
 			return false;
 	}
 
-  boolean transferTo (double amount, BankAccount target){
+  public boolean transferTo (double amount, BankAccount target){
     String timeStamp = genTimeStamp();
     if (this.getBalance() >= amount) {
       String callAcctMsg = ("[$" + amount + " to account " + target.getAcctNum() + "]"); 
@@ -72,14 +72,14 @@ public class BankAccount {
       return false;
   }
 
-  boolean checkPswd(String pass) {
+  public boolean checkPswd(String pass) {
     if (pass.equals(this.pswd)) {
       return true;
     } else
       return false;
   }
 
-  boolean resetPswd(String currPass, String newPass) {
+  public boolean resetPswd(String currPass, String newPass) {
     String timeStamp = genTimeStamp();
     if (currPass.equals(this.pswd)) {
       this.pswd = newPass;
@@ -93,7 +93,7 @@ public class BankAccount {
   void setFName(String fName) { this.fName = fName; }
   void setLName(String lName) { this.lName = lName; }
 
-  static int genAcctNum(int upperBound) {
+  public static int genAcctNum(int upperBound) {
     int lowerBound = 1;
     Random randGen = new Random();
 		int acctNum = randGen.nextInt(upperBound-lowerBound) + lowerBound;
@@ -121,13 +121,13 @@ public class BankAccount {
     return (formatter.format(date));
   }
 
-  double getBalance() { return this.balance; }
-  int getAcctNum() { return this.acctNum; }
-  String getFName() { return this.fName; }
-  String getLName() { return this.lName; }
-  String getLog() { return this.log; }
+    public double getBalance() { return this.balance; }
+    public int getAcctNum() { return this.acctNum; }
+    public String getFName() { return this.fName; }
+    public String getLName() { return this.lName; }
+    public String getLog() { return this.log; }
 
-  void display() { 
+  public void display() { 
     System.out.println("Account #: " + this.getAcctNum());
     System.out.println("Balance: " + this.getBalance());
     System.out.println("First Name:" + this.getFName());
