@@ -2,7 +2,6 @@ package test.bankaccount
 
 import bankaccount.BankAccount;
 import static org.junit.jupiter.api.Assertions.*; 
-import static org.junit.jupiter.api.Assertions.*; 
 
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +10,20 @@ public class BankAccountTests {
 
   private final BankAccount bankAccount = new BankAccount();
 
+  
   @Test
-  public void BankAccount_EmptyStringAsFirstName_ExceptionThrown() {
+  void BankAccount_IfInitialized_ReturnsBankAccount() {
+    BankAccount newAcct = new BankAccount();
+    
+    int acctNum = newAcct.getAcctNum();
+    double balance = newAcct.getBalance();
+    String fName = newAcct.getFName();
+    String lName = newAcct.getLName();
 
-  }
-
-  @Test
-  public void BankAccount_EmptyStringAsLastName_ExceptionThrown() {
-
+    assertNotEquals(acctNum, null, "Account Number is initialized");
+    assertEquals(balance, 0, "User has no money in account");
+    assertNotEquals(fName, null, "User's first name is: " + fName);
+    assertNotEquals(lName, null, "User's last name is: " + lName);
   }
 
   @Test
