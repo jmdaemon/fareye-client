@@ -3,6 +3,8 @@ package app.bankAccount;
 import java.util.Random;
 
 import java.text.SimpleDateFormat;  
+import java.lang.StringBuilder;
+import java.lang.StringBuffer;
 import java.util.Date;  
 
 public class BankAccount {
@@ -11,7 +13,7 @@ public class BankAccount {
 	private	String fName;
 	private	String lName;
 	private	String pswd;
-	private	String log; 
+  private StringBuffer log;
 	
 	public BankAccount() {
     this.acctNum = genAcctNum(10000); // TODO: Shove all constants into Constants.java and import
@@ -19,7 +21,9 @@ public class BankAccount {
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(32); // 32 Characters Long 
-    this.log = "";
+    String timeStamp = genTimeStamp();
+    this.log = new StringBuffer();
+    this.log.append (timeStamp + "\tNew Bank Account Created.\t\n");
   }
 
   public BankAccount(String firstName, String lastName) {
@@ -28,19 +32,21 @@ public class BankAccount {
     this.fName = firstName;
     this.lName = lastName;
     this.pswd = genPswd(32); 
-    this.log = "";
+    String timeStamp = genTimeStamp();
+    this.log = new StringBuffer();
+    this.log.append (timeStamp + "\tNew Bank Account Created.\t\n");
   }
 
 	public boolean deposit(double amount) {
     String timeStamp = genTimeStamp();
 		if (amount >= 0) {
       balance += amount;
-      String dAmt = ("[$" + amount + "]");
-      log.concat(timeStamp + "\tDeposit Sucessful\t" + dAmt);
+      String dAmt = ("[$" + amount + "]\n");
+      this.log.append(timeStamp + "\tDeposit Successful\t" + dAmt);
 
 			return true;
 		} else
-      log.concat(timeStamp + "\tDeposit Unsuccessful\t");
+      this.log.append(timeStamp + "\tDeposit Unsuccessful\t\n");
 			return false;
 	}
 
@@ -49,25 +55,25 @@ public class BankAccount {
 		if (amount < balance) {
       balance -= amount;
       String wAmt = ("[$" + amount + "]");
-      log.concat(timeStamp + "\tWithdrawal Successful\t" + wAmt);
+      this.log.append(timeStamp + "\tWithdrawal Successful\t" + wAmt);
 			return true;
 		} else 
       
-      log.concat(timeStamp + "\tWithdrawal Unsuccessful\t");
+      this.log.append(timeStamp + "\tWithdrawal Unsuccessful\t\n");
 			return false;
 	}
 
   public boolean transferTo (double amount, BankAccount target){
     String timeStamp = genTimeStamp();
     if (this.getBalance() >= amount) {
-      String callAcctMsg = ("[$" + amount + " to account " + target.getAcctNum() + "]"); 
-      String targetAcctMsg = ("[$" + amount + " received from account " + this.getAcctNum() + "]");
-      this.log.concat(timeStamp + "\tTransfer " + callAcctMsg);
-      target.log.concat(timeStamp + "\tTransfer " + targetAcctMsg);
+      String callAcctMsg = ("[$" + amount + " to account " + target.getAcctNum() + "]\n"); 
+      String targetAcctMsg = ("[$" + amount + " received from account " + this.getAcctNum() + "]\n");
+      this.log.append(timeStamp + "\tTransfer " + callAcctMsg);
+      target.log.append(timeStamp + "\tTransfer " + targetAcctMsg);
       return true;
     } else { 
-      String failMsg = ("[$" + amount + " to account " + target.getAcctNum()); 
-      log.concat(timeStamp + "\tTransfer Failed\t" + failMsg);
+      String failMsg = ("[$" + amount + " to account " + target.getAcctNum() + "]\n"); 
+      this.log.append(timeStamp + "\tTransfer Failed\t" + failMsg);
     }
       return false;
   }
@@ -83,10 +89,10 @@ public class BankAccount {
     String timeStamp = genTimeStamp();
     if (currPass.equals(this.pswd)) {
       this.pswd = newPass;
-      log.concat(timeStamp + "\tPassword Successfully Changed\t"); 
+      this.log.append(timeStamp + "\tPassword Successfully Changed\t\n"); 
       return true;
     } else
-    log.concat(timeStamp + "\tPassword Reset Failed\t");
+    this.log.append(timeStamp + "\tPassword Reset Failed\t\n");
     return false;
   }
 
@@ -121,11 +127,17 @@ public class BankAccount {
     return (formatter.format(date));
   }
 
+  //private void this.log.append(String event) {
+    ////StringBuilder sb = new StringBuilder(this.log);
+    //this.log.append(event);
+  //}
+
     public double getBalance() { return this.balance; }
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
-    public String getLog() { return this.log; }
+    //public String getLog() { return this.log; }
+    public StringBuffer getLog() { return this.log; }
 
   public void display() { 
     System.out.println("Account #: " + this.getAcctNum());
