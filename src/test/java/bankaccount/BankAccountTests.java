@@ -133,4 +133,10 @@ public class BankAccountTests {
 
   }
 
+  @Test
+  public void checkPswd_IsEmpty_ReturnsFalse() {
+    boolean res = bankAccount.checkPswd("");
+    assertEquals(false, res, "Password cannot be empty");
+  }
+
 }
