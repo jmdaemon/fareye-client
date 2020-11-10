@@ -2,8 +2,12 @@ package test.bankaccount;
 
 import app.bankAccount.*;
 import static org.junit.jupiter.api.Assertions.*; 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 
 import org.junit.jupiter.api.Test;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.Double.*;
 
 
@@ -11,6 +15,8 @@ public class BankAccountTests {
 
   private final BankAccount bankAccount = new BankAccount("Paul", "Allen");
   private final BankAccount targAccount = new BankAccount("Timothy", "Price");
+  private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+  private static final PrintStream originalOut = System.out;
 
   private String parseLog(String log, int index) {
     String[] parsedLog = log.split("\\t+");
@@ -168,6 +174,21 @@ public class BankAccountTests {
   }
 
 
+  @BeforeAll
+  public static void setUpStreams() { System.setOut(new PrintStream(outContent)); }
 
+  @AfterAll
+  public static void restoreStreams() { System.setOut(originalOut); }
 
+  @Test 
+  public void display_WhenCalled_OutputBankAccountInfo() {
+    bankAccount.display();
+    
+    String expectedMessage = ("Account #: " + bankAccount.getAcctNum() + "\n" +
+        "Balance: " + bankAccount.getBalance() + "\n" +
+        "First Name: " + bankAccount.getFName() + "\n" +
+        "Last Name: " + bankAccount.getLName() + "\n" +
+        bankAccount.getLog() + "\n");
+    assertEquals(expectedMessage, outContent.toString());
+  }
 }
