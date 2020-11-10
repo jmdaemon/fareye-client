@@ -12,14 +12,14 @@ public class BankAccountTests {
   private final BankAccount bankAccount = new BankAccount("Paul", "Allen");
 
   private String parseLog(String log, int index) {
-    String[] parsedLog = log.split("\\t");
+    String[] parsedLog = log.split("\\t+");
     String logRes = parsedLog[index];
     return logRes;
   }
   
   @Test
   void BankAccount_IfInitialized_ReturnsBankAccount() {
-    BankAccount newAcct = new BankAccount();
+    BankAccount newAcct = new BankAccount("Patrick", "Bateman");
     
     int acctNum = newAcct.getAcctNum();
     double balance = newAcct.getBalance();
@@ -28,17 +28,17 @@ public class BankAccountTests {
 
     assertNotNull(acctNum, "Account Number is initialized");
     assertEquals(balance, 0, "User has no money in account");
-    assertNotEquals(fName, null, "User's first name is: " + fName);
-    assertNotEquals(lName, null, "User's last name is: " + lName);
+    assertNotNull(fName, "User's first name is: " + fName);
+    assertNotNull(lName, "User's last name is: " + lName);
   }
 
   @Test
   public void Deposit_NegativeAmount_ReturnsFalse() {
     boolean res = bankAccount.deposit(-1000);
-    String log = bankAccount.getLog();
+    String log = bankAccount.getLog().toString();
     assertEquals(res, false, "Cannot deposit a negative amount"); 
-    String logRes = parseLog(log, 1); // Cut timeStamp from log
-    assertEquals(logRes, "Deposit Unsuccessful", "Account log has successfully recorded the failed deposit");
+    String logRes = parseLog(log, 3); // Cut timeStamp from log
+    assertEquals("Deposit Unsuccessful", logRes, "Account Log has recorded the failed deposit");
   }
 
   @Test
@@ -50,18 +50,20 @@ public class BankAccountTests {
     // Or should we use BigDouble
 
     double bal = bankAccount.getBalance();
-    String log = bankAccount.getLog();
+    String log = bankAccount.getLog().toString();
 
   }
 
   @Test
   public void Deposit_1000_ReturnsTrue() {
     boolean res = bankAccount.deposit(1000);
-    String log = bankAccount.getLog();
-    String logRes = parseLog(log, 1);
+    String log = bankAccount.getLog().toString();
+    System.out.println("Log" + log);
+    String logRes = parseLog(log, 3);
 
+    System.out.println("logRes: " + logRes);
     assertEquals(res, true, "Deposit of $1000 is successful");
-    assertEquals(log, "Deposit Successful", "Account Log has successfuly recorded the deposit");
+    assertEquals("Deposit Successful", logRes, "Account Log has successfuly recorded the deposit");
   }
 
   @Test
