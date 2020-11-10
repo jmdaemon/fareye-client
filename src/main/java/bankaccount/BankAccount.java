@@ -153,7 +153,7 @@ public class BankAccount {
   public void display() { 
     System.out.println("Account #: " + this.getAcctNum());
     System.out.println("Balance: " + this.getBalance());
-    System.out.println("First Name:" + this.getFName());
+    System.out.println("First Name: " + this.getFName());
     System.out.println("Last Name: " + this.getLName());
     System.out.println(this.getLog());
   }
