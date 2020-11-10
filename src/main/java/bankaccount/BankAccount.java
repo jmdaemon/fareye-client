@@ -67,16 +67,19 @@ public class BankAccount {
 
   public boolean transferTo (double amount, BankAccount target){
     String timeStamp = genTimeStamp();
-    if (this.getBalance() >= amount) {
+    if (this.getBalance() >= amount && target != null) {
       String callAcctMsg = ("[$" + amount + " to account " + target.getAcctNum() + "]\n"); 
       String targetAcctMsg = ("[$" + amount + " received from account " + this.getAcctNum() + "]\n");
       this.log.append(timeStamp + "\tTransfer " + callAcctMsg);
       target.log.append(timeStamp + "\tTransfer " + targetAcctMsg);
       return true;
-    } else { 
+    } else if (target != null) { 
       String failMsg = ("[$" + amount + " to account " + target.getAcctNum() + "]\n"); 
       this.log.append(timeStamp + "\tTransfer Failed\t" + failMsg);
+    } else {
+      this.log.append(timeStamp + "\tTransfer Failed\t\n");
     }
+
       return false;
   }
 
