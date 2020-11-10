@@ -10,6 +10,7 @@ import java.lang.Double.*;
 public class BankAccountTests {
 
   private final BankAccount bankAccount = new BankAccount("Paul", "Allen");
+  private final BankAccount targAccount = new BankAccount("Timothy", "Price");
 
   private String parseLog(String log, int index) {
     String[] parsedLog = log.split("\\t+");
@@ -88,6 +89,33 @@ public class BankAccountTests {
     String logRes = parseLog(log, 5); // 3 is the deposit msg from earlier
     assertEquals(true, res, "Withdrawal of $1000 is successful");
     assertEquals("Withdrawal Successful", logRes,"Account Log has successfully recorded the withdrawal");
+
+  }
+
+
+  @Test
+  public void transferTo_InvalidAccount_ReturnsFalse() {
+    BankAccount imaginaryAccount = null;
+    bankAccount.deposit(1000);
+    boolean res = bankAccount.transferTo(500, imaginaryAccount);
+    String log = bankAccount.getLog().toString();
+    String logRes = parseLog(log, 5);
+    assertEquals(false, res, "Cannot initiate transaction with nonexistent bank account");
+    assertEquals("Transfer Failed", logRes, "Account Log has successfully recorded the failed transaction");
+  }
+
+  @Test
+  public void transferTo_Acct1000_ReturnsTrue() {
+
+  }
+
+  @Test
+  public void transferTo_AcctNegativeAmount_ReturnsTrue() {
+
+  }
+
+  @Test
+  public void transferTo_AcctAmountOverflow_ReturnsTrue() {
 
   }
 
