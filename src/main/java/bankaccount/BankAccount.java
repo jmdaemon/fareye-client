@@ -54,7 +54,7 @@ public class BankAccount {
 
   public boolean withdraw(double amount) {
     String timeStamp = genTimeStamp();
-		if (amount < balance) {
+		if (amount > 0 && amount < balance) {
       balance -= amount;
       String wAmt = ("[$" + amount + "]");
       this.log.append(timeStamp + "\tWithdrawal Successful\t" + wAmt);
