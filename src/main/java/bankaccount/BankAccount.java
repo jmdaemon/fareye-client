@@ -116,6 +116,13 @@ public class BankAccount {
   }
 
   private String genPswd(int len) {
+
+    if (len < 16) { 
+      len = 16; // 16 < len < 32
+    } else if (len > 32) { 
+      len = 32; 
+    }
+
     final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
     StringBuilder newPswd = new StringBuilder();
@@ -127,6 +134,7 @@ public class BankAccount {
               )
             );
     }
+
     return newPswd.toString();
   }
 
