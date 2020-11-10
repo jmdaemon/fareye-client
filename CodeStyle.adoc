@@ -10,7 +10,7 @@ Ex:
 public class BankAccountTests
 {
   @Test
-  public void Should_Increase_Balance_When_Deposit_Is_Made()
+  public void Deposit_IfAmountGreaterThanZero_ReturnsTrue()
   {
      var bankAccount = new BankAccount();
      bankAccount.Deposit(100);
