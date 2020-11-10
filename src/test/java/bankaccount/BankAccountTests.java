@@ -138,5 +138,36 @@ public class BankAccountTests {
     boolean res = bankAccount.checkPswd("");
     assertEquals(false, res, "Password cannot be empty");
   }
+  
+  @Test
+  public void genAcctNum_UpperBoundIsEqualToLowerBound_ThrowsException() {
+    Exception e = assertThrows(IllegalArgumentException.class, () -> {
+      int acctNum = bankAccount.genAcctNum(1);
+    });
+
+    String expectedMessage = "upperBound cannot be less than or equal to the lowerBound";
+    String actualMessage = e.getMessage();
+    assertTrue(actualMessage.contains(expectedMessage), "IllegalArgumentException is thrown when upperBound == lowerBound");
+  }
+
+  @Test
+  public void genAcctNum_UpperBoundIsLessThanLowerBound_ThrowsException() {
+    Exception e = assertThrows(IllegalArgumentException.class, () -> {
+      int acctNum = bankAccount.genAcctNum(-1);
+    });
+
+    String expectedMessage = "upperBound cannot be less than or equal to the lowerBound";
+    String actualMessage = e.getMessage();
+    assertTrue(actualMessage.contains(expectedMessage), "IllegalArgumentException is thrown when upperBound < 1");
+  }
+
+  @Test
+  public void genAcctNum_IfBoundIsSet_ReturnsAcctNum() {
+    int res =  bankAccount.genAcctNum(10);
+    assertNotNull(res, "Pseudorandom account number is generated");
+  }
+
+
+
 
 }
