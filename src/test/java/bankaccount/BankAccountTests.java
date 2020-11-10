@@ -119,6 +119,12 @@ public class BankAccountTests {
 
   @Test
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {
+    boolean res = bankAccount.transferTo(-500, targAccount);
+    String log = bankAccount.getLog().toString();
+    String logRes = parseLog(log, 3);
+
+    assertEquals(false, res, "Cannot transfer negative amount to BankAccount");
+    assertEquals("Transfer Failed", logRes, "Account Log has successfully recorded the failed transaction");
 
   }
 
