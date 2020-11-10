@@ -107,6 +107,9 @@ public class BankAccount {
 
   public static int genAcctNum(int upperBound) {
     int lowerBound = 1;
+    if (upperBound <= lowerBound) {
+      throw new IllegalArgumentException("upperBound cannot be less than or equal to the lowerBound");
+    }
     Random randGen = new Random();
 		int acctNum = randGen.nextInt(upperBound-lowerBound) + lowerBound;
 		return acctNum;
