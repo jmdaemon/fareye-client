@@ -106,6 +106,14 @@ public class BankAccountTests {
 
   @Test
   public void transferTo_Acct1000_ReturnsTrue() {
+    bankAccount.deposit(1000);
+    boolean res = bankAccount.transferTo(500, targAccount);
+    String log = bankAccount.getLog().toString();
+    String logRes = parseLog(log, 5);
+    String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]\n"); 
+
+    assertEquals(true, res, "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
+    assertEquals(expectedLog, logRes, "Account Log has successfully recorded the transaction");
 
   }
 
