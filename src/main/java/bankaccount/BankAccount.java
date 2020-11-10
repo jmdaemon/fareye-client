@@ -21,6 +21,7 @@ public class BankAccount {
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(32); // 32 Characters Long 
+
     String timeStamp = genTimeStamp();
     this.log = new StringBuffer();
     this.log.append (timeStamp + "\tNew Bank Account Created.\t\n");
@@ -32,6 +33,7 @@ public class BankAccount {
     this.fName = firstName;
     this.lName = lastName;
     this.pswd = genPswd(32); 
+
     String timeStamp = genTimeStamp();
     this.log = new StringBuffer();
     this.log.append (timeStamp + "\tNew Bank Account Created.\t\n");
@@ -127,16 +129,10 @@ public class BankAccount {
     return (formatter.format(date));
   }
 
-  //private void this.log.append(String event) {
-    ////StringBuilder sb = new StringBuilder(this.log);
-    //this.log.append(event);
-  //}
-
     public double getBalance() { return this.balance; }
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
-    //public String getLog() { return this.log; }
     public StringBuffer getLog() { return this.log; }
 
   public void display() { 
