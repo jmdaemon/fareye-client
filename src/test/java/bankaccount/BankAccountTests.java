@@ -84,11 +84,8 @@ public class BankAccountTests {
   public void transferTo_InvalidAccount_ReturnsFalse() {
     BankAccount imaginaryAccount = null;
     bankAccount.deposit(1000);
-    boolean res = bankAccount.transferTo(500, imaginaryAccount);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 5);
-    assertEquals(false, res, "Cannot initiate transaction with nonexistent bank account");
-    assertEquals("Transfer Failed", logRes, "Account Log has successfully recorded the failed transaction");
+    assertEquals(false, bankAccount.transferTo(500, imaginaryAccount), "Cannot initiate transaction with nonexistent bank account");
+    assertEquals("Transfer Failed", parseLog(bankAccount.getLog().toString(), 5), "Account Log has successfully recorded the failed transaction");
   }
 
   @Test
