@@ -30,8 +30,8 @@ public class BankAccountTests {
 
     assertNotNull(newAcct.getAcctNum(), "Account Number is initialized");
     assertEquals(0, newAcct.getBalance(), "User has no money in account");
-    assertNotNull(newAcct.getFName(), "User's first name is: " + newAcct.getFName());
-    assertNotNull(newAcct.getLName(), "User's last name is: " + newAcct.getLName());
+    assertEquals("Patrick", newAcct.getFName(), "User's first name is: " + newAcct.getFName());
+    assertEquals("Bateman", newAcct.getLName(), "User's last name is: " + newAcct.getLName());
   }
 
   @Test
