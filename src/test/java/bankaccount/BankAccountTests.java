@@ -141,10 +141,8 @@ public class BankAccountTests {
 
   @Test
   public void genAcctNum_IfBoundIsSet_ReturnsAcctNum() {
-    int res =  bankAccount.genAcctNum(10);
-    assertNotNull(res, "Pseudorandom account number is generated");
+    assertNotNull(bankAccount.genAcctNum(10), "Pseudorandom account number is generated");
   }
-
 
   @BeforeAll
   public static void setUpStreams() { System.setOut(new PrintStream(outContent)); }
@@ -156,10 +154,11 @@ public class BankAccountTests {
   public void display_WhenCalled_OutputBankAccountInfo() {
     bankAccount.display();
     
-    String expectedMessage = ("Account #: " + bankAccount.getAcctNum() + "\n" +
-        "Balance: " + bankAccount.getBalance() + "\n" +
-        "First Name: " + bankAccount.getFName() + "\n" +
-        "Last Name: " + bankAccount.getLName() + "\n" +
+    String expectedMessage = (
+        "Account #: "   + bankAccount.getAcctNum()   + "\n" +
+        "Balance: "     + bankAccount.getBalance()   + "\n" +
+        "First Name: "  + bankAccount.getFName()     + "\n" +
+        "Last Name: "   + bankAccount.getLName()     + "\n" +
         bankAccount.getLog() + "\n");
     assertEquals(expectedMessage, outContent.toString());
   }
