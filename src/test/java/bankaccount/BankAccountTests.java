@@ -63,17 +63,12 @@ public class BankAccountTests {
 
   @Test
   public void Withdraw_NegativeAmount_ReturnsFalse() {
-    boolean res = bankAccount.withdraw(-1000);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 3);
-    assertEquals(false, res, "Cannot withdraw a negative amount");
-    assertEquals("Withdrawal Unsuccessful", logRes,"Account Log has recorded the failed withdrawal");
-
+    assertEquals(false, bankAccount.withdraw(-1000), "Cannot withdraw a negative amount");
+    assertEquals("Withdrawal Unsuccessful", parseLog(bankAccount.getLog().toString(), 3),"Account Log has recorded the failed withdrawal");
   }
 
   @Test
   public void Withdraw_AmountOverflow_ExceptionThrown() {
-
   }
 
   @Test
