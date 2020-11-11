@@ -42,21 +42,6 @@ public class BankAccountTests {
   }
 
   @Test
-  public void Deposit_AmountOverflow_ExceptionThrown() {
-    boolean res = bankAccount.deposit(Double.MAX_VALUE); // Win the Lottery
-
-    // TODO: Finish buffer overflow test
-    // Need to check if amount is greater than MAX_VALUE?
-    // Should this throw an Exception?
-    // Or should we use BigDouble
-    // Ignore for now
-
-    double bal = bankAccount.getBalance();
-    String log = bankAccount.getLog().toString();
-
-  }
-
-  @Test
   public void Deposit_1000_ReturnsTrue() {
     assertEquals(true, bankAccount.deposit(1000), "Deposit of $1000 is successful");
     assertEquals("Deposit Successful", bankAccount.parseLog(3), "Account Log has successfully recorded the deposit");
@@ -69,17 +54,12 @@ public class BankAccountTests {
   }
 
   @Test
-  public void Withdraw_AmountOverflow_ExceptionThrown() {
-  }
-
-  @Test
   public void Withdraw_1000_True() {
     bankAccount.deposit(1000); // Give our mock a starting balance
     // TODO: Deal with arbitrary index. Make it so that you don't have to pass in arbitrary number indexes
     assertEquals(true, bankAccount.withdraw(1000), "Withdrawal of $1000 is successful"); 
     assertEquals("Withdrawal Successful", bankAccount.parseLog(5),"Account Log has successfully recorded the withdrawal");
   }
-
 
   @Test
   public void transferTo_InvalidAccount_ReturnsFalse() {
@@ -103,11 +83,6 @@ public class BankAccountTests {
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {
     assertEquals(false, bankAccount.transferTo(-500, targAccount), "Cannot transfer negative amount to BankAccount");
     assertEquals("Transfer Failed", bankAccount.parseLog(3), "Account Log has successfully recorded the failed transaction");
-  }
-
-  @Test
-  public void transferTo_AcctAmountOverflow_ReturnsTrue() {
-
   }
 
   @Test
