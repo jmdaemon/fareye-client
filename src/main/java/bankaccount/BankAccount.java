@@ -144,6 +144,12 @@ public class BankAccount {
     return (formatter.format(date));
   }
 
+  public String parseLog(int index) {
+    String[] parsedLog = this.getLog().toString().split("\\t+");
+    String logRes = parsedLog[index];
+    return logRes;
+  }
+
     public double getBalance() { return this.balance; }
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
