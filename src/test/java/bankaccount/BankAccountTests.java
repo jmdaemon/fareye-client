@@ -36,11 +36,8 @@ public class BankAccountTests {
 
   @Test
   public void Deposit_NegativeAmount_ReturnsFalse() {
-    boolean res = bankAccount.deposit(-1000);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 3); // Cut timeStamp from log
-    assertEquals(false, res, "Cannot deposit a negative amount"); 
-    assertEquals("Deposit Unsuccessful", logRes, "Account Log has recorded the failed deposit");
+    assertEquals(false, bankAccount.deposit(-1000), "Cannot deposit a negative amount"); 
+    assertEquals("Deposit Unsuccessful", parseLog(bankAccount.getLog().toString(), 3), "Account Log has recorded the failed deposit");
   }
 
   @Test
