@@ -23,6 +23,12 @@ public class BankAccountTests {
     String logRes = parsedLog[index];
     return logRes;
   }
+
+  private String getLogMsg(int index) {
+    String[] parsedLog = bankAccount.getLog().toString().split("\\t+");
+    String logRes = parsedLog[index];
+    return logRes;
+  }
   
   @Test
   void BankAccount_IfInitialized_ReturnsBankAccount() {
@@ -91,13 +97,10 @@ public class BankAccountTests {
   @Test
   public void transferTo_Acct1000_ReturnsTrue() {
     bankAccount.deposit(1000);
-    boolean res = bankAccount.transferTo(500, targAccount);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 5);
     String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]\n"); 
 
-    assertEquals(true, res, "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
-    assertEquals(expectedLog, logRes, "Account Log has successfully recorded the transaction");
+    assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
+    assertEquals(expectedLog, getLogMsg(5), "Account Log has successfully recorded the transaction");
 
   }
 
