@@ -91,28 +91,23 @@ public class BankAccountTests {
     BankAccount imaginaryAccount = null;
     bankAccount.deposit(1000);
     assertEquals(false, bankAccount.transferTo(500, imaginaryAccount), "Cannot initiate transaction with nonexistent bank account");
-    assertEquals("Transfer Failed", parseLog(bankAccount.getLog().toString(), 5), "Account Log has successfully recorded the failed transaction");
+    assertEquals("Transfer Failed", bankAccount.parseLog(5), "Account Log has successfully recorded the failed transaction");
+    // *Note* that the target account isn't notified in failed transactions.
+    // TODO: Change this behavior?
   }
 
   @Test
   public void transferTo_Acct1000_ReturnsTrue() {
     bankAccount.deposit(1000);
     String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]\n"); 
-
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
     assertEquals(expectedLog, getLogMsg(5), "Account Log has successfully recorded the transaction");
-
   }
 
   @Test
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {
-    boolean res = bankAccount.transferTo(-500, targAccount);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 3);
-
-    assertEquals(false, res, "Cannot transfer negative amount to BankAccount");
-    assertEquals("Transfer Failed", logRes, "Account Log has successfully recorded the failed transaction");
-
+    assertEquals(false, bankAccount.transferTo(-500, targAccount), "Cannot transfer negative amount to BankAccount");
+    assertEquals("Transfer Failed", bankAccount.parseLog(3), "Account Log has successfully recorded the failed transaction");
   }
 
   @Test
