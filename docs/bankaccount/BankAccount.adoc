@@ -1,0 +1,47 @@
+= BankAccount Model
+
+== Requirements
+
+A BankAccount must have the following data:
+- Account number / ID
+- Balance 
+- First and Last names of the User's Account
+- A secure password
+- A running log of all the transaction events collected thus far.
+
+With a BankAccount we should be able to 
+- Deposit (Add) money into our account.
+- Withdraw (Subtract) money from our account.
+- Transfer money to a new account.
+- Reset our account's password with a new password.
+- Be able to see all of this information on screen.
+- Obtain a list of all the transactions and events of our Account. 
+
+
+*To Be Implemented*
+- Be able to search through entire transaction history by providing keywords to grep for
+- Be able to withdraw and deposit money to/from other BankAccounts 
+
+*To Be Considered*
+- Calculating Interest for current money in BankAccount.
+- Cancelling transactions for BankAccount. This requires the BankAccount to record state/implement stateful behavior.
+
+
+== Possible Features
+Create Money object to deal with other currencies.
+- Right now there doesn't seem to be much of a warrant/motivation for wanting to create that feature as of yet.
+- This would also reduce the problem of dealing with overflows for currencies
+- This would also lead to a complete overhaul of the current transaction methods.
+- This also requires us to implement an exchange rates table/equivalent.
+
+Move Log into separate class/abstract class/interface/ to reduce coupling of components.
+- This could allow for more finegrained search to fit our requirements (no more arbitrary indexing).
+- Could move timeStamp() functionality into Log and have BankAccount inherit/implement from it.
+
+BankAccount with email member variable
+- This allow for resetPswd to ask users to reset their password via email, and thus will be more secure than flatly asking for new, cur password.
+- Not enough motivation to create a feature we may/may not need so this is on the backburner for now.
+
+=== Priority Features
+Implement functionality for GUI interface.
+- Could be accomplished with a separate class/interface? BankAccontObservable equivalent?
