@@ -1,7 +1,26 @@
-= Formatting Standards
+= Code Style  
 
-== Unit Tests
-Unit test files are named <class>Tests.java and unit tests are named <method>_Should<expected>_When<condition>
+== Format Styling
+Formatting *should* follow that of Google's Java checkstyle document https://google.github.io/styleguide/javaguide.html[here]. 
+For now however I'm going to ignore most of the formatting in the document until I finish configuring java.vim to follow the format.
+
+== Unit Tests & Testing Methodology
+
+=== Naming of Unit Tests
+Unit test files are named <class>Tests.java.
+Unit test methods are named as follow:
+*[UnitOfWork_StateUnderTest_ExpectedBehavior]*
+
+Ex:
+
+[source, java]
+Public void Sum_NegativeNumberAs1stParam_ExceptionThrown()
+
+Public void Sum_NegativeNumberAs2ndParam_ExceptionThrown ()
+
+Public void Sum_simpleValues_Calculated ()
+[source, java]
+
 
 Ex: 
 .BankAccountTests.java
@@ -23,6 +42,8 @@ Sources:
 https://stackoverflow.com/questions/155436/unit-test-naming-best-practices[Naming Convention for Unit Tests]
 https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html[Unit Tests Blogpost]
 
+=== Testing Methodology
+
 == Git Workflow
 Branches:
 - master
@@ -31,3 +52,39 @@ Branches:
 - feature-*
 - hotfix-*
 
+=== Git Commit
+
+=== Git Commit Messages
+The TL;DR of commits is as follows:
+
+1. Separate subject from body with a blank line
+2. Limit the subject line to 50 characters
+3. Capitalize the subject line
+4. Do not end the subject line with a period
+5. Use the imperative mood in the subject line
+6. Wrap the body at 72 characters
+7. Use the body to explain what and why vs. how
+
+Sources:
+https://chris.beams.io/posts/git-commit/[Git Commit Messages]
+
+=== Atomic Commits
+Atomic committing is as follows: 
+- Commit each fix or task as a separate change
+- Only commit when a block of work is complete
+- Commit each layout change separately
+- Joint commit for layout file, code behind file, and additional resources
+
+Sources:
+https://www.freshconsulting.com/atomic-commits/[Atomic Commits]
+
+== Version Numbering
+Version number is as follows:
+X.Y.Z
+- X: Major version number where some large change is introduced (e.g backwards-incompatible change).
+- Y: Minor version number where a new, minor feature is introduced, or a small set of features are rolled out.
+- Z: Patch version number where the patch number changes with new software builds for small bug-fixes.
+
+Sources:
+https://stackoverflow.com/questions/3826580/what-rules-does-software-version-numbering-follow[Software Version Numbering]
+https://semver.org/[Semantic Version Numbering]
