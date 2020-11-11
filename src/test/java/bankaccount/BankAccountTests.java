@@ -27,16 +27,11 @@ public class BankAccountTests {
   @Test
   void BankAccount_IfInitialized_ReturnsBankAccount() {
     BankAccount newAcct = new BankAccount("Patrick", "Bateman");
-    
-    int acctNum = newAcct.getAcctNum();
-    double balance = newAcct.getBalance();
-    String fName = newAcct.getFName();
-    String lName = newAcct.getLName();
 
-    assertNotNull(acctNum, "Account Number is initialized");
-    assertEquals(0, balance, "User has no money in account");
-    assertNotNull(fName, "User's first name is: " + fName);
-    assertNotNull(lName, "User's last name is: " + lName);
+    assertNotNull(newAcct.getAcctNum(), "Account Number is initialized");
+    assertEquals(0, newAcct.getBalance(), "User has no money in account");
+    assertNotNull(newAcct.getFName(), "User's first name is: " + newAcct.getFName());
+    assertNotNull(newAcct.getLName(), "User's last name is: " + newAcct.getLName());
   }
 
   @Test
