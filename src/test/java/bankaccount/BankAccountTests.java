@@ -57,11 +57,8 @@ public class BankAccountTests {
 
   @Test
   public void Deposit_1000_ReturnsTrue() {
-    boolean res = bankAccount.deposit(1000);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 3);
-    assertEquals(true, res, "Deposit of $1000 is successful");
-    assertEquals("Deposit Successful", logRes, "Account Log has successfully recorded the deposit");
+    assertEquals(true, bankAccount.deposit(1000), "Deposit of $1000 is successful");
+    assertEquals("Deposit Successful", parseLog(bankAccount.getLog().toString(), 3), "Account Log has successfully recorded the deposit");
   }
 
   @Test
