@@ -18,18 +18,6 @@ public class BankAccountTests {
   private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private static final PrintStream originalOut = System.out;
 
-  private String parseLog(String log, int index) {
-    String[] parsedLog = log.split("\\t+");
-    String logRes = parsedLog[index];
-    return logRes;
-  }
-
-  private String getLogMsg(int index) {
-    String[] parsedLog = bankAccount.getLog().toString().split("\\t+");
-    String logRes = parsedLog[index];
-    return logRes;
-  }
-
   private String getExceptionMsg_AcctNum(int illegalUpperBound) {
     Exception e = assertThrows(IllegalArgumentException.class, () -> {
       int acctNum = bankAccount.genAcctNum(illegalUpperBound);
@@ -108,7 +96,7 @@ public class BankAccountTests {
     bankAccount.deposit(1000);
     String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]\n"); 
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
-    assertEquals(expectedLog, getLogMsg(5), "Account Log has successfully recorded the transaction");
+    assertEquals(expectedLog, bankAccount.parseLog(5), "Account Log has successfully recorded the transaction");
   }
 
   @Test
