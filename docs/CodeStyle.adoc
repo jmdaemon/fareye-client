@@ -45,12 +45,15 @@ https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html[Unit Tes
 === Testing Methodology
 
 == Git Workflow
-Branches:
-- master
-- develop
-- release-* 
-- feature-*
-- hotfix-*
+
+Vincent Driessen does a good job of outlining the model workflow https://nvie.com/posts/a-successful-git-branching-model/[here]
+TODO: Post TL;DR for future reference.
+
+Sources:
+https://nvie.com/posts/a-successful-git-branching-model/[Successful Git Branching Model]
+https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow[Git Workflow Comparison]
+https://softwareengineering.stackexchange.com/questions/395021/is-it-better-to-merge-often-or-only-after-completion-do-a-big-merge-of-feature[Merge Often?]
+https://guides.github.com/introduction/flow/[Alternative Git Workflow]
 
 === Git Commit
 
