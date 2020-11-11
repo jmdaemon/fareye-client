@@ -29,7 +29,14 @@ public class BankAccountTests {
     String logRes = parsedLog[index];
     return logRes;
   }
-  
+
+  private String getExceptionMsg_AcctNum(int illegalUpperBound) {
+    Exception e = assertThrows(IllegalArgumentException.class, () -> {
+      int acctNum = bankAccount.genAcctNum(illegalUpperBound);
+    });
+    return e.getMessage();
+  }
+
   @Test
   void BankAccount_IfInitialized_ReturnsBankAccount() {
     BankAccount newAcct = new BankAccount("Patrick", "Bateman");
@@ -122,24 +129,14 @@ public class BankAccountTests {
   
   @Test
   public void genAcctNum_UpperBoundIsEqualToLowerBound_ThrowsException() {
-    Exception e = assertThrows(IllegalArgumentException.class, () -> {
-      int acctNum = bankAccount.genAcctNum(1);
-    });
-
-    String expectedMessage = "upperBound cannot be less than or equal to the lowerBound";
-    String actualMessage = e.getMessage();
-    assertTrue(actualMessage.contains(expectedMessage), "IllegalArgumentException is thrown when upperBound == lowerBound");
+    String expected = "upperBound cannot be less than or equal to the lowerBound";
+    assertTrue(getExceptionMsg_AcctNum(1).contains(expected), "IllegalArgumentException is thrown when upperBound == lowerBound");
   }
 
   @Test
   public void genAcctNum_UpperBoundIsLessThanLowerBound_ThrowsException() {
-    Exception e = assertThrows(IllegalArgumentException.class, () -> {
-      int acctNum = bankAccount.genAcctNum(-1);
-    });
-
     String expectedMessage = "upperBound cannot be less than or equal to the lowerBound";
-    String actualMessage = e.getMessage();
-    assertTrue(actualMessage.contains(expectedMessage), "IllegalArgumentException is thrown when upperBound < 1");
+    assertTrue(getExceptionMsg_AcctNum(-1).contains(expectedMessage), "IllegalArgumentException is thrown when upperBound < 1");
   }
 
   @Test
