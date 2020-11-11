@@ -25,6 +25,19 @@ With a BankAccount we should be able to
 *To Be Considered*
 - Calculating Interest for current money in BankAccount.
 - Cancelling transactions for BankAccount. This requires the BankAccount to record state/implement stateful behavior.
+- Create loans and allow BankAccounts to incur debt.
+- Automatic closure/freezing of BankAccounts when withdrawing significant amounts of money, or money greater than default set behavior.
+- Freezing of BankAccounts, and suspension of all money flow when debt ocurred is too great.
+- Allow for more freedom in transaction log statements (Payment came from this entity, organization, or user paid for X service, product etc).
+
+
+== TODO
+
+== Discussion
+
+=== Log
+- If there are multiple entries of a transaction occurring, should log return the first one, or all?
+- Test multiple log entries by testing if log has returned the 2nd transaction?
 
 
 == Possible Features
@@ -45,3 +58,6 @@ BankAccount with email member variable
 === Priority Features
 Implement functionality for GUI interface.
 - Could be accomplished with a separate class/interface? BankAccontObservable equivalent?
+
+=== Performance Features
+Multi-thread/Concurrency for great responsiveness.
