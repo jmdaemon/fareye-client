@@ -43,7 +43,7 @@ public class BankAccountTests {
   @Test
   public void Deposit_NegativeAmount_ReturnsFalse() {
     assertEquals(false, bankAccount.deposit(-1000), "Cannot deposit a negative amount"); 
-    assertEquals("Deposit Unsuccessful", parseLog(bankAccount.getLog().toString(), 3), "Account Log has recorded the failed deposit");
+    assertEquals("Deposit Unsuccessful", bankAccount.parseLog(3), "Account Log has recorded the failed deposit");
   }
 
   @Test
@@ -64,13 +64,13 @@ public class BankAccountTests {
   @Test
   public void Deposit_1000_ReturnsTrue() {
     assertEquals(true, bankAccount.deposit(1000), "Deposit of $1000 is successful");
-    assertEquals("Deposit Successful", parseLog(bankAccount.getLog().toString(), 3), "Account Log has successfully recorded the deposit");
+    assertEquals("Deposit Successful", bankAccount.parseLog(3), "Account Log has successfully recorded the deposit");
   }
 
   @Test
   public void Withdraw_NegativeAmount_ReturnsFalse() {
     assertEquals(false, bankAccount.withdraw(-1000), "Cannot withdraw a negative amount");
-    assertEquals("Withdrawal Unsuccessful", parseLog(bankAccount.getLog().toString(), 3),"Account Log has recorded the failed withdrawal");
+    assertEquals("Withdrawal Unsuccessful", bankAccount.parseLog(3),"Account Log has recorded the failed withdrawal");
   }
 
   @Test
@@ -82,7 +82,7 @@ public class BankAccountTests {
     bankAccount.deposit(1000); // Give our mock a starting balance
     // TODO: Deal with arbitrary index. Make it so that you don't have to pass in arbitrary number indexes
     assertEquals(true, bankAccount.withdraw(1000), "Withdrawal of $1000 is successful"); 
-    assertEquals("Withdrawal Successful", parseLog(bankAccount.getLog().toString(), 5),"Account Log has successfully recorded the withdrawal");
+    assertEquals("Withdrawal Successful", bankAccount.parseLog(5),"Account Log has successfully recorded the withdrawal");
   }
 
 
