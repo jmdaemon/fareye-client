@@ -86,7 +86,8 @@ https://www.internalpointers.com/post/squash-commits-into-one-git[Squashing Comm
 ====
 https://opensource.com/article/18/6/git-reset-revert-rebase-commands[Git Reference Commands] +
 https://devconnected.com/how-to-push-git-branch-to-remote/[Push to remote] +
-https://stackoverflow.com/questions/520650/make-an-existing-git-branch-track-a-remote-branch[Change Branch Tracking]
+https://stackoverflow.com/questions/520650/make-an-existing-git-branch-track-a-remote-branch[Change Branch Tracking] +
+https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Signed Git Commits]
 ====
 
 === Git Commit Messages
