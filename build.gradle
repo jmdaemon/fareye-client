@@ -3,6 +3,7 @@ plugins {
         id 'java-library'
         id "com.scuilion.syntastic" version "0.3.8"
         id 'org.openjfx.javafxplugin' version '0.0.9'
+        //id 'checkstyle'
 }
 
 repositories {
