@@ -74,12 +74,9 @@ public class BankAccountTests {
   @Test
   public void Withdraw_1000_True() {
     bankAccount.deposit(1000); // Give our mock a starting balance
-    boolean res = bankAccount.withdraw(1000);
-    String log = bankAccount.getLog().toString();
-    String logRes = parseLog(log, 5); // 3 is the deposit msg from earlier
-    assertEquals(true, res, "Withdrawal of $1000 is successful");
-    assertEquals("Withdrawal Successful", logRes,"Account Log has successfully recorded the withdrawal");
-
+    // TODO: Deal with arbitrary index. Make it so that you don't have to pass in arbitrary number indexes
+    assertEquals(true, bankAccount.withdraw(1000), "Withdrawal of $1000 is successful"); 
+    assertEquals("Withdrawal Successful", parseLog(bankAccount.getLog().toString(), 5),"Account Log has successfully recorded the withdrawal");
   }
 
 
