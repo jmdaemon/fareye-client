@@ -1,21 +1,20 @@
 package app.bankAccount;
 
+import java.lang.StringBuffer;
+import java.lang.StringBuilder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
-import java.text.SimpleDateFormat;  
-import java.lang.StringBuilder;
-import java.lang.StringBuffer;
-import java.util.Date;  
-
 public class BankAccount {
-	private	int acctNum;
-	private	double balance;
-	private	String fName;
-	private	String lName;
-	private	String pswd;
-  private StringBuffer log;
-	
-	public BankAccount() {
+    private int acctNum;
+    private double balance;
+    private String fName;
+    private String lName;
+    private String pswd;
+    private StringBuffer log;
+
+  public BankAccount() {
     this.acctNum = genAcctNum(10000); // TODO: Shove all constants into Constants.java and import
     this.balance = 0.0;
     this.fName = null;
@@ -24,7 +23,7 @@ public class BankAccount {
 
     String timeStamp = genTimeStamp();
     this.log = new StringBuffer();
-    this.log.append (timeStamp + "\tNew Bank Account Created.\t\n");
+    this.log.append(timeStamp + "\tNew Bank Account Created.\t\n");
   }
 
   public BankAccount(String firstName, String lastName) {
@@ -36,7 +35,7 @@ public class BankAccount {
 
     String timeStamp = genTimeStamp();
     this.log = new StringBuffer();
-    this.log.append (timeStamp + "\tNew Bank Account Created.\t\n");
+    this.log.append(timeStamp + "\tNew Bank Account Created.\t\n");
   }
 
 	public boolean deposit(double amount) {
