@@ -43,9 +43,7 @@ public class BankAccount {
     String timeStamp = genTimeStamp();
 		if (amount >= 0) {
       balance += amount;
-      String dAmt = ("[$" + amount + "]\n");
-      this.log.append(timeStamp + "\tDeposit Successful\t" + dAmt);
-
+      this.log.append(timeStamp + "\tDeposit Successful\t" + ("[$" + amount + "]\n") );
 			return true;
 		} else
       this.log.append(timeStamp + "\tDeposit Unsuccessful\t\n");
