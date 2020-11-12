@@ -1,0 +1,14 @@
+= Interface
+
+== Overview
+
+=== Model
+
+
+=== The View:
+The interface will be made using the JavaFX library.
+
+https://openjfx.io/index.html[JavaFX]
+http://csis.pace.edu/~bergin/mvc/mvcgui.html[MVC GUI Example]
+
+=== The Controller:

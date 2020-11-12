@@ -1,0 +1,71 @@
+plugins {
+	id 'java' 
+        id 'java-library'
+        id "com.scuilion.syntastic" version "0.3.8"
+        id 'org.openjfx.javafxplugin' version '0.0.9'
+        //id 'checkstyle'
+}
+
+repositories {
+	mavenCentral()
+        jcenter()
+}
+
+dependencies {
+	testImplementation (platform('org.junit:junit-bom:5.7.0'))
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+        testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
+        testCompile 'org.mockito:mockito-core:2.+'
+
+}
+
+test {
+	useJUnitPlatform()
+        maxHeapSize = '1G'
+        testLogging {
+		events "failed"
+		exceptionFormat "full"
+	}
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(14)
+    }
+}
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' ]
+}
+
+//mainClassName = 'ui.UI'
+jar {
+    manifest {
+        attributes 'Main-Class': 'ui.Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+sourceSets {
+    main {
+         java {
+            //srcDirs = ['src']
+            //srcDirs = ['src/main/java/encryption'] // Test encryption directory only
+            //srcDirs = ['src/main/java/interface/']
+            srcDirs = ['src/main/java/bankaccount']
+         }
+
+    }
+
+    test {
+        java {
+            //srcDirs = ['src/test/java/encryption']
+            //srcDirs = ['src/test/java/interface']
+            srcDirs = ['src/test/java/bankaccount']
+        }
+    }
+}

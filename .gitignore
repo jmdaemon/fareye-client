@@ -1,0 +1,35 @@
+# Gradle
+.gradle
+build/
+gradle-app.setting # Ignore Gradle GUI config
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# Java build artifacts class files
+*.class 
+
+bin/ # other generated files
+gen/
+build/
+
+# Ignore all Asciidoc output files
+*.html
+
+# Eclipse
+/.classpath
+/.settings/
+/.project
+/bin/
+
+# IntelliJ
+.idea
+*.iml
+*.ipr
+*.iws
+
+# Misc
+*.log 

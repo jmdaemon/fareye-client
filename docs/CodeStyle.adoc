@@ -1,0 +1,138 @@
+= Code Style  
+
+== Format Styling
+Formatting *should* follow that of Google's Java checkstyle document https://google.github.io/styleguide/javaguide.html[here]. 
+For now however I'm going to ignore most of the formatting in the document until I finish configuring java.vim to follow the format.
+
+== Unit Tests & Testing Methodology
+
+=== Naming of Unit Tests
+Unit test files are named <class>Tests.java.
+Unit test methods are named as follow:
+*[UnitOfWork_StateUnderTest_ExpectedBehavior]*
+
+Ex:
+
+[source, java]
+Public void Sum_NegativeNumberAs1stParam_ExceptionThrown()
+
+Public void Sum_NegativeNumberAs2ndParam_ExceptionThrown ()
+
+Public void Sum_simpleValues_Calculated ()
+[source, java]
+
+
+Ex: 
+.BankAccountTests.java
+[source,java]
+----
+public class BankAccountTests
+{
+  @Test
+  public void Deposit_IfAmountGreaterThanZero_ReturnsTrue()
+  {
+     var bankAccount = new BankAccount();
+     bankAccount.Deposit(100);
+     Assert.That(bankAccount.Balance, Is.EqualTo(100));
+  }
+}
+----
+
+.Sources: 
+[#Sources]
+[%collapsible]
+====
+https://stackoverflow.com/questions/155436/unit-test-naming-best-practices[Naming Convention for Unit Tests] +
+https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html[Unit Tests Blogpost]
+====
+
+=== Testing Methodology
+
+== Git Workflow
+
+Vincent Driessen does a good job of outlining the model workflow https://nvie.com/posts/a-successful-git-branching-model/[here]
+TODO: Post TL;DR for future reference.
+
+.Sources:
+[#Sources]
+[%collapsible]
+====
+https://nvie.com/posts/a-successful-git-branching-model/[Successful Git Branching Model] +
+https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow[Git Workflow Comparison] +
+https://softwareengineering.stackexchange.com/questions/395021/is-it-better-to-merge-often-or-only-after-completion-do-a-big-merge-of-feature[Merge Often?]
+====
+
+.Git Flow:
+[#Sources]
+[%collapsible]
+====
+https://guides.github.com/introduction/flow/[Alternative Git Workflow] +
+http://scottchacon.com/2011/08/31/github-flow.html
+====
+
+=== Git Commit
+
+.Sources:
+[#Sources]
+[%collapsible]
+====
+https://rogerdudler.github.io/git-guide/[Git Guide] +
+https://www.internalpointers.com/post/squash-commits-into-one-git[Squashing Commits]
+====
+
+.How to:
+[#Sources]
+[%collapsible]
+====
+https://opensource.com/article/18/6/git-reset-revert-rebase-commands[Git Reference Commands] +
+https://devconnected.com/how-to-push-git-branch-to-remote/[Push to remote] +
+https://stackoverflow.com/questions/520650/make-an-existing-git-branch-track-a-remote-branch[Change Branch Tracking] +
+https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Signed Git Commits]
+====
+
+=== Git Commit Messages
+The TL;DR of commits is as follows:
+
+1. Separate subject from body with a blank line
+2. Limit the subject line to 50 characters
+3. Capitalize the subject line
+4. Do not end the subject line with a period
+5. Use the imperative mood in the subject line
+6. Wrap the body at 72 characters
+7. Use the body to explain what and why vs. how
+
+.Sources:
+[#Sources]
+[%collapsible]
+====
+https://chris.beams.io/posts/git-commit/[Git Commit Messages]
+====
+
+=== Atomic Commits
+Atomic committing is as follows: 
+- Commit each fix or task as a separate change
+- Only commit when a block of work is complete
+- Commit each layout change separately
+- Joint commit for layout file, code behind file, and additional resources
+
+.Sources:
+[#Sources]
+[%collapsible]
+====
+https://www.freshconsulting.com/atomic-commits/[Atomic Commits]
+====
+
+== Version Numbering
+Version number is as follows:
+X.Y.Z
+- X: Major version number where some large change is introduced (e.g backwards-incompatible change).
+- Y: Minor version number where a new, minor feature is introduced, or a small set of features are rolled out.
+- Z: Patch version number where the patch number changes with new software builds for small bug-fixes.
+
+.Sources:
+[#Sources]
+[%collapsible]
+====
+https://stackoverflow.com/questions/3826580/what-rules-does-software-version-numbering-follow[Software Version Numbering] +
+https://semver.org/[Semantic Version Numbering]
+====
