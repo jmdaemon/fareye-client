@@ -22,13 +22,13 @@ public class CryptAESTests {
 
   void encryptWithPrefixIV_ShouldReturnCTWithIV_WhenGivenParameters() throws Exception {
     byte[] plainText = "Hello, World!".getBytes(ENCODING);
-    SecretKey key = crypt.utils.CryptUtils.getAESKey(AES_KEY_BIT); // AES 256 bits (32 bytes) key
-    byte[] iv = crypt.utils.CryptUtils.getRandomNonce(IV_LENGTH_BYTE); // AES-GCM needs IV 96-bit (12 bytes)
+    SecretKey key = CryptUtils.getAESKey(AES_KEY_BIT); // AES 256 bits (32 bytes) key
+    byte[] iv = CryptUtils.getRandomNonce(IV_LENGTH_BYTE); // AES-GCM needs IV 96-bit (12 bytes)
 
-    byte[] cipherText = crypt.AES.CryptAES.encryptWithPrefixIV(plainText, key, iv);  
+    byte[] cipherText = CryptAES.encryptWithPrefixIV(plainText, key, iv);  
     assert(plainText != cipherText);
 
-    byte[] decryptedText = (crypt.AES.CryptAES.decryptWithPrefixIV(cipherText, key)).getBytes(ENCODING);
+    byte[] decryptedText = (CryptAES.decryptWithPrefixIV(cipherText, key)).getBytes(ENCODING);
     assert(decryptedText != cipherText);
   }
 
