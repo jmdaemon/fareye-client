@@ -39,6 +39,14 @@ We need to do an awful lot of random stuff here, maybe make a random class?
 - Client side certificate validation 
 - Merge CryptUtils with CryptAES? 
 
+== Methods
+
+=== Encrypt
+Encrypt should take a key (AES or RSA), some plaintext (our message), and/or an IV and/or a Salt.
+
+Encrypt should then be able to return back the ciphertext (or maybe it returns a tuple with the ciphertext, key, and/or iv, and/or salt)
+
+
 == TODO
 
 == Discussion
