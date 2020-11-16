@@ -1,31 +1,35 @@
 == Encryption Model
 Models:
+
 - CryptUtils
 - CryptAES
 
 == Requirements
 Our Encryption tools must have the following data:
-- Encryption key(s) 
+
+- Encryption key(s)
 - Password Salt (possibly also the password?)
-- Encrypted ciphertext
+- Encrypted ciphertext 
 
 
 With our models we must be able to do the following on our client's end:
+
 - Encrypt our data in AES-256 GCM format.
 - Decrypt our data
 - Encode our data in base64
-- Store our keys, salt (In member vars and possibly to keystore).
+- Store our keys, salt (In member vars and possibly to keystore). +
 
 - Securely generate random keys
 - Securely generate AES keys
 - Securely generate RSA keys too maybe, might be useful
 - Securely generate random salt
 - Securely generate random passwords
-We need to do an awful lot of random stuff here, maybe make a random class?
 
-- Test for proper padding, and block sizes if that isn't handled by lib.
+*We need to do an awful lot of random stuff here, maybe make a random class?*
 
-- Do a test with a bit of php just to see if it will be properly handled by it
+- Test for proper padding, and block sizes if that isn't handled by lib. +
+
+- Do a test with a bit of php just to see if it will be properly handled by it +
 
 - Test with mocks and php frontend later -> for server later
 - Test with mocks in java application -> for client
