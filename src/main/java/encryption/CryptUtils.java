@@ -1,12 +1,14 @@
 package app.crypt;
 
 public class CryptUtils {
-  public String plaintext = "This is the plaintext";
+  private String plaintext;
 
-  CryptUtils() {
+  public CryptUtils() {
+    this.plaintext = null;
   }
 
   public String encrypt(String plaintext) { 
+    return "This is not the plaintext";
   }
 
 }

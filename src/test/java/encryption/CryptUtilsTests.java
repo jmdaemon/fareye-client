@@ -1,12 +1,28 @@
 package test.crypt;
 
-import app.crypt;
+import app.crypt.*;
+
+import static org.junit.jupiter.api.Assertions.*; 
+import org.junit.jupiter.api.Test;
 
 public class CryptUtilsTests {
 
-  public void encrypt_(){
+  //public void genKey_AES() {
+  //}
+
+  //public void genKey_RSA() {
+  //}
+
+  //public void genSalt() {
+  //}
+
+  //public void genIV() {
+  //}
+
+  public void encrypt_Plaintext_ReturnCiphertext() {
     CryptUtils cutil =  new CryptUtils();
     String res = cutil.encrypt("This is the plaintext");
+    assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
   }
 
@@ -67,16 +83,6 @@ public class CryptUtilsTests {
   //public void getSalt_FromKS() {
   //}
 
-  //public void genKey_AES() {
-  //}
 
-  //public void genKey_RSA() {
-  //}
-
-  //public void genSalt() {
-  //}
-
-  //public void genIV() {
-  //}
 
 }
