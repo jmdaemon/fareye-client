@@ -7,17 +7,21 @@ import org.junit.jupiter.api.Test;
 
 public class CryptUtilsTests {
 
+  private CryptUtils cutil = new CryptUtils();
+
   //public void genKey_AES() {
   //}
 
   //public void genKey_RSA() {
   //}
 
-  //public void genSalt() {
-  //}
+  public void genSalt() {
+    assertNotNull(cutil.genSalt(), "Salt should be initialized");
+  }
 
-  //public void genIV() {
-  //}
+  public void genIV() {
+    assertNotNull(cutil.genIV(), "IV should be initialized");
+  }
 
   public void encrypt_Plaintext_ReturnCiphertext() {
     CryptUtils cutil =  new CryptUtils();
