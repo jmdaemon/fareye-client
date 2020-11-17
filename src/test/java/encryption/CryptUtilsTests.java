@@ -5,15 +5,20 @@ import app.crypt.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.SecretKey;
+import java.security.NoSuchAlgorithmException;
+
 public class CryptUtilsTests {
 
   private CryptUtils cutil = new CryptUtils();
 
-  //public void genKey_AES() {
-  //}
+  public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
+    assertNotNull(cutil.genAESKey(), "AES Key should be initialized");
+  }
 
-  //public void genKey_RSA() {
-  //}
+  public void genKey_RSA() throws NoSuchAlgorithmException {
+    assertNotNull(cutil.genRSAKey(), "RSA Key should be initialized");
+  }
 
   public void genSalt() {
     assertNotNull(cutil.genSalt(), "Salt should be initialized");
