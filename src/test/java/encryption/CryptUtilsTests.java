@@ -5,6 +5,7 @@ import app.crypt.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
 
+import java.security.KeyPair;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 
@@ -16,8 +17,11 @@ public class CryptUtilsTests {
     assertNotNull(cutil.genAESKey(), "AES Key should be initialized");
   }
 
-  public void genKey_RSA() throws NoSuchAlgorithmException {
-    assertNotNull(cutil.genRSAKey(), "RSA Key should be initialized");
+  public void genKey_RSA_ReturnRSAKeyPair() throws NoSuchAlgorithmException {
+    KeyPair RSAKey = cutil.genRSAKey();
+    assertNotNull(RSAKey, "RSA Key should be initialized");
+    assertNotNull(RSAKey.getPrivate(), "KeyPair should have a private key");
+    assertNotNull(RSAKey.getPublic(), "KeyPair should have a public key");
   }
 
   public void genSalt() {
