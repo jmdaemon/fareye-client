@@ -1,4 +1,4 @@
-package app.crypt;
+package app.crypt.utils;
 
 import java.util.Arrays;
 
@@ -13,8 +13,7 @@ public class CryptUtils {
   private String plaintext;
   private final int IV_LENGTH = 12;
   private final int SALT_LENGTH = 16;
-  private final int AES_KEY_LENGTH = 256;
-  private final int RSA_KEY_LENGTH = 2048;
+
 
   public CryptUtils() {
     this.plaintext = null;
@@ -32,18 +31,6 @@ public class CryptUtils {
 
   public byte[] genSalt() {
     return genRandomBytes(SALT_LENGTH);
-  }
-
-  public SecretKey genAESKey() throws NoSuchAlgorithmException {
-    KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-    keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
-    return keyGen.generateKey();
-  }
-
-  public KeyPair genRSAKey() throws NoSuchAlgorithmException {
-    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-    keyGen.initialize(RSA_KEY_LENGTH, SecureRandom.getInstanceStrong());
-    return keyGen.genKeyPair();
   }
 
   public String encrypt(String plaintext) { 
