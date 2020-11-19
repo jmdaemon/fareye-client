@@ -1,41 +1,25 @@
-package test.crypt;
+package test.crypt.utils;
 
 import app.crypt.utils.*;
-import app.crypt.cipher.aes.*;
-import app.crypt.cipher.rsa.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
 
-import java.security.KeyPair;
-import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
-
 public class CryptUtilsTests {
 
   private CryptUtils cutil = new CryptUtils();
-  private AESCipher aes = new AESCipher();
-  private RSACipher rsa = new RSACipher();
 
-  public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
-    assertNotNull(aes.genKey(), "AES Key should be initialized");
-  }
-
-  public void genKey_RSA_ReturnRSAKeyPair() throws NoSuchAlgorithmException {
-    KeyPair RSAKey = rsa.genKeyPair();
-    assertNotNull(RSAKey, "RSA Key should be initialized");
-    assertNotNull(RSAKey.getPrivate(), "KeyPair should have a private key");
-    assertNotNull(RSAKey.getPublic(), "KeyPair should have a public key");
-  }
-
+  @Test
   public void genSalt() {
     assertNotNull(cutil.genSalt(), "Salt should be initialized");
   }
 
+  @Test
   public void genIV() {
     assertNotNull(cutil.genIV(), "IV should be initialized");
   }
 
+  @Test
   public void encrypt_Plaintext_ReturnCiphertext() {
     String res = cutil.encrypt("This is the plaintext");
     assertNotNull(res, "Ciphertext should be initialized");
