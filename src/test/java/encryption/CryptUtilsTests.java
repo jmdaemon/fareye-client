@@ -1,6 +1,8 @@
 package test.crypt;
 
-import app.crypt.*;
+import app.crypt.utils.*;
+import app.crypt.cipher.aes.*;
+import app.crypt.cipher.rsa.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
@@ -12,13 +14,15 @@ import java.security.NoSuchAlgorithmException;
 public class CryptUtilsTests {
 
   private CryptUtils cutil = new CryptUtils();
+  private AESCipher aes = new AESCipher();
+  private RSACipher rsa = new RSACipher();
 
   public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
-    assertNotNull(cutil.genAESKey(), "AES Key should be initialized");
+    assertNotNull(aes.genKey(), "AES Key should be initialized");
   }
 
   public void genKey_RSA_ReturnRSAKeyPair() throws NoSuchAlgorithmException {
-    KeyPair RSAKey = cutil.genRSAKey();
+    KeyPair RSAKey = rsa.genKeyPair();
     assertNotNull(RSAKey, "RSA Key should be initialized");
     assertNotNull(RSAKey.getPrivate(), "KeyPair should have a private key");
     assertNotNull(RSAKey.getPublic(), "KeyPair should have a public key");
