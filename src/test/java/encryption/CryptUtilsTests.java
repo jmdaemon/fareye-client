@@ -19,13 +19,6 @@ public class CryptUtilsTests {
     assertNotNull(cutil.genIV(), "IV should be initialized");
   }
 
-  @Test
-  public void encrypt_Plaintext_ReturnCiphertext() {
-    String res = cutil.encrypt("This is the plaintext");
-    assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
-  }
-
   public void decrypt_(){
   }
 
