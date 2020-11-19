@@ -37,7 +37,6 @@ public class CryptUtilsTests {
   }
 
   public void encrypt_Plaintext_ReturnCiphertext() {
-    CryptUtils cutil =  new CryptUtils();
     String res = cutil.encrypt("This is the plaintext");
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
