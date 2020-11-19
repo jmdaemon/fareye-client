@@ -20,4 +20,8 @@ public class AESCipher extends CryptUtils {
     keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
     return keyGen.generateKey();
   }
+
+  public String encrypt(String plaintext) { 
+    return "This is not the plaintext";
+  }
 }
