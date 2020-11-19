@@ -18,9 +18,12 @@ public class AESCipherTests {
   }
   
   @Test
-  public void encrypt_Plaintext_ReturnAESCiphertext() {
-    String res = cipher.encrypt("This is the plaintext");
+  public void encrypt_Plaintext_ReturnAESCiphertext() throws Exception {
+    SecretKey key = cipher.genKey();
+    byte[] iv = cipher.genIV();
+    byte[] plaintext = "This is the plaintext".getBytes(cipher.UTF_8);
+    byte[] res = cipher.encrypt(plaintext, key, iv);
     assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
+    assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
 }
