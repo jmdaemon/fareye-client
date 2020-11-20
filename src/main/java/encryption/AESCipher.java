@@ -44,34 +44,45 @@ public class AESCipher extends CryptUtils {
   }
 
   public SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] hash = genPswdHash(pswd, salt);
-    SecretKey result = new SecretKeySpec(hash, "AES");
+    byte[] pswdHash = genPswdHash(pswd, salt);
+    SecretKey result = new SecretKeySpec(pswdHash, "AES");
     return result;
   }
 
-  public byte[] encrypt(byte[] plaintext, SecretKey key, byte[] iv) throws Exception { 
+  public byte[] prefixIV(byte [] iv, byte[] ciphertext) {
+    byte[] result = ByteBuffer.allocate(iv.length + ciphertext.length)
+      .put(iv) 
+      .put(ciphertext)
+      .array();
+    return result;
+  }
+
+  public byte[] prefixSalt(byte[] iv, byte[] salt, byte[] ciphertext) {
+    byte[] result = ByteBuffer.allocate(iv.length + salt.length + ciphertext.length)
+      .put(iv) 
+      .put(salt) 
+      .put(ciphertext) 
+      .array();
+    return result;
+  }
+
+  public byte[] encrypt(byte[] plaintext, byte[] iv, SecretKey key) throws Exception { 
     Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
     cipher.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
     byte[] result = cipher.doFinal(plaintext);
     return result;
   }
 
-  
+  public byte[] encryptWithIV(byte[] plaintext, byte[] iv, SecretKey key) throws Exception {
+    byte[] ciphertext = encrypt(plaintext, iv, key);
+    byte[] result = prefixIV(iv, ciphertext);
+    return result;
+    }
 
-  
-
-  //public byte[] encryptWithSalt(SecretKey key, byte[] iv, byte[] salt) throws Exception { 
-    //Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
-    //cipher.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
-
-    //byte[] cipherText = cipher.doFinal(pswd);
-    //byte[] result  = ByteBuffer.allocate(iv.length + salt.length + cipherText.length)
-                //.put(iv)
-                //.put(salt)
-                //.put(cipherText)
-                //.array();
-
-    //return result;
-  //}
+  public byte[] encryptWithSalt(byte[] pswdHash, byte[] iv, byte[] salt, SecretKey key) throws Exception { 
+    byte[] ciphertext = encrypt(pswdHash, iv, key);
+    byte[] result = prefixSalt(iv, salt, ciphertext);
+    return result;
+  }
   
 }

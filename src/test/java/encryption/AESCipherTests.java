@@ -25,16 +25,25 @@ public class AESCipherTests {
   
   @Test
   public void encrypt_Plaintext_ReturnAESCiphertext() throws Exception {
-    byte[] res = cipher.encrypt( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genKey(), cipher.genIV() );
+    byte[] res = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genKey() );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
 
-  //public void encrypt_SaltPlaintext_ReturnAESCiphertext(){
-    //byte[] res = cipher.encryptSalt( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genKey(), cipher.genIV(), cipher.getSalt());
-    //assertNotNull(res, "Ciphertext should be initialized");
-    //assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
-  //}
+  @Test
+  public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
+    byte[] res = cipher.encryptWithIV( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genKey() );
+    assertNotNull(res, "Ciphertext should be initialized");
+    assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
+  }
+
+  @Test
+  public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
+    byte[] salt = cipher.genSalt();
+    byte[] res = cipher.encryptWithSalt( cipher.genPswdHash("This is the plaintext", salt), cipher.genIV(), salt, cipher.genKey() );
+    assertNotNull(res, "Ciphertext should be initialized");
+    assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
+  }
 
   //public void decrypt_Salt_(){
   //}
