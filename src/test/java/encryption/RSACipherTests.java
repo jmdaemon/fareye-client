@@ -20,4 +20,22 @@ public class RSACipherTests {
     assertNotNull(RSAKey.getPrivate(), "KeyPair should have a private key");
     assertNotNull(RSAKey.getPublic(), "KeyPair should have a public key");
   }
+
+  //public void encrypt_SaltPlaintext_ReturnAESCiphertext(){
+  //}
+
+  //public void decrypt_Salt_(){
+  //}
+
+  //public void encrypt_IV_(){
+  //}
+
+  //public void decryptIV_(){
+  //}
+
+  //public void encrypt_IVSalt_(){
+  //}
+
+  //public void decryptIVSALT_(){
+  //}
 }
