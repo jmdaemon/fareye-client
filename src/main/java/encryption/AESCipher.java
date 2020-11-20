@@ -84,5 +84,12 @@ public class AESCipher extends CryptUtils {
     byte[] result = prefixSalt(iv, salt, ciphertext);
     return result;
   }
+
+  public String decrypt(byte[] ciphertext, byte[] iv, SecretKey key) throws Exception { 
+    Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
+    cipher.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+    byte[] result = cipher.doFinal(ciphertext);
+    return new String(result, UTF_8);
+  }
   
 }
