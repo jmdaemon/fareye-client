@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class AESCipherTests {
   private AESCipher cipher = new AESCipher();
@@ -16,6 +17,11 @@ public class AESCipherTests {
   public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
     assertNotNull(cipher.genKey(), "AES Key should be initialized");
   }
+
+  @Test
+  public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
+    assertNotNull(cipher.genKeyPswd("This is the user password", cipher.genSalt()), "AES Key should be initialized");
+  }
   
   @Test
   public void encrypt_Plaintext_ReturnAESCiphertext() throws Exception {
@@ -23,4 +29,28 @@ public class AESCipherTests {
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
+
+  //public void encrypt_SaltPlaintext_ReturnAESCiphertext(){
+    //byte[] res = cipher.encryptSalt( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genKey(), cipher.genIV() );
+    //byte[] salt = cipher.getSalt();
+    //assertNotNull(res, "Ciphertext should be initialized");
+    //assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
+    //assertNotNull(salt, "Salt should be initialized");
+  //}
+
+  //public void decrypt_Salt_(){
+  //}
+
+  //public void encrypt_IV_(){
+  //}
+
+  //public void decryptIV_(){
+  //}
+
+  //public void encrypt_IVSalt_(){
+  //}
+
+  //public void decryptIVSALT_(){
+  //}
+
 }
