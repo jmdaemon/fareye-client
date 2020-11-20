@@ -66,20 +66,14 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  private Cipher initCipherEncrypt(byte[] iv, SecretKey key) throws Exception {
+  private Cipher initCipher(int cipherMode, byte[] iv, SecretKey key) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
-    result.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
-    return result;
-  }
-
-  private Cipher initCipherDecrypt(byte[] iv, SecretKey key) throws Exception {
-    Cipher result = Cipher.getInstance(AES_ALGORITHM);
-    result.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+    result.init(cipherMode, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
     return result;
   }
 
   public byte[] encrypt(byte[] plaintext, byte[] iv, SecretKey key) throws Exception { 
-    Cipher cipher = initCipherEncrypt(iv, key);
+    Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, iv, key);
     byte[] result = cipher.doFinal(plaintext);
     return result;
   }
@@ -97,7 +91,7 @@ public class AESCipher extends CryptUtils {
   }
 
   public String decrypt(byte[] ciphertext, byte[] iv, SecretKey key) throws Exception { 
-    Cipher cipher = initCipherDecrypt(iv, key);
+    Cipher cipher = initCipher(Cipher.DECRYPT_MODE, iv, key);
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
