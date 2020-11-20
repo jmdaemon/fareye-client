@@ -2,6 +2,7 @@ package app.crypt.cipher.aes;
 
 import app.crypt.utils.*;
 
+import java.nio.ByteBuffer;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -18,7 +19,8 @@ import java.security.spec.KeySpec;
 
 public class AESCipher extends CryptUtils {
 
-  private static final String ALGORITHM = "AES/GCM/NoPadding";
+  private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
+  private static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
   private static final int TAG_LENGTH_BIT = 128;
   private final int AES_KEY_LENGTH = 256;
 
@@ -34,24 +36,42 @@ public class AESCipher extends CryptUtils {
     return keyGen.generateKey();
   }
 
+  public byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
+    SecretKeyFactory factory = SecretKeyFactory.getInstance(HASH_ALGORITHM);
+    byte[] result = factory.generateSecret(spec).getEncoded();
+    return result;
+  }
+
+  public SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    byte[] hash = genPswdHash(pswd, salt);
+    SecretKey result = new SecretKeySpec(hash, "AES");
+    return result;
+  }
+
   public byte[] encrypt(byte[] plaintext, SecretKey key, byte[] iv) throws Exception { 
-    Cipher cipher = Cipher.getInstance(ALGORITHM);
+    Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
     cipher.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
     byte[] result = cipher.doFinal(plaintext);
     return result;
   }
 
-  public SecretKey genKeyPswd(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-    KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
-    SecretKey result = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
-    return result;
-  }
+  
 
-  //public byte[] encrypt(byte[] plaintext, SecretKey key, byte[] iv, byte[] salt) throws Exception { 
-    //Cipher cipher = Cipher.getInstance(ENCRYPT_ALGO);
-    //cipher.init(Cipher.ENCRYPT_MODE, aesKeyFromPassword, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+  
 
+  //public byte[] encryptWithSalt(SecretKey key, byte[] iv, byte[] salt) throws Exception { 
+    //Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
+    //cipher.init(Cipher.ENCRYPT_MODE, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+
+    //byte[] cipherText = cipher.doFinal(pswd);
+    //byte[] result  = ByteBuffer.allocate(iv.length + salt.length + cipherText.length)
+                //.put(iv)
+                //.put(salt)
+                //.put(cipherText)
+                //.array();
+
+    //return result;
   //}
   
 }
