@@ -2,7 +2,8 @@ package app.crypt.cipher.aes;
 
 import app.crypt.utils.*;
 
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -49,20 +50,14 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] prefixIV(byte [] iv, byte[] ciphertext) {
-    byte[] result = ByteBuffer.allocate(iv.length + ciphertext.length)
-      .put(iv) 
-      .put(ciphertext)
-      .array();
-    return result;
-  }
-
-  public byte[] prefixSalt(byte[] iv, byte[] salt, byte[] ciphertext) {
-    byte[] result = ByteBuffer.allocate(iv.length + salt.length + ciphertext.length)
-      .put(iv) 
-      .put(salt) 
-      .put(ciphertext) 
-      .array();
+  public byte[] prefixCiphertext(byte[] iv, byte[] salt, byte[] ciphertext) throws IOException {
+    ByteArrayOutputStream output = new ByteArrayOutputStream(); 
+    output.write(iv);
+    if (salt != null) {
+      output.write(salt);
+    }
+    output.write(ciphertext);
+    byte[] result = output.toByteArray();
     return result;
   }
 
@@ -80,13 +75,13 @@ public class AESCipher extends CryptUtils {
 
   public byte[] encryptWithIV(byte[] plaintext, byte[] iv, SecretKey key) throws Exception {
     byte[] ciphertext = encrypt(plaintext, iv, key);
-    byte[] result = prefixIV(iv, ciphertext);
+    byte[] result = prefixCiphertext(iv, null, ciphertext);
     return result;
     }
 
   public byte[] encryptWithSalt(byte[] pswdHash, byte[] iv, byte[] salt, SecretKey key) throws Exception { 
     byte[] ciphertext = encrypt(pswdHash, iv, key);
-    byte[] result = prefixSalt(iv, salt, ciphertext);
+    byte[] result = prefixCiphertext(iv, salt, ciphertext);
     return result;
   }
 
