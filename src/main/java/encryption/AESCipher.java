@@ -36,7 +36,7 @@ public class AESCipher extends CryptUtils {
   }
 
   public void setIV(byte[] iv)      { this.iv = iv; }
-  public void setSalt(byte[] salt)  { this.iv = salt; }
+  public void setSalt(byte[] salt)  { this.salt = salt; }
   public void setKey(SecretKey key) { this.key = key; }
 
   public void setAll(byte[] iv, byte[] salt, SecretKey key) {

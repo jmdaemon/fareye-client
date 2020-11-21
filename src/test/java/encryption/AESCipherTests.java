@@ -45,8 +45,10 @@ public class AESCipherTests {
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
 
+  @Test
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
-    byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genKey());
+    cipher.setAll(cipher.genIV(), null, cipher.genKey());
+    byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.getIV(), cipher.getKey());
 
     assertNotNull(cipher.decrypt(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should not be empty");
     assertEquals("This is the plaintext", cipher.decrypt(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
