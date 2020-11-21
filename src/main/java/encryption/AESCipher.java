@@ -3,7 +3,9 @@ package app.crypt.cipher.aes;
 import app.crypt.utils.*;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.io.IOException;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -66,20 +68,25 @@ public class AESCipher extends CryptUtils {
 
   public byte[] parseHeader(byte[] ciphertextWithPrefix, String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
+    byte[] salt = null;
+    SecretKey key = null;
 
-    if ( IV_LENGTH + SALT_LENGTH < ciphertextWithPrefix.length) {
-      byte[] salt = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, SALT_LENGTH);
-      SecretKey key = genPswdKey(pswd, salt);
-      setAll(iv, salt, key);
-    } else { setIV(iv); }
-    
+    if (IV_LENGTH + SALT_LENGTH < ciphertextWithPrefix.length) {
+      salt = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, SALT_LENGTH);
+    } 
+
+    if (pswd != "") {
+      key = genPswdKey(pswd, salt);
+    } 
+
+    setAll(iv, salt, key);
     byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
     return result;
   }
 
   public byte[] headerIV(byte[] ciphertextWithPrefix) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
-    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
+    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, ciphertextWithPrefix.length - 1);
     return result;
   }
 
@@ -91,6 +98,18 @@ public class AESCipher extends CryptUtils {
     
     byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
     return result;
+  }
+
+  public byte[] headerBB(byte[] ciphertextWithPrefix, byte[] iv)  {
+      ByteBuffer bb = ByteBuffer.wrap(ciphertextWithPrefix);
+      //iv = new byte[IV_LENGTH];
+      bb.get(iv); //bb.get(iv, 0, iv.length);
+      this.iv = iv;
+
+      byte[] result = new byte[bb.remaining()];
+      bb.get(result);
+      return result;
+
   }
 
   private Cipher initCipher(int cipherMode, byte[] iv, SecretKey key) throws Exception {
@@ -122,7 +141,32 @@ public class AESCipher extends CryptUtils {
   // Test should not be aware of implementation details
   // Assume key is not generated from password
   public String decryptIV(byte[] ciphertextWithIV, SecretKey key) throws Exception { 
-    String result = decrypt(headerIV(ciphertextWithIV), iv, key);
+    //byte[] ciphertext = headerIV(ciphertextWithIV);
+        //byte[] iv = new byte[IV_LENGTH];
+    //byte[] ciphertext = headerBB(ciphertextWithIV, iv);
+    //byte[] iv = this.iv;
+
+    ByteBuffer bb = ByteBuffer.wrap(ciphertextWithIV);
+    //byte[] iv = new byte[IV_LENGTH];
+    //bb.get(iv); //bb.get(iv, 0, iv.length);
+    byte[] iv = Arrays.copyOfRange(ciphertextWithIV, 0, IV_LENGTH); 
+    byte[] ciphertext = new byte[bb.remaining()];
+    bb.get(ciphertext);
+
+    System.out.println(" In AES Cipher ");
+    System.out.println("IV: " + Arrays.toString(iv));
+    System.out.println("Full Ciphertext: " + Arrays.toString(ciphertextWithIV));
+    //System.out.println("Key: " + Arrays.toString(key));
+    System.out.println("Key: " + Base64.getEncoder().encodeToString(key.getEncoded()));
+    System.out.println("Parsed Ciphertext: " + Arrays.toString(ciphertext));
+    String result = null;
+    try {
+    result = decrypt(ciphertext, iv, key);
+    } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     return result;
   }
 
@@ -131,6 +175,11 @@ public class AESCipher extends CryptUtils {
     //String result = decrypt(parseHeader(ciphertextWithHeader, pswd), iv, key);
     //return result;
   //}
+
+  public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
+    String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
+    return result;
+  }
 
   public void setIV(byte[] iv)      { this.iv = iv; }
   public void setSalt(byte[] salt)  { this.salt = salt; }

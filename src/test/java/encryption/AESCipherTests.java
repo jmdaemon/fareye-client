@@ -6,6 +6,8 @@ import app.crypt.cipher.aes.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Base64;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -56,11 +58,25 @@ public class AESCipherTests {
 
   @Test 
   public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    //cipher.setAll(cipher.genIV(), null, cipher.genKey());
-    //byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.getIV(), cipher.getKey());
 
-    //assertNotNull(cipher.decryptIV(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should not be empty");
-    //assertEquals("This is the plaintext", cipher.decryptIV(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
+    byte[] plaintext = "This is the plaintext".getBytes(cipher.UTF_8);
+    byte[] iv = cipher.genIV();
+    SecretKey key = cipher.genKey();
+
+    cipher.setAll(iv, null, key);
+
+    byte[] ciphertextWithIV = cipher.encrypt(plaintext, iv, key);
+
+
+    System.out.println(" In Unit Test ");
+    System.out.println("IV: " + Arrays.toString(iv));
+    //System.out.println("Key: " + Arrays.toString(iv));
+    System.out.println("Key: " + Base64.getEncoder().encodeToString(key.getEncoded()));
+    System.out.println("ciphertextWithIV: " + Arrays.toString(ciphertextWithIV));
+    String res = cipher.decryptIV(ciphertextWithIV, key);
+
+    assertNotNull(res, "Decrypted plaintext should not be empty");
+    assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
   }
 
   //@Test 
@@ -72,9 +88,6 @@ public class AESCipherTests {
     //assertEquals("This is the plaintext", cipher.decrypt(ciphertext, cipher.getIV(), cipher.genSalt(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
   //}
 
-  
-
-  
   //public void encrypt_IV_(){
   //}
 
