@@ -32,7 +32,7 @@ public class AESCipherTests {
 
   @Test
   public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
-    byte[] res = cipher.encryptWithIV( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genKey() );
+    byte[] res = cipher.encryptWithPrefix( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), null, cipher.genKey() );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
@@ -40,7 +40,7 @@ public class AESCipherTests {
   @Test
   public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
     byte[] salt = cipher.genSalt();
-    byte[] res = cipher.encryptWithSalt( cipher.genPswdHash("This is the plaintext", salt), cipher.genIV(), salt, cipher.genKey() );
+    byte[] res = cipher.encryptWithPrefix( cipher.genPswdHash("This is the plaintext", salt), cipher.genIV(), salt, cipher.genKey() );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }

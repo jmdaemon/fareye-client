@@ -53,9 +53,7 @@ public class AESCipher extends CryptUtils {
   public byte[] prefixCiphertext(byte[] iv, byte[] salt, byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream(); 
     output.write(iv);
-    if (salt != null) {
-      output.write(salt);
-    }
+    if (salt != null) { output.write(salt); }
     output.write(ciphertext);
     byte[] result = output.toByteArray();
     return result;
@@ -73,17 +71,11 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] encryptWithIV(byte[] plaintext, byte[] iv, SecretKey key) throws Exception {
+  public byte[] encryptWithPrefix(byte[] plaintext, byte[] iv, byte[] salt, SecretKey key) throws Exception {
     byte[] ciphertext = encrypt(plaintext, iv, key);
-    byte[] result = prefixCiphertext(iv, null, ciphertext);
-    return result;
-    }
-
-  public byte[] encryptWithSalt(byte[] pswdHash, byte[] iv, byte[] salt, SecretKey key) throws Exception { 
-    byte[] ciphertext = encrypt(pswdHash, iv, key);
     byte[] result = prefixCiphertext(iv, salt, ciphertext);
     return result;
-  }
+    }
 
   public String decrypt(byte[] ciphertext, byte[] iv, SecretKey key) throws Exception { 
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE, iv, key);
