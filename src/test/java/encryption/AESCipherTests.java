@@ -46,16 +46,10 @@ public class AESCipherTests {
   }
 
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
-    byte[] plaintext = "This is the plaintext".getBytes(cipher.UTF_8);
-    byte[] iv = cipher.genIV();
-    SecretKey key = cipher.genKey();
+    byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genKey());
 
-
-    byte[] ciphertext = cipher.encrypt(plaintext, iv , key);
-    String res = cipher.decrypt(ciphertext, iv, key);
-
-    assertNotNull(res, "Decrypted plaintext should not be empty");
-    assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
+    assertNotNull(cipher.decrypt(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should not be empty");
+    assertEquals("This is the plaintext", cipher.decrypt(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
   }
 
   //public void decrypt_Salt_(){

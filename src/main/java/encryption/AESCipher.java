@@ -27,9 +27,27 @@ public class AESCipher extends CryptUtils {
 
   private final int ITERATION_COUNT = 65536;
 
+  private byte[] iv;
+  private byte[] salt;
+  private SecretKey key;
+
   public AESCipher() {
 
   }
+
+  public void setIV(byte[] iv)      { this.iv = iv; }
+  public void setSalt(byte[] salt)  { this.iv = salt; }
+  public void setKey(SecretKey key) { this.key = key; }
+
+  public void setAll(byte[] iv, byte[] salt, SecretKey key) {
+    setIV(iv);
+    setSalt(salt);
+    setKey(key);
+  }
+
+  public byte[] getIV()     { return this.iv; } 
+  public byte[] getSalt()   { return this.salt; } 
+  public SecretKey getKey() { return this.key; }
 
   public SecretKey genKey() throws NoSuchAlgorithmException {
     KeyGenerator keyGen = KeyGenerator.getInstance("AES");
