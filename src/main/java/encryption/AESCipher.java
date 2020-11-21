@@ -2,6 +2,7 @@ package app.crypt.cipher.aes;
 
 import app.crypt.utils.*;
 
+import java.util.Arrays;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.crypto.Cipher;
@@ -35,20 +36,6 @@ public class AESCipher extends CryptUtils {
 
   }
 
-  public void setIV(byte[] iv)      { this.iv = iv; }
-  public void setSalt(byte[] salt)  { this.salt = salt; }
-  public void setKey(SecretKey key) { this.key = key; }
-
-  public void setAll(byte[] iv, byte[] salt, SecretKey key) {
-    setIV(iv);
-    setSalt(salt);
-    setKey(key);
-  }
-
-  public byte[] getIV()     { return this.iv; } 
-  public byte[] getSalt()   { return this.salt; } 
-  public SecretKey getKey() { return this.key; }
-
   public SecretKey genKey() throws NoSuchAlgorithmException {
     KeyGenerator keyGen = KeyGenerator.getInstance("AES");
     keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
@@ -68,12 +55,41 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] prefixCiphertext(byte[] iv, byte[] salt, byte[] ciphertext) throws IOException {
+  public byte[] genHeader(byte[] iv, byte[] salt, byte[] ciphertext) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream(); 
     output.write(iv);
     if (salt != null) { output.write(salt); }
     output.write(ciphertext);
     byte[] result = output.toByteArray();
+    return result;
+  }
+
+  public byte[] parseHeader(byte[] ciphertextWithPrefix, String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
+
+    if ( IV_LENGTH + SALT_LENGTH < ciphertextWithPrefix.length) {
+      byte[] salt = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, SALT_LENGTH);
+      SecretKey key = genPswdKey(pswd, salt);
+      setAll(iv, salt, key);
+    } else { setIV(iv); }
+    
+    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
+    return result;
+  }
+
+  public byte[] headerIV(byte[] ciphertextWithPrefix) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
+    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
+    return result;
+  }
+
+  public byte[] headerSalt(byte[] ciphertextWithPrefix, String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
+    byte[] salt = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, SALT_LENGTH);
+    SecretKey key = genPswdKey(pswd, salt);
+    setAll(iv, salt, key);
+    
+    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
     return result;
   }
 
@@ -89,16 +105,44 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] encryptWithPrefix(byte[] plaintext, byte[] iv, byte[] salt, SecretKey key) throws Exception {
+  public byte[] encryptWithHeader(byte[] plaintext, byte[] iv, byte[] salt, SecretKey key) throws Exception {
     byte[] ciphertext = encrypt(plaintext, iv, key);
-    byte[] result = prefixCiphertext(iv, salt, ciphertext);
+    byte[] result = genHeader(iv, salt, ciphertext);
     return result;
     }
 
+  // TODO: Update documentation with information from current state
+  // Assume key is not generated from password
   public String decrypt(byte[] ciphertext, byte[] iv, SecretKey key) throws Exception { 
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE, iv, key);
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
+
+  // Test should not be aware of implementation details
+  // Assume key is not generated from password
+  public String decryptIV(byte[] ciphertextWithIV, SecretKey key) throws Exception { 
+    String result = decrypt(headerIV(ciphertextWithIV), iv, key);
+    return result;
+  }
+
+  // Assume key is generated from password
+  //public String decryptSalt(String pswd, byte[] ciphertextWithHeader) throws Exception {
+    //String result = decrypt(parseHeader(ciphertextWithHeader, pswd), iv, key);
+    //return result;
+  //}
+
+  public void setIV(byte[] iv)      { this.iv = iv; }
+  public void setSalt(byte[] salt)  { this.salt = salt; }
+  public void setKey(SecretKey key) { this.key = key; }
+  public void setAll(byte[] iv, byte[] salt, SecretKey key) {
+    setIV(iv);
+    setSalt(salt);
+    setKey(key);
+  }
+
+  public byte[] getIV()     { return this.iv; } 
+  public byte[] getSalt()   { return this.salt; } 
+  public SecretKey getKey() { return this.key; }
   
 }

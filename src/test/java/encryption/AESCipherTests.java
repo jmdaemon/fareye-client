@@ -32,7 +32,7 @@ public class AESCipherTests {
 
   @Test
   public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
-    byte[] res = cipher.encryptWithPrefix( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), null, cipher.genKey() );
+    byte[] res = cipher.encryptWithHeader( "This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), null, cipher.genKey() );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
@@ -40,7 +40,7 @@ public class AESCipherTests {
   @Test
   public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
     byte[] salt = cipher.genSalt();
-    byte[] res = cipher.encryptWithPrefix( cipher.genPswdHash("This is the plaintext", salt), cipher.genIV(), salt, cipher.genKey() );
+    byte[] res = cipher.encryptWithHeader( cipher.genPswdHash("This is the plaintext", salt), cipher.genIV(), salt, cipher.genKey() );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
@@ -54,12 +54,27 @@ public class AESCipherTests {
     assertEquals("This is the plaintext", cipher.decrypt(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
   }
 
-  //public void decrypt_Salt_(){
+  @Test 
+  public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
+    //cipher.setAll(cipher.genIV(), null, cipher.genKey());
+    //byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.getIV(), cipher.getKey());
+
+    //assertNotNull(cipher.decryptIV(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should not be empty");
+    //assertEquals("This is the plaintext", cipher.decryptIV(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
+  }
+
+  //@Test 
+  //public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
+    //cipher.setAll(cipher.genIV(), cipher.genSalt(), cipher.genKey());
+    //byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), cipher.getIV(), cipher.getKey());
+
+    //assertNotNull(cipher.decrypt(ciphertext, cipher.getIV(), cipher.getKey()), "Decrypted plaintext should not be empty");
+    //assertEquals("This is the plaintext", cipher.decrypt(ciphertext, cipher.getIV(), cipher.genSalt(), cipher.getKey()), "Decrypted plaintext should equal the original plaintext");
   //}
 
-  //public void decrypt_Salt_(){
-  //}
+  
 
+  
   //public void encrypt_IV_(){
   //}
 

@@ -8,8 +8,8 @@ import java.nio.charset.StandardCharsets;
 
 public class CryptUtils {
   private String plaintext;
-  private final int IV_LENGTH = 12;
-  private final int SALT_LENGTH = 16;
+  public final int IV_LENGTH = 12;
+  public final int SALT_LENGTH = 16;
 
   public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
