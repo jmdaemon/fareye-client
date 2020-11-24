@@ -111,6 +111,16 @@ public class AESCipher extends CryptUtils {
       return result;
 
   }
+  
+  public String encodeBase64(byte[] ciphertext) {
+    String result = Base64.getEncoder().encodeToString(ciphertext);
+    return result;
+  }
+
+  public byte[] decodeBase64(String ciphertext) {
+    byte[] result = Base64.getDecoder().decode(ciphertext.getBytes(UTF_8));
+    return result;
+  }
 
   private Cipher initCipher(int cipherMode, byte[] iv, SecretKey key) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
@@ -124,10 +134,10 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] encryptWithHeader(byte[] plaintext, byte[] iv, byte[] salt, SecretKey key) throws Exception {
+  public String encryptWithHeader(byte[] plaintext, byte[] iv, byte[] salt, SecretKey key) throws Exception {
     byte[] ciphertext = encrypt(plaintext, iv, key);
     byte[] result = genHeader(iv, salt, ciphertext);
-    return result;
+    return encodeBase64(result);
     }
 
   // TODO: Update documentation with information from current state
@@ -138,27 +148,34 @@ public class AESCipher extends CryptUtils {
     return new String(result, UTF_8);
   }
 
+  public void testPrint(byte[] decodedCiphertext, byte[] iv, byte[] salt, SecretKey key) {
+    // Formatting
+    String IV = Arrays.toString(iv);
+    String SALT = Arrays.toString(salt);
+    String DECODED_CIPHERTEXT = Arrays.toString(decodedCiphertext);
+    String KEY = Base64.getEncoder().encodeToString(key.getEncoded());
+
+    System.out.println(" In AES Cipher ");
+    System.out.println("IV: " + IV);
+    System.out.println("Salt: " + SALT);
+    System.out.println("Key: " + KEY);
+    System.out.println("Decoded Ciphertext: " + DECODED_CIPHERTEXT);
+  }
+
   // Test should not be aware of implementation details
   // Assume key is not generated from password
-  public String decryptIV(byte[] ciphertextWithIV, SecretKey key) throws Exception { 
-    //byte[] ciphertext = headerIV(ciphertextWithIV);
-        //byte[] iv = new byte[IV_LENGTH];
-    //byte[] ciphertext = headerBB(ciphertextWithIV, iv);
-    //byte[] iv = this.iv;
+  public String decryptIV(String ciphertextWithIV, SecretKey key) throws Exception { 
+    byte[] decodedCiphertext = decodeBase64(ciphertextWithIV);
 
-    ByteBuffer bb = ByteBuffer.wrap(ciphertextWithIV);
-    //byte[] iv = new byte[IV_LENGTH];
-    //bb.get(iv); //bb.get(iv, 0, iv.length);
-    byte[] iv = Arrays.copyOfRange(ciphertextWithIV, 0, IV_LENGTH); 
+    ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
+    byte[] iv = new byte[IV_LENGTH];
+    bb.get(iv);
+    byte[] salt = new byte[SALT_LENGTH];
+    bb.get(salt);
     byte[] ciphertext = new byte[bb.remaining()];
     bb.get(ciphertext);
 
-    System.out.println(" In AES Cipher ");
-    System.out.println("IV: " + Arrays.toString(iv));
-    System.out.println("Full Ciphertext: " + Arrays.toString(ciphertextWithIV));
-    //System.out.println("Key: " + Arrays.toString(key));
-    System.out.println("Key: " + Base64.getEncoder().encodeToString(key.getEncoded()));
-    System.out.println("Parsed Ciphertext: " + Arrays.toString(ciphertext));
+    testPrint(ciphertext, iv, salt, key);
     String result = null;
     try {
     result = decrypt(ciphertext, iv, key);
