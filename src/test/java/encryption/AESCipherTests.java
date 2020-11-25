@@ -80,17 +80,5 @@ public class AESCipherTests {
     assertNotNull(cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should not be empty");
     assertEquals("This is the plaintext", cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should equal the original plaintext");
   }
-
-  //public void encrypt_IV_(){
-  //}
-
-  //public void decryptIV_(){
-  //}
-
-  //public void encrypt_IVSalt_(){
-  //}
-
-  //public void decryptIVSALT_(){
-  //}
-
+  
 }
