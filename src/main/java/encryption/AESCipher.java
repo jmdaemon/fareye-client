@@ -127,14 +127,16 @@ public class AESCipher extends CryptUtils {
   }
 
   // Assume key is generated from password
-  //public String decryptSalt(String pswd, byte[] ciphertextWithHeader) throws Exception {
-    //byte[] decodedCiphertext = decodeBase64(ciphertextWithIV);
-    //byte[] ciphertext = parseHeaderIV(decodedCiphertext); 
-    //String result = decrypt(ciphertext, this.iv, key);
+  public String decryptSalt(String pswd, String ciphertextWithHeader) throws Exception {
+    byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
+    byte[] ciphertext = parseHeader(decodedCiphertext); 
+    SecretKey aesKey = genPswdKey(pswd, this.salt);
 
-    //String result = decrypt(parseHeader(ciphertextWithHeader, pswd), iv, key);
-    //return result;
-  //}
+    String result = decrypt(ciphertext, this.iv, aesKey);
+
+    //String result = decrypt(parseHeader(ciphertextWithHeader, pswd), iv, );
+    return result;
+  }
 
   //public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
     //String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
