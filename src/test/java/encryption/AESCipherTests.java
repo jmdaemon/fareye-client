@@ -58,10 +58,7 @@ public class AESCipherTests {
 
   @Test 
   public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    byte[] iv = cipher.genIV();
     SecretKey key = cipher.genKey();
-    cipher.setAll(iv, null, key);
-
     String ciphertextWithIV = cipher.encryptWithHeader("This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genSalt(), key);
     String res = cipher.decryptIV(ciphertextWithIV, key);
 

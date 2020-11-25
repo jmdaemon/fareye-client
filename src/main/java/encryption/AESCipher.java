@@ -138,6 +138,10 @@ public class AESCipher extends CryptUtils {
 
   // Assume key is generated from password
   //public String decryptSalt(String pswd, byte[] ciphertextWithHeader) throws Exception {
+    //byte[] decodedCiphertext = decodeBase64(ciphertextWithIV);
+    //byte[] ciphertext = parseHeaderIV(decodedCiphertext); 
+    //String result = decrypt(ciphertext, this.iv, key);
+
     //String result = decrypt(parseHeader(ciphertextWithHeader, pswd), iv, key);
     //return result;
   //}
