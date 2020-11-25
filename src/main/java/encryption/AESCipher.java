@@ -80,16 +80,6 @@ public class AESCipher extends CryptUtils {
     bb.get(result);
     return result;
   }
-
-  public byte[] headerSalt(byte[] ciphertextWithPrefix, String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
-    byte[] salt = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, SALT_LENGTH);
-    SecretKey key = genPswdKey(pswd, salt);
-    setAll(iv, salt, key);
-    
-    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
-    return result;
-  }
   
   public String encodeBase64(byte[] ciphertext) {
     String result = Base64.getEncoder().encodeToString(ciphertext);
