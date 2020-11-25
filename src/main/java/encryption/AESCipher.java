@@ -91,6 +91,12 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
+  public byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
+    byte[] result = parseHeader(decodedCiphertext); 
+    return result;
+  }
+
   private Cipher initCipher(int cipherMode, byte[] iv, SecretKey key) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
     result.init(cipherMode, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
@@ -120,21 +126,16 @@ public class AESCipher extends CryptUtils {
   // Test should not be aware of implementation details
   // Assume key is not generated from password
   public String decryptIV(String ciphertextWithIV, SecretKey key) throws Exception { 
-    byte[] decodedCiphertext = decodeBase64(ciphertextWithIV);
-    byte[] ciphertext = parseHeader(decodedCiphertext); 
+    byte[] ciphertext = decodeCiphertext(ciphertextWithIV);
     String result = decrypt(ciphertext, this.iv, key);
     return result;
   }
 
   // Assume key is generated from password
   public String decryptSalt(String pswd, String ciphertextWithHeader) throws Exception {
-    byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
-    byte[] ciphertext = parseHeader(decodedCiphertext); 
+    byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
     SecretKey aesKey = genPswdKey(pswd, this.salt);
-
     String result = decrypt(ciphertext, this.iv, aesKey);
-
-    //String result = decrypt(parseHeader(ciphertextWithHeader, pswd), iv, );
     return result;
   }
 
