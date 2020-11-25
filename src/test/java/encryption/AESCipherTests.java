@@ -58,20 +58,11 @@ public class AESCipherTests {
 
   @Test 
   public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    byte[] plaintext = "This is the plaintext".getBytes(cipher.UTF_8);
     byte[] iv = cipher.genIV();
-    byte[] salt = cipher.genSalt();
     SecretKey key = cipher.genKey();
-
     cipher.setAll(iv, null, key);
 
-    String ciphertextWithIV = cipher.encryptWithHeader(plaintext, iv, salt, key);
-
-    System.out.println(" In Unit Test ");
-    System.out.println("IV: " + Arrays.toString(iv));
-    System.out.println("Salt: " + Arrays.toString(salt));
-    System.out.println("Key: " + Base64.getEncoder().encodeToString(key.getEncoded()));
-    System.out.println("ciphertextWithIV: " + ciphertextWithIV);
+    String ciphertextWithIV = cipher.encryptWithHeader("This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genSalt(), key);
     String res = cipher.decryptIV(ciphertextWithIV, key);
 
     assertNotNull(res, "Decrypted plaintext should not be empty");

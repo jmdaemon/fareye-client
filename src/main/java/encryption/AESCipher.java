@@ -66,27 +66,18 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] parseHeader(byte[] ciphertextWithPrefix, String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
-    byte[] salt = null;
-    SecretKey key = null;
+  public byte[] parseHeaderIV(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
+    byte[] iv = new byte[IV_LENGTH];
+    bb.get(iv);
+    this.iv = iv;
 
-    if (IV_LENGTH + SALT_LENGTH < ciphertextWithPrefix.length) {
-      salt = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, SALT_LENGTH);
-    } 
+    byte[] salt = new byte[SALT_LENGTH];
+    bb.get(salt);
+    this.salt = salt;
 
-    if (pswd != "") {
-      key = genPswdKey(pswd, salt);
-    } 
-
-    setAll(iv, salt, key);
-    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
-    return result;
-  }
-
-  public byte[] headerIV(byte[] ciphertextWithPrefix) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] iv = Arrays.copyOfRange(ciphertextWithPrefix, 0, IV_LENGTH);
-    byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, IV_LENGTH, ciphertextWithPrefix.length - 1);
+    byte[] result = new byte[bb.remaining()];
+    bb.get(result);
     return result;
   }
 
@@ -98,18 +89,6 @@ public class AESCipher extends CryptUtils {
     
     byte[] result = Arrays.copyOfRange(ciphertextWithPrefix, SALT_LENGTH, ciphertextWithPrefix.length);
     return result;
-  }
-
-  public byte[] headerBB(byte[] ciphertextWithPrefix, byte[] iv)  {
-      ByteBuffer bb = ByteBuffer.wrap(ciphertextWithPrefix);
-      //iv = new byte[IV_LENGTH];
-      bb.get(iv); //bb.get(iv, 0, iv.length);
-      this.iv = iv;
-
-      byte[] result = new byte[bb.remaining()];
-      bb.get(result);
-      return result;
-
   }
   
   public String encodeBase64(byte[] ciphertext) {
@@ -152,16 +131,8 @@ public class AESCipher extends CryptUtils {
   // Assume key is not generated from password
   public String decryptIV(String ciphertextWithIV, SecretKey key) throws Exception { 
     byte[] decodedCiphertext = decodeBase64(ciphertextWithIV);
-
-    ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
-    byte[] iv = new byte[IV_LENGTH];
-    bb.get(iv);
-    byte[] salt = new byte[SALT_LENGTH];
-    bb.get(salt);
-    byte[] ciphertext = new byte[bb.remaining()];
-    bb.get(ciphertext);
-
-    String result = decrypt(ciphertext, iv, key);
+    byte[] ciphertext = parseHeaderIV(decodedCiphertext); 
+    String result = decrypt(ciphertext, this.iv, key);
     return result;
   }
 
@@ -171,10 +142,10 @@ public class AESCipher extends CryptUtils {
     //return result;
   //}
 
-  public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
-    String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
-    return result;
-  }
+  //public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
+    //String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
+    //return result;
+  //}
 
   public void setIV(byte[] iv)      { this.iv = iv; }
   public void setSalt(byte[] salt)  { this.salt = salt; }
