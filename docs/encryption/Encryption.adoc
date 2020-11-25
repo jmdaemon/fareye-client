@@ -1,15 +1,44 @@
-== Encryption Model
-Models:
+= Encryption Model
+Our encryption module contains the following classes:
 
 - CryptUtils
-- CryptAES
+- AESCipher 
+- RSACipher
 
 == Requirements
 Our Encryption tools must have the following data:
 
 - Encryption key(s)
-- Password Salt (possibly also the password?)
+- Password Salt
 - Encrypted ciphertext 
+
+== CryptUtils
+CryptUtils defines a set of reusable methods for both AES and RSA ciphers (i.e it is not specific to one encryption standard).
+
+.Methods
+CryptUtils can only
+
+- Generate random byte arrays for use in salts, or initialization vectors (IVs).
+
+
+== AES Cipher
+AES Cipher contains helper methods for use in both encryption and decryption of data. 
+AES Cipher stores the following member variables
+
+- byte[] iv
+- byte[] salt
+- Secretkey key
+
+.Methods
+AESCipher can 
+- Generate AES keys, password hashes/keys 
+- Encrypt and Decrypt plaintext and ciphertext in AES-256 GCM with no padding
+- Generate prefix headers for attaching iv, salt to ciphertext
+- Parse headers for obtaining iv, salt, ciphertext
+
+== RSA Cipher
+
+
 
 
 With our models we must be able to do the following on our client's end:
@@ -34,6 +63,8 @@ With our models we must be able to do the following on our client's end:
 - Test with mocks and php frontend later -> for server later
 - Test with mocks in java application -> for client
 
+*Note* We could possibly define a Data class
+
 
 - Possibly encrypt files
 
@@ -43,7 +74,6 @@ With our models we must be able to do the following on our client's end:
 - Client side certificate validation 
 - Merge CryptUtils with CryptAES? 
 
-== Methods
 
 === Encrypt
 Encrypt should take a key (AES or RSA), some plaintext (our message), and/or an IV and/or a Salt.
