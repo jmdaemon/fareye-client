@@ -148,20 +148,6 @@ public class AESCipher extends CryptUtils {
     return new String(result, UTF_8);
   }
 
-  public void testPrint(byte[] decodedCiphertext, byte[] iv, byte[] salt, SecretKey key) {
-    // Formatting
-    String IV = Arrays.toString(iv);
-    String SALT = Arrays.toString(salt);
-    String DECODED_CIPHERTEXT = Arrays.toString(decodedCiphertext);
-    String KEY = Base64.getEncoder().encodeToString(key.getEncoded());
-
-    System.out.println(" In AES Cipher ");
-    System.out.println("IV: " + IV);
-    System.out.println("Salt: " + SALT);
-    System.out.println("Key: " + KEY);
-    System.out.println("Decoded Ciphertext: " + DECODED_CIPHERTEXT);
-  }
-
   // Test should not be aware of implementation details
   // Assume key is not generated from password
   public String decryptIV(String ciphertextWithIV, SecretKey key) throws Exception { 
@@ -175,15 +161,7 @@ public class AESCipher extends CryptUtils {
     byte[] ciphertext = new byte[bb.remaining()];
     bb.get(ciphertext);
 
-    testPrint(ciphertext, iv, salt, key);
-    String result = null;
-    try {
-    result = decrypt(ciphertext, iv, key);
-    } catch (Exception e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    String result = decrypt(ciphertext, iv, key);
     return result;
   }
 
