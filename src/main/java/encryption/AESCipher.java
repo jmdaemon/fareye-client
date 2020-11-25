@@ -66,7 +66,7 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] parseHeaderIV(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
     byte[] iv = new byte[IV_LENGTH];
     bb.get(iv);
@@ -121,7 +121,7 @@ public class AESCipher extends CryptUtils {
   // Assume key is not generated from password
   public String decryptIV(String ciphertextWithIV, SecretKey key) throws Exception { 
     byte[] decodedCiphertext = decodeBase64(ciphertextWithIV);
-    byte[] ciphertext = parseHeaderIV(decodedCiphertext); 
+    byte[] ciphertext = parseHeader(decodedCiphertext); 
     String result = decrypt(ciphertext, this.iv, key);
     return result;
   }
