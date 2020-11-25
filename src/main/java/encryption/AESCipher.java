@@ -134,8 +134,7 @@ public class AESCipher extends CryptUtils {
   // Assume key is generated from password
   public String decryptSalt(String pswd, String ciphertextWithHeader) throws Exception {
     byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
-    SecretKey aesKey = genPswdKey(pswd, this.salt);
-    String result = decrypt(ciphertext, this.iv, aesKey);
+    String result = decrypt(ciphertext, this.iv, genPswdKey(pswd, this.salt));
     return result;
   }
 
