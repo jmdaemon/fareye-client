@@ -1,4 +1,5 @@
 = Encryption Model
+
 Our encryption module contains the following classes:
 
 - CryptUtils
