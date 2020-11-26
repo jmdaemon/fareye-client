@@ -66,11 +66,11 @@ public class AESCipher extends CryptUtils {
 
   //// TODO: Update documentation with information from current state
   //// Assume key is not generated from password
-  //public String decrypt(byte[] ciphertext, byte[] iv, SecretKey key) throws Exception { 
-    //Cipher cipher = initCipher(Cipher.DECRYPT_MODE, iv, key);
-    //byte[] result = cipher.doFinal(ciphertext);
-    //return new String(result, UTF_8);
-  //}
+  public String decrypt(byte[] ciphertext, Data data) throws Exception { 
+    Cipher cipher = initCipher(Cipher.DECRYPT_MODE, data.getIV(), data.getKey());
+    byte[] result = cipher.doFinal(ciphertext);
+    return new String(result, UTF_8);
+  }
 
   //// Test should not be aware of implementation details
   //// Assume key is not generated from password
