@@ -34,29 +34,29 @@ public class AESCipherTests {
     assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
   }
 
-  //@Test
-  //public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
-    //String res = cipher.encryptWithHeader( "This is the plaintext".getBytes(cipher.UTF_8), new Data(cipher.genIV(), null, cipher.genKey()) );
-    //assertNotNull(res, "Ciphertext should be initialized");
-    //assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
-  //}
+  @Test
+  public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
+    String res = cipher.encryptWithHeader( "This is the plaintext".getBytes(cipher.UTF_8), DataFactory.createDataIV() );
+    assertNotNull(res, "Ciphertext should be initialized");
+    assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
+  }
 
-  //@Test
-  //public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
-    //Data data = new Data(cipher.genIV(), cipher.genSalt(), cipher.genKey());
-    //String res = cipher.encryptWithHeader( cipher.genPswdHash("This is the plaintext", data.getSalt()), data);
-    //assertNotNull(res, "Ciphertext should be initialized");
-    //assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
-  //}
+  @Test
+  public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
+    Data data = DataFactory.createDataSalt();
+    String res = cipher.encryptWithHeader( cipher.genPswdHash("This is the plaintext", data.getSalt()), data );
+    assertNotNull(res, "Ciphertext should be initialized");
+    assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
+  }
 
-  //@Test
-  //public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
-    //Data data = new Data(cipher.genIV(), null, cipher.genKey());
-    //byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), data);
+  @Test
+  public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
+    Data data = DataFactory.createDataIV();
+    byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), data);
 
-    //assertNotNull(cipher.decrypt(ciphertext, data), "Decrypted plaintext should not be empty");
-    //assertEquals("This is the plaintext", cipher.decrypt(ciphertext, data), "Decrypted plaintext should equal the original plaintext");
-  //}
+    assertNotNull(cipher.decrypt(ciphertext, data), "Decrypted plaintext should not be empty");
+    assertEquals("This is the plaintext", cipher.decrypt(ciphertext, data), "Decrypted plaintext should equal the original plaintext");
+  }
 
   //@Test 
   //public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
