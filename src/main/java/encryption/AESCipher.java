@@ -16,18 +16,17 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-
 public class AESCipher extends CryptUtils {
 
   private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
   private static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
   private static final int TAG_LENGTH_BIT = 128;
   private final int ITERATION_COUNT = 65536;
-  private final int AES_KEY_LENGTH = 256;
+  private static final int AES_KEY_LENGTH = 256;
 
   public AESCipher() { }
 
-  public SecretKey genKey() throws NoSuchAlgorithmException {
+  public static SecretKey genKey() throws NoSuchAlgorithmException {
     KeyGenerator keyGen = KeyGenerator.getInstance("AES");
     keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
     return keyGen.generateKey();
