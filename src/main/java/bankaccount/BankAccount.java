@@ -13,28 +13,31 @@ public class BankAccount {
     private String lName;
     private String pswd;
     private StringBuffer log;
+    
+    private static final int MAX_ACCTNUM_LENGTH = 10000;
+    private static final int MAX_PASS_LENGTH = 32;
 
   public BankAccount() {
-    this.acctNum = genAcctNum(10000); // TODO: Shove all constants into Constants.java and import
+    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH); // TODO: Shove all constants into Constants.java and import
     this.balance = 0.0;
     this.fName = null;
     this.lName = null;
-    this.pswd = genPswd(32); // 32 Characters Long 
+    this.pswd = genPswd(MAX_PASS_LENGTH);
 
-    String timeStamp = genTimeStamp();
     this.log = new StringBuffer();
+    String timeStamp = genTimeStamp();
     this.log.append(timeStamp + "\tNew Bank Account Created.\t\n");
   }
 
   public BankAccount(String firstName, String lastName) {
-    this.acctNum = genAcctNum(10000);
+    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
     this.balance = 0.0;
     this.fName = firstName;
     this.lName = lastName;
-    this.pswd = genPswd(32); 
+    this.pswd = genPswd(MAX_PASS_LENGTH); 
 
-    String timeStamp = genTimeStamp();
     this.log = new StringBuffer();
+    String timeStamp = genTimeStamp();
     this.log.append(timeStamp + "\tNew Bank Account Created.\t\n");
   }
 
