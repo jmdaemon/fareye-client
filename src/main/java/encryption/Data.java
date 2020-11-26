@@ -36,11 +36,11 @@ public class Data extends CryptUtils {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
     byte[] iv = new byte[IV_LENGTH];
     bb.get(iv);
-    iv = iv;
+    Data.iv = iv;
 
     byte[] salt = new byte[SALT_LENGTH];
     bb.get(salt);
-    salt = salt;
+    Data.salt = salt;
 
     byte[] result = new byte[bb.remaining()];
     bb.get(result);
@@ -63,9 +63,9 @@ public class Data extends CryptUtils {
     return result;
   }
 
-  public void setIV(byte[] iv)      { this.iv = iv; }
-  public void setSalt(byte[] salt)  { this.salt = salt; }
-  public void setKey(SecretKey key) { this.key = key; }
+  public void setIV(byte[] iv)      { Data.iv = iv; }
+  public void setSalt(byte[] salt)  { Data.salt = salt; }
+  public void setKey(SecretKey key) { Data.key = key; }
   public void setAll(byte[] iv, byte[] salt, SecretKey key) {
     setIV(iv);
     setSalt(salt);
@@ -75,6 +75,5 @@ public class Data extends CryptUtils {
   public static byte[] getIV()      { return Data.iv; } 
   public static byte[] getSalt()    { return Data.salt; } 
   public static SecretKey getKey()  { return Data.key; }
-
 
 }
