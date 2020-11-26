@@ -1,32 +1,89 @@
-== Encryption Model
-Models:
+= Encryption Model
+
+Our encryption module contains the following classes:
+
 - CryptUtils
-- CryptAES
+- AESCipher 
+- RSACipher
 
 == Requirements
 Our Encryption tools must have the following data:
-- Encryption key(s) 
-- Password Salt (possibly also the password?)
-- Encrypted ciphertext
+
+- Encryption key(s)
+- Password Salt
+- Encrypted ciphertext 
+
+== CryptUtils
+CryptUtils defines a set of reusable methods for both AES and RSA ciphers (i.e it is not specific to one encryption standard).
+
+.Methods
+CryptUtils can only
+
+- Generate random byte arrays for use in salts, or initialization vectors (IVs).
 
 
-With our models we must be able to do the following on our client's end:
-- Encrypt our data in AES-256 GCM format.
-- Decrypt our data
-- Encode our data in base64
-- Store our keys, salt
+== AES Cipher
+AES Cipher contains helper methods for use in both encryption and decryption of data. 
+AES Cipher stores the following member variables
+
+[source, java]
+----
+byte[] iv
+byte[] salt
+Secretkey key
+----
+
+.Methods
+AESCipher can 
+- Generate AES keys, password hashes/keys 
+- Encrypt and Decrypt plaintext and ciphertext in AES-256 GCM with no padding
+- Generate prefix headers for attaching iv, salt to ciphertext
+- Parse headers for obtaining iv, salt, ciphertext
+
+.TODO
+- Could add more tests with invalid parameters to find and fix bugs
+
+== RSA Cipher
+
+
+== Data
+Data contains member variables and helper methods to deal with the formatting and initialization of our data.
+
+Data contins these three member variables:
+
+[source, java]
+----
+static byte[] iv 
+static byte[] salt
+static Secretkey key
+----
+
+.Methods
+Data can 
+- Be initialized with a given iv, salt, or key
+- Generate and parse headers with IV, or Salt prepended to the ciphertext 
+- Encode and decode ciphertext into Base64 Strings
+
+== Data Factory
+Data Factory contains no member variables, and only a few methods. 
+Data Factory is responsible for initializing Data objects and provides syntactical sugar for function calls.
+
+.Methods
+DataFactory can
+
+- Generate Data objects with an IV (no salt);
+- Generate Data objects with an IV and salt;
+
+
+
+- Store our keys, salt (In member vars and possibly to keystore). +
+- Create php mocks
+- Possibility for file encryption
 
 *To Be Implemented*
 
 *To Be Considered*
 - Client side certificate validation 
-- Merge CryptUtils with CryptAES? 
-
-== TODO
-
-== Discussion
-- Wrap data up in .json format for easy access?
-- Send data as base64 file? Most likely as we'll need to temporarily save it, or perhaps just use java listener
 
 == Possible Features
 SSL Configuration for key and data transmission.

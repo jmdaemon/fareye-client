@@ -54,18 +54,18 @@ sourceSets {
     main {
          java {
             //srcDirs = ['src']
-            //srcDirs = ['src/main/java/encryption'] // Test encryption directory only
+            srcDirs = ['src/main/java/encryption']
             //srcDirs = ['src/main/java/interface/']
-            srcDirs = ['src/main/java/bankaccount']
+            //srcDirs = ['src/main/java/bankaccount']
          }
 
     }
 
     test {
         java {
-            //srcDirs = ['src/test/java/encryption']
+            srcDirs = ['src/test/java/encryption']
             //srcDirs = ['src/test/java/interface']
-            srcDirs = ['src/test/java/bankaccount']
+            //srcDirs = ['src/test/java/bankaccount']
         }
     }
 }
