@@ -65,19 +65,14 @@ public class AESCipherTests {
     assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
   }
 
-  //@Test 
-  //public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
+  @Test 
+  public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
+    Data data = DataFactory.createDataSalt();
+    data.setKey(cipher.genPswdKey("password", data.getSalt()));
 
-    //byte[] salt = cipher.genSalt();
-    //SecretKey aesKeyFromPswd = cipher.genPswdKey("password", salt);
-
-    //cipher.setAll(cipher.genIV(), salt, aesKeyFromPswd);
-
-    //byte[] plaintext = "This is the plaintext".getBytes(cipher.UTF_8);
-    //String ciphertext = cipher.encryptWithHeader(plaintext, cipher.getIV(), salt, aesKeyFromPswd);
-
-    //assertNotNull(cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should not be empty");
-    //assertEquals("This is the plaintext", cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should equal the original plaintext");
-  //}
+    String ciphertext = cipher.encryptWithHeader("This is the plaintext".getBytes(cipher.UTF_8), data);
+    assertNotNull(cipher.decryptSalt("password", ciphertext, data), "Decrypted plaintext should not be empty");
+    assertEquals("This is the plaintext", cipher.decryptSalt("password", ciphertext, data), "Decrypted plaintext should equal the original plaintext");
+  }
   
 }

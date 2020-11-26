@@ -79,12 +79,13 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  //// Assume key is generated from password
-  //public String decryptSalt(String pswd, String ciphertextWithHeader) throws Exception {
-    //byte[] ciphertext = decodeCiphertext(ciphertextWithHeader);
-    //String result = decrypt(ciphertext, this.iv, genPswdKey(pswd, this.salt));
-    //return result;
-  //}
+  // Assume key is generated from password
+  public String decryptSalt(String pswd, String ciphertextWithHeader, Data data) throws Exception {
+    byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader, IV_LENGTH, SALT_LENGTH);
+    data.setKey(genPswdKey(pswd, data.getSalt()));
+    String result = decrypt(ciphertext, data);
+    return result;
+  }
 
   //public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
     //String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
