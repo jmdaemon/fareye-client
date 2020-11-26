@@ -53,20 +53,17 @@ public class AESCipherTests {
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
     Data data = DataFactory.createDataIV();
     byte[] ciphertext = cipher.encrypt("This is the plaintext".getBytes(cipher.UTF_8), data);
-
     assertNotNull(cipher.decrypt(ciphertext, data), "Decrypted plaintext should not be empty");
     assertEquals("This is the plaintext", cipher.decrypt(ciphertext, data), "Decrypted plaintext should equal the original plaintext");
   }
 
-  //@Test 
-  //public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    //SecretKey key = cipher.genKey();
-    //String ciphertextWithIV = cipher.encryptWithHeader("This is the plaintext".getBytes(cipher.UTF_8), cipher.genIV(), cipher.genSalt(), key);
-    //String res = cipher.decryptIV(ciphertextWithIV, key);
-
-    //assertNotNull(res, "Decrypted plaintext should not be empty");
-    //assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
-  //}
+  @Test 
+  public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
+    Data data = DataFactory.createDataSalt();
+    String res = cipher.decryptIV(cipher.encryptWithHeader("This is the plaintext".getBytes(cipher.UTF_8), data), data);
+    assertNotNull(res, "Decrypted plaintext should not be empty");
+    assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
+  }
 
   //@Test 
   //public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {

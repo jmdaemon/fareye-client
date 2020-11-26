@@ -71,13 +71,13 @@ public class AESCipher extends CryptUtils {
     return new String(result, UTF_8);
   }
 
-  //// Test should not be aware of implementation details
-  //// Assume key is not generated from password
-  //public String decryptIV(String ciphertextWithIV, SecretKey key) throws Exception { 
-    //byte[] ciphertext = decodeCiphertext(ciphertextWithIV);
-    //String result = decrypt(ciphertext, this.iv, key);
-    //return result;
-  //}
+  // Test should not be aware of implementation details
+  // Assume key is not generated from password
+  public String decryptIV(String ciphertextWithIV, Data data) throws Exception { 
+    byte[] ciphertext = data.decodeCiphertext(ciphertextWithIV, IV_LENGTH, SALT_LENGTH);
+    String result = decrypt(ciphertext, data);
+    return result;
+  }
 
   //// Assume key is generated from password
   //public String decryptSalt(String pswd, String ciphertextWithHeader) throws Exception {
