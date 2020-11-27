@@ -90,7 +90,7 @@ public class BankAccount {
 		return acctNum;
   }
 
-  private String genPswd(int len) {
+  private static String genPswd(int len) {
     final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
     Random randGen = new Random();
