@@ -110,6 +110,6 @@ public class BankAccount {
     System.out.println("Balance: " +    getBalance());
     System.out.println("First Name: " + getFName());
     System.out.println("Last Name: " +  getLName());
-    System.out.println(getLog().toStringBuffer());
+    System.out.println(getLog().toStringBuffer().toString());
   }
 } 
