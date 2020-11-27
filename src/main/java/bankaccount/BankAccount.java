@@ -2,7 +2,6 @@ package app.bankAccount;
 
 import app.log.*;
 
-import java.lang.StringBuilder;
 import java.util.Random;
 
 public class BankAccount { 
