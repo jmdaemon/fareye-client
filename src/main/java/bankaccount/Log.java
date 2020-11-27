@@ -29,7 +29,11 @@ public class Log {
   }
 
   public void logTo(String msg, BankAccount acct) {
-    acct.getLog().logAppend(msg);
+    Log acctLog = acct.getLog();
+    //System.out.println(msg);
+    //System.out.println(acctLog.toStringBuffer().toString());
+    //acct.getLog().toStringBuffer().append(msg);
+    acctLog.logAppend(msg);
   }
 
   public void logMessage(String msg) { 
@@ -42,7 +46,7 @@ public class Log {
     logAppend(timeStamp + "\t" + msg + "\t" + "[$" + amount + "]\n");
   }
 
-  public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
+  public void logMessage(BankAccount sender, BankAccount receiver, double amount) { // sender is the current bankAccount
     String timeStamp = genTimeStamp();
     String senderMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\t\n"); 
     String receiverMsg = ("[$" + amount + " received from account " + sender.getAcctNum() + "]\t\n");
@@ -86,6 +90,9 @@ public class Log {
     String matches = search(msg);
     String line = parseLog(matches, "\\r?\\n");
     String result = parseLog(matches, "\\t+");
+
+    //System.out.println("First line " + line);
+    //System.out.println("Final result " + result);
     return result;
   }
 
