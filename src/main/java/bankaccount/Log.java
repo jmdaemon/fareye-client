@@ -2,13 +2,21 @@ package app.log;
 
 import app.bankAccount.*;
 
+import java.util.Arrays;
 import java.lang.StringBuffer;
 import java.lang.StringBuilder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class Log {
-  private StringBuffer log = new StringBuffer();
+  private StringBuffer log;
+
+  public Log() { 
+    this.log = new StringBuffer();
+  }
 
   private String genTimeStamp() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy.mm.dd.HH.mm.sss");
@@ -22,7 +30,7 @@ public class Log {
 
   public void logTo(String msg, BankAccount acct) {
     Log log = acct.getLog();
-    log.logAppend(msg);
+    logAppend(msg);
   }
 
   public void logMessage(String msg) { 
@@ -37,8 +45,8 @@ public class Log {
 
   public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
     String timeStamp = genTimeStamp();
-    String senderMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\n"); 
-    String receiverMsg = ("[$" + amount + " received from account " + sender.getAcctNum() + "]\n");
+    String senderMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\t\n"); 
+    String receiverMsg = ("[$" + amount + " received from account " + sender.getAcctNum() + "]\t\n");
     logTo( (timeStamp + "\tTransfer " + senderMsg), sender);
     logTo( (timeStamp + "\tTransfer " + receiverMsg), receiver);
   }
@@ -49,10 +57,62 @@ public class Log {
     logAppend(timeStamp + "\tTransfer Failed\t" + failMsg); 
   }
 
+  public String search(String msg) {
+    Pattern pattern = Pattern.compile(msg);
+    Matcher matcher = pattern.matcher(this.log.toString());
+    
+    StringBuilder results = new StringBuilder();
+
+    if (matcher.find()) {
+      results.append(matcher.group());
+    }
+    //long matches = matcher.results().count();
+
+    //for (int i = 0; i < matches; i++) {
+      //results.append(matcher.group(i));
+    //}
+
+    //int count = 0; 
+    //while (matcher.find())  {
+      //results.append(matcher.group(count));
+      //count++;
+    //}
+    return results.toString(); // Returns with \n
+  }
+  
   public String parseLog(int index) {
     String[] parsedLog = this.log.toString().split("\\t+");
-    String logRes = parsedLog[index];
-    return logRes;
+    String result = parsedLog[index];
+    return result;
+  }
+
+  public String parseLog(String matches, String delim) {
+    String[] parsedLog = matches.split(delim);
+    //String result = Arrays.toString(parsedLog);
+    StringBuilder result = new StringBuilder(); 
+    for (String value : parsedLog) { 
+      result.append(value);
+    }
+    return result.toString();
+  }
+ 
+
+
+  //public String parseLog(int index, String delim) {
+    ////String[] parsedLog = this.log.toString().split("\\t+");
+    ////String[] parsedLog = this.log.toString().split("\\r?\\n");
+    //String[] parsedLog = this.log.toString().split(delim);
+    //String result = parsedLog[index];
+    //return result;
+  //}
+
+  public String searchFor(String msg) {
+    String matches = search(msg);
+    String line = parseLog(matches, "\\r?\\n");
+    System.out.println("First Line " + line );
+    String result = parseLog(matches, "\\t+");
+    System.out.println("Final Result " + result);
+    return result;
   }
 
   public StringBuffer toStringBuffer() { return this.log; }

@@ -73,7 +73,7 @@ public class BankAccountTests {
   @Test
   public void transferTo_Acct1000_ReturnsTrue() {
     bankAccount.deposit(1000);
-    String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]\n"); 
+    String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]"); 
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
     assertEquals(expectedLog, bankAccount.getLog().parseLog(5), "Account Log has successfully recorded the transaction");
   }
