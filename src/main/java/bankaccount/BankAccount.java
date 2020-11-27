@@ -93,17 +93,13 @@ public class BankAccount {
   private String genPswd(int len) {
     final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-    StringBuilder newPswd = new StringBuilder();
     Random randGen = new Random();
-    while (0 < len--) {
-        newPswd.append(
-            charset.charAt(
-              randGen.nextInt(charset.length())
-              )
-            );
+    char[] genPswd = new char[len];
+    for (int i = 0; i < len; i++) {
+      genPswd[i] = charset.charAt( randGen.nextInt(charset.length()) );
     }
-
-    return newPswd.toString();
+    String result = String.valueOf(genPswd);
+    return result;
   }
 
     public double getBalance() { return this.balance; }
