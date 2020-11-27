@@ -48,17 +48,16 @@ public class BankAccount {
 			return false;
 	}
 
-  public boolean transferTo (double amount, BankAccount target){
-      if (amount > 0 && (hasFunds(amount)) && target != null) { 
-        this.log.logMessage(this, target, amount);
-        return true; 
-      } else if (amount > 0 && target != null) { 
-        this.log.logMessage(target, amount);
-      } 
-      else {
-        this.log.logMessage("Transfer Failed");
+  public boolean transferTo (double amount, BankAccount target){ 
+    if (amount > 0 && (hasFunds(amount)) && target != null) { 
+      this.log.logMessage(this, target, amount);
+      return true; 
+    } else if (amount == 0) {
+      return true; 
+    } else {
+      this.log.logMessage("Transfer Failed");
     }
-      return false;
+    return false;
   }
 
   public boolean checkPswd(String pass) {
