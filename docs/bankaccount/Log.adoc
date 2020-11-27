@@ -1,0 +1,30 @@
+= Log Model
+
+== Requirements
+Our log must do have the following requirements:
+
+- An internal log which logs the transaction history of a BankAccount to a file (transaction_history)
+-
+-
+
+.Methods
+Log must:
+- Write strings to a logAppend which appends the log to the end of our current history.
+
+.search
+Inputs: A string message like "Deposit Successful" "deposit"
+Outputs: A string with `
+
+
+
+- First we get a string to match/filter like "Deposit Successful"
+- Then we need to return either a 
+  - String of matches
+  - String array of matches
+  parseLog
+- Then in the parseLog we first filter by each newline and return either a
+  - String of matches(probably preferred since we can split easily again)
+  - String array of matches
+- Then finally we parse it again and return another list of 
+
+- If our log is too long(too many transactions) we should just dump them to a file and read them from there instead.
