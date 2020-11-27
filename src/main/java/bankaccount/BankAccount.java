@@ -6,17 +6,17 @@ import java.util.Random;
 
 public class BankAccount { 
   private final int MAX_ACCTNUM_LENGTH = 10000;
-  private final int MAX_PASS_LENGTH = 32;
+  private final int DEFAULT_PASS_LENGTH = 32;
   private int acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
   private double balance = 0.0;
   private String fName = null;
   private String lName = null;
-  private String pswd = genPswd(MAX_PASS_LENGTH);
+  private String pswd = genPswd(DEFAULT_PASS_LENGTH);
   private Log log = new Log();
 
   public BankAccount() {
     this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH); // TODO: Shove all constants into Constants.java and import
-    this.pswd = genPswd(MAX_PASS_LENGTH);
+    this.pswd = genPswd(DEFAULT_PASS_LENGTH);
     this.log.logMessage("New Bank Account Created.");
   }
 
