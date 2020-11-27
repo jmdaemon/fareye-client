@@ -31,13 +31,13 @@ public class BankAccount {
       balance += amount;
       this.log.logMessage("Deposit Successful", amount);
 			return true;
-		} else
+    } else
       this.log.logMessage("Deposit Unsuccessful");
 			return false;
 	}
 
   public boolean withdraw(double amount) {
-		if (amount > 0 && amount <= balance) {
+		if (amount > 0 && hasFunds(amount)) {
       balance -= amount;
       this.log.logMessage("Withdrawal Successful", amount);
 			return true;
@@ -61,6 +61,11 @@ public class BankAccount {
 
   public boolean checkPswd(String pass) {
     boolean result = (pass.equals(this.pswd)) ? true : false;
+    return result;
+  }
+
+  public boolean hasFunds(double amount) {
+    boolean result = (this.balance >= amount) ? true : false;
     return result;
   }
 
