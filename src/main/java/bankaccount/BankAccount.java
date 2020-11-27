@@ -27,13 +27,15 @@ public class BankAccount {
   }
 
 	public boolean deposit(double amount) {
-		if (amount >= 0) {
+    if (amount > 0) { 
       balance += amount;
       this.log.logMessage("Deposit Successful", amount);
-			return true;
-    } else
+      return true;
+    } else if (amount == 0) {
+      return true;
+    } else 
       this.log.logMessage("Deposit Unsuccessful");
-			return false;
+    return false;
 	}
 
   public boolean withdraw(double amount) {
