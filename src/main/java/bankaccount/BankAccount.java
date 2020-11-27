@@ -60,10 +60,8 @@ public class BankAccount {
   }
 
   public boolean checkPswd(String pass) {
-    if (pass.equals(this.pswd)) {
-      return true;
-    } else
-      return false;
+    boolean result = (pass.equals(this.pswd)) ? true : false;
+    return result;
   }
 
   public boolean resetPswd(String currPass, String newPass) {
