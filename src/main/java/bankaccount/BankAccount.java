@@ -68,7 +68,7 @@ public class BankAccount {
   }
 
   public boolean resetPswd(String currPass, String newPass) {
-    if (currPass.equals(this.pswd)) {
+    if (checkPswd(currPass)) {
       this.pswd = newPass;
       this.log.logMessage("Password Successfully Changed");
       return true;
