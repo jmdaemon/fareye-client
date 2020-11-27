@@ -1,0 +1,15 @@
+= Log Model
+
+== Requirements
+Log is in charge of generating transaction messages, timestamps, formatting the logs, and searching for transactions with passed keywords.
+
+.Methods
+Log can:
+- Append messages to the end of our running transaction history. 
+- Send messages to the logs of BankAccounts
+- Generate time stamps to keep track of the current date.
+- Search the logs via keywords.
+
+.TODO
+- Find alternatives to store and view account transaction history.
+- Could use a .csv file to store the long transaction history.
