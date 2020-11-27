@@ -49,7 +49,7 @@ public class BankAccount {
 	}
 
   public boolean transferTo (double amount, BankAccount target){
-      if (amount > 0 && this.getBalance() >= amount && target != null) { 
+      if (amount > 0 && (hasFunds(amount)) && target != null) { 
         this.log.logMessage(this, target, amount);
         return true; 
       } else if (amount > 0 && target != null) { 
@@ -67,7 +67,7 @@ public class BankAccount {
   }
 
   public boolean hasFunds(double amount) {
-    boolean result = (this.balance >= amount) ? true : false;
+    boolean result = (getBalance() >= amount) ? true : false;
     return result;
   }
 
