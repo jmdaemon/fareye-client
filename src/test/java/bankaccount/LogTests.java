@@ -12,7 +12,6 @@ public class LogTests {
   @Test
   public void search_ReturnsLogMsg() {
     acct.deposit(100);
-    System.out.println(acct.getLog().toStringBuffer().toString());
     String res = acct.getLog().searchFor("Deposit Successful");
     assertNotNull(res, "Deposit should be logged in the log");
     assertEquals("Deposit Successful", res, "Log should be formatted correctly");
