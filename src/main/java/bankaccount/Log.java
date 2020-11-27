@@ -62,22 +62,10 @@ public class Log {
     Matcher matcher = pattern.matcher(this.log.toString());
     
     StringBuilder results = new StringBuilder();
-
     if (matcher.find()) {
       results.append(matcher.group());
     }
-    //long matches = matcher.results().count();
-
-    //for (int i = 0; i < matches; i++) {
-      //results.append(matcher.group(i));
-    //}
-
-    //int count = 0; 
-    //while (matcher.find())  {
-      //results.append(matcher.group(count));
-      //count++;
-    //}
-    return results.toString(); // Returns with \n
+    return results.toString();
   }
   
   public String parseLog(int index) {
@@ -88,7 +76,6 @@ public class Log {
 
   public String parseLog(String matches, String delim) {
     String[] parsedLog = matches.split(delim);
-    //String result = Arrays.toString(parsedLog);
     StringBuilder result = new StringBuilder(); 
     for (String value : parsedLog) { 
       result.append(value);
@@ -96,22 +83,10 @@ public class Log {
     return result.toString();
   }
  
-
-
-  //public String parseLog(int index, String delim) {
-    ////String[] parsedLog = this.log.toString().split("\\t+");
-    ////String[] parsedLog = this.log.toString().split("\\r?\\n");
-    //String[] parsedLog = this.log.toString().split(delim);
-    //String result = parsedLog[index];
-    //return result;
-  //}
-
   public String searchFor(String msg) {
     String matches = search(msg);
     String line = parseLog(matches, "\\r?\\n");
-    System.out.println("First Line " + line );
     String result = parseLog(matches, "\\t+");
-    System.out.println("Final Result " + result);
     return result;
   }
 
