@@ -67,12 +67,6 @@ public class Log {
     return results.toString();
   }
   
-  public String parseLog(int index) {
-    String[] parsedLog = this.log.toString().split("\\t+");
-    String result = parsedLog[index];
-    return result;
-  }
-
   public String parseLog(String matches, String delim) {
     String[] parsedLog = matches.split(delim);
     StringBuilder result = new StringBuilder(); 
