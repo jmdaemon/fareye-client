@@ -29,8 +29,7 @@ public class Log {
   }
 
   public void logTo(String msg, BankAccount acct) {
-    Log log = acct.getLog();
-    logAppend(msg);
+    acct.getLog().logAppend(msg);
   }
 
   public void logMessage(String msg) { 
