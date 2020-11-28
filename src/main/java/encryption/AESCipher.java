@@ -1,6 +1,6 @@
 package app.crypt.cipher.aes;
 
-import app.crypt.utils.*;
+import static app.crypt.utils.CryptUtils.*;
 import app.crypt.data.*;
 
 import javax.crypto.Cipher;
@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-public class AESCipher extends CryptUtils {
+public class AESCipher {
 
   private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
   private static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
@@ -74,7 +74,7 @@ public class AESCipher extends CryptUtils {
 
   public byte[] encrypt(String plaintext) throws Exception { 
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
-    byte[] result = cipher.doFinal(CryptUtils.stringToBytes(plaintext));
+    byte[] result = cipher.doFinal(stringToBytes(plaintext));
     return result;
   }
 
