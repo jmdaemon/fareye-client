@@ -43,4 +43,20 @@ public class LogTests {
     assertNotNull(res, "Deposit should be logged in the log");
     assertEquals("Deposit Successful", res, "Log should be formatted correctly");
   }
+
+  @Test
+  public void writeToFile_CreatesCSVFile() {
+    acct.deposit(100);
+    acct.getLog().writeToFile("./transaction_history.csv");
+    boolean csvfileExists = acct.getLog().fileExists("./transaction_history.csv");
+    assertEquals(true, csvfileExists, "transaction_history should be created");
+  }
+
+  @Test
+  public void readFile_transaction_history_ReturnsTrue() {
+    //boolean csvfileExists = acct.getLog().fileExists("./transaction_history.csv");
+    //String logCSV = acct.getLog().readLog("./transaction_history");
+    //String res = logCSV.searchFor("Deposit Successful");
+    //assertNotNull(res, "Transaction should be logged");
+  }
 }

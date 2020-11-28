@@ -10,6 +10,16 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+import java.util.stream.*;
+import java.util.List;
+//import java.util.stream.Collectors;
 
 public class Log {
   private StringBuffer log;
@@ -75,12 +85,62 @@ public class Log {
     }
     return result.toString();
   }
- 
+
   public String searchFor(String msg) {
     String matches = search(msg);
     String line = parseLog(matches, "\\r?\\n");
     String result = parseLog(matches, "\\t+");
     return result;
+  }
+
+  public String[] splitLog(String delim) {
+    String[] result = this.log.toString().split(delim);
+    return result;
+  }
+
+  public String[] splitLog(String log, String delim) {
+    String[] result = log.split(delim);
+    return result;
+  }
+  
+  public boolean fileExists(String filepath) {
+    File f = new File(filepath);
+    if (f.exists() && !f.isDirectory()) { 
+      return true; 
+    } 
+    return false;
+  }
+
+  public String escapeChars(String data) {
+    String result = data.replaceAll("\\R", " ");
+    if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+        data = data.replace("\"", "\"\"");
+        result = "\"" + data + "\"";
+    }
+    return result;
+  }
+
+  public String stringToCSV(String logEntry) {
+    String[] splitLog = splitLog(logEntry,"\\t+"); 
+    return Stream.of(splitLog)
+      .map(this::escapeChars)
+      .collect(Collectors.joining(", "));
+  }
+
+  public void writeToFile(String filepath) {
+    if (fileExists(filepath)) {
+      return;
+    } 
+
+    List<String> logData = Arrays.asList(splitLog("\\r?\\n"));
+    File logCSV = new File(filepath);
+    try (PrintWriter pw = new PrintWriter(logCSV)) {
+      logData.stream()
+        .map(this::stringToCSV) 
+        .forEach(pw::println);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public StringBuffer toStringBuffer() { return this.log; }
