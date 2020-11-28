@@ -50,6 +50,8 @@ public class BankAccount {
 
   public boolean transferTo (double amount, BankAccount target){ 
     if (amount > 0 && (hasFunds(amount)) && target != null) { 
+      setBalance(balance -= amount);
+      target.setBalance(target.getBalance() + amount);
       this.log.logMessage(this, target, amount);
       return true; 
     } else if (amount == 0) {
@@ -82,6 +84,7 @@ public class BankAccount {
 
   void setFName(String fName) { this.fName = fName; }
   void setLName(String lName) { this.lName = lName; }
+  void setBalance(double newBalance) { this.balance = newBalance; }
 
   public static int genAcctNum(int upperBound) {
     int lowerBound = 1;
