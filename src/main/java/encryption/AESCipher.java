@@ -62,33 +62,22 @@ public class AESCipher extends CryptUtils {
     return data.encodeBase64(result);
     }
 
-  //// TODO: Update documentation with information from current state
-  //// Assume key is not generated from password
   public String decrypt(byte[] ciphertext, Data data) throws Exception { 
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE, data);
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
 
-  // Test should not be aware of implementation details
-  // Assume key is not generated from password
   public String decryptIV(String ciphertextWithIV, Data data) throws Exception { 
     byte[] ciphertext = data.decodeCiphertext(ciphertextWithIV, IV_LENGTH, SALT_LENGTH);
     String result = decrypt(ciphertext, data);
     return result;
   }
 
-  // Assume key is generated from password
   public String decryptSalt(String pswd, String ciphertextWithHeader, Data data) throws Exception {
     byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader, IV_LENGTH, SALT_LENGTH);
     data.setKey(genPswdKey(pswd, data.getSalt()));
     String result = decrypt(ciphertext, data);
     return result;
   }
-
-  //public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
-    //String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
-    //return result;
-  //}
-
 }
