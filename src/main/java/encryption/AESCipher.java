@@ -52,14 +52,14 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public byte[] encrypt(byte[] plaintext) throws Exception { 
+  public byte[] encrypt(String plaintext) throws Exception { 
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, this.data);
     byte[] result = cipher.doFinal(plaintext);
     return result;
   }
 
-  public String encryptWithHeader(byte[] plaintext) throws Exception {
-    byte[] ciphertext = encrypt(plaintext);
+  public String encryptWithHeader(String plaintext) throws Exception {
+    byte[] ciphertext = encrypt(CryptUtils.stringToBytes(plaintext));
     byte[] result = data.genHeader(ciphertext);
     return data.encodeBase64(result);
     }
