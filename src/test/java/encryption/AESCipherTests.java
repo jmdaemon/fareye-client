@@ -2,7 +2,6 @@ package test.crypt.cipher.aes;
 
 import app.crypt.utils.*;
 import app.crypt.data.*;
-import app.crypt.datafactory.*;
 import app.crypt.cipher.aes.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
@@ -24,7 +23,8 @@ public class AESCipherTests {
 
   @Test
   public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-    assertNotNull(cipher.genPswdKey("This is the user password", cipher.genSalt()), "AES Key should be initialized");
+    cipher.createDataSalt();
+    assertNotNull(cipher.genPswdKey("This is the user password", cipher.getSalt()), "AES Key should be initialized");
   }
   
   @Test
@@ -46,7 +46,7 @@ public class AESCipherTests {
   @Test
   public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
     cipher.createDataSalt();
-    String res = cipher.encryptWithHeader(cipher.genPswdHash("This is the plaintext");
+    String res = cipher.encryptWithHeader( cipher.bytesToString(cipher.genPswdHash("This is the plaintext", cipher.getSalt())) );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
   }
@@ -69,9 +69,11 @@ public class AESCipherTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    cipher.createDataSalt();
-    cipher.setKey(cipher.genPswdKey("password"));
+    cipher.createData("password");
 
+    System.out.println("IV: " + cipher.getIV());
+    System.out.println("Salt: " + cipher.getSalt());
+    System.out.println("Key: " + cipher.getKey());
     String ciphertext = cipher.encryptWithHeader("This is the plaintext");
     assertNotNull(cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should not be empty");
     assertEquals("This is the plaintext", cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should equal the original plaintext");
