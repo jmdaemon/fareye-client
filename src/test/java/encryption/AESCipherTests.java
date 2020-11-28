@@ -58,7 +58,7 @@ public class AESCipherTests {
 
   @Test 
   public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
-    String res = cipherSalt.decryptIV(cipherSalt.encryptWithHeader("This is the plaintext"));
+    String res = cipherSalt.decryptWithHeader(cipherSalt.encryptWithHeader("This is the plaintext"));
     assertNotNull(res, "Decrypted plaintext should not be empty");
     assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
   }
@@ -67,8 +67,8 @@ public class AESCipherTests {
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
     AESCipher cipherSaltPass = new AESCipher("password");
     String ciphertext = cipherSaltPass.encryptWithHeader("This is the plaintext");
-    assertNotNull(cipherSaltPass.decryptSalt("password", ciphertext), "Decrypted plaintext should not be empty");
-    assertEquals("This is the plaintext", cipherSaltPass.decryptSalt("password", ciphertext), "Decrypted plaintext should equal the original plaintext");
+    assertNotNull(cipherSaltPass.decryptWithHeader(ciphertext), "Decrypted plaintext should not be empty");
+    assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext), "Decrypted plaintext should equal the original plaintext");
   }
   
 }

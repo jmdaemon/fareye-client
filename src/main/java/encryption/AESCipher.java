@@ -89,31 +89,18 @@ public class AESCipher {
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
-
-  public String decryptIV(String ciphertextWithIV) throws Exception { 
-    byte[] ciphertext = data.decodeCiphertext(ciphertextWithIV);
-    String result = decrypt(ciphertext);
-    return result;
-  }
-
-  public String decryptSalt(String pswd, String ciphertextWithHeader) throws Exception {
+  
+  public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
     byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader);
-    data.setKey(genPswdKey(pswd, this.data.getSalt()));
     String result = decrypt(ciphertext);
     return result;
   }
 
-  public void createDataIV() throws NoSuchAlgorithmException { 
-    this.data = new Data(genIV(), null, genKey());
-  }
-
-  public void createDataSalt() throws NoSuchAlgorithmException {
-    this.data = new Data(genIV(), genSalt(), genKey());
-  }
+  public void createDataIV() throws NoSuchAlgorithmException    { this.data = new Data(genIV(), null, genKey()); }
+  public void createDataSalt() throws NoSuchAlgorithmException  { this.data = new Data(genIV(), genSalt(), genKey()); } 
 
   public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] salt = genSalt();
-    this.data = new Data (genIV(), salt, genPswdKey(pswd, salt));
+    this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
   }
  
   public byte[] getSalt()   { return data.getSalt();  }
