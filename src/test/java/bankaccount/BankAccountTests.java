@@ -76,7 +76,7 @@ public class BankAccountTests {
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
     assertEquals(500.0, bankAccount.getBalance(), "Our sender BankAccount should now be at $500"); 
     assertEquals(500.0, targAccount.getBalance(), "Our receiver BankAccount should now be at $500");
-    assertEquals(expectedLog, bankAccount.getLog().searchFor("Transfer \\[\\$500.0 to account \\d{4}]"), "Account Log has successfully recorded the transaction");
+    assertEquals(expectedLog, bankAccount.searchFor("Transfer \\[\\$500.0 to account \\d{4}]"), "Account Log has successfully recorded the transaction");
   }
 
   @Test

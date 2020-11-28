@@ -17,8 +17,10 @@ import java.nio.file.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.stream.*;
 import java.util.List;
+
 
 public class Log {
   private StringBuffer log;
@@ -62,7 +64,7 @@ public class Log {
   public void logMessage(BankAccount receiver, double amount) {
     String timeStamp = genTimeStamp();
     String failMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\n"); 
-    logAppend(timeStamp + "\tTransfer Failed\t" + failMsg); 
+    receiver.getLog().logAppend(timeStamp + "\tTransfer Failed\t" + failMsg); 
   }
 
   public String search(String msg) {
@@ -141,5 +143,34 @@ public class Log {
     }
   }
 
+
+  public String readFile(String filepath) {
+    if (!fileExists(filepath)) {
+      return "";
+    } 
+    String logData = "";
+    try {
+    Path path = Paths.get(getClass().getClassLoader().getResource(filepath).toURI());
+         
+    Stream<String> logCSV = Files.lines(path);
+    logData = logCSV.collect(Collectors.joining("\n"));
+    logCSV.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return logData;
+    //StringBuilder result = new StringBuilder();
+    //File logCSV = new File(filepath);
+    //try (BufferedReader br = new BufferedReader(new FileReader(logCSV))) { 
+      //String line;
+      //while ((line = br.readLine()) != null) {
+            //resultStringBuilder.append(line).append("\n");
+        //}
+    //} catch (Exception e) {
+      //e.printStackTrace();
+    //}
+    //return result.toString();
+  }
   public StringBuffer toStringBuffer() { return this.log; }
 }
