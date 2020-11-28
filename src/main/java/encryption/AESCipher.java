@@ -54,14 +54,14 @@ public class AESCipher {
     return keyGen.generateKey();
   }
 
-  public byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
     KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
     SecretKeyFactory factory = SecretKeyFactory.getInstance(HASH_ALGORITHM);
     byte[] result = factory.generateSecret(spec).getEncoded();
     return result;
   }
 
-  public SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public static SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
     SecretKey result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
     return result;
   }
