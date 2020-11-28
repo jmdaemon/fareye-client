@@ -32,7 +32,7 @@ public class AESCipherTests {
     cipher.createDataIV();
     byte[] res = cipher.encrypt("This is the plaintext");
     assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", new String (res, cipher.UTF_8), "Ciphertext should not equal plaintext");
+    assertNotEquals("This is the plaintext", CryptUtils.bytesToString(res), "Ciphertext should not equal plaintext");
   }
 
   @Test
