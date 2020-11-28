@@ -39,7 +39,7 @@ public class LogTests {
   @Test
   public void searchFor_ReturnsLogMsg() {
     acct.deposit(100);
-    String res = acct.getLog().searchFor("Deposit Successful");
+    String res = acct.searchFor("Deposit Successful");
     assertNotNull(res, "Deposit should be logged in the log");
     assertEquals("Deposit Successful", res, "Log should be formatted correctly");
   }
@@ -47,7 +47,7 @@ public class LogTests {
   @Test
   public void writeToFile_CreatesCSVFile() {
     acct.deposit(100);
-    acct.getLog().writeToFile("./transaction_history.csv");
+    acct.writeToFile("./transaction_history.csv");
     boolean csvfileExists = acct.getLog().fileExists("./transaction_history.csv");
     assertEquals(true, csvfileExists, "transaction_history should be created");
   }

@@ -113,6 +113,8 @@ public class BankAccount {
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
     public Log getLog() { return this.log; }
+    public String searchFor(String msg) { return this.getLog().searchFor(msg); }
+    public void writeToFile(String filepath) { this.getLog().writeToFile(filepath); }
 
   public void display() { 
     System.out.println("Account #: " +  getAcctNum());
