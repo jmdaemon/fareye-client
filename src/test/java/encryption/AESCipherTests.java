@@ -1,6 +1,6 @@
 package test.crypt.cipher.aes;
 
-import app.crypt.utils.*;
+import static app.crypt.utils.CryptUtils.*;
 import app.crypt.data.*;
 import app.crypt.cipher.aes.*;
 
@@ -32,7 +32,7 @@ public class AESCipherTests {
   public void encrypt_Plaintext_ReturnAESCiphertext() throws Exception {
     byte[] res = cipherIV.encrypt("This is the plaintext");
     assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", CryptUtils.bytesToString(res), "Ciphertext should not equal plaintext");
+    assertNotEquals("This is the plaintext", bytesToString(res), "Ciphertext should not equal plaintext");
   }
 
   @Test
@@ -44,7 +44,7 @@ public class AESCipherTests {
 
   @Test
   public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
-    String res = cipherSalt.encryptWithHeader( cipherSalt.bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())) );
+    String res = cipherSalt.encryptWithHeader( bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())) );
     assertNotNull(res, "Ciphertext should be initialized");
     assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
   }
