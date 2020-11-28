@@ -44,14 +44,14 @@ public class AESCipher extends CryptUtils {
     return result;
   }
   
-  private Cipher initCipher(int cipherMode, byte[] iv, SecretKey key) throws Exception {
+  private Cipher initCipher(int cipherMode, Data data) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
-    result.init(cipherMode, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+    result.init(cipherMode, data.key, new GCMParameterSpec(TAG_LENGTH_BIT, data.iv));
     return result;
   }
 
   public byte[] encrypt(byte[] plaintext, Data data) throws Exception { 
-    Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, data.getIV(), data.getKey());
+    Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, data);
     byte[] result = cipher.doFinal(plaintext);
     return result;
   }
@@ -65,7 +65,7 @@ public class AESCipher extends CryptUtils {
   //// TODO: Update documentation with information from current state
   //// Assume key is not generated from password
   public String decrypt(byte[] ciphertext, Data data) throws Exception { 
-    Cipher cipher = initCipher(Cipher.DECRYPT_MODE, data.getIV(), data.getKey());
+    Cipher cipher = initCipher(Cipher.DECRYPT_MODE, data);
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
