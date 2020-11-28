@@ -111,16 +111,16 @@ public class BankAccountTests {
   @AfterAll
   public static void restoreStreams() { System.setOut(originalOut); }
 
-  //@Test 
-  //public void display_WhenCalled_OutputBankAccountInfo() {
-    //bankAccount.display();
+  @Test 
+  public void display_WhenCalled_OutputBankAccountInfo() {
+    bankAccount.display();
     
-    //String expectedMessage = (
-        //"Account #: "   + bankAccount.getAcctNum()   + "\n" +
-        //"Balance: "     + bankAccount.getBalance()   + "\n" +
-        //"First Name: "  + bankAccount.getFName()     + "\n" +
-        //"Last Name: "   + bankAccount.getLName()     + "\n" +
-        //bankAccount.getLog().toStringBuffer() + "\n");
-    //assertEquals(expectedMessage, outContent.toString());
-  //}
+    String expectedMessage = (
+        "Account #: "   + bankAccount.getAcctNum()   + "\n" +
+        "Balance: "     + bankAccount.getBalance()   + "\n" +
+        "First Name: "  + bankAccount.getFName()     + "\n" +
+        "Last Name: "   + bankAccount.getLName()     + "\n" +
+        bankAccount.getLog().toStringBuffer() + "\n");
+    assertEquals(expectedMessage, outContent.toString());
+  }
 }
