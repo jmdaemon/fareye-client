@@ -83,17 +83,13 @@ public class AESCipher extends CryptUtils {
     return result;
   }
 
-  public static Data createDataIV() throws NoSuchAlgorithmException { 
-    return new Data(genIV(), null, genKey());
+  public void createDataIV() throws NoSuchAlgorithmException { 
+    this.data = new Data(genIV(), null, genKey());
   }
 
-  public static Data createDataSalt() throws NoSuchAlgorithmException {
-    return new Data(genIV(), genSalt(), genKey());
+  public void createDataSalt() throws NoSuchAlgorithmException {
+    this.data = new Data(genIV(), genSalt(), genKey());
   }
-
-  //public Data createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    //return new Data(genIV(), genSalt(), genPswdKey(pswd));
-  //}
 
   public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] salt = genSalt();
@@ -104,7 +100,5 @@ public class AESCipher extends CryptUtils {
   public byte[] getIV()     { return data.getIV();    }
   public SecretKey getKey() { return data.getKey();   }
 
-  public void setSalt(byte[] salt)  { data.setSalt(salt); }
   public void setKey(SecretKey key) { data.setKey(key); }
-  public void setData(Data data) { this.data = data; }
 }
