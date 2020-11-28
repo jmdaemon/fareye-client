@@ -40,8 +40,7 @@ public class AESCipher extends CryptUtils {
   }
 
   public SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] pswdHash = genPswdHash(pswd, salt);
-    SecretKey result = new SecretKeySpec(pswdHash, "AES");
+    SecretKey result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
     return result;
   }
   
