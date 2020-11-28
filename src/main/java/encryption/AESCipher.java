@@ -28,6 +28,26 @@ public class AESCipher extends CryptUtils {
 
   public AESCipher() { }
 
+  public AESCipher(CIPHER_MODE mode) {
+    try { 
+      switch(mode) { 
+        case IV_ONLY:   createDataIV();   break;
+        case IV_SALT:   createDataSalt(); break;
+        default:        createDataIV();   break;
+      } 
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public AESCipher(String pswd) {
+    try {
+    createData(pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public static SecretKey genKey() throws NoSuchAlgorithmException {
     KeyGenerator keyGen = KeyGenerator.getInstance("AES");
     keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
