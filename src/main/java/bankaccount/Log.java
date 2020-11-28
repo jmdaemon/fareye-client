@@ -19,7 +19,6 @@ import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.stream.*;
 import java.util.List;
-//import java.util.stream.Collectors;
 
 public class Log {
   private StringBuffer log;
