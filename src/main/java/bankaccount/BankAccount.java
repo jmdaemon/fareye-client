@@ -15,7 +15,7 @@ public class BankAccount {
   private Log log = new Log();
 
   public BankAccount() {
-    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH); // TODO: Shove all constants into Constants.java and import
+    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH); 
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
     this.log.logMessage("New Bank Account Created.");
   }
