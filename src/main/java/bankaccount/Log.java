@@ -87,8 +87,7 @@ public class Log {
 
   public String searchFor(String msg) {
     String matches = search(msg);
-    String line = parseLog(matches, "\\r?\\n");
-    String result = parseLog(matches, "\\t+");
+    String result = parseLog(parseLog(matches, "\\r?\\n"), "\\t+");
     return result;
   }
 
