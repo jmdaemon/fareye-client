@@ -74,6 +74,8 @@ public class BankAccountTests {
     bankAccount.deposit(1000);
     String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]"); 
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
+    assertEquals(500.0, bankAccount.getBalance(), "Our sender BankAccount should now be at $500"); 
+    assertEquals(500.0, targAccount.getBalance(), "Our receiver BankAccount should now be at $500");
     assertEquals(expectedLog, bankAccount.getLog().searchFor("Transfer \\[\\$500.0 to account \\d{4}]"), "Account Log has successfully recorded the transaction");
   }
 
@@ -111,16 +113,16 @@ public class BankAccountTests {
   @AfterAll
   public static void restoreStreams() { System.setOut(originalOut); }
 
-  //@Test 
-  //public void display_WhenCalled_OutputBankAccountInfo() {
-    //bankAccount.display();
+  @Test 
+  public void display_WhenCalled_OutputBankAccountInfo() {
+    bankAccount.display();
     
-    //String expectedMessage = (
-        //"Account #: "   + bankAccount.getAcctNum()   + "\n" +
-        //"Balance: "     + bankAccount.getBalance()   + "\n" +
-        //"First Name: "  + bankAccount.getFName()     + "\n" +
-        //"Last Name: "   + bankAccount.getLName()     + "\n" +
-        //bankAccount.getLog().toStringBuffer() + "\n");
-    //assertEquals(expectedMessage, outContent.toString());
-  //}
+    String expectedMessage = (
+        "Account #: "   + bankAccount.getAcctNum()   + "\n" +
+        "Balance: "     + bankAccount.getBalance()   + "\n" +
+        "First Name: "  + bankAccount.getFName()     + "\n" +
+        "Last Name: "   + bankAccount.getLName()     + "\n" +
+        bankAccount.getLog().toStringBuffer() + "\n");
+    assertEquals(expectedMessage, outContent.toString());
+  }
 }

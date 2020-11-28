@@ -28,4 +28,13 @@ public class CryptUtils {
     return genRandomBytes(SALT_LENGTH);
   }
 
+  public static byte[] stringToBytes(String plaintext) {
+    return plaintext.getBytes(UTF_8);
+  }
+
+  public static String bytesToString(byte[] hash) {
+    String result = new String(hash, UTF_8);
+    return result; 
+  }
+
 }

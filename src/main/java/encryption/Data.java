@@ -32,13 +32,13 @@ public class Data extends CryptUtils {
     return result;
   }
 
-  public static byte[] parseHeader(byte[] decodedCiphertext, int IV_LENGTH, int SALT_LENGTH) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public static byte[] parseHeader(byte[] decodedCiphertext) throws NoSuchAlgorithmException, InvalidKeySpecException {
     ByteBuffer bb = ByteBuffer.wrap(decodedCiphertext);
-    byte[] iv = new byte[IV_LENGTH];
+    byte[] iv = new byte[CryptUtils.IV_LENGTH];
     bb.get(iv);
     Data.iv = iv;
 
-    byte[] salt = new byte[SALT_LENGTH];
+    byte[] salt = new byte[CryptUtils.SALT_LENGTH];
     bb.get(salt);
     Data.salt = salt;
 
@@ -57,9 +57,9 @@ public class Data extends CryptUtils {
     return result;
   }
 
-  public static byte[] decodeCiphertext(String ciphertextWithHeader, int IV_LENGTH, int SALT_LENGTH) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public static byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
-    byte[] result = parseHeader(decodedCiphertext, IV_LENGTH, SALT_LENGTH); 
+    byte[] result = parseHeader(decodedCiphertext); 
     return result;
   }
 

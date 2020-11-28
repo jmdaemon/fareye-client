@@ -1,6 +1,6 @@
 package app.crypt.cipher.aes;
 
-import app.crypt.utils.*;
+import static app.crypt.utils.CryptUtils.*;
 import app.crypt.data.*;
 
 import javax.crypto.Cipher;
@@ -16,15 +16,37 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-public class AESCipher extends CryptUtils {
+public class AESCipher {
 
   private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
   private static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
   private static final int TAG_LENGTH_BIT = 128;
-  private final int ITERATION_COUNT = 65536;
+  private static final int ITERATION_COUNT = 65536;
   private static final int AES_KEY_LENGTH = 256;
 
+  private Data data;
+
   public AESCipher() { }
+
+  public AESCipher(CIPHER_MODE mode) {
+    try { 
+      switch(mode) { 
+        case IV_ONLY:   createDataIV();   break;
+        case IV_SALT:   createDataSalt(); break;
+        default:        createDataIV();   break;
+      } 
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public AESCipher(String pswd) {
+    try {
+    createData(pswd);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   public static SecretKey genKey() throws NoSuchAlgorithmException {
     KeyGenerator keyGen = KeyGenerator.getInstance("AES");
@@ -32,64 +54,58 @@ public class AESCipher extends CryptUtils {
     return keyGen.generateKey();
   }
 
-  public byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public static byte[] genPswdHash(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
     KeySpec spec = new PBEKeySpec(pswd.toCharArray(), salt, ITERATION_COUNT, AES_KEY_LENGTH);
     SecretKeyFactory factory = SecretKeyFactory.getInstance(HASH_ALGORITHM);
     byte[] result = factory.generateSecret(spec).getEncoded();
     return result;
   }
 
-  public SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    byte[] pswdHash = genPswdHash(pswd, salt);
-    SecretKey result = new SecretKeySpec(pswdHash, "AES");
+  public static SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    SecretKey result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
     return result;
   }
   
-  private Cipher initCipher(int cipherMode, byte[] iv, SecretKey key) throws Exception {
+  private Cipher initCipher(int cipherMode) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
-    result.init(cipherMode, key, new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+    result.init(cipherMode, getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, getIV()));
     return result;
   }
 
-  public byte[] encrypt(byte[] plaintext, Data data) throws Exception { 
-    Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, data.getIV(), data.getKey());
-    byte[] result = cipher.doFinal(plaintext);
+  public byte[] encrypt(String plaintext) throws Exception { 
+    Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
+    byte[] result = cipher.doFinal(stringToBytes(plaintext));
     return result;
   }
 
-  public String encryptWithHeader(byte[] plaintext, Data data) throws Exception {
-    byte[] ciphertext = encrypt(plaintext, data);
+  public String encryptWithHeader(String plaintext) throws Exception {
+    byte[] ciphertext = encrypt(plaintext);
     byte[] result = data.genHeader(ciphertext);
     return data.encodeBase64(result);
     }
 
-  //// TODO: Update documentation with information from current state
-  //// Assume key is not generated from password
-  public String decrypt(byte[] ciphertext, Data data) throws Exception { 
-    Cipher cipher = initCipher(Cipher.DECRYPT_MODE, data.getIV(), data.getKey());
+  public String decrypt(byte[] ciphertext) throws Exception { 
+    Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
-
-  // Test should not be aware of implementation details
-  // Assume key is not generated from password
-  public String decryptIV(String ciphertextWithIV, Data data) throws Exception { 
-    byte[] ciphertext = data.decodeCiphertext(ciphertextWithIV, IV_LENGTH, SALT_LENGTH);
-    String result = decrypt(ciphertext, data);
+  
+  public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
+    byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader);
+    String result = decrypt(ciphertext);
     return result;
   }
 
-  // Assume key is generated from password
-  public String decryptSalt(String pswd, String ciphertextWithHeader, Data data) throws Exception {
-    byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader, IV_LENGTH, SALT_LENGTH);
-    data.setKey(genPswdKey(pswd, data.getSalt()));
-    String result = decrypt(ciphertext, data);
-    return result;
+  public void createDataIV() throws NoSuchAlgorithmException    { this.data = new Data(genIV(), null, genKey()); }
+  public void createDataSalt() throws NoSuchAlgorithmException  { this.data = new Data(genIV(), genSalt(), genKey()); } 
+
+  public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
   }
+ 
+  public byte[] getSalt()   { return data.getSalt();  }
+  public byte[] getIV()     { return data.getIV();    }
+  public SecretKey getKey() { return data.getKey();   }
 
-  //public String decryptWithHeader(byte[] ciphertextWithIV, String pswd) throws Exception { 
-    //String result = decrypt(parseHeader(ciphertextWithIV, pswd), iv, key);
-    //return result;
-  //}
-
+  public void setKey(SecretKey key) { data.setKey(key); }
 }
