@@ -32,4 +32,9 @@ public class CryptUtils {
     return plaintext.getBytes(UTF_8);
   }
 
+  public static String bytesToString(byte[] hash) {
+    String result = new String(hash, UTF_8);
+    return result; 
+  }
+
 }
