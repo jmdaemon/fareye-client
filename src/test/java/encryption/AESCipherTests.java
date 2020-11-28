@@ -70,10 +70,6 @@ public class AESCipherTests {
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
     cipher.createData("password");
-
-    System.out.println("IV: " + cipher.getIV());
-    System.out.println("Salt: " + cipher.getSalt());
-    System.out.println("Key: " + cipher.getKey());
     String ciphertext = cipher.encryptWithHeader("This is the plaintext");
     assertNotNull(cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should not be empty");
     assertEquals("This is the plaintext", cipher.decryptSalt("password", ciphertext), "Decrypted plaintext should equal the original plaintext");
