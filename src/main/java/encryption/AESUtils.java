@@ -1,4 +1,4 @@
-package app.crypt.cipher.aes;
+package app.crypt.utils.aes;
 
 import static app.crypt.utils.CryptUtils.*;
 import app.crypt.data.*;
@@ -16,19 +16,20 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-public class AESCipher {
+interface AESSpecs {
+  static final String AES_ALGORITHM = "AES/GCM/NoPadding";
+  static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
+  static final int TAG_LENGTH_BIT = 128;
+  static final int ITERATION_COUNT = 65536;
+  static final int AES_KEY_LENGTH = 256;
+}
 
-  private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
-  private static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
-  private static final int TAG_LENGTH_BIT = 128;
-  private static final int ITERATION_COUNT = 65536;
-  private static final int AES_KEY_LENGTH = 256;
-
+public class AESUtils implements AESSpecs {
   private Data data;
 
-  public AESCipher() { }
+  public AESUtils() { }
 
-  public AESCipher(CIPHER_MODE mode) {
+  public AESUtils(CIPHER_MODE mode) {
     try { 
       switch(mode) { 
         case IV_ONLY:   createDataIV();   break;
@@ -40,7 +41,7 @@ public class AESCipher {
     }
   }
 
-  public AESCipher(String pswd) {
+  public AESUtils(String pswd) {
     try {
     createData(pswd);
     } catch (Exception e) {

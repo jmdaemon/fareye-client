@@ -1,8 +1,8 @@
-package test.crypt.cipher.aes;
+package test.crypt.utils.aes;
 
 import static app.crypt.utils.CryptUtils.*;
 import app.crypt.data.*;
-import app.crypt.cipher.aes.*;
+import app.crypt.utils.aes.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
@@ -13,16 +13,16 @@ import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-public class AESCipherTests { 
-  private AESCipher cipher;
-  private AESCipher cipherIV;
-  private AESCipher cipherSalt;
+public class AESUtilsTests { 
+  private AESUtils cipher;
+  private AESUtils cipherIV;
+  private AESUtils cipherSalt;
 
   @BeforeEach 
   public void setUp() {
-    this.cipher = new AESCipher();
-    this.cipherIV = new AESCipher(CIPHER_MODE.IV_ONLY);
-    this.cipherSalt = new AESCipher(CIPHER_MODE.IV_SALT);
+    this.cipher = new AESUtils();
+    this.cipherIV = new AESUtils(CIPHER_MODE.IV_ONLY);
+    this.cipherSalt = new AESUtils(CIPHER_MODE.IV_SALT);
   }
 
   @Test
@@ -36,19 +36,19 @@ public class AESCipherTests {
   }
   
   @Test
-  public void encrypt_Plaintext_ReturnAESCiphertext() throws Exception {
+  public void encrypt_Plaintext_ReturnAESUtilstext() throws Exception {
     byte[] res = cipherIV.encrypt("This is the plaintext");
     assertNotEquals("This is the plaintext", bytesToString(res), "Ciphertext is encrypted");
   }
 
   @Test
-  public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
+  public void encrypt_IVPlaintext_ReturnAESUtilstext() throws Exception {
     String res = cipherIV.encryptWithHeader("This is the plaintext");
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
-  public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
+  public void encrypt_SaltPlaintext_ReturnAESUtilstext() throws Exception {
     String res = cipherSalt.encryptWithHeader( bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())) );
     assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
@@ -67,7 +67,7 @@ public class AESCipherTests {
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
-    AESCipher cipherSaltPass = new AESCipher("password");
+    AESUtils cipherSaltPass = new AESUtils("password");
     String ciphertext = cipherSaltPass.encryptWithHeader("This is the plaintext");
     assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
   }
