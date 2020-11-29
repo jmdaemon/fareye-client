@@ -84,6 +84,8 @@ public class LogTests {
     assertEquals("Deposit Successful", res);
   }
 
+  /** Create setup code for creating mock ./transaction_history.csv */
+
   @Test
   public void fileExists_ReturnsTrue() {
     assertEquals(true, acct.getLog().fileExists(filepath));
@@ -94,6 +96,7 @@ public class LogTests {
   public void writeToFile_CreatesCSVFile() {
     acct.deposit(100);
     acct.writeToFile("./transaction_history.csv");
+    assertEquals(true, acct.getLog().fileExists(filepath));
   }
 
   //@Test
