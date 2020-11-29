@@ -21,10 +21,12 @@ import java.net.URISyntaxException;
 import java.util.stream.*;
 import java.util.List;
 
+interface Delims {
+  final String TAB_DELIM = "\\t+";
+  final String NEWLINE_DELIM = "\\r?\\n";
+}
 
-public class Log {
-  private final String TAB_DELIM = "\\t+";
-  private final String NEWLINE_DELIM = "\\r?\\n";
+public class Log implements Delims {
   private StringBuffer log;
 
   public Log() { 
