@@ -7,23 +7,32 @@ import java.util.Random;
 public class BankAccount { 
   private final int MAX_ACCTNUM_LENGTH = 10000;
   private final int DEFAULT_PASS_LENGTH = 32;
-  private int acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
-  private double balance = 0.0;
-  private String fName = null;
-  private String lName = null;
-  private String pswd = genPswd(DEFAULT_PASS_LENGTH);
-  private Log log = new Log();
+  private int acctNum;
+  private double balance;
+  private String fName;
+  private String lName;
+  private String pswd;
+  private Log log;
 
   public BankAccount() {
-    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH); 
-    this.pswd = genPswd(DEFAULT_PASS_LENGTH);
+    createAccount();
     this.log.logMessage("New Bank Account Created.");
   }
 
   public BankAccount(String firstName, String lastName) {
+    createAccount();
     this.fName = firstName;
     this.lName = lastName;
     this.log.logMessage("New Bank Account Created.");
+  }
+
+  private void createAccount() {
+    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
+    this.balance = 0.0;
+    this.fName = null;
+    this.lName = null;
+    this.pswd = genPswd(DEFAULT_PASS_LENGTH);
+    this.log = new Log();
   }
 
 	public boolean deposit(double amount) {
