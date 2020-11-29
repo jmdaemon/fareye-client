@@ -16,14 +16,14 @@ public class LogTests {
   private BankAccount targ;
 
   @BeforeEach
-  public void setupObjects() {
+  public void setUp() {
     this.log = new Log();
     this.acct = new BankAccount();
     this.targ = new BankAccount();
   }
 
   @AfterEach
-  public void tearDownObjects() {
+  public void tearDown() {
     this.log = null;
     this.acct = null;
     this.targ = null;

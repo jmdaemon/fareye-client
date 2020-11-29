@@ -3,7 +3,9 @@ package test.bankaccount;
 import app.bankAccount.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
@@ -12,8 +14,21 @@ import java.io.PrintStream;
 
 public class BankAccountTests {
 
-  private final BankAccount bankAccount = new BankAccount("Paul", "Allen");
-  private final BankAccount targAccount = new BankAccount("Timothy", "Price");
+  private BankAccount bankAccount;
+  private BankAccount targAccount;
+
+  @BeforeEach
+  public void setUp() {
+    this.bankAccount = new BankAccount("Paul", "Allen");
+    this.targAccount = new BankAccount("Timothy", "Price");
+  }
+
+  @AfterEach
+  public void tearDown() {
+    this.bankAccount = null;
+    this.bankAccount = null;
+  }
+
   private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private static final PrintStream originalOut = System.out;
 
