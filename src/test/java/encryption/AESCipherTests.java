@@ -5,7 +5,7 @@ import app.crypt.data.*;
 import app.crypt.cipher.aes.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
 import java.util.Base64;
@@ -13,10 +13,17 @@ import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-public class AESCipherTests {
-  private AESCipher cipher = new AESCipher();
-  private AESCipher cipherIV = new AESCipher(CIPHER_MODE.IV_ONLY);
-  private AESCipher cipherSalt = new AESCipher(CIPHER_MODE.IV_SALT);
+public class AESCipherTests { 
+  private AESCipher cipher;
+  private AESCipher cipherIV;
+  private AESCipher cipherSalt;
+
+  @BeforeEach 
+  public void setUp() {
+    this.cipher = new AESCipher();
+    this.cipherIV = new AESCipher(CIPHER_MODE.IV_ONLY);
+    this.cipherSalt = new AESCipher(CIPHER_MODE.IV_SALT);
+  }
 
   @Test
   public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
