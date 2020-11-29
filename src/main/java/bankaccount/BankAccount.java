@@ -35,6 +35,11 @@ public class BankAccount {
     this.log = new Log();
   }
 
+  private boolean cancelProcess(String msg) {
+    this.log.logMessage(msg);
+    return false;
+  }
+
 	public boolean deposit(double amount) {
     if (amount > 0) { 
       balance += amount;
@@ -43,8 +48,7 @@ public class BankAccount {
     } else if (amount == 0) {
       return true;
     } else 
-      this.log.logMessage("Deposit Unsuccessful");
-    return false;
+      return cancelProcess("Deposit Unsuccessful");
 	}
 
   public boolean withdraw(double amount) {
@@ -53,8 +57,7 @@ public class BankAccount {
       this.log.logMessage("Withdrawal Successful", amount);
 			return true;
 		} else 
-      this.log.logMessage("Withdrawal Unsuccessful");
-			return false;
+      return cancelProcess("Withdrawal Unsuccessful");
 	}
 
   public boolean transferTo (double amount, BankAccount target){ 
@@ -65,10 +68,8 @@ public class BankAccount {
       return true; 
     } else if (amount == 0) {
       return true; 
-    } else {
-      this.log.logMessage("Transfer Failed");
-    }
-    return false;
+    } else 
+      return cancelProcess("Transfer Failed");
   }
 
   public boolean checkPswd(String pass) {
@@ -86,9 +87,8 @@ public class BankAccount {
       this.pswd = newPass;
       this.log.logMessage("Password Successfully Changed");
       return true;
-    } else
-      this.log.logMessage("Password Reset Failed");
-    return false;
+    } else 
+      return cancelProcess("Password Reset Failed");
   }
 
   void setFName(String fName) { this.fName = fName; }
