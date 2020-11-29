@@ -22,13 +22,6 @@ public class LogTests {
     this.targ = new BankAccount();
   }
 
-  @AfterEach
-  public void tearDown() {
-    this.log = null;
-    this.acct = null;
-    this.targ = null;
-  }
-
   private final String filepath = "./transaction_history.csv";
 
   @Test 
