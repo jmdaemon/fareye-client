@@ -27,55 +27,49 @@ public class AESCipherTests {
 
   @Test
   public void genKey_AES_ReturnAESKey() throws NoSuchAlgorithmException {
-    assertNotNull(cipher.genKey(), "AES Key should be initialized");
+    assertNotNull(cipher.genKey());
   }
 
   @Test
   public void genKeyPswd_AES_ReturnAESKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-    assertNotNull(cipherSalt.genPswdKey("This is the user password", cipherSalt.getSalt()), "AES Key should be initialized");
+    assertNotNull(cipherSalt.genPswdKey("This is the user password", cipherSalt.getSalt()));
   }
   
   @Test
   public void encrypt_Plaintext_ReturnAESCiphertext() throws Exception {
     byte[] res = cipherIV.encrypt("This is the plaintext");
-    assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", bytesToString(res), "Ciphertext should not equal plaintext");
+    assertNotEquals("This is the plaintext", bytesToString(res), "Ciphertext is encrypted");
   }
 
   @Test
   public void encrypt_IVPlaintext_ReturnAESCiphertext() throws Exception {
     String res = cipherIV.encryptWithHeader("This is the plaintext");
-    assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
+    assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
   public void encrypt_SaltPlaintext_ReturnAESCiphertext() throws Exception {
     String res = cipherSalt.encryptWithHeader( bytesToString(cipherSalt.genPswdHash("This is the plaintext", cipherSalt.getSalt())) );
-    assertNotNull(res, "Ciphertext should be initialized");
-    assertNotEquals("This is the plaintext", res, "Ciphertext should not equal plaintext");
+    assertNotEquals("This is the plaintext", res, "Ciphertext is encrypted");
   }
 
   @Test
   public void decrypt_Ciphertext_ReturnPlaintext() throws Exception {
     byte[] ciphertext = cipher.encrypt("This is the plaintext");
-    assertNotNull(cipher.decrypt(ciphertext), "Decrypted plaintext should not be empty");
-    assertEquals("This is the plaintext", cipher.decrypt(ciphertext), "Decrypted plaintext should equal the original plaintext");
+    assertEquals("This is the plaintext", cipher.decrypt(ciphertext));
   }
 
   @Test 
   public void decrypt_IVCiphertext_ReturnPlaintext() throws Exception {
     String res = cipherSalt.decryptWithHeader(cipherSalt.encryptWithHeader("This is the plaintext"));
-    assertNotNull(res, "Decrypted plaintext should not be empty");
-    assertEquals("This is the plaintext", res, "Decrypted plaintext should equal the original plaintext");
+    assertEquals("This is the plaintext", res);
   }
 
   @Test 
   public void decrypt_SaltCiphertext_ReturnPlaintext() throws Exception {
     AESCipher cipherSaltPass = new AESCipher("password");
     String ciphertext = cipherSaltPass.encryptWithHeader("This is the plaintext");
-    assertNotNull(cipherSaltPass.decryptWithHeader(ciphertext), "Decrypted plaintext should not be empty");
-    assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext), "Decrypted plaintext should equal the original plaintext");
+    assertEquals("This is the plaintext", cipherSaltPass.decryptWithHeader(ciphertext));
   }
   
 }
