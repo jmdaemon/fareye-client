@@ -23,6 +23,8 @@ import java.util.List;
 
 
 public class Log {
+  private final String TAB_DELIM = "\\t+";
+  private final String NEWLINE_DELIM = "\\r?\\n";
   private StringBuffer log;
 
   public Log() { 
@@ -89,7 +91,7 @@ public class Log {
 
   public String searchFor(String msg) {
     String matches = search(msg);
-    String result = parseLog(parseLog(matches, "\\r?\\n"), "\\t+");
+    String result = parseLog(parseLog(matches, NEWLINE_DELIM), TAB_DELIM);
     return result;
   }
 
