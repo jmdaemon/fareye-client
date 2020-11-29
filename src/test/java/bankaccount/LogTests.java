@@ -8,44 +8,30 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.StringBuffer;
 
-import java.util.Map;
-
 public class LogTests {
   private Log log = new Log();
   private BankAccount acct = new BankAccount();
   private BankAccount targ = new BankAccount();
 
-
-  Map<String, String> Errors = Map.of(
-      "checkFormat", "Entry should be formatted correctly",
-      "checkResult", "Entry should be logged");
-
-  public void checkResult(String res) { 
-    assertNotNull(res, Errors.get("checkResult"));
-  }
-
   @Test 
   public void logAppend_ShouldLogMessage() { 
   log.logAppend("Testing logAppend");
   String res = log.searchFor("Testing logAppend");
-  checkResult(res);
-  assertEquals("Testing logAppend", res, Errors.get("checkFormat"));
+  assertEquals("Testing logAppend", res);
   }
 
   @Test 
   public void logTo_ShouldLogToAcct() {
     acct.getLog().logTo("Testing logTo", acct);
     String res = acct.searchFor("Testing logTo");
-    checkResult(res);
-    assertEquals("Testing logTo", res, Errors.get("checkFormat"));
+    assertEquals("Testing logTo", res);
   }
 
   @Test 
   public void logMessage_Msg_ShouldLogMsg() {
     log.logMessage("Testing logMessage");
     String res = log.searchFor("Testing logMessage");
-    checkResult(res);
-    assertEquals("Testing logMessage", res, Errors.get("checkFormat"));
+    assertEquals("Testing logMessage", res);
   }
 
   @Test 
@@ -93,8 +79,7 @@ public class LogTests {
   public void searchFor_ReturnsLogMsg() {
     acct.deposit(100);
     String res = acct.searchFor("Deposit Successful");
-    assertNotNull(res, "Deposit should be logged in the log");
-    assertEquals("Deposit Successful", res, Errors.get("checkFormat"));
+    assertEquals("Deposit Successful", res);
   }
 
   @Test
