@@ -42,8 +42,6 @@ public class LogTests {
     log.logMessage("logMessage with amount", 100);
     String resLog = log.searchFor("logMessage with amount");
     String resAmt = log.searchFor("\\[\\$100.0\\]");
-    assertNotNull(resLog);
-    assertNotNull(resAmt);
     assertEquals("logMessage with amount", resLog);
     assertEquals("[$100.0]", resAmt);
   }
@@ -53,8 +51,6 @@ public class LogTests {
     log.logMessage(acct, targ, 100);
     String acctResLog = acct.searchFor("Transfer \\[\\$100.0 to account \\d{1,5}\\]");
     String targResLog = targ.searchFor("Transfer \\[\\$100.0 received from account \\d{1,5}\\]");
-    assertNotNull(acctResLog);
-    assertNotNull(targResLog);
     assertEquals("Transfer [$100.0 to account " + targ.getAcctNum() + "]", acctResLog);
     assertEquals("Transfer [$100.0 received from account " + acct.getAcctNum() + "]", targResLog);
   }
@@ -97,6 +93,12 @@ public class LogTests {
     boolean csvfileExists = acct.getLog().fileExists("./transaction_history.csv");
     assertEquals(true, csvfileExists, "transaction_history should be created");
   }
+
+  //@Test
+  //public void outputFile_CSV_ReturnsContents() {
+    //// Call to mock csv for creation ./transaction_history
+    ////boolean exists = log.fileExists("./transaction_history.csv");
+  //}
 
   //@Test
   //public void readFile_transaction_history_ReturnsTrue() {
