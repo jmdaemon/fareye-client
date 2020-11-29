@@ -63,7 +63,7 @@ public class LogTests {
   public void logMessage_FailedAcctAmt_ShouldLogFailedTransfer() {
     acct.getLog().logMessage(acct, 100);
     String acctResLog = acct.searchFor("Transfer Failed");
-    String acctResAmt = acct.searchFor("\\[\\$100.0 to account \\d{4}\\]");
+    String acctResAmt = acct.searchFor("\\[\\$100.0 to account \\d{1,5}\\]");
     assertEquals("Transfer Failed", acctResLog);
     assertEquals("[$100.0 to account " + acct.getAcctNum() + "]", acctResAmt);
   }
