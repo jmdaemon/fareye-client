@@ -6,14 +6,30 @@ import app.log.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.*; 
+
 import java.lang.StringBuffer;
 
 public class LogTests {
-  private Log log = new Log();
-  private BankAccount acct = new BankAccount();
-  private BankAccount targ = new BankAccount();
+  private Log log;
+  private BankAccount acct;
+  private BankAccount targ;
 
-  private String filepath = "./transaction_history.csv";
+  @BeforeEach
+  public void setupObjects() {
+    this.log = new Log();
+    this.acct = new BankAccount();
+    this.targ = new BankAccount();
+  }
+
+  @AfterEach
+  public void tearDownObjects() {
+    this.log = null;
+    this.acct = null;
+    this.targ = null;
+  }
+
+  private final String filepath = "./transaction_history.csv";
 
   @Test 
   public void logAppend_ShouldLogMessage() { 
