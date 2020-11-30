@@ -5,6 +5,7 @@ Our encryption module contains the following classes:
 - CryptUtils
 - AESCipher 
 - RSACipher
+- Data
 
 == Requirements
 Our Encryption tools must have the following data:
@@ -63,6 +64,9 @@ Data can
 - Be initialized with a given iv, salt, or key
 - Generate and parse headers with IV, or Salt prepended to the ciphertext 
 - Encode and decode ciphertext into Base64 Strings
+
+Note that even though the ciphertext is not sent over the wire to the Internet, you still need to encode the ciphertext in Base64.
+https://stackoverflow.com/questions/31749025/understanding-java-bytebuffer[Source]
 
 == Data Factory
 Data Factory contains no member variables, and only a few methods. 

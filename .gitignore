@@ -16,6 +16,12 @@ bin/ # other generated files
 gen/
 build/
 
+# Ignore transactions written to .csv
+*.csv
+
+# Ignore ctags files
+tags
+
 # Ignore all Asciidoc output files
 *.html
 

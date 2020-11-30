@@ -7,23 +7,37 @@ import java.util.Random;
 public class BankAccount { 
   private final int MAX_ACCTNUM_LENGTH = 10000;
   private final int DEFAULT_PASS_LENGTH = 32;
-  private int acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
-  private double balance = 0.0;
-  private String fName = null;
-  private String lName = null;
-  private String pswd = genPswd(DEFAULT_PASS_LENGTH);
-  private Log log = new Log();
+  private int acctNum;
+  private double balance;
+  private String fName;
+  private String lName;
+  private String pswd;
+  private Log log;
 
   public BankAccount() {
-    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH); 
-    this.pswd = genPswd(DEFAULT_PASS_LENGTH);
+    createAccount();
     this.log.logMessage("New Bank Account Created.");
   }
 
   public BankAccount(String firstName, String lastName) {
+    createAccount();
     this.fName = firstName;
     this.lName = lastName;
     this.log.logMessage("New Bank Account Created.");
+  }
+
+  private void createAccount() {
+    this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
+    this.balance = 0.0;
+    this.fName = null;
+    this.lName = null;
+    this.pswd = genPswd(DEFAULT_PASS_LENGTH);
+    this.log = new Log();
+  }
+
+  private boolean cancelProcess(String msg) {
+    this.log.logMessage(msg);
+    return false;
   }
 
 	public boolean deposit(double amount) {
@@ -34,8 +48,7 @@ public class BankAccount {
     } else if (amount == 0) {
       return true;
     } else 
-      this.log.logMessage("Deposit Unsuccessful");
-    return false;
+      return cancelProcess("Deposit Unsuccessful");
 	}
 
   public boolean withdraw(double amount) {
@@ -44,8 +57,7 @@ public class BankAccount {
       this.log.logMessage("Withdrawal Successful", amount);
 			return true;
 		} else 
-      this.log.logMessage("Withdrawal Unsuccessful");
-			return false;
+      return cancelProcess("Withdrawal Unsuccessful");
 	}
 
   public boolean transferTo (double amount, BankAccount target){ 
@@ -56,10 +68,8 @@ public class BankAccount {
       return true; 
     } else if (amount == 0) {
       return true; 
-    } else {
-      this.log.logMessage("Transfer Failed");
-    }
-    return false;
+    } else 
+      return cancelProcess("Transfer Failed");
   }
 
   public boolean checkPswd(String pass) {
@@ -77,9 +87,8 @@ public class BankAccount {
       this.pswd = newPass;
       this.log.logMessage("Password Successfully Changed");
       return true;
-    } else
-      this.log.logMessage("Password Reset Failed");
-    return false;
+    } else 
+      return cancelProcess("Password Reset Failed");
   }
 
   void setFName(String fName) { this.fName = fName; }
@@ -113,6 +122,8 @@ public class BankAccount {
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
     public Log getLog() { return this.log; }
+    public String searchFor(String msg) { return this.getLog().searchFor(msg); }
+    public void writeToFile(String filepath) { this.getLog().writeToFile(filepath); }
 
   public void display() { 
     System.out.println("Account #: " +  getAcctNum());

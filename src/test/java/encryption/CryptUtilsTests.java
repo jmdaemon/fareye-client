@@ -3,11 +3,15 @@ package test.crypt.utils;
 import app.crypt.utils.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class CryptUtilsTests {
+  private CryptUtils cutil;
 
-  private CryptUtils cutil = new CryptUtils();
+  @BeforeEach
+  public void setUp() {
+   this.cutil = new CryptUtils();
+  }
 
   @Test
   public void genSalt() {

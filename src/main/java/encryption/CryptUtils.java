@@ -6,11 +6,13 @@ import java.security.SecureRandom;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class CryptUtils {
+interface CryptSpecs {
   public static final int IV_LENGTH = 12;
   public static final int SALT_LENGTH = 16;
-
   public static final Charset UTF_8 = StandardCharsets.UTF_8;
+}
+
+public class CryptUtils implements CryptSpecs {
 
   public CryptUtils() { }
 
