@@ -28,7 +28,8 @@ import java.io.FileReader;
 
 interface Delims {
   final String TAB_DELIM = "\\t+";
-  final String NEWLINE_DELIM = "\\r?\\n";
+  final String CARRIAGE_RETURN_DELIM = "\\r?\\n";
+  final String NEWLINE_DELIM = "\n";
   final String COMMA_DELIM = ", ";
 }
 
@@ -99,7 +100,24 @@ public class Log implements Delims {
 
   public String searchFor(String msg) {
     String matches = search(msg);
-    String result = parseLog(parseLog(matches, NEWLINE_DELIM), TAB_DELIM);
+    String result = parseLog(parseLog(matches, CARRIAGE_RETURN_DELIM), TAB_DELIM);
+    return result;
+  }
+
+  public String searchCSV(String msg, String file) {
+    Pattern pattern = Pattern.compile(msg);
+    Matcher matcher = pattern.matcher(file);
+    
+    StringBuilder results = new StringBuilder();
+    if (matcher.find()) {
+      results.append(matcher.group());
+    }
+    return results.toString();
+  }
+
+  public String searchFileFor(String msg, String file) {
+    String matches = searchCSV(msg, file);
+    String result = parseLog(parseLog(matches, CARRIAGE_RETURN_DELIM), TAB_DELIM);
     return result;
   }
 
@@ -168,32 +186,17 @@ public class Log implements Delims {
     try (BufferedReader br = new BufferedReader(new FileReader(filepath))) { 
       String line; 
       while ((line = br.readLine()) != null) { 
-        String[] values = line.split(NEWLINE_DELIM); 
+        String[] values = line.split(CARRIAGE_RETURN_DELIM); 
         records.add(Arrays.asList(values)); 
       } 
     } catch (Exception e) {
       e.printStackTrace();
     }
     List<String> data = flattenListOfListsStream(records);
-    String result = data.stream().collect(Collectors.joining(("\n")));
+    String result = data.stream().collect(Collectors.joining((NEWLINE_DELIM)));
     return result;
   }
 
-  public String searchCSV(String msg, String file) {
-    Pattern pattern = Pattern.compile(msg);
-    Matcher matcher = pattern.matcher(file);
-    
-    StringBuilder results = new StringBuilder();
-    if (matcher.find()) {
-      results.append(matcher.group());
-    }
-    return results.toString();
-  }
 
-  public String searchFileFor(String msg, String file) {
-    String matches = searchCSV(msg, file);
-    String result = parseLog(parseLog(matches, NEWLINE_DELIM), TAB_DELIM);
-    return result;
-  }
   public StringBuffer toStringBuffer() { return this.log; }
 }
