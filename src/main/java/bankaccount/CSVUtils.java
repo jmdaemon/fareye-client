@@ -1,12 +1,8 @@
-package app.log; 
+package app.utils.utils.csv;
 
-import app.bankAccount.*;
+import app.log.*;
 
 import java.util.Arrays;
-import java.lang.StringBuffer;
-import java.lang.StringBuilder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -26,60 +22,11 @@ import java.util.stream.*;
 import java.util.List;
 import java.io.FileReader;
 
-public class Log implements Delims {
-  private StringBuffer log;
+public class CSVUtils implements Delims {
+  private String log;
 
-  public Log() { 
-    this.log = new StringBuffer();
-  }
-
-  private String genTimeStamp() {
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy.mm.dd.HH.mm.sss");
-    Date date = new Date();  
-    return (formatter.format(date));
-  }
-
-  public void logAppend(String msg) {
-    this.log.append(msg);
-  }
-
-  public void logTo(String msg, BankAccount acct) {
-    acct.getLog().logAppend(msg);
-  }
-
-  public void logMessage(String msg) { 
-    String timeStamp = genTimeStamp();
-    logAppend(timeStamp + "\t" + msg + "\t\n");
-  }
-
-  public void logMessage(String msg, double amount) {
-    String timeStamp = genTimeStamp();
-    logAppend(timeStamp + "\t" + msg + "\t" + "[$" + amount + "]\n");
-  }
-
-  public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
-    String timeStamp = genTimeStamp();
-    String senderMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\t\n"); 
-    String receiverMsg = ("[$" + amount + " received from account " + sender.getAcctNum() + "]\t\n");
-    logTo( (timeStamp + "\tTransfer " + senderMsg), sender);
-    logTo( (timeStamp + "\tTransfer " + receiverMsg), receiver);
-  }
-
-  public void logMessage(BankAccount receiver, double amount) {
-    String timeStamp = genTimeStamp();
-    String failMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\n"); 
-    receiver.getLog().logAppend(timeStamp + "\tTransfer Failed\t" + failMsg); 
-  }
-
-  public String search(String msg) {
-    Pattern pattern = Pattern.compile(msg);
-    Matcher matcher = pattern.matcher(this.log.toString());
-    
-    StringBuilder results = new StringBuilder();
-    if (matcher.find()) {
-      results.append(matcher.group());
-    }
-    return results.toString();
+  public CSVUtils(String log) {
+    this.log = log;
   }
   
   public String parseLog(String matches, String delim) {
@@ -89,17 +36,10 @@ public class Log implements Delims {
       result.append(value);
     }
     return result.toString();
-  }
-
-  public String searchFor(String msg) {
-    String matches = search(msg);
-    String result = parseLog(parseLog(matches, CARRIAGE_RETURN_DELIM), TAB_DELIM);
-    return result;
-  }
-
-  public String searchCSV(String msg, String file) {
+  } 
+  public String search(String msg) {
     Pattern pattern = Pattern.compile(msg);
-    Matcher matcher = pattern.matcher(file);
+    Matcher matcher = pattern.matcher(this.log);
     
     StringBuilder results = new StringBuilder();
     if (matcher.find()) {
@@ -108,14 +48,14 @@ public class Log implements Delims {
     return results.toString();
   }
 
-  public String searchFileFor(String msg, String file) {
-    String matches = searchCSV(msg, file);
+  public String searchFor(String msg) {
+    String matches = search(msg);
     String result = parseLog(parseLog(matches, CARRIAGE_RETURN_DELIM), TAB_DELIM);
     return result;
   }
 
   public String[] splitLog(String delim) {
-    String[] result = this.log.toString().split(delim);
+    String[] result = this.log.split(delim);
     return result;
   }
 
@@ -189,7 +129,4 @@ public class Log implements Delims {
     String result = data.stream().collect(Collectors.joining((NEWLINE_DELIM)));
     return result;
   }
-
-
-  public StringBuffer toStringBuffer() { return this.log; }
 }
