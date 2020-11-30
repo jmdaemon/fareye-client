@@ -10,6 +10,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import java.util.ArrayList; 
+import java.util.Collection;
+import java.io.BufferedReader; 
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,10 +24,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.stream.*;
 import java.util.List;
+import java.io.FileReader;
 
 interface Delims {
   final String TAB_DELIM = "\\t+";
   final String NEWLINE_DELIM = "\\r?\\n";
+  final String COMMA_DELIM = ", ";
 }
 
 public class Log implements Delims {
@@ -147,34 +153,47 @@ public class Log implements Delims {
     }
   }
 
+  public <T> List<T> flattenListOfListsStream(List<List<T>> list) { 
+    return list.stream() 
+      .flatMap(Collection::stream) 
+      .collect(Collectors.toList());    
+  }
 
   public String readFile(String filepath) {
     if (!fileExists(filepath)) {
       return "";
     } 
-    String logData = "";
-    try {
-    Path path = Paths.get(getClass().getClassLoader().getResource(filepath).toURI());
-         
-    Stream<String> logCSV = Files.lines(path);
-    logData = logCSV.collect(Collectors.joining("\n"));
-    logCSV.close();
+
+    List<List<String>> records = new ArrayList<>(); 
+    try (BufferedReader br = new BufferedReader(new FileReader(filepath))) { 
+      String line; 
+      while ((line = br.readLine()) != null) { 
+        String[] values = line.split(NEWLINE_DELIM); 
+        records.add(Arrays.asList(values)); 
+      } 
     } catch (Exception e) {
       e.printStackTrace();
     }
+    List<String> data = flattenListOfListsStream(records);
+    String result = data.stream().collect(Collectors.joining(("\n")));
+    return result;
+  }
 
-    return logData;
-    //StringBuilder result = new StringBuilder();
-    //File logCSV = new File(filepath);
-    //try (BufferedReader br = new BufferedReader(new FileReader(logCSV))) { 
-      //String line;
-      //while ((line = br.readLine()) != null) {
-            //resultStringBuilder.append(line).append("\n");
-        //}
-    //} catch (Exception e) {
-      //e.printStackTrace();
-    //}
-    //return result.toString();
+  public String searchCSV(String msg, String file) {
+    Pattern pattern = Pattern.compile(msg);
+    Matcher matcher = pattern.matcher(file);
+    
+    StringBuilder results = new StringBuilder();
+    if (matcher.find()) {
+      results.append(matcher.group());
+    }
+    return results.toString();
+  }
+
+  public String searchFileFor(String msg, String file) {
+    String matches = searchCSV(msg, file);
+    String result = parseLog(parseLog(matches, NEWLINE_DELIM), TAB_DELIM);
+    return result;
   }
   public StringBuffer toStringBuffer() { return this.log; }
 }

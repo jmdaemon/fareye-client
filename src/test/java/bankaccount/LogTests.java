@@ -108,20 +108,11 @@ public class LogTests {
     assertEquals(true, acct.getLog().fileExists(filepath));
   }
 
-  //@Test
-  //public void outputFile_CSV_ReturnsContents() {
-    //// Call to mock csv for creation ./transaction_history
-    ////boolean exists = log.fileExists("./transaction_history.csv");
-  //}
-
-  //@Test
-  //public void readFile_transaction_history_ReturnsTrue() {
-    //boolean csvfileExists = acct.getLog().fileExists("./transaction_history.csv");
-    //assertEquals(true, csvfileExists, "transaction_history should be created");
-    //String logCSV = acct.getLog().readFile("./transaction_history.csv");
-    //System.out.println(logCSV);
-    ////String res = logCSV.searchFor("Deposit Successful");
-    ////System.out.println(res);
-    ////assertNotNull(res, "Transaction should be logged");
-  //}
+  @Test
+  public void readFile_transaction_history_ReturnsTrue() {
+    String logCSV = acct.getLog().readFile(filepath);
+    System.out.println(logCSV);
+    String res = acct.getLog().searchFileFor("Deposit Successful", logCSV);
+    assertEquals("Deposit Successful", res);
+  }
 }
