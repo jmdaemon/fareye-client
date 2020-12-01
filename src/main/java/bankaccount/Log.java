@@ -44,15 +44,15 @@ public class Log implements Delims {
   }
 
   public void logTo(String msg, BankAccount acct) {
-    acct.getLog().logAppend(msg);
+    acct.getLog().logAppend(genTimeStamp() + msg);
   }
 
   public void logMessage(String msg) { 
-    logAppend(genTimeStamp() + "\t" + msg + "\t\n");
+    logAppend("\t" + msg + "\t\n");
   }
 
   public void logMessage(String msg, double amount) {
-    logAppend(genTimeStamp() + "\t" + msg + "\t" + "[$" + amount + "]\n");
+    logAppend("\t" + msg + "\t" + "[$" + amount + "]\n");
   }
 
   public String composeMsg(double amount, String msg, BankAccount acct) {
@@ -60,12 +60,12 @@ public class Log implements Delims {
   }
 
   public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
-    logTo( (genTimeStamp() + "\tTransfer " + composeMsg(amount, "to account", receiver)), sender);
-    logTo( (genTimeStamp() + "\tTransfer " + composeMsg(amount, "received from account", sender)), receiver);
+    logTo( ("\tTransfer " + composeMsg(amount, "to account", receiver)), sender);
+    logTo( ("\tTransfer " + composeMsg(amount, "received from account", sender)), receiver);
   }
 
   public void logMessage(BankAccount receiver, double amount) {
-    logTo( (genTimeStamp() + "\tTransfer Failed\t" + composeMsg(amount, "to account", receiver)), receiver); 
+    logTo( ("\tTransfer Failed\t" + composeMsg(amount, "to account", receiver)), receiver); 
   }
 
   public String search(String msg) {
