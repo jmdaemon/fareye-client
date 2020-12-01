@@ -55,17 +55,17 @@ public class Log implements Delims {
     logAppend("\t" + msg + "\t" + "[$" + amount + "]\n");
   }
 
-  public String composeMsg(double amount, String msg, BankAccount acct) {
-    return ("[$" + amount + " " + msg + " " + acct.getAcctNum() + "]\t\n");
+  public String composeMsg(String transferMsg,double amount, String msg, BankAccount acct) {
+    return ("\t" + transferMsg " " + "[$" + amount + " " + msg + " " + acct.getAcctNum() + "]\t\n");
   }
 
   public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
-    logTo( ("\tTransfer " + composeMsg(amount, "to account", receiver)), sender);
-    logTo( ("\tTransfer " + composeMsg(amount, "received from account", sender)), receiver);
+    logTo(composeMsg("Transfer", amount, "to account", receiver), sender);
+    logTo(composeMsg("Transfer", amount, "received from account", sender), receiver);
   }
 
   public void logMessage(BankAccount receiver, double amount) {
-    logTo( ("\tTransfer Failed\t" + composeMsg(amount, "to account", receiver)), receiver); 
+    logTo(composeMsg("Transfer Failed", amount, "to account", receiver), receiver); 
   }
 
   public String search(String msg) {
