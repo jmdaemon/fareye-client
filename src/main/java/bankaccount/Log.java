@@ -48,27 +48,24 @@ public class Log implements Delims {
   }
 
   public void logMessage(String msg) { 
-    String timeStamp = genTimeStamp();
-    logAppend(timeStamp + "\t" + msg + "\t\n");
+    logAppend(genTimeStamp() + "\t" + msg + "\t\n");
   }
 
   public void logMessage(String msg, double amount) {
-    String timeStamp = genTimeStamp();
-    logAppend(timeStamp + "\t" + msg + "\t" + "[$" + amount + "]\n");
+    logAppend(genTimeStamp() + "\t" + msg + "\t" + "[$" + amount + "]\n");
+  }
+
+  public String composeMsg(double amount, String msg, BankAccount acct) {
+    return ("[$" + amount + " " + msg + " " + acct.getAcctNum() + "]\t\n");
   }
 
   public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
-    String timeStamp = genTimeStamp();
-    String senderMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\t\n"); 
-    String receiverMsg = ("[$" + amount + " received from account " + sender.getAcctNum() + "]\t\n");
-    logTo( (timeStamp + "\tTransfer " + senderMsg), sender);
-    logTo( (timeStamp + "\tTransfer " + receiverMsg), receiver);
+    logTo( (genTimeStamp() + "\tTransfer " + composeMsg(amount, "to account", receiver)), sender);
+    logTo( (genTimeStamp() + "\tTransfer " + composeMsg(amount, "received from account", sender)), receiver);
   }
 
   public void logMessage(BankAccount receiver, double amount) {
-    String timeStamp = genTimeStamp();
-    String failMsg = ("[$" + amount + " to account " + receiver.getAcctNum() + "]\n"); 
-    receiver.getLog().logAppend(timeStamp + "\tTransfer Failed\t" + failMsg); 
+    logTo( (genTimeStamp() + "\tTransfer Failed\t" + composeMsg(amount, "to account", receiver)), receiver); 
   }
 
   public String search(String msg) {
