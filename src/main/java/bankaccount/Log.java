@@ -56,7 +56,7 @@ public class Log implements Delims {
   }
 
   public String composeMsg(String transferMsg,double amount, String msg, BankAccount acct) {
-    return ("\t" + transferMsg " " + "[$" + amount + " " + msg + " " + acct.getAcctNum() + "]\t\n");
+    return ("\t" + transferMsg + " " + "[$" + amount + " " + msg + " " + acct.getAcctNum() + "]\t\n");
   }
 
   public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
