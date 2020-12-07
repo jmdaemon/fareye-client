@@ -105,12 +105,12 @@ public class BankAccountTests {
   
   @Test
   public void genAcctNum_UpperBoundIsEqualToLowerBound_ThrowsException() {
-    assertTrue(getExceptionMsg_AcctNum(1).contains("upperBound cannot be less than or equal to the lowerBound"));
+    assertTrue(getExceptionMsg_AcctNum(1).contains("upperBound cannot be less than or equal to 1"));
   }
 
   @Test
   public void genAcctNum_UpperBoundIsLessThanLowerBound_ThrowsException() {
-    assertTrue(getExceptionMsg_AcctNum(-1).contains("upperBound cannot be less than or equal to the lowerBound"));
+    assertTrue(getExceptionMsg_AcctNum(-1).contains("upperBound cannot be less than or equal to 1"));
   }
 
   @Test

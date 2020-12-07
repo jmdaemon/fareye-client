@@ -102,7 +102,7 @@ public class BankAccount {
 
   public static int genAcctNum(int upperBound) {
     if (upperBound <= 1) {
-      throw new IllegalArgumentException("upperBound cannot be less than or equal to the lowerBound");
+      throw new IllegalArgumentException("upperBound cannot be less than or equal to 1");
     }
     int result = genRandNum(upperBound-1) + 1;
 		return result;
