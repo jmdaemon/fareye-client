@@ -1,7 +1,7 @@
 package test.log.csv;
 
-import static app.log.csv.CSV.*;
-import static app.log.Log.*;
+import static app.utils.csv.CSV.*;
+import static app.utils.log.Log.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;

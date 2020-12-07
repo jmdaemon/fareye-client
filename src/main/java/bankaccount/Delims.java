@@ -1,4 +1,4 @@
-package app.log;
+package app.utils.log;
 
 public interface Delims {
   final String TAB_DELIM = "\\t+";

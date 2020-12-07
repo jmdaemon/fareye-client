@@ -1,8 +1,8 @@
 package app.bankAccount;
 
-import static app.log.csv.CSV.*;
-import static app.log.Log.*;
-import app.log.*;
+import static app.utils.csv.CSV.*;
+import static app.utils.log.Log.*;
+import app.utils.log.*;
 
 import java.util.Random;
 
@@ -52,7 +52,6 @@ public class BankAccount {
   public boolean withdraw(double amount) {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Withdrawal Unsuccessful"); }
-    //if (!hasFunds(amount)) { return cancelProcess("Withdrawal Unsuccessful"); }
     if (!hasFunds(amount)) { 
       logMessage("Withdrawal Unsuccessful", amount);
     }
@@ -61,7 +60,7 @@ public class BankAccount {
     return true;
 	}
 
-  public boolean transferTo (double amount, BankAccount target){ 
+  public boolean transferTo (double amount, BankAccount target) { 
     if (amount == 0) { return true; }
     if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
     if (!hasFunds(amount)) { 

@@ -1,7 +1,7 @@
-package app.log; 
+package app.utils.log; 
 
+import static app.utils.csv.CSV.*;
 import app.bankAccount.*;
-import static app.log.csv.CSV.*;
 
 import java.lang.StringBuilder;
 import java.text.SimpleDateFormat;

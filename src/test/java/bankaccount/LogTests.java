@@ -1,7 +1,7 @@
 package test.log;
 
-import static app.log.csv.CSV.*;
-import static app.log.Log.*;
+import static app.utils.csv.CSV.*;
+import static app.utils.log.Log.*;
 import app.bankAccount.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
@@ -40,7 +40,7 @@ public class LogTests {
   @Test 
   public void logMessage_MsgAmt_ShouldLogMsgWithAmt() {
     logMessage("logMessage with amount", 100);
-    assertEquals("logMessage with amount  [$100.0]", searchLog("logMessage with amount"));
+    assertEquals("logMessage with amount [$100.0]", searchLog("logMessage with amount"));
   }
 
   @Test 

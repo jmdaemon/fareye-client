@@ -1,6 +1,7 @@
-package app.log.csv;
+package app.utils.csv;
 
-import app.log.*;
+import static app.utils.log.Log.*;
+import app.utils.log.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

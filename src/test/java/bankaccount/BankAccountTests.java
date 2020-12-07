@@ -1,7 +1,7 @@
 package test.bankaccount;
 
-import static app.log.csv.CSV.*;
-import static app.log.Log.*;
+import static app.utils.csv.CSV.*;
+import static app.utils.log.Log.*;
 import app.bankAccount.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
