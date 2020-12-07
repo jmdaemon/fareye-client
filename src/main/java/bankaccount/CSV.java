@@ -23,6 +23,14 @@ import org.unix4j.line.*;
 
 public class CSV implements Delims {
 
+  public static boolean fileExists(String filepath) {
+    File f = new File(filepath);
+    if (f.exists() && !f.isDirectory()) { 
+      return true; 
+    } 
+    return false;
+  }
+ 
   public static List<Line> grepFile(String keyword, String filepath) {
     File file = new File(filepath);
     List<Line> results = Unix4j.grep(keyword, file).toLineList(); 
@@ -50,6 +58,22 @@ public class CSV implements Delims {
     }
     return lines;
   }
+
+  //public void writeToFile(String filepath) {
+    //if (fileExists(filepath)) {
+      //return;
+    //} 
+
+    //List<String> logData = Arrays.asList(splitLog("\\r?\\n"));
+    //File logCSV = new File(filepath);
+    //try (PrintWriter pw = new PrintWriter(logCSV)) {
+      //logData.stream()
+        //.map(this::stringToCSV) 
+        //.forEach(pw::println);
+    //} catch (Exception e) {
+      //e.printStackTrace();
+    //}
+  //}
 
   //public String search(String msg) {
     //Pattern pattern = Pattern.compile(msg);
