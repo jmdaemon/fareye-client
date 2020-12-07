@@ -15,19 +15,23 @@ import java.io.PrintStream;
 public class BankAccountTests {
   private BankAccount bankAccount;
   private BankAccount targAccount;
+  private BankAccount newAcct;
 
   @BeforeEach
   public void setUp() {
     this.bankAccount = new BankAccount("Paul", "Allen");
-    this.targAccount = new BankAccount("Timothy", "Price");
+    this.targAccount = new BankAccount("Timothy", "Price"); 
+    this.newAcct = new BankAccount("Patrick", "Bateman");
   }
 
   @AfterEach
   public void tearDown() { 
-    File acctLog = new File("./" + bankAccount.getAcctNum() + "-transaction_history.csv"); 
-    File targLog = new File("./" + targAccount.getAcctNum() + "-transaction_history.csv"); 
+    File acctLog = new File(bankAccount.getFilePath()); 
+    File targLog = new File(targAccount.getFilePath()); 
+    File newAcctLog = new File(newAcct.getFilePath());
     acctLog.delete();
     targLog.delete();
+    newAcctLog.delete();
   }
 
   private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -42,7 +46,6 @@ public class BankAccountTests {
 
   @Test
   public void BankAccount_IfInitialized_ReturnsBankAccount() {
-    BankAccount newAcct = new BankAccount("Patrick", "Bateman");
     assertNotNull(newAcct.getAcctNum());
     assertEquals(0, newAcct.getBalance());
     assertEquals("Patrick", newAcct.getFName());
