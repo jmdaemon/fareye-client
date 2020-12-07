@@ -32,11 +32,6 @@ public class CSV implements Delims {
   public static String cutTimeStamp(String line) { 
     String[] slicedLine = line.split(COMMA_DELIM);
     return slicedLine[1];
-    //StringBuilder result = new StringBuilder(); 
-    //for (String value : slicedEntry) { 
-      //result.append(value);
-    //}
-    //return result.toString();
   }
 
   public static String searchLog(String keyword) {
