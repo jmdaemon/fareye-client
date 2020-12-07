@@ -10,9 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.FileWriter;
 import java.lang.StringBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -20,14 +17,6 @@ import java.io.PrintStream;
 
 public class BankAccountTests {
   private static final String filepath = "./transaction_history.csv";
-
-  //private static void initializeFile(String msg1, String msg2) throws IOException { 
-    //BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
-    //writer.write(msg1); 
-    //writer.write(msg2);
-    //writer.close();
-  //}
-
   private BankAccount bankAccount;
   private BankAccount targAccount;
 
@@ -36,13 +25,6 @@ public class BankAccountTests {
     this.bankAccount = new BankAccount("Paul", "Allen");
     this.targAccount = new BankAccount("Timothy", "Price");
   }
-
-  //@BeforeAll
-  //public void setUpLog() throws IOException {
-    //String logEntry1 = (genTimeStamp() + ", " + "New Bank Account Created, ");
-    //String logEntry2 = (genTimeStamp() + ", " + "Deposit Successful [$100.0], " );
-    //initializeFile(logEntry1, logEntry2); 
-  //}
 
   private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private static final PrintStream originalOut = System.out;
@@ -57,7 +39,6 @@ public class BankAccountTests {
   @Test
   public void BankAccount_IfInitialized_ReturnsBankAccount() {
     BankAccount newAcct = new BankAccount("Patrick", "Bateman");
-
     assertNotNull(newAcct.getAcctNum());
     assertEquals(0, newAcct.getBalance());
     assertEquals("Patrick", newAcct.getFName());
@@ -73,7 +54,7 @@ public class BankAccountTests {
   @Test
   public void Deposit_1000_ReturnsTrue() {
     assertEquals(true, bankAccount.deposit(1000));
-    assertEquals("Deposit Successful  [$1000.0]", searchLog("Deposit Successful"));
+    assertEquals("Deposit Successful [$1000.0]", searchLog("Deposit Successful"));
   }
 
   @Test
@@ -84,9 +65,9 @@ public class BankAccountTests {
 
   @Test
   public void Withdraw_1000_True() {
-    bankAccount.deposit(1000); // Give our mock a starting balance
+    bankAccount.deposit(1000);
     assertEquals(true, bankAccount.withdraw(1000)); 
-    assertEquals("Withdrawal Successful  [$1000.0]", searchLog("Withdrawal Successful"));
+    assertEquals("Withdrawal Successful [$1000.0]", searchLog("Withdrawal Successful"));
   }
 
   @Test
@@ -102,11 +83,10 @@ public class BankAccountTests {
   @Test
   public void transferTo_Acct1000_ReturnsTrue() {
     bankAccount.deposit(1000);
-    String expectedLog = ("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]"); 
-    assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
-    assertEquals(500.0, bankAccount.getBalance(), "Sender's new balance should be $500"); 
-    assertEquals(500.0, targAccount.getBalance(), "Receiver's new balance should be $500");
-    assertEquals(expectedLog, searchLog("Transfer \\[\\$500.0 to account \\d{1,5}]"));
+    assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
+    assertEquals(500.0, bankAccount.getBalance()); 
+    assertEquals(500.0, targAccount.getBalance());
+    assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer"));
   }
 
   @Test
@@ -122,14 +102,12 @@ public class BankAccountTests {
   
   @Test
   public void genAcctNum_UpperBoundIsEqualToLowerBound_ThrowsException() {
-    String expected = "upperBound cannot be less than or equal to the lowerBound";
-    assertTrue(getExceptionMsg_AcctNum(1).contains(expected), "Exception thrown when upperBound == lowerBound");
+    assertTrue(getExceptionMsg_AcctNum(1).contains("upperBound cannot be less than or equal to the lowerBound"));
   }
 
   @Test
   public void genAcctNum_UpperBoundIsLessThanLowerBound_ThrowsException() {
-    String expectedMessage = "upperBound cannot be less than or equal to the lowerBound";
-    assertTrue(getExceptionMsg_AcctNum(-1).contains(expectedMessage), "Exception thrown when upperBound < 1");
+    assertTrue(getExceptionMsg_AcctNum(-1).contains("upperBound cannot be less than or equal to the lowerBound"));
   }
 
   @Test

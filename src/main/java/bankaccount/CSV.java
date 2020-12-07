@@ -50,7 +50,7 @@ public class CSV implements Delims {
 
   public static String msgToCSV(String data) {
     String convertToCSV = data.replaceAll(TAB_DELIM, ", ");
-    String result = convertToCSV.replaceAll("\\$,", " ");
+    String result = convertToCSV.replaceAll("\\$,", "");
     return result;
   }
 
