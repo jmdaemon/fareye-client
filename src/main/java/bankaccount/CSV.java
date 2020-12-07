@@ -55,9 +55,6 @@ public class CSV implements Delims {
     return result;
   }
 
-  public static void csvToMSG() {
-  }
-
   public static void writeToFile(String msg, String filepath) throws IOException {
     if (!fileExists(filepath)) {
       return;
@@ -74,5 +71,4 @@ public class CSV implements Delims {
     writer.write(entry); 
     writer.close();
   }
-
 }
