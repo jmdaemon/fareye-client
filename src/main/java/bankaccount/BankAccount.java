@@ -37,7 +37,7 @@ public class BankAccount {
   }
 
   private boolean cancelProcess(String msg) {
-    this.log.logMessage(msg);
+    logMessage(msg);
     return false;
   }
 
@@ -96,23 +96,27 @@ public class BankAccount {
   void setLName(String lName) { this.lName = lName; }
   void setBalance(double newBalance) { this.balance = newBalance; }
 
+  private static int genRandNum(int len) { 
+    Random randGen = new Random();
+    int result = randGen.nextInt(len);
+    return result;
+  }
+
   public static int genAcctNum(int upperBound) {
     int lowerBound = 1;
     if (upperBound <= lowerBound) {
       throw new IllegalArgumentException("upperBound cannot be less than or equal to the lowerBound");
     }
-    Random randGen = new Random();
-		int acctNum = randGen.nextInt(upperBound-lowerBound) + lowerBound;
-		return acctNum;
+    int result = genRandNum(upperBound-lowerBound) + lowerBound;
+		return result;
   }
 
   private static String genPswd(int len) {
     final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
-    Random randGen = new Random();
     char[] genPswd = new char[len];
     for (int i = 0; i < len; i++) {
-      genPswd[i] = charset.charAt( randGen.nextInt(charset.length()) );
+      genPswd[i] = charset.charAt(genRandNum(charset.length()));
     }
     String result = String.valueOf(genPswd);
     return result;
