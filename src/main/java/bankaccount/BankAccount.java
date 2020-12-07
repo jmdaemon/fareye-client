@@ -1,6 +1,7 @@
 package app.bankAccount;
 
 import static app.log.csv.CSV.*;
+import static app.log.Log.*;
 import app.log.*;
 
 import java.util.Random;
@@ -32,7 +33,7 @@ public class BankAccount {
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
     this.log = new Log();
-    this.log.initLog("New Bank Account Created");
+    initLog("New Bank Account Created");
   }
 
   private boolean cancelProcess(String msg) {
@@ -43,7 +44,7 @@ public class BankAccount {
 	public boolean deposit(double amount) {
     if (amount > 0) { 
       balance += amount;
-      this.log.logMessage("Deposit Successful", amount);
+      logMessage("Deposit Successful", amount);
       return true;
     } else if (amount == 0) {
       return true;
@@ -54,7 +55,7 @@ public class BankAccount {
   public boolean withdraw(double amount) {
 		if (amount > 0 && hasFunds(amount)) {
       balance -= amount;
-      this.log.logMessage("Withdrawal Successful", amount);
+      logMessage("Withdrawal Successful", amount);
 			return true;
 		} else 
       return cancelProcess("Withdrawal Unsuccessful");
@@ -64,7 +65,7 @@ public class BankAccount {
     if (amount > 0 && (hasFunds(amount)) && target != null) { 
       setBalance(balance -= amount);
       target.setBalance(target.getBalance() + amount);
-      this.log.logMessage(this, target, amount);
+      logMessage(this, target, amount);
       return true; 
     } else if (amount == 0) {
       return true; 
@@ -85,7 +86,7 @@ public class BankAccount {
   public boolean resetPswd(String currPass, String newPass) {
     if (checkPswd(currPass)) {
       this.pswd = newPass;
-      this.log.logMessage("Password Successfully Changed");
+      logMessage("Password Successfully Changed");
       return true;
     } else 
       return cancelProcess("Password Reset Failed");
