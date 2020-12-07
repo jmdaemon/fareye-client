@@ -23,7 +23,6 @@ public class BankAccount {
     createAccount();
     this.fName = firstName;
     this.lName = lastName;
-    this.log.initLog("New Bank Account Created");
   }
 
   private void createAccount() {
