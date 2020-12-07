@@ -51,8 +51,8 @@ public class LogTests {
 
   @Test 
   public void logAppend_ShouldLogMessage() { 
-  logAppend("\t" + "Testing logAppend", filepath);
-  assertEquals("Testing logAppend", searchLog("Testing logAppend", filepath));
+    logAppend("\t" + "Testing logAppend", filepath); 
+    assertEquals("Testing logAppend", searchLog("Testing logAppend", filepath));
   }
 
   @Test 

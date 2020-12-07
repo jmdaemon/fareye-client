@@ -5,20 +5,16 @@ import static app.utils.log.Log.*;
 import app.bankAccount.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.lang.StringBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+// File Change v2
+
 public class BankAccountTests {
-  //private static final String filepath = "./transaction_history.csv";
-  private static String filepath;
   private BankAccount bankAccount;
   private BankAccount targAccount;
 
