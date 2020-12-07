@@ -80,8 +80,6 @@ public class BankAccountTests {
     bankAccount.deposit(1000);
     assertEquals(false, bankAccount.transferTo(500, imaginaryAccount));
     assertEquals("Transfer Failed", searchLog("Transfer Failed", bankAccount.getFilePath() ));
-    // *Note* that the target account isn't notified in failed transactions.
-    // TODO: Change this behavior?
   }
 
   @Test
