@@ -33,7 +33,7 @@ public class BankAccount {
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
-    this.log = new Log();
+    //this.log = new Log();
     this.filepath = ("./" + acctNum + "-transaction_history.csv");
     initLog("New Bank Account Created", this.filepath);
   }
@@ -125,7 +125,7 @@ public class BankAccount {
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
-    public Log getLog() { return this.log; }
+    //public Log getLog() { return this.log; }
     public String getFilePath() { return this.filepath; }
 
   public void display() { 

@@ -8,9 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Log implements Delims {
-  //private static final String filepath = "./transaction_history.csv";
-
-  //public Log() { }
 
   public static String genTimeStamp() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy.mm.dd.HH.mm.sss");
@@ -34,10 +31,6 @@ public class Log implements Delims {
     }
   }
 
-  public static void logTo(String msg, BankAccount acct, String filepath) {
-    acct.getLog().logAppend(genTimeStamp() + "\t" + msg, filepath);
-  }
-
   public static void logMessage(String msg, String filepath) { 
     logAppend(genTimeStamp() + "\t" + msg, filepath);
   }
@@ -51,11 +44,11 @@ public class Log implements Delims {
   }
 
   public static void logMessage(BankAccount sender, BankAccount receiver, double amount, String filepath) {
-    logTo(composeMsg("Transfer", amount, "to account", receiver), sender, sender.getFilePath());
-    logTo(composeMsg("Transfer", amount, "received from account", sender), receiver, receiver.getFilePath());
+    logMessage(composeMsg("Transfer", amount, "to account", receiver), sender.getFilePath());
+    logMessage(composeMsg("Transfer", amount, "received from account", sender), receiver.getFilePath());
   }
 
   public static void logMessage(BankAccount receiver, double amount, String filepath) {
-    logTo(composeMsg("Transfer Failed", amount, "to account", receiver), receiver, filepath); 
+    logMessage(composeMsg("Transfer Failed", amount, "to account", receiver), filepath); 
   }
 }

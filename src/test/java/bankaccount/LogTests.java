@@ -56,12 +56,6 @@ public class LogTests {
   }
 
   @Test 
-  public void logTo_ShouldLogToAcct() {
-    logTo("Testing logTo", acct, filepath);
-    assertEquals("Testing logTo", searchLog("Testing logTo", filepath));
-  }
-
-  @Test 
   public void logMessage_Msg_ShouldLogMsg() {
     logMessage("Testing logMessage", filepath);
     assertEquals("Testing logMessage", searchLog("Testing logMessage", filepath));
