@@ -15,7 +15,6 @@ public class BankAccount {
   private String lName;
   private String pswd;
   private String filepath;
-  private Log log;
 
   public BankAccount() {
     createAccount();
@@ -33,13 +32,12 @@ public class BankAccount {
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
-    //this.log = new Log();
     this.filepath = ("./" + acctNum + "-transaction_history.csv");
-    initLog("New Bank Account Created", this.filepath);
+    initLog("New Bank Account Created", getFilePath());
   }
 
   private boolean cancelProcess(String msg) {
-    logMessage(msg, this.filepath);
+    logMessage(msg, getFilePath());
     return false;
   }
 
@@ -47,7 +45,7 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
     balance += amount;
-    logMessage("Deposit Successful", amount, this.filepath);
+    logMessage("Deposit Successful", amount, getFilePath());
     return true;
 	}
 
@@ -55,10 +53,10 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Withdrawal Unsuccessful"); }
     if (!hasFunds(amount)) { 
-      logMessage("Withdrawal Unsuccessful", amount, this.filepath);
+      logMessage("Withdrawal Unsuccessful", amount, getFilePath());
     }
     balance -= amount;
-    logMessage("Withdrawal Successful", amount, this.filepath);
+    logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
 	}
 
@@ -66,12 +64,12 @@ public class BankAccount {
     if (amount == 0) { return true; }
     if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
     if (!hasFunds(amount)) { 
-      logMessage("Transfer Failed" + amount, this.filepath); 
+      logMessage("Transfer Failed" + amount, getFilePath()); 
       return false;
     } 
     setBalance(balance -= amount);
     target.setBalance(target.getBalance() + amount);
-    logMessage(this, target, amount, this.filepath);
+    logMessage(this, target, amount, getFilePath());
     return true; 
   }
 
@@ -88,7 +86,7 @@ public class BankAccount {
   public boolean resetPswd(String currPass, String newPass) {
     if (!checkPswd(currPass)) { return cancelProcess("Password Reset Failed"); }
     this.pswd = newPass;
-    logMessage("Password Successfully Changed", this.filepath);
+    logMessage("Password Successfully Changed", getFilePath());
     return true;
   }
 
@@ -125,7 +123,6 @@ public class BankAccount {
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
-    //public Log getLog() { return this.log; }
     public String getFilePath() { return this.filepath; }
 
   public void display() { 
@@ -133,7 +130,7 @@ public class BankAccount {
     System.out.println("Balance: " +    getBalance());
     System.out.println("First Name: " + getFName());
     System.out.println("Last Name: " +  getLName());
-    String[] logEntries = searchLogAll("", this.filepath);
+    String[] logEntries = searchLogAll("", getFilePath());
     for (String entry : logEntries) {
       System.out.println(entry);
     }
