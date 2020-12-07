@@ -40,8 +40,15 @@ public class CSV implements Delims {
     String line  = entry.getContent();
     String result = cutTimeStamp(line);
     return result;
-    //String result = entry.toString();
-    //System.out.println(result);
+  }
+  
+  public static String[] searchLogAll(String keyword) {
+    List<Line> entries = grepFile(keyword, "./transaction_history.csv");
+    String[] lines = new String[entries.size()];
+    for (int i = 0; i < entries.size(); i++) {
+      lines[i] = entries.get(i).getContent();
+    }
+    return lines;
   }
 
   //public String search(String msg) {
