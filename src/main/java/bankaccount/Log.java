@@ -18,7 +18,7 @@ public class Log implements Delims {
     return (formatter.format(date));
   }
 
-  public void logAppend(String msg) {
+  public static void logAppend(String msg) {
     try { 
       writeToFile(msg + "\t\n", filepath);
     } catch (Exception e) {
@@ -26,7 +26,7 @@ public class Log implements Delims {
     }
   }
 
-  public void initLog(String initMSG) {
+  public static void initLog(String initMSG) {
     try { 
       initializeLog(genTimeStamp() + "\t" + initMSG + "\t\n");
     } catch (Exception e) {
@@ -34,28 +34,28 @@ public class Log implements Delims {
     }
   }
 
-  public void logTo(String msg, BankAccount acct) {
+  public static void logTo(String msg, BankAccount acct) {
     acct.getLog().logAppend(genTimeStamp() + "\t" + msg);
   }
 
-  public void logMessage(String msg) { 
+  public static void logMessage(String msg) { 
     logAppend(genTimeStamp() + "\t" + msg);
   }
 
-  public void logMessage(String msg, double amount) {
+  public static void logMessage(String msg, double amount) {
     logAppend(genTimeStamp() + "\t" + msg + "$\t" + "[$" + amount + "]");
   }
 
-  public String composeMsg(String transferMsg,double amount, String msg, BankAccount acct) {
+  public static String composeMsg(String transferMsg,double amount, String msg, BankAccount acct) {
     return ("\t" + transferMsg + " " + "[$" + amount + " " + msg + " " + acct.getAcctNum() + "]");
   }
 
-  public void logMessage(BankAccount sender, BankAccount receiver, double amount) {
+  public static void logMessage(BankAccount sender, BankAccount receiver, double amount) {
     logTo(composeMsg("Transfer", amount, "to account", receiver), sender);
     logTo(composeMsg("Transfer", amount, "received from account", sender), receiver);
   }
 
-  public void logMessage(BankAccount receiver, double amount) {
+  public static void logMessage(BankAccount receiver, double amount) {
     logTo(composeMsg("Transfer Failed", amount, "to account", receiver), receiver); 
   }
 }
