@@ -35,9 +35,7 @@ public class CSV implements Delims {
 
   public static String searchLog(String keyword) {
     List<Line> entries = grepFile(keyword, "./transaction_history.csv");
-    Line entry = entries.get(0);
-    String line  = entry.getContent();
-    String result = cutTimeStamp(line);
+    String result = cutTimeStamp(entries.get(0).getContent());
     return result;
   }
   
