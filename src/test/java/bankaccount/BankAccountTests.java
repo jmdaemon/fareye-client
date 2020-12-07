@@ -12,8 +12,6 @@ import java.lang.StringBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-// File Change v2
-
 public class BankAccountTests {
   private BankAccount bankAccount;
   private BankAccount targAccount;
@@ -30,10 +28,6 @@ public class BankAccountTests {
     File targLog = new File("./" + targAccount.getAcctNum() + "-transaction_history.csv"); 
     acctLog.delete();
     targLog.delete();
-  }
-
-  private static String getFilePath(BankAccount acct) {
-    return ("./" + acct.getAcctNum() + "-transaction_history.csv");
   }
 
   private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -58,26 +52,26 @@ public class BankAccountTests {
   @Test
   public void Deposit_NegativeAmount_ReturnsFalse() {
     assertEquals(false, bankAccount.deposit(-1000)); 
-    assertEquals("Deposit Unsuccessful", searchLog("Deposit Unsuccessful", getFilePath(bankAccount) ));
+    assertEquals("Deposit Unsuccessful", searchLog("Deposit Unsuccessful", bankAccount.getFilePath() ));
   }
 
   @Test
   public void Deposit_1000_ReturnsTrue() {
     assertEquals(true, bankAccount.deposit(1000));
-    assertEquals("Deposit Successful [$1000.0]", searchLog("Deposit Successful", getFilePath(bankAccount) ));
+    assertEquals("Deposit Successful [$1000.0]", searchLog("Deposit Successful", bankAccount.getFilePath() ));
   }
 
   @Test
   public void Withdraw_NegativeAmount_ReturnsFalse() {
     assertEquals(false, bankAccount.withdraw(-1000));
-    assertEquals("Withdrawal Unsuccessful", searchLog("Withdrawal Unsuccessful", getFilePath(bankAccount) ));
+    assertEquals("Withdrawal Unsuccessful", searchLog("Withdrawal Unsuccessful", bankAccount.getFilePath() ));
   }
 
   @Test
   public void Withdraw_1000_True() {
     bankAccount.deposit(1000);
     assertEquals(true, bankAccount.withdraw(1000)); 
-    assertEquals("Withdrawal Successful [$1000.0]", searchLog("Withdrawal Successful", getFilePath(bankAccount) ));
+    assertEquals("Withdrawal Successful [$1000.0]", searchLog("Withdrawal Successful", bankAccount.getFilePath() ));
   }
 
   @Test
@@ -85,7 +79,7 @@ public class BankAccountTests {
     BankAccount imaginaryAccount = null;
     bankAccount.deposit(1000);
     assertEquals(false, bankAccount.transferTo(500, imaginaryAccount));
-    assertEquals("Transfer Failed", searchLog("Transfer Failed", getFilePath(bankAccount) ));
+    assertEquals("Transfer Failed", searchLog("Transfer Failed", bankAccount.getFilePath() ));
     // *Note* that the target account isn't notified in failed transactions.
     // TODO: Change this behavior?
   }
@@ -96,14 +90,14 @@ public class BankAccountTests {
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
     assertEquals(500.0, bankAccount.getBalance()); 
     assertEquals(500.0, targAccount.getBalance());
-    assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", getFilePath(bankAccount) ));
-    //assertEquals("Transfer [$500.0 received from " + bankAccount.getAcctNum() + "]", searchLog("Transfer", getFilePath(targAccount) ));
+    assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", bankAccount.getFilePath() ));
+    assertEquals("Transfer [$500.0 received from account " + bankAccount.getAcctNum() + "]", searchLog("Transfer", targAccount.getFilePath() ));
   }
 
   @Test
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {
     assertEquals(false, bankAccount.transferTo(-500, targAccount));
-    assertEquals("Transfer Failed", searchLog("Transfer Failed", getFilePath(bankAccount) ));
+    assertEquals("Transfer Failed", searchLog("Transfer Failed", bankAccount.getFilePath() ));
   }
 
   @Test
@@ -143,7 +137,7 @@ public class BankAccountTests {
         "Last Name: "   + bankAccount.getLName()     + "\n");
     
     StringBuilder sb = new StringBuilder();
-        String[] logEntries = searchLogAll("", getFilePath(bankAccount) );
+        String[] logEntries = searchLogAll("", bankAccount.getFilePath() );
         for (String entry : logEntries) {
           sb.append(entry + "\n");
         }
