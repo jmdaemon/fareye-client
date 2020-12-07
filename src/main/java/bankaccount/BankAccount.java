@@ -62,15 +62,16 @@ public class BankAccount {
 	}
 
   public boolean transferTo (double amount, BankAccount target){ 
-    if (amount > 0 && (hasFunds(amount)) && target != null) { 
-      setBalance(balance -= amount);
-      target.setBalance(target.getBalance() + amount);
-      logMessage(this, target, amount);
-      return true; 
-    } else if (amount == 0) {
-      return true; 
-    } else 
-      return cancelProcess("Transfer Failed");
+    if (amount == 0) { return true; }
+    if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
+    if (!hasFunds(amount)) { 
+      logMessage("Transfer Failed" + amount); 
+      return false;
+    } 
+    setBalance(balance -= amount);
+    target.setBalance(target.getBalance() + amount);
+    logMessage(this, target, amount);
+    return true; 
   }
 
   public boolean checkPswd(String pass) {
