@@ -51,8 +51,8 @@ public class Log implements Delims {
   }
 
   public static void logMessage(BankAccount sender, BankAccount receiver, double amount, String filepath) {
-    logTo(composeMsg("Transfer", amount, "to account", receiver), sender, filepath);
-    logTo(composeMsg("Transfer", amount, "received from account", sender), receiver, filepath);
+    logTo(composeMsg("Transfer", amount, "to account", receiver), sender, sender.getFilePath());
+    logTo(composeMsg("Transfer", amount, "received from account", sender), receiver, receiver.getFilePath());
   }
 
   public static void logMessage(BankAccount receiver, double amount, String filepath) {

@@ -59,14 +59,14 @@ public class LogTests {
 
   @Test 
   public void logMessage_AcctsAmt_ShouldLogToBothAccts() {
-    logMessage(acct, targ, 100, filepath);
-    assertEquals("Transfer [$100.0 to account "             + targ.getAcctNum() + "]", searchLog("to account", filepath));
-    assertEquals("Transfer [$100.0 received from account "  + acct.getAcctNum() + "]", searchLog("received from account", filepath));
+    logMessage(acct, targ, 100, getFilePath(acct));
+    assertEquals("Transfer [$100.0 to account "             + targ.getAcctNum() + "]", searchLog("to account", getFilePath(acct)));
+    assertEquals("Transfer [$100.0 received from account "  + acct.getAcctNum() + "]", searchLog("received from account", getFilePath(targ)));
   }
 
   @Test 
   public void logMessage_FailedAcctAmt_ShouldLogFailedTransfer() {
-    logMessage(acct, 100, filepath);
-    assertEquals("Transfer Failed [$100.0 to account " + acct.getAcctNum() + "]", searchLog("Transfer Failed", filepath));
+    logMessage(acct, 100, getFilePath(acct));
+    assertEquals("Transfer Failed [$100.0 to account " + acct.getAcctNum() + "]", searchLog("Transfer Failed", getFilePath(acct) ));
   }
 }
