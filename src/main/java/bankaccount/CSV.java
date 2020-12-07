@@ -34,14 +34,14 @@ public class CSV implements Delims {
     return slicedLine[1];
   }
 
-  public static String searchLog(String keyword) {
-    List<Line> entries = grepFile(keyword, "./transaction_history.csv");
+  public static String searchLog(String keyword, String filepath) {
+    List<Line> entries = grepFile(keyword, filepath);
     String result = cutTimeStamp(entries.get(0).getContent());
     return result;
   }
   
-  public static String[] searchLogAll(String keyword) {
-    List<Line> entries = grepFile(keyword, "./transaction_history.csv");
+  public static String[] searchLogAll(String keyword, String filepath) {
+    List<Line> entries = grepFile(keyword, filepath);
     String[] lines = new String[entries.size()];
     for (int i = 0; i < entries.size(); i++) {
       lines[i] = entries.get(i).getContent();
@@ -68,9 +68,9 @@ public class CSV implements Delims {
     writer.close();
   } 
 
-  public static void initializeLog(String initMSG) throws IOException { 
+  public static void initializeLog(String initMSG, String filepath) throws IOException { 
     String entry = msgToCSV(initMSG);
-    BufferedWriter writer = new BufferedWriter(new FileWriter("./transaction_history.csv")); 
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
     writer.write(entry); 
     writer.close();
   }

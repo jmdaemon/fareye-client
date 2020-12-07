@@ -14,6 +14,7 @@ public class BankAccount {
   private String fName;
   private String lName;
   private String pswd;
+  private String filepath;
   private Log log;
 
   public BankAccount() {
@@ -33,11 +34,12 @@ public class BankAccount {
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
     this.log = new Log();
-    initLog("New Bank Account Created");
+    this.filepath = ("./" + acctNum + "-transaction_history.csv");
+    initLog("New Bank Account Created", this.filepath);
   }
 
   private boolean cancelProcess(String msg) {
-    logMessage(msg);
+    logMessage(msg, this.filepath);
     return false;
   }
 
@@ -45,7 +47,7 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
     balance += amount;
-    logMessage("Deposit Successful", amount);
+    logMessage("Deposit Successful", amount, this.filepath);
     return true;
 	}
 
@@ -53,10 +55,10 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Withdrawal Unsuccessful"); }
     if (!hasFunds(amount)) { 
-      logMessage("Withdrawal Unsuccessful", amount);
+      logMessage("Withdrawal Unsuccessful", amount, this.filepath);
     }
     balance -= amount;
-    logMessage("Withdrawal Successful", amount);
+    logMessage("Withdrawal Successful", amount, this.filepath);
     return true;
 	}
 
@@ -64,12 +66,12 @@ public class BankAccount {
     if (amount == 0) { return true; }
     if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
     if (!hasFunds(amount)) { 
-      logMessage("Transfer Failed" + amount); 
+      logMessage("Transfer Failed" + amount, this.filepath); 
       return false;
     } 
     setBalance(balance -= amount);
     target.setBalance(target.getBalance() + amount);
-    logMessage(this, target, amount);
+    logMessage(this, target, amount, this.filepath);
     return true; 
   }
 
@@ -86,7 +88,7 @@ public class BankAccount {
   public boolean resetPswd(String currPass, String newPass) {
     if (!checkPswd(currPass)) { return cancelProcess("Password Reset Failed"); }
     this.pswd = newPass;
-    logMessage("Password Successfully Changed");
+    logMessage("Password Successfully Changed", this.filepath);
     return true;
   }
 
@@ -130,7 +132,7 @@ public class BankAccount {
     System.out.println("Balance: " +    getBalance());
     System.out.println("First Name: " + getFName());
     System.out.println("Last Name: " +  getLName());
-    String[] logEntries = searchLogAll("");
+    String[] logEntries = searchLogAll("", this.filepath);
     for (String entry : logEntries) {
       System.out.println(entry);
     }

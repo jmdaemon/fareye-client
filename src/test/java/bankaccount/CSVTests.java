@@ -36,7 +36,7 @@ public class CSVTests {
 
   @Test
   public void searchLog_WithKeyword_ReturnsResult() {
-    assertEquals("Deposit Successful\t[$100.0]", searchLog("Deposit Successful"));
+    assertEquals("Deposit Successful\t[$100.0]", searchLog("Deposit Successful", filepath));
   }
 
   @Test
@@ -47,7 +47,7 @@ public class CSVTests {
       results[i] = entries.get(i).getContent();
     }
 
-    String[] funcResults = searchLogAll("");
+    String[] funcResults = searchLogAll("", filepath);
     for (int i = 0; i < results.length; i++) {
       assertEquals(results[i], funcResults[i]); 
     }
