@@ -1,118 +1,82 @@
 package test.log;
 
+import static app.utils.csv.CSV.*;
+import static app.utils.log.Log.*;
 import app.bankAccount.*;
-import app.log.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.*; 
 
-import java.lang.StringBuffer;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException; 
 
 public class LogTests {
-  private Log log;
+  private static final String filepath = "./transaction_history.csv";
   private BankAccount acct;
   private BankAccount targ;
-
+  
   @BeforeEach
-  public void setUp() {
-    this.log = new Log();
+  public void setUp() throws IOException {
     this.acct = new BankAccount();
-    this.targ = new BankAccount();
+    this.targ = new BankAccount(); 
+    String logEntry1 = (genTimeStamp() + ", " + "New Bank Account Created, \n");
+    String logEntry2 = (genTimeStamp() + ", " + "Deposit Successful\t[$100.0], \n" );
+    initializeFile(logEntry1, logEntry2);
+
   }
 
-  private final String filepath = "./transaction_history.csv";
+  @AfterEach
+  public void tearDown() { 
+    File acctLog = new File("./" + acct.getAcctNum() + "-transaction_history.csv"); 
+    File targLog = new File("./" + targ.getAcctNum() + "-transaction_history.csv"); 
+    File logFile = new File(filepath);
+    acctLog.delete();
+    targLog.delete();
+    logFile.delete();
+  }
+
+  private static void initializeFile(String msg1, String msg2) throws IOException { 
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
+    writer.write(msg1); 
+    writer.write(msg2);
+    writer.close();
+  }
+
+  private static String getFilePath(BankAccount acct) {
+    return ("./" + acct.getAcctNum() + "-transaction_history.csv");
+  }
 
   @Test 
   public void logAppend_ShouldLogMessage() { 
-  log.logAppend("Testing logAppend");
-  String res = log.searchFor("Testing logAppend");
-  assertEquals("Testing logAppend", res);
-  }
-
-  @Test 
-  public void logTo_ShouldLogToAcct() {
-    acct.getLog().logTo("Testing logTo", acct);
-    String res = acct.searchFor("Testing logTo");
-    assertEquals("Testing logTo", res);
+    logAppend("\t" + "Testing logAppend", filepath); 
+    assertEquals("Testing logAppend", searchLog("Testing logAppend", filepath));
   }
 
   @Test 
   public void logMessage_Msg_ShouldLogMsg() {
-    log.logMessage("Testing logMessage");
-    String res = log.searchFor("Testing logMessage");
-    assertEquals("Testing logMessage", res);
+    logMessage("Testing logMessage", filepath);
+    assertEquals("Testing logMessage", searchLog("Testing logMessage", filepath));
   }
 
   @Test 
   public void logMessage_MsgAmt_ShouldLogMsgWithAmt() {
-    log.logMessage("logMessage with amount", 100);
-    String resLog = log.searchFor("logMessage with amount");
-    String resAmt = log.searchFor("\\[\\$100.0\\]");
-    assertEquals("logMessage with amount", resLog);
-    assertEquals("[$100.0]", resAmt);
+    logMessage("logMessage with amount", 100, filepath);
+    assertEquals("logMessage with amount [$100.0]", searchLog("logMessage with amount", filepath));
   }
 
   @Test 
   public void logMessage_AcctsAmt_ShouldLogToBothAccts() {
-    log.logMessage(acct, targ, 100);
-    String acctResLog = acct.searchFor("Transfer \\[\\$100.0 to account \\d{1,5}\\]");
-    String targResLog = targ.searchFor("Transfer \\[\\$100.0 received from account \\d{1,5}\\]");
-    assertEquals("Transfer [$100.0 to account " + targ.getAcctNum() + "]", acctResLog);
-    assertEquals("Transfer [$100.0 received from account " + acct.getAcctNum() + "]", targResLog);
+    logMessage(acct, targ, 100, getFilePath(acct));
+    assertEquals("Transfer [$100.0 to account "             + targ.getAcctNum() + "]", searchLog("to account", getFilePath(acct)));
+    assertEquals("Transfer [$100.0 received from account "  + acct.getAcctNum() + "]", searchLog("received from account", getFilePath(targ)));
   }
 
   @Test 
   public void logMessage_FailedAcctAmt_ShouldLogFailedTransfer() {
-    acct.getLog().logMessage(acct, 100);
-    String acctResLog = acct.searchFor("Transfer Failed");
-    String acctResAmt = acct.searchFor("\\[\\$100.0 to account \\d{1,5}\\]");
-    assertEquals("Transfer Failed", acctResLog);
-    assertEquals("[$100.0 to account " + acct.getAcctNum() + "]", acctResAmt);
-  }
-
-  @Test 
-  public void parseLog_NewlineDelim_ShouldReturnLogEntry() {
-    log.logMessage("Testing parseLog \nwith newline delimeter\n");
-    String res = log.parseLog(log.search("Testing parseLog"), "\\r?\\n");
-    assertEquals("Testing parseLog", res);
-  }
-
-  @Test 
-  public void parseLog_TabDelim_ShouldReturnLogEntry() {
-    log.logMessage("Testing parseLog \twith tab delimeter\t\n");
-    String res = log.parseLog(log.search("Testing parseLog"), "\\t+");
-    assertEquals("Testing parseLog", res);
-  }
-
-  @Test
-  public void searchFor_ReturnsLogMsg() {
-    acct.deposit(100);
-    String res = acct.searchFor("Deposit Successful");
-    assertEquals("Deposit Successful", res);
-  }
-
-  /** Create setup code for creating mock ./transaction_history.csv */
-
-  @Test
-  public void fileExists_ReturnsTrue() {
-    assertEquals(true, acct.getLog().fileExists(filepath));
-    assertEquals(false, acct.getLog().fileExists("imaginaryfile.csv"));
-  }
-
-  @Test
-  public void writeToFile_CreatesCSVFile() {
-    acct.deposit(100);
-    acct.writeToFile("./transaction_history.csv");
-    assertEquals(true, acct.getLog().fileExists(filepath));
-  }
-
-  @Test
-  public void readFile_transaction_history_ReturnsTrue() {
-    String logCSV = acct.getLog().readFile(filepath);
-    System.out.println(logCSV);
-    String res = acct.getLog().searchFileFor("Deposit Successful", logCSV);
-    assertEquals("Deposit Successful", res);
+    logMessage(acct, 100, getFilePath(acct));
+    assertEquals("Transfer Failed [$100.0 to account " + acct.getAcctNum() + "]", searchLog("Transfer Failed", getFilePath(acct) ));
   }
 }

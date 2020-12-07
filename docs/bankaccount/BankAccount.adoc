@@ -1,13 +1,41 @@
 = BankAccount Model
 
+Our BankAccount module contains the following classes:
+
+- BankAccount
+- CSV
+- Log
+- Delims (interface)
+
 == Requirements
 
 A BankAccount must have the following data:
-- Account number / ID
-- Balance 
-- First and Last names of the User's Account
+- Account number / Account ID
+- Account Balance 
+- First, Last names of user 
 - A secure password
-- A running log of all the transaction events collected thus far.
+- A log containing all the transaction events.
+
+== BankAccount
+
+
+.Methods 
+Bank Account can 
+- A
+- B
+- C
+
+.TODO
+
+transferTo_NegativeAmount:
+- Note that the target account isn't notified in failed transactions.
+
+== CSV
+
+== Log
+
+== Delims 
+
 
 With a BankAccount we should be able to 
 - Deposit (Add) money into our account.
