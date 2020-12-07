@@ -14,7 +14,6 @@ import java.lang.StringBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-
 public class BankAccountTests {
   private static final String filepath = "./transaction_history.csv";
   private BankAccount bankAccount;

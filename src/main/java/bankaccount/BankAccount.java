@@ -42,23 +42,23 @@ public class BankAccount {
   }
 
 	public boolean deposit(double amount) {
-    if (amount > 0) { 
-      balance += amount;
-      logMessage("Deposit Successful", amount);
-      return true;
-    } else if (amount == 0) {
-      return true;
-    } else 
-      return cancelProcess("Deposit Unsuccessful");
+    if (amount == 0)  { return true; }
+    if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
+    balance += amount;
+    logMessage("Deposit Successful", amount);
+    return true;
 	}
 
   public boolean withdraw(double amount) {
-		if (amount > 0 && hasFunds(amount)) {
-      balance -= amount;
-      logMessage("Withdrawal Successful", amount);
-			return true;
-		} else 
-      return cancelProcess("Withdrawal Unsuccessful");
+    if (amount == 0)  { return true; }
+    if (amount < 0)   { return cancelProcess("Withdrawal Unsuccessful"); }
+    //if (!hasFunds(amount)) { return cancelProcess("Withdrawal Unsuccessful"); }
+    if (!hasFunds(amount)) { 
+      logMessage("Withdrawal Unsuccessful", amount);
+    }
+    balance -= amount;
+    logMessage("Withdrawal Successful", amount);
+    return true;
 	}
 
   public boolean transferTo (double amount, BankAccount target){ 
@@ -85,12 +85,10 @@ public class BankAccount {
   }
 
   public boolean resetPswd(String currPass, String newPass) {
-    if (checkPswd(currPass)) {
-      this.pswd = newPass;
-      logMessage("Password Successfully Changed");
-      return true;
-    } else 
-      return cancelProcess("Password Reset Failed");
+    if (!checkPswd(currPass)) { return cancelProcess("Password Reset Failed"); }
+    this.pswd = newPass;
+    logMessage("Password Successfully Changed");
+    return true;
   }
 
   void setFName(String fName) { this.fName = fName; }
@@ -104,11 +102,10 @@ public class BankAccount {
   }
 
   public static int genAcctNum(int upperBound) {
-    int lowerBound = 1;
-    if (upperBound <= lowerBound) {
+    if (upperBound <= 1) {
       throw new IllegalArgumentException("upperBound cannot be less than or equal to the lowerBound");
     }
-    int result = genRandNum(upperBound-lowerBound) + lowerBound;
+    int result = genRandNum(upperBound-1) + 1;
 		return result;
   }
 
