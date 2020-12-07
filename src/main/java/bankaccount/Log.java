@@ -10,7 +10,7 @@ import java.util.Date;
 public class Log implements Delims {
   //private static final String filepath = "./transaction_history.csv";
 
-  public Log() { }
+  //public Log() { }
 
   public static String genTimeStamp() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy.mm.dd.HH.mm.sss");

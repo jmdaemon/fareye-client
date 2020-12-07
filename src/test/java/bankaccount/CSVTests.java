@@ -9,8 +9,9 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
 import org.unix4j.*;
 import org.unix4j.unix.cat.*;
@@ -20,19 +21,25 @@ import org.unix4j.line.*;
 public class CSVTests {
   private static final String filepath = "./transaction_history.csv";
 
-  private static void initializeFile(String msg1, String msg2) throws IOException { 
-    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
-    writer.write(msg1); 
-    writer.write(msg2);
-    writer.close();
-  }
-
   @BeforeEach
   public void setUp() throws IOException {
     String logEntry1 = (genTimeStamp() + ", " + "New Bank Account Created, \n");
     String logEntry2 = (genTimeStamp() + ", " + "Deposit Successful\t[$100.0], \n" );
     initializeFile(logEntry1, logEntry2);
   }
+
+  @AfterEach
+  public void tearDown() {
+    File logFile = new File(filepath);
+    logFile.delete(); 
+  }
+
+  private static void initializeFile(String msg1, String msg2) throws IOException { 
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
+    writer.write(msg1); 
+    writer.write(msg2);
+    writer.close();
+  } 
 
   @Test
   public void searchLog_WithKeyword_ReturnsResult() {

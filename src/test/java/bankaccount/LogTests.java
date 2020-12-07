@@ -8,7 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*; 
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException; 
 
 public class LogTests {
   private static final String filepath = "./transaction_history.csv";
@@ -16,17 +19,30 @@ public class LogTests {
   private BankAccount targ;
   
   @BeforeEach
-  public void setUp() {
+  public void setUp() throws IOException {
     this.acct = new BankAccount();
-    this.targ = new BankAccount();
+    this.targ = new BankAccount(); 
+    String logEntry1 = (genTimeStamp() + ", " + "New Bank Account Created, \n");
+    String logEntry2 = (genTimeStamp() + ", " + "Deposit Successful\t[$100.0], \n" );
+    initializeFile(logEntry1, logEntry2);
+
   }
 
   @AfterEach
   public void tearDown() { 
     File acctLog = new File("./" + acct.getAcctNum() + "-transaction_history.csv"); 
     File targLog = new File("./" + targ.getAcctNum() + "-transaction_history.csv"); 
+    File logFile = new File(filepath);
     acctLog.delete();
     targLog.delete();
+    logFile.delete();
+  }
+
+  private static void initializeFile(String msg1, String msg2) throws IOException { 
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
+    writer.write(msg1); 
+    writer.write(msg2);
+    writer.close();
   }
 
   private static String getFilePath(BankAccount acct) {
