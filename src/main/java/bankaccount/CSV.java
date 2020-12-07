@@ -4,7 +4,9 @@ import app.log.*;
 
 import java.util.ArrayList; 
 import java.util.Collection;
+import java.io.BufferedWriter;
 import java.io.BufferedReader; 
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,6 +59,16 @@ public class CSV implements Delims {
       lines[i] = entries.get(i).getContent();
     }
     return lines;
+  }
+
+  public static void writeToFile(String msg, String filepath) throws IOException {
+    if (!fileExists(filepath)) {
+      return;
+    }
+
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
+    writer.append(msg);
+    writer.close();
   }
 
   //public void writeToFile(String filepath) {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*; 
 
 import java.util.List;
+import java.io.IOException;
 
 import org.unix4j.*;
 import org.unix4j.unix.cat.*;
@@ -14,6 +15,7 @@ import org.unix4j.unix.Grep.*;
 import org.unix4j.line.*;
 
 public class CSVTests {
+  private static final String filepath = "./transaction_history.csv";
 
   @Test
   public void searchLog_WithKeyword_ReturnsResult() {
@@ -22,7 +24,7 @@ public class CSVTests {
 
   @Test
   public void searchLogAll_Star_ReturnsAllResults() {
-    List<Line> entries = Unix4j.cat("./transaction_history.csv").grep("").toLineList();
+    List<Line> entries = Unix4j.cat(filepath).grep("").toLineList();
     String[] results = new String[entries.size()];
     for (int i = 0; i < entries.size(); i++) {
       results[i] = entries.get(i).getContent();
@@ -32,5 +34,12 @@ public class CSVTests {
     for (int i = 0; i < results.length; i++) {
       assertEquals(results[i], funcResults[i]); 
     }
+  }
+
+  @Test
+  public void writeToFile_TestMessage_AppendsToLog() throws IOException {
+    writeToFile("Test Message\n", filepath);
+    String res = Unix4j.cat(filepath).grep("Test Message").toLineList().get(0).getContent();
+    assertEquals("Test Message", res);
   }
 }
