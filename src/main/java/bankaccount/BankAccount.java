@@ -1,5 +1,6 @@
 package app.bankAccount;
 
+import static app.log.csv.CSV.*;
 import app.log.*;
 
 import java.util.Random;
@@ -16,14 +17,16 @@ public class BankAccount {
 
   public BankAccount() {
     createAccount();
-    this.log.logMessage("New Bank Account Created.");
+    //this.log.logMessage("New Bank Account Created");
+    this.log.initLog("New Bank Account Created");
   }
 
   public BankAccount(String firstName, String lastName) {
     createAccount();
     this.fName = firstName;
     this.lName = lastName;
-    this.log.logMessage("New Bank Account Created.");
+    //this.log.logMessage("New Bank Account Created");
+    this.log.initLog("New Bank Account Created");
   }
 
   private void createAccount() {
@@ -122,14 +125,18 @@ public class BankAccount {
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
     public Log getLog() { return this.log; }
-    public String searchFor(String msg) { return this.getLog().searchFor(msg); }
-    public void writeToFile(String filepath) { this.getLog().writeToFile(filepath); }
+    //public String searchFor(String msg) { return this.getLog().searchFor(msg); }
+    //public void writeToFile(String filepath) { this.getLog().writeToFile(filepath); }
 
   public void display() { 
     System.out.println("Account #: " +  getAcctNum());
     System.out.println("Balance: " +    getBalance());
     System.out.println("First Name: " + getFName());
     System.out.println("Last Name: " +  getLName());
-    System.out.println(getLog().toStringBuffer().toString());
+    //System.out.println(getLog().toStringBuffer().toString());
+    String[] logEntries = searchLogAll("");
+    for (String entry : logEntries) {
+      System.out.println(entry);
+    }
   }
 } 

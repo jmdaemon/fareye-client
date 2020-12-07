@@ -61,12 +61,30 @@ public class CSV implements Delims {
     return lines;
   }
 
+  public static String msgToCSV(String data) {
+    String convertToCSV = data.replaceAll(TAB_DELIM, ", ");
+    String result = convertToCSV.replaceAll("\\$,", " ");
+    return result;
+  }
+
+  public static void csvToMSG() {
+  }
+
   public static void writeToFile(String msg, String filepath) throws IOException {
     if (!fileExists(filepath)) {
       return;
     }
+    String entry = msgToCSV(msg);
     BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
-    writer.append(msg);
+    writer.append(entry);
+    writer.close();
+  } 
+
+  public static void initializeLog(String initMSG) throws IOException { 
+    String entry = msgToCSV(initMSG);
+    BufferedWriter writer = new BufferedWriter(new FileWriter("./transaction_history.csv")); 
+    writer.write(entry); 
     writer.close();
   }
+
 }

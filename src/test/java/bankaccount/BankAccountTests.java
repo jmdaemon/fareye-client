@@ -1,17 +1,32 @@
 package test.bankaccount;
 
+import static app.log.csv.CSV.*;
+import static app.log.Log.*;
 import app.bankAccount.*;
+
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterAll;
-
 import org.junit.jupiter.api.Test;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.lang.StringBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 
 public class BankAccountTests {
+  private static final String filepath = "./transaction_history.csv";
+
+  //private static void initializeFile(String msg1, String msg2) throws IOException { 
+    //BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
+    //writer.write(msg1); 
+    //writer.write(msg2);
+    //writer.close();
+  //}
 
   private BankAccount bankAccount;
   private BankAccount targAccount;
@@ -21,6 +36,13 @@ public class BankAccountTests {
     this.bankAccount = new BankAccount("Paul", "Allen");
     this.targAccount = new BankAccount("Timothy", "Price");
   }
+
+  //@BeforeAll
+  //public void setUpLog() throws IOException {
+    //String logEntry1 = (genTimeStamp() + ", " + "New Bank Account Created, ");
+    //String logEntry2 = (genTimeStamp() + ", " + "Deposit Successful [$100.0], " );
+    //initializeFile(logEntry1, logEntry2); 
+  //}
 
   private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private static final PrintStream originalOut = System.out;
@@ -45,26 +67,26 @@ public class BankAccountTests {
   @Test
   public void Deposit_NegativeAmount_ReturnsFalse() {
     assertEquals(false, bankAccount.deposit(-1000)); 
-    assertEquals("Deposit Unsuccessful", bankAccount.searchFor("Deposit Unsuccessful"));
+    assertEquals("Deposit Unsuccessful", searchLog("Deposit Unsuccessful"));
   }
 
   @Test
   public void Deposit_1000_ReturnsTrue() {
     assertEquals(true, bankAccount.deposit(1000));
-    assertEquals("Deposit Successful", bankAccount.searchFor("Deposit Successful"));
+    assertEquals("Deposit Successful  [$1000.0]", searchLog("Deposit Successful"));
   }
 
   @Test
   public void Withdraw_NegativeAmount_ReturnsFalse() {
     assertEquals(false, bankAccount.withdraw(-1000));
-    assertEquals("Withdrawal Unsuccessful", bankAccount.searchFor("Withdrawal Unsuccessful"));
+    assertEquals("Withdrawal Unsuccessful", searchLog("Withdrawal Unsuccessful"));
   }
 
   @Test
   public void Withdraw_1000_True() {
     bankAccount.deposit(1000); // Give our mock a starting balance
     assertEquals(true, bankAccount.withdraw(1000)); 
-    assertEquals("Withdrawal Successful", bankAccount.searchFor("Withdrawal Successful"));
+    assertEquals("Withdrawal Successful  [$1000.0]", searchLog("Withdrawal Successful"));
   }
 
   @Test
@@ -72,7 +94,7 @@ public class BankAccountTests {
     BankAccount imaginaryAccount = null;
     bankAccount.deposit(1000);
     assertEquals(false, bankAccount.transferTo(500, imaginaryAccount));
-    assertEquals("Transfer Failed", bankAccount.searchFor("Transfer Failed"));
+    assertEquals("Transfer Failed", searchLog("Transfer Failed"));
     // *Note* that the target account isn't notified in failed transactions.
     // TODO: Change this behavior?
   }
@@ -84,13 +106,13 @@ public class BankAccountTests {
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transfer of $500 to account " + targAccount.getAcctNum() + " successful");
     assertEquals(500.0, bankAccount.getBalance(), "Sender's new balance should be $500"); 
     assertEquals(500.0, targAccount.getBalance(), "Receiver's new balance should be $500");
-    assertEquals(expectedLog, bankAccount.searchFor("Transfer \\[\\$500.0 to account \\d{1,5}]"));
+    assertEquals(expectedLog, searchLog("Transfer \\[\\$500.0 to account \\d{1,5}]"));
   }
 
   @Test
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {
     assertEquals(false, bankAccount.transferTo(-500, targAccount));
-    assertEquals("Transfer Failed", bankAccount.searchFor("Transfer Failed"));
+    assertEquals("Transfer Failed", searchLog("Transfer Failed"));
   }
 
   @Test
@@ -129,8 +151,13 @@ public class BankAccountTests {
         "Account #: "   + bankAccount.getAcctNum()   + "\n" +
         "Balance: "     + bankAccount.getBalance()   + "\n" +
         "First Name: "  + bankAccount.getFName()     + "\n" +
-        "Last Name: "   + bankAccount.getLName()     + "\n" +
-        bankAccount.getLog().toStringBuffer() + "\n");
-    assertEquals(expectedMessage, outContent.toString());
+        "Last Name: "   + bankAccount.getLName()     + "\n");
+    
+    StringBuilder sb = new StringBuilder();
+        String[] logEntries = searchLogAll("");
+        for (String entry : logEntries) {
+          sb.append(entry + "\n");
+        }
+    assertEquals(expectedMessage + sb, outContent.toString());
   }
 }
