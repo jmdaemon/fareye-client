@@ -18,6 +18,7 @@ dependencies {
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
         testCompile 'org.mockito:mockito-core:2.+'
         compile 'org.unix4j:unix4j-command:0.5'
+        compile 'org.javamoney:moneta:1.4.2'
 
 }
 
@@ -59,6 +60,7 @@ sourceSets {
             //srcDirs = ['src/main/java/encryption']
             //srcDirs = ['src/main/java/interface/']
             srcDirs = ['src/main/java/bankaccount']
+            srcDirs = ['src/main/java/money']
          }
 
     }
@@ -68,6 +70,7 @@ sourceSets {
             //srcDirs = ['src/test/java/encryption']
             //srcDirs = ['src/test/java/interface']
             srcDirs = ['src/test/java/bankaccount']
+            srcDirs = ['src/test/java/money']
         }
     }
 }
