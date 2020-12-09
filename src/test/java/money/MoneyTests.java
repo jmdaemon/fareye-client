@@ -78,7 +78,7 @@ public class MoneyTests {
   @Test
   public void add_DollarFranc_ReturnSum() {
     Money fiveBucks = Money.dollar(5);
-    Money tenFrancs = Money.dollar(10);
+    Money tenFrancs = Money.franc(10);
     Bank bank = new Bank();
     bank.addRate("CHF", "USD", 2);
     Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
