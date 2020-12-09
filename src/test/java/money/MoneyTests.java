@@ -16,7 +16,7 @@ public class MoneyTests {
     this.five = Money.dollar(5);
     this.bank = new Bank();
     this.fiveBucks = Money.dollar(5);
-    this.tenFrancs = Money.franc(5);
+    this.tenFrancs = Money.franc(10);
   }
 
   @Test
@@ -80,8 +80,6 @@ public class MoneyTests {
 
   @Test
   public void sum_Money_ReturnSum() {
-    Expression fiveBucks = Money.dollar(5);
-    Expression tenFrancs = Money.franc(10);
     bank.addRate("CHF", "USD", 2);
     Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
     assertEquals(Money.dollar(10), result);
@@ -89,8 +87,6 @@ public class MoneyTests {
 
   @Test
   public void sum_SumDollarFranc_ReturnSum() {
-    Expression fiveBucks = Money.dollar(5);
-    Expression tenFrancs = Money.franc(10);
     bank.addRate("CHF", "USD", 2);
     Expression sum = new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
     Money result = bank.reduce(sum, "USD");
@@ -99,8 +95,6 @@ public class MoneyTests {
 
   @Test
   public void times_Sum_ReturnsNewTotal() {
-    Expression fiveBucks = Money.dollar(5);
-    Expression tenFrancs = Money.franc(10);
     bank.addRate("CHF", "USD", 2);
     Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
     Money result = bank.reduce(sum, "USD");
