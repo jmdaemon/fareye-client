@@ -59,19 +59,19 @@ public class MoneyTests {
   }
 
   @Test
-  public void reduce_Money() {
+  public void reduce_Money_ReturnsMoney() {
     Money result = bank.reduce(Money.dollar(1), "USD");
     assertEquals(Money.dollar(1), result);
   }
 
   @Test
-  public void reduce_MoneyDifferentCurrency_ReturnMoney() {
+  public void reduce_DifferentCurrency_ReturnsMoney() {
     Money result = bank.reduce(Money.franc(2), "USD");
     assertEquals(Money.dollar(1), result);
   }
 
   @Test
-  public void rate_USDandUSD_Return1() {
+  public void rate_SameCurrency_Return1() {
     assertEquals(1, new Bank().rate("USD", "USD"));
   }
 
@@ -82,14 +82,14 @@ public class MoneyTests {
   }
 
   @Test
-  public void sum_SumDollarFranc_ReturnSum() {
+  public void sum_DollarFranc_ReturnSum() {
     Expression sum = new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
     Money result = bank.reduce(sum, "USD");
     assertEquals(Money.dollar(15), result);
   }
 
   @Test
-  public void times_Sum_ReturnsNewTotal() {
+  public void times_Money_ReturnsProduct() {
     Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
     Money result = bank.reduce(sum, "USD");
     assertEquals(Money.dollar(20), result);
