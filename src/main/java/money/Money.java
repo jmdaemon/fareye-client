@@ -37,7 +37,6 @@ public class Money extends Expression {
 
   public boolean equals(Object object) {
     Money money = (Money) object;
-    //return amount == money.amount
     return amount.equals(money.amount)
       && currency().equals(money.currency());
   }
