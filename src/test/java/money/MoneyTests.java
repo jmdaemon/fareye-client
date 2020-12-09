@@ -37,7 +37,7 @@ public class MoneyTests {
   }
 
   @Test
-  public void add_Money_ReturnsNewTotal() {
+  public void plus_Money_ReturnsSum() {
     Expression sum = five.plus(five);
     Money reduced = bank.reduce(sum, "USD");
     assertEquals(Money.dollar(10), reduced);
@@ -52,7 +52,7 @@ public class MoneyTests {
   }
 
   @Test
-  public void sum_3And4_ReducesTo7() {
+  public void sum_Money_ReturnsMoney() {
     Expression sum = new Sum (Money.dollar(3), Money.dollar(4));
     Money result = bank.reduce(sum, "USD");
     assertEquals(Money.dollar(7), result);
