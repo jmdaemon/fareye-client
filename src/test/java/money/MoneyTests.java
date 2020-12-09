@@ -26,13 +26,11 @@ public class MoneyTests {
   @Test
   public void equals_Dollars_ReturnTrue() {
     assertTrue(Money.dollar(5).equals(Money.dollar(5)));
-    //assertTrue(Money.dollar(5.00).equals(Money.dollar(5.00)));
   }
 
   @Test
   public void times_Dollars_ReturnsProduct() {
     assertEquals(Money.dollar(10), five.times(2));
-    //assertEquals(Money.dollar(10.00), five.times(2.00));
   }
 
   @Test
@@ -97,10 +95,7 @@ public class MoneyTests {
   public void times_DollarFranc_ReturnsProduct() {
     Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
     Money result = bank.reduce(sum, "USD");
-    //int b1 = new BigDecimal(20).intValue();
     assertEquals(Money.dollar(20), result);
-    //String val = b1 + "" + "USD";
-    //assertEquals(val, result);
   }
 
   @Test
