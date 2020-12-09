@@ -21,17 +21,17 @@ public class MoneyTests {
   }
 
   @Test
-  public void equals_Money_ReturnsTrue() {
+  public void equals_Dollars_ReturnTrue() {
     assertTrue(Money.dollar(5).equals(Money.dollar(5)));
   }
 
   @Test
-  public void times_Money_ReturnsNewTotal() {
+  public void times_Dollars_ReturnsProduct() {
     assertEquals(Money.dollar(10), five.times(2));
   }
 
   @Test
-  public void currency_DollarsFrancs_EqualsDollarsFrancs() {
+  public void currency_DollarsFrancs_ReturnsDollarsFrancs() {
     assertEquals("USD", Money.dollar(1).currency());
     assertEquals("CHF", Money.franc(1).currency());
   }
