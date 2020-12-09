@@ -106,4 +106,17 @@ public class MoneyTests {
     assertEquals(10, b3.intValue());
     assertEquals(toBigDecimal(10), b3);
   }
+
+  @Test
+  public void minus_Franc_ReturnsDifference() {
+    Money result = bank.reduce(fiveBucks.minus(tenFrancs), "USD");
+    assertEquals(Money.dollar(0), result);
+  }
+
+  @Test
+  public void minus_DollarFranc_ReturnDifference() {
+    Expression diff = new Difference(fiveBucks, tenFrancs).minus(fiveBucks);
+    Money result = bank.reduce(diff, "USD");
+    assertEquals(Money.dollar(-5), result);
+  }
 }

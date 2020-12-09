@@ -59,6 +59,10 @@ public class Money extends Expression {
   public Expression plus(Expression addend) {
     return new Sum(this, addend);
   }
+  
+  public Expression minus(Expression subtrahend) {
+    return new Difference(this, subtrahend);
+  }
 
   public Money reduce(Bank bank, String to) {
     return new Money(this.amount.divide(bank.rate(currency, to)), to);

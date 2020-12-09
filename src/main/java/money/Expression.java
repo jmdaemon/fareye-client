@@ -9,4 +9,8 @@ public abstract class Expression {
     return new Sum(this, addend);
   }
 
+  public Expression minus(Expression subtrahend) {
+    return new Difference(this, subtrahend);
+  }
+
 }
