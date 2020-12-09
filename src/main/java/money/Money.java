@@ -31,11 +31,11 @@ public class Money implements Expression {
     return new Money(amount, "CHF");
   }
 
-  public Money times(int mult) {
+  public Expression times(int mult) {
     return new Money(this.amount * mult, currency);
   }
 
-  public Expression plus(Money addend) {
+  public Expression plus(Expression addend) {
     return new Sum(this, addend);
   }
 

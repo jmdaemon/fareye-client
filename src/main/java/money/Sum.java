@@ -1,10 +1,14 @@
 package app.money;
 
 public class Sum implements Expression {
-  public Money augend;
-  public Money addend;
+  public Expression augend;
+  public Expression addend;
 
-  public Sum(Money augend, Money addend) {
+  public Expression plus(Expression addend) {
+    return null;
+  }
+
+  public Sum(Expression augend, Expression addend) {
     this.augend = augend;
     this.addend = addend;
   }
