@@ -41,7 +41,8 @@ public class Money extends Expression {
       && currency().equals(money.currency());
   }
 
-  public boolean greaterThan(Money money) {
+  public boolean greaterThan(double amount) {
+    Money money = Money.dollar(amount);
     int result = this.amount.compareTo(money.amount);
     switch(result) {
       case -1: return false;
@@ -61,7 +62,8 @@ public class Money extends Expression {
     }
   }
 
-  public boolean equalsTo(Money money) {
+  public boolean equalsTo(double amount) {
+    Money money = Money.dollar(amount); 
     int result = this.amount.compareTo(money.amount);
     switch(result) {
       case -1: return false;
