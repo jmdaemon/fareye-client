@@ -77,12 +77,16 @@ public class BankAccount {
   public boolean transferTo (double amount, BankAccount target) { 
     if (amount == 0) { return true; }
     if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
-    if (!hasFunds(amount)) { 
-      logMessage("Transfer Failed" + amount, getFilePath()); 
-      return false;
-    } 
+    //if (!hasFunds(amount)) { 
+      //logMessage("Transfer Failed" + amount, getFilePath()); 
+      //return false;
+    //} 
     //setBalance(balance -= amount);
     //target.setBalance(target.getBalance() + amount);
+    Transaction acct = new Transaction(this.bal, Money.dollar(amount));
+    Transaction targ = new Transaction(target.bal, Money.dollar(amount));
+    updateBalance(acct.withdrawFunds("USD"));
+    target.updateBalance(targ.depositFunds("USD"));
     logMessage(this, target, amount, getFilePath());
     return true; 
   }

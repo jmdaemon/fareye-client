@@ -3,6 +3,7 @@ package test.bankaccount;
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
 import app.bankAccount.*;
+import app.money.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
@@ -87,14 +88,16 @@ public class BankAccountTests {
 
   // * Marker
   //@Test
-  //public void transferTo_Acct1000_ReturnsTrue() {
-    //bankAccount.deposit(1000);
-    //assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
+  public void transferTo_Acct1000_ReturnsTrue() {
+    bankAccount.deposit(1000);
+    assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
+    assertEquals(Money.dollar(500.0), bankAccount.getBal()); 
+    assertEquals(Money.dollar(500.0), targAccount.getBal()); 
     //assertEquals(500.0, bankAccount.getBalance()); 
     //assertEquals(500.0, targAccount.getBalance());
-    //assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", bankAccount.getFilePath() ));
-    //assertEquals("Transfer [$500.0 received from account " + bankAccount.getAcctNum() + "]", searchLog("Transfer", targAccount.getFilePath() ));
-  //}
+    assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", bankAccount.getFilePath() ));
+    assertEquals("Transfer [$500.0 received from account " + bankAccount.getAcctNum() + "]", searchLog("Transfer", targAccount.getFilePath() ));
+  }
 
   @Test
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {
