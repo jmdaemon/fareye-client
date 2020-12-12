@@ -2,12 +2,11 @@ package app.bankAccount;
 
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
+import static app.money.Transaction.*;
 import app.utils.log.*;
 import app.money.*;
 
 import java.util.Random;
-import java.lang.Double;
-import static java.util.Objects.isNull;
 
 public class BankAccount { 
   private final int MAX_ACCTNUM_LENGTH = 10000;
@@ -41,16 +40,7 @@ public class BankAccount {
     return false;
   }
 
-	public boolean deposit(double amount) {
-    if (quitEarly(amount, this)) { return cancelProcess("Deposit Unsuccessful"); }
-
-    Transaction newTransaction = new Transaction(this.balance, Money.dollar(amount));
-    updateBalance(newTransaction.depositFunds("USD"));
-    logMessage("Deposit Successful", amount, getFilePath());
-    return true;
-	} 
-
-  public boolean amountIsZero(double amount)        { return (amount == 0)  ? true : false;   }
+  public boolean amountIsZero(double amount)          { return (amount == 0)  ? true : false;   }
   public boolean amountLessThanZero(double amount)    { return (amount < 0)   ? true : false;   }
   public boolean accountExists(BankAccount acct)      { return (acct != null) ? true : false;   }
 
@@ -71,10 +61,19 @@ public class BankAccount {
     return result;
   }
 
+	public boolean deposit(double amount) {
+    if (quitEarly(amount, this)) { return cancelProcess("Deposit Unsuccessful"); }
+
+    //updateBalance((processPayment(getBalance(), Money.dollar(amount))).depositFunds("USD"));
+    updateBalance((processPayment(this, amount)).depositFunds("USD"));
+    logMessage("Deposit Successful", amount, getFilePath());
+    return true;
+	}
+
   public boolean withdraw(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Withdrawal Unsuccessful"); }
-    Transaction newTransaction = new Transaction(this.balance, Money.dollar(amount));
-    updateBalance(newTransaction.withdrawFunds("USD"));
+    //updateBalance((processPayment(getBalance(), Money.dollar(amount))).withdrawFunds("USD"));
+    updateBalance((processPayment(this, amount)).withdrawFunds("USD"));
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
 	}
@@ -83,10 +82,10 @@ public class BankAccount {
     if (quitEarly(amount, this) || !accountExists(target)) { 
       return cancelProcess("Transfer Failed");
     }
-    Transaction acct = new Transaction(this.balance, Money.dollar(amount));
-    Transaction targ = new Transaction(target.balance, Money.dollar(amount));
-    updateBalance(acct.withdrawFunds("USD"));
-    target.updateBalance(targ.depositFunds("USD"));
+    //updateBalance((processPayment(getBalance(), Money.dollar(amount))).withdrawFunds("USD"));
+    //target.updateBalance((processPayment(target.getBalance(), Money.dollar(amount)).depositFunds("USD"));
+    updateBalance((processPayment(this, amount)).withdrawFunds("USD"));
+    target.updateBalance((processPayment(target, amount)).depositFunds("USD"));
     logMessage(this, target, amount, getFilePath());
     return true; 
   }
