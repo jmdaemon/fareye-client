@@ -67,6 +67,10 @@ public class BankAccount {
   public boolean transferTo (double amount, BankAccount target) { 
     if (amount == 0) { return true; }
     if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
+    if (!acctHasFunds(amount)) { 
+      logMessage("Transfer Failed" + amount, getFilePath()); 
+      return false;
+    }
     //if (!hasFunds(amount)) { 
       //logMessage("Transfer Failed" + amount, getFilePath()); 
       //return false;
@@ -88,6 +92,12 @@ public class BankAccount {
 
   public boolean hasFunds(double amount) {
     boolean result = (getBalance() >= amount) ? true : false;
+    return result;
+  }
+
+  public boolean acctHasFunds(double amount) {
+    Money dollarAmount = Money.dollar(amount);
+    boolean result = (getBal().greaterThan(dollarAmount) || getBal().equalsTo(dollarAmount)) ? true : false;
     return result;
   }
 
