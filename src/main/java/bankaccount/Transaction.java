@@ -10,17 +10,9 @@ public class Transaction {
 
   public Transaction(Money accountFunds, Money fundsTo){
     this.bank = new Bank();
-    //createTransaction(accountFunds, fundsTo);
-    //this.bank = new Bank();
     this.accountFunds = accountFunds;
     this.fundsTo = fundsTo;
   }
-
-  //public Transaction processPayment(Money accountFunds, Money fundsTo) {
-    ////this.accountFunds = accountFunds;
-    ////this.fundsTo = fundsTo;
-    //return new Transaction(accountFunds, fundsTo);
-  //}
 
   public static Transaction processPayment (BankAccount acct, double amount) {
     

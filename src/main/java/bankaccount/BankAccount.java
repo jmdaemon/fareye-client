@@ -64,7 +64,6 @@ public class BankAccount {
 	public boolean deposit(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Deposit Unsuccessful"); }
 
-    //updateBalance((processPayment(getBalance(), Money.dollar(amount))).depositFunds("USD"));
     updateBalance((processPayment(this, amount)).depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
@@ -72,7 +71,7 @@ public class BankAccount {
 
   public boolean withdraw(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Withdrawal Unsuccessful"); }
-    //updateBalance((processPayment(getBalance(), Money.dollar(amount))).withdrawFunds("USD"));
+
     updateBalance((processPayment(this, amount)).withdrawFunds("USD"));
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
@@ -82,8 +81,6 @@ public class BankAccount {
     if (quitEarly(amount, this) || !accountExists(target)) { 
       return cancelProcess("Transfer Failed");
     }
-    //updateBalance((processPayment(getBalance(), Money.dollar(amount))).withdrawFunds("USD"));
-    //target.updateBalance((processPayment(target.getBalance(), Money.dollar(amount)).depositFunds("USD"));
     updateBalance((processPayment(this, amount)).withdrawFunds("USD"));
     target.updateBalance((processPayment(target, amount)).depositFunds("USD"));
     logMessage(this, target, amount, getFilePath());
