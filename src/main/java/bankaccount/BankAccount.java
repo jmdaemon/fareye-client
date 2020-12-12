@@ -3,6 +3,7 @@ package app.bankAccount;
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
 import app.utils.log.*;
+//import static app.transaction.Transaction.*;
 import app.money.*;
 
 import java.util.Random;
@@ -44,11 +45,10 @@ public class BankAccount {
 	public boolean deposit(double amount) {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
-    balance += amount;
-    //Expression amount =
-    //bank.reduce(balance.plus(Money.dollar(amount)), "USD");
-    //Expression sum = new Sum (this.balance, Money.dollar(amount).plus(Money.dollar(amount));
-    //this.balance = (bank.reduce(sum, "USD"));
+    //balance += amount;
+    Expression newBalance = new Sum(this.bal, Money.dollar(amount));
+    Bank bank = new Bank();
+    this.bal = bank.reduce(newBalance, "USD");
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
 	}
@@ -59,10 +59,16 @@ public class BankAccount {
     if (!hasFunds(amount)) { 
       logMessage("Withdrawal Unsuccessful", amount, getFilePath());
     }
-    balance -= amount;
+    //balance -= amount;
     //bank.reduce(bal.minus(Money.dollar(amount)), "USD");
     //Expression diff = new Difference(this.amount, Money.dollar(amount).minus(amount));
     //this.amount = bank.reduce(sum, "USD");
+    //Expression newBalance = new Difference(this.bal, Money.dollar(amount));
+    //Bank bank = new Bank();
+    //this.bal = bank.reduce(newBalance, "USD");
+    Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
+    updateBalance(newTransaction.withdrawFunds("USD"));
+    //this.bal = newTransaction.withdrawFunds(this.bal, Money.dollar(amount), "USD");
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
 	}
@@ -74,10 +80,8 @@ public class BankAccount {
       logMessage("Transfer Failed" + amount, getFilePath()); 
       return false;
     } 
-    setBalance(balance -= amount);
-    target.setBalance(target.getBalance() + amount);
-    //bank.reduce(balance.minus(Money.dollar(amount)), "USD");
-    //bank.reduce(target.getBal().plus(Money.dollar(amount)), "USD");
+    //setBalance(balance -= amount);
+    //target.setBalance(target.getBalance() + amount);
     logMessage(this, target, amount, getFilePath());
     return true; 
   }
@@ -102,6 +106,7 @@ public class BankAccount {
   void setFName(String fName) { this.fName = fName; }
   void setLName(String lName) { this.lName = lName; }
   void setBalance(double newBalance) { this.balance = newBalance; }
+  void updateBalance(Money newBalance) { this.bal = newBalance; }
 
   private static int genRandNum(int len) { 
     Random randGen = new Random();

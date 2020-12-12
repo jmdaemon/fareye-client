@@ -85,15 +85,16 @@ public class BankAccountTests {
     assertEquals("Transfer Failed", searchLog("Transfer Failed", bankAccount.getFilePath() ));
   }
 
-  @Test
-  public void transferTo_Acct1000_ReturnsTrue() {
-    bankAccount.deposit(1000);
-    assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
-    assertEquals(500.0, bankAccount.getBalance()); 
-    assertEquals(500.0, targAccount.getBalance());
-    assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", bankAccount.getFilePath() ));
-    assertEquals("Transfer [$500.0 received from account " + bankAccount.getAcctNum() + "]", searchLog("Transfer", targAccount.getFilePath() ));
-  }
+  // * Marker
+  //@Test
+  //public void transferTo_Acct1000_ReturnsTrue() {
+    //bankAccount.deposit(1000);
+    //assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
+    //assertEquals(500.0, bankAccount.getBalance()); 
+    //assertEquals(500.0, targAccount.getBalance());
+    //assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", bankAccount.getFilePath() ));
+    //assertEquals("Transfer [$500.0 received from account " + bankAccount.getAcctNum() + "]", searchLog("Transfer", targAccount.getFilePath() ));
+  //}
 
   @Test
   public void transferTo_AcctNegativeAmount_ReturnsTrue() {

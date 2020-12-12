@@ -45,8 +45,16 @@ public class Money extends Expression {
     return new Money(amount, "USD");
   }
 
+  public static Money dollar(double amount) {
+    return new Money(toBigDecimal(amount), "USD");
+  }
+
   public static Money franc(int amount) {
     return new Money(amount, "CHF");
+  }
+
+  public static Money franc(double amount) {
+    return new Money(toBigDecimal(amount), "CHF"); 
   }
 
   public Expression times(int multiplier) {
