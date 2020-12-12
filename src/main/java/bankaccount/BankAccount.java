@@ -52,19 +52,11 @@ public class BankAccount {
     updateBalance(newTransaction.depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
-	}
+	} 
 
-  public boolean amountIsZero(double amount) {
-    return (amount == 0) ? true : false;
-  }
-
-  public boolean amountLessThanZero(double amount) {
-    return (amount < 0) ? true : false;
-  }
-
-  public boolean accountExists(BankAccount acct) {
-    return (acct != null) ? true : false;
-  }
+  public boolean amountIsZero(double amount)        { return (amount == 0)  ? true : false;   }
+  public boolean amountLessThanZero(double amount)    { return (amount < 0)   ? true : false;   }
+  public boolean accountExists(BankAccount acct)      { return (acct != null) ? true : false;   }
 
   public boolean acctHasFunds(double amount, BankAccount acct) { 
     Money withdrawal = Money.dollar(amount);
@@ -80,11 +72,6 @@ public class BankAccount {
     } else if (accountExists(acct) && acctHasFunds(amount, acct)) {
       result = false;
     }
-    //if (amountIsZero(amount)) { result = true; }
-    //if (amountLessThanZero(amount)) { result = true; }
-    //if (accountExists(acct)) { result = false; }
-    //if (acctHasFunds(amount, acct)) { result = false; }
-    ////return false;
     return result;
   }
 
@@ -99,20 +86,9 @@ public class BankAccount {
 	}
 
   public boolean transferTo (double amount, BankAccount target) { 
-    //if (quitEarly(amount, this) || quitEarly(amount, target)) { 
     if (quitEarly(amount, this) || !accountExists(target)) { 
       return cancelProcess("Transfer Failed");
     }
-    //if (amount == 0) { return true; }
-    //if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
-    //if (!acctHasFunds(amount, this)) { 
-      //logMessage("Transfer Failed" + amount, getFilePath()); 
-      //return false;
-    //}
-    //if (!hasFunds(amount)) { 
-      //logMessage("Transfer Failed" + amount, getFilePath()); 
-      //return false;
-    //} 
     //setBalance(balance -= amount);
     //target.setBalance(target.getBalance() + amount);
     Transaction acct = new Transaction(this.bal, Money.dollar(amount));
@@ -132,25 +108,6 @@ public class BankAccount {
     boolean result = (getBalance() >= amount) ? true : false;
     return result;
   }
-
-
-
-  public int compareToZero(double amount) {
-    Double amountDouble = Double.valueOf(amount);
-    int result = Double.compare(amount, Double.valueOf(0.0));
-    return result;
-  }
-
-  //private boolean quitEarly(String msg, double amount) {
-    //int res = compareToZero(amount);
-    //switch(res) {
-      //case -1: 
-        //logMessage(msg, getFilePath());
-        //return true;
-      //case  0: return true;
-      //default: return false;
-    //}
-  //}
 
   public boolean resetPswd(String currPass, String newPass) {
     if (!checkPswd(currPass)) { return cancelProcess("Password Reset Failed"); }
