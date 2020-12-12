@@ -3,7 +3,6 @@ package app.bankAccount;
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
 import app.utils.log.*;
-//import static app.transaction.Transaction.*;
 import app.money.*;
 
 import java.util.Random;
@@ -46,9 +45,11 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
     //balance += amount;
-    Expression newBalance = new Sum(this.bal, Money.dollar(amount));
-    Bank bank = new Bank();
-    this.bal = bank.reduce(newBalance, "USD");
+    //Expression newBalance = new Sum(this.bal, Money.dollar(amount));
+    //Bank bank = new Bank();
+    //this.bal = bank.reduce(newBalance, "USD");
+    Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
+    updateBalance(newTransaction.depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
 	}
