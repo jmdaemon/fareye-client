@@ -69,7 +69,8 @@ sourceSets {
     main {
          java {
             //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
-            srcDirs = [ "$src/bankaccount", "$src/money"]
+            //srcDirs = [ "$src/bankaccount", "$src/money"]
+            srcDirs = [ "$src/connect/" ]
          }
 
     }
@@ -77,7 +78,8 @@ sourceSets {
     test {
         java {
             //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
-            srcDirs = [ "$test/bankaccount", "$test/money"]
+            //srcDirs = [ "$test/bankaccount", "$test/money"]
+            srcDirs = [ "$test/connect/" ]
         }
     }
 }
