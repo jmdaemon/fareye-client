@@ -48,7 +48,8 @@ public class BankAccountTests {
   @Test
   public void BankAccount_IfInitialized_ReturnsBankAccount() {
     assertNotNull(newAcct.getAcctNum());
-    assertEquals(0, newAcct.getBalance());
+    //assertEquals(0, newAcct.getBalance());
+    assertEquals(Money.dollar(0), newAcct.getBal());
     assertEquals("Patrick", newAcct.getFName());
     assertEquals("Bateman", newAcct.getLName());
   }
@@ -137,7 +138,8 @@ public class BankAccountTests {
     
     String expectedMessage = (
         "Account #: "   + bankAccount.getAcctNum()   + "\n" +
-        "Balance: "     + bankAccount.getBalance()   + "\n" +
+        //"Balance: "     + bankAccount.getBalance()   + "\n" +
+        "Balance: "     + bankAccount.getBal()   + "\n" +
         "First Name: "  + bankAccount.getFName()     + "\n" +
         "Last Name: "   + bankAccount.getLName()     + "\n");
     
