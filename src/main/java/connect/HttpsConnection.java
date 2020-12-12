@@ -49,7 +49,7 @@ public class HttpsConnection {
 
   public String ping(String url) {
       String input = null;
-      StringBuilder result = new StringBuilder();
+      StringBuilder response = new StringBuilder();
       BufferedReader br = connectTo(url);
 
       try {
@@ -59,6 +59,6 @@ public class HttpsConnection {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      return result.toString();
+      return response.toString();
   }
 }
