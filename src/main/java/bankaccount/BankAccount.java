@@ -3,6 +3,7 @@ package app.bankAccount;
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
 import app.utils.log.*;
+import app.money.*;
 
 import java.util.Random;
 
@@ -11,10 +12,8 @@ public class BankAccount {
   private final int DEFAULT_PASS_LENGTH = 32;
   private int acctNum;
   private double balance;
-  private String fName;
-  private String lName;
-  private String pswd;
-  private String filepath;
+  private Money bal;
+  private String fName, mName, lName, pswd, filepath;
 
   public BankAccount() {
     createAccount();
@@ -29,6 +28,7 @@ public class BankAccount {
   private void createAccount() {
     this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
     this.balance = 0.0;
+    this.bal = Money.dollar(0);
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
@@ -45,6 +45,10 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
     balance += amount;
+    //Expression amount =
+    //bank.reduce(balance.plus(Money.dollar(amount)), "USD");
+    //Expression sum = new Sum (this.balance, Money.dollar(amount).plus(Money.dollar(amount));
+    //this.balance = (bank.reduce(sum, "USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
 	}
@@ -56,6 +60,9 @@ public class BankAccount {
       logMessage("Withdrawal Unsuccessful", amount, getFilePath());
     }
     balance -= amount;
+    //bank.reduce(bal.minus(Money.dollar(amount)), "USD");
+    //Expression diff = new Difference(this.amount, Money.dollar(amount).minus(amount));
+    //this.amount = bank.reduce(sum, "USD");
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
 	}
@@ -69,6 +76,8 @@ public class BankAccount {
     } 
     setBalance(balance -= amount);
     target.setBalance(target.getBalance() + amount);
+    //bank.reduce(balance.minus(Money.dollar(amount)), "USD");
+    //bank.reduce(target.getBal().plus(Money.dollar(amount)), "USD");
     logMessage(this, target, amount, getFilePath());
     return true; 
   }
@@ -120,6 +129,7 @@ public class BankAccount {
   }
 
     public double getBalance() { return this.balance; }
+    public Money getBal() { return this.bal; }
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
