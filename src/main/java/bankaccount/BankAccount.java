@@ -13,8 +13,8 @@ public class BankAccount {
   private final int MAX_ACCTNUM_LENGTH = 10000;
   private final int DEFAULT_PASS_LENGTH = 32;
   private int acctNum;
-  private double balance;
-  private Money bal;
+  //private double balance;
+  private Money balance;
   private String fName, mName, lName, pswd, filepath;
 
   public BankAccount() {
@@ -29,8 +29,8 @@ public class BankAccount {
 
   private void createAccount() {
     this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
-    this.balance = 0.0;
-    this.bal = Money.dollar(0);
+    //this.balanceance = 0.0;
+    this.balance = Money.dollar(0);
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
@@ -46,7 +46,7 @@ public class BankAccount {
 	public boolean deposit(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Deposit Unsuccessful"); }
 
-    Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
+    Transaction newTransaction = new Transaction(this.balance, Money.dollar(amount));
     updateBalance(newTransaction.depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
@@ -58,7 +58,7 @@ public class BankAccount {
 
   public boolean acctHasFunds(double amount, BankAccount acct) { 
     Money withdrawal = Money.dollar(amount);
-    Money acctBalance = acct.getBal();
+    Money acctBalance = acct.getBalance();
     boolean result = (acctBalance.greaterThan(withdrawal) || acctBalance.equalsTo(withdrawal)) ? true : false;
     return result;
   }
@@ -75,7 +75,7 @@ public class BankAccount {
 
   public boolean withdraw(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Withdrawal Unsuccessful"); }
-    Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
+    Transaction newTransaction = new Transaction(this.balance, Money.dollar(amount));
     updateBalance(newTransaction.withdrawFunds("USD"));
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
@@ -87,8 +87,8 @@ public class BankAccount {
     }
     //setBalance(balance -= amount);
     //target.setBalance(target.getBalance() + amount);
-    Transaction acct = new Transaction(this.bal, Money.dollar(amount));
-    Transaction targ = new Transaction(target.bal, Money.dollar(amount));
+    Transaction acct = new Transaction(this.balance, Money.dollar(amount));
+    Transaction targ = new Transaction(target.balance, Money.dollar(amount));
     updateBalance(acct.withdrawFunds("USD"));
     target.updateBalance(targ.depositFunds("USD"));
     logMessage(this, target, amount, getFilePath());
@@ -114,8 +114,8 @@ public class BankAccount {
 
   void setFName(String fName) { this.fName = fName; }
   void setLName(String lName) { this.lName = lName; }
-  //void setBalance(double newBalance) { this.balance = newBalance; }
-  void updateBalance(Money newBalance) { this.bal = newBalance; }
+  //void setBalance(double newBalance) { this.balanceance = newBalance; }
+  void updateBalance(Money newBalance) { this.balance = newBalance; }
 
   private static int genRandNum(int len) { 
     Random randGen = new Random();
@@ -142,8 +142,9 @@ public class BankAccount {
     return result;
   }
 
-    //public double getBalance() { return this.balance; }
-    public Money getBal() { return this.bal; }
+    //public double getBalance() { return this.balanceance; }
+    //public Money getBal() { return this.balance; }
+    public Money getBalance() { return this.balance; }
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }
@@ -151,8 +152,8 @@ public class BankAccount {
 
   public void display() { 
     System.out.println("Account #: " +  getAcctNum());
-    //System.out.println("Balance: " +    getBalance());
-    System.out.println("Balance: " +    getBal());
+    System.out.println("Balance: " +    getBalance());
+    //System.out.println("Balance: " +    getBal());
     System.out.println("First Name: " + getFName());
     System.out.println("Last Name: " +  getLName());
     String[] logEntries = searchLogAll("", getFilePath());
