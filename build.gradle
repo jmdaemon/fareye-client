@@ -53,23 +53,31 @@ jar {
     }
 }
 
-sourceSets { 
-ext.src = 'src/main/java' 
-//ext.org = 'com/github/jmd' 
-ext.test = 'src/test/java'
+ext {
+    src = "src/main/java"
+    //ext.org = 'com/github/jmd' 
+    test = "src/test/java"
 
+}
+
+sourceSets.all { 
+ext.src = src
+ext.test = test
+}
+
+sourceSets { 
     main {
          java {
-            //srcDirs = [ "$src/$org/bankaccount", "$src/$org/money", "$src/$org/encryption"]
-            srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
+            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
+            srcDirs = [ "$src/bankaccount", "$src/money"]
          }
 
     }
 
     test {
         java {
-            //srcDirs = [ "$test/$org/bankaccount", "$test/$org/money", "$test/$org/encryption"]
-            srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
+            //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
+            srcDirs = [ "$test/bankaccount", "$test/money"]
         }
     }
 }
