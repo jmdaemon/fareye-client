@@ -6,6 +6,8 @@ import app.utils.log.*;
 import app.money.*;
 
 import java.util.Random;
+import java.lang.Double;
+import static java.util.Objects.isNull;
 
 public class BankAccount { 
   private final int MAX_ACCTNUM_LENGTH = 10000;
@@ -42,22 +44,54 @@ public class BankAccount {
   }
 
 	public boolean deposit(double amount) {
-    if (amount == 0)  { return true; }
-    if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
-    //balance += amount;
+    if (quitEarly(amount, this)) {
+      return cancelProcess("Deposit Unsuccessful");
+    }
+
     Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
     updateBalance(newTransaction.depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
 	}
 
-  public boolean withdraw(double amount) {
-    if (amount == 0)  { return true; }
-    if (amount < 0)   { return cancelProcess("Withdrawal Unsuccessful"); }
-    if (!hasFunds(amount)) { 
-      logMessage("Withdrawal Unsuccessful", amount, getFilePath());
+  public boolean amountIsZero(double amount) {
+    return (amount == 0) ? true : false;
+  }
+
+  public boolean amountLessThanZero(double amount) {
+    return (amount < 0) ? true : false;
+  }
+
+  public boolean accountExists(BankAccount acct) {
+    return (acct != null) ? true : false;
+  }
+
+  public boolean acctHasFunds(double amount, BankAccount acct) { 
+    Money withdrawal = Money.dollar(amount);
+    Money acctBalance = acct.getBal();
+    boolean result = (acctBalance.greaterThan(withdrawal) || acctBalance.equalsTo(withdrawal)) ? true : false;
+    return result;
+  }
+  
+  public boolean quitEarly(double amount, BankAccount acct) {
+    boolean result = false;
+    if (amountIsZero(amount) || amountLessThanZero(amount)) {
+      result = true;
+    } else if (accountExists(acct) && acctHasFunds(amount, acct)) {
+      result = false;
     }
-    //balance -= amount;
+    //if (amountIsZero(amount)) { result = true; }
+    //if (amountLessThanZero(amount)) { result = true; }
+    //if (accountExists(acct)) { result = false; }
+    //if (acctHasFunds(amount, acct)) { result = false; }
+    ////return false;
+    return result;
+  }
+
+  public boolean withdraw(double amount) {
+    if (quitEarly(amount, this)) {
+      return cancelProcess("Withdrawal Unsuccessful");
+    }
     Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
     updateBalance(newTransaction.withdrawFunds("USD"));
     logMessage("Withdrawal Successful", amount, getFilePath());
@@ -65,12 +99,16 @@ public class BankAccount {
 	}
 
   public boolean transferTo (double amount, BankAccount target) { 
-    if (amount == 0) { return true; }
-    if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
-    if (!acctHasFunds(amount)) { 
-      logMessage("Transfer Failed" + amount, getFilePath()); 
-      return false;
+    //if (quitEarly(amount, this) || quitEarly(amount, target)) { 
+    if (quitEarly(amount, this) || !accountExists(target)) { 
+      return cancelProcess("Transfer Failed");
     }
+    //if (amount == 0) { return true; }
+    //if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
+    //if (!acctHasFunds(amount, this)) { 
+      //logMessage("Transfer Failed" + amount, getFilePath()); 
+      //return false;
+    //}
     //if (!hasFunds(amount)) { 
       //logMessage("Transfer Failed" + amount, getFilePath()); 
       //return false;
@@ -95,11 +133,24 @@ public class BankAccount {
     return result;
   }
 
-  public boolean acctHasFunds(double amount) {
-    Money dollarAmount = Money.dollar(amount);
-    boolean result = (getBal().greaterThan(dollarAmount) || getBal().equalsTo(dollarAmount)) ? true : false;
+
+
+  public int compareToZero(double amount) {
+    Double amountDouble = Double.valueOf(amount);
+    int result = Double.compare(amount, Double.valueOf(0.0));
     return result;
   }
+
+  //private boolean quitEarly(String msg, double amount) {
+    //int res = compareToZero(amount);
+    //switch(res) {
+      //case -1: 
+        //logMessage(msg, getFilePath());
+        //return true;
+      //case  0: return true;
+      //default: return false;
+    //}
+  //}
 
   public boolean resetPswd(String currPass, String newPass) {
     if (!checkPswd(currPass)) { return cancelProcess("Password Reset Failed"); }
