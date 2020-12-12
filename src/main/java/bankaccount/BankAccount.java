@@ -45,9 +45,6 @@ public class BankAccount {
     if (amount == 0)  { return true; }
     if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
     //balance += amount;
-    //Expression newBalance = new Sum(this.bal, Money.dollar(amount));
-    //Bank bank = new Bank();
-    //this.bal = bank.reduce(newBalance, "USD");
     Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
     updateBalance(newTransaction.depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
@@ -61,15 +58,8 @@ public class BankAccount {
       logMessage("Withdrawal Unsuccessful", amount, getFilePath());
     }
     //balance -= amount;
-    //bank.reduce(bal.minus(Money.dollar(amount)), "USD");
-    //Expression diff = new Difference(this.amount, Money.dollar(amount).minus(amount));
-    //this.amount = bank.reduce(sum, "USD");
-    //Expression newBalance = new Difference(this.bal, Money.dollar(amount));
-    //Bank bank = new Bank();
-    //this.bal = bank.reduce(newBalance, "USD");
     Transaction newTransaction = new Transaction(this.bal, Money.dollar(amount));
     updateBalance(newTransaction.withdrawFunds("USD"));
-    //this.bal = newTransaction.withdrawFunds(this.bal, Money.dollar(amount), "USD");
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
 	}
