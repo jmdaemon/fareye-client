@@ -45,9 +45,8 @@ public class BankAccount {
   public boolean accountExists(BankAccount acct)      { return (acct != null) ? true : false;   }
 
   public boolean acctHasFunds(double amount, BankAccount acct) { 
-    Money withdrawal = Money.dollar(amount);
     Money acctBalance = acct.getBalance();
-    boolean result = (acctBalance.greaterThan(withdrawal) || acctBalance.equalsTo(withdrawal)) ? true : false;
+    boolean result = (acctBalance.greaterThan(amount) || acctBalance.equalsTo(amount)) ? true : false;
     return result;
   }
   
