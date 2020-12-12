@@ -8,7 +8,7 @@ public class HttpsConnectionTests {
   public void ping_Google_ReturnsResult() {
     HttpsConnection connection = new HttpsConnection();
     String result = connection.ping("https://google.com");
-    System.out.println(result);
+    //System.out.println(result); // Print html response
     assertNotNull(result);
   }
 }

@@ -54,7 +54,7 @@ public class HttpsConnection {
 
       try {
         while ((input = br.readLine()) != null) {
-          result.append(input);
+          response.append(input);
         }
       } catch (IOException e) {
         e.printStackTrace();
