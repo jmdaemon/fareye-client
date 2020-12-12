@@ -16,6 +16,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
+import static java.util.Objects.isNull;
+
 interface AESSpecs {
   static final String AES_ALGORITHM = "AES/GCM/NoPadding";
   static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
@@ -29,29 +31,42 @@ public class AESUtils implements AESSpecs {
 
   public AESUtils() { }
 
-  public AESUtils(CIPHER_MODE mode) {
-    try { 
-      switch(mode) { 
-        case IV_ONLY:   createDataIV();   break;
-        case IV_SALT:   createDataSalt(); break;
-        default:        createDataIV();   break;
-      } 
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  public AESUtils(CIPHER_MODE mode) { 
+    switch(mode) { 
+      case IV_ONLY:   createDataIV();   break; 
+      case IV_SALT:   createDataSalt(); break; 
+      default:        createDataIV();   break;
+    } 
+
+    //try { 
+      //switch(mode) { 
+        //case IV_ONLY:   createDataIV();   break;
+        //case IV_SALT:   createDataSalt(); break;
+        //default:        createDataIV();   break;
+      //} 
+    //} catch (Exception e) {
+      //e.printStackTrace();
+    //}
   }
 
   public AESUtils(String pswd) {
-    try {
     createData(pswd);
+    //try {
+    //createData(pswd);
+    //} catch (Exception e) {
+      //e.printStackTrace();
+    //}
+  }
+
+  public static SecretKey genKey() {
+    KeyGenerator keyGen = null;
+    try {
+      keyGen = KeyGenerator.getInstance("AES");
+      keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-
-  public static SecretKey genKey() throws NoSuchAlgorithmException {
-    KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-    keyGen.init(AES_KEY_LENGTH, SecureRandom.getInstanceStrong());
+    if (isNull(keyGen)) { System.exit(1); }
     return keyGen.generateKey();
   }
 
@@ -62,8 +77,15 @@ public class AESUtils implements AESSpecs {
     return result;
   }
 
-  public static SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    SecretKey result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
+  //public static SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public static SecretKey genPswdKey(String pswd, byte[] salt) {
+    SecretKey result = null;
+    try { 
+      result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+    if (isNull(result)) { System.exit(1); }
     return result;
   }
   
@@ -97,12 +119,13 @@ public class AESUtils implements AESSpecs {
     return result;
   }
 
-  public void createDataIV() throws NoSuchAlgorithmException    { this.data = new Data(genIV(), null, genKey()); }
-  public void createDataSalt() throws NoSuchAlgorithmException  { this.data = new Data(genIV(), genSalt(), genKey()); } 
+  public void createDataIV()    { this.data = new Data(genIV(), null, genKey()); }
+  public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); } 
+  public void createData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
 
-  public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
-  }
+  //public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    //this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
+  //}
  
   public byte[] getSalt()   { return data.getSalt();  }
   public byte[] getIV()     { return data.getIV();    }

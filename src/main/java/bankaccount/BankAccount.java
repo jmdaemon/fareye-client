@@ -3,18 +3,18 @@ package app.bankAccount;
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
 import app.utils.log.*;
+import app.money.*;
 
 import java.util.Random;
+import java.lang.Double;
+import static java.util.Objects.isNull;
 
 public class BankAccount { 
   private final int MAX_ACCTNUM_LENGTH = 10000;
   private final int DEFAULT_PASS_LENGTH = 32;
   private int acctNum;
-  private double balance;
-  private String fName;
-  private String lName;
-  private String pswd;
-  private String filepath;
+  private Money balance;
+  private String fName, mName, lName, pswd, filepath;
 
   public BankAccount() {
     createAccount();
@@ -28,7 +28,7 @@ public class BankAccount {
 
   private void createAccount() {
     this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
-    this.balance = 0.0;
+    this.balance = Money.dollar(0);
     this.fName = null;
     this.lName = null;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
@@ -42,44 +42,57 @@ public class BankAccount {
   }
 
 	public boolean deposit(double amount) {
-    if (amount == 0)  { return true; }
-    if (amount < 0)   { return cancelProcess("Deposit Unsuccessful"); }
-    balance += amount;
+    if (quitEarly(amount, this)) { return cancelProcess("Deposit Unsuccessful"); }
+
+    Transaction newTransaction = new Transaction(this.balance, Money.dollar(amount));
+    updateBalance(newTransaction.depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
-	}
+	} 
+
+  public boolean amountIsZero(double amount)        { return (amount == 0)  ? true : false;   }
+  public boolean amountLessThanZero(double amount)    { return (amount < 0)   ? true : false;   }
+  public boolean accountExists(BankAccount acct)      { return (acct != null) ? true : false;   }
+
+  public boolean acctHasFunds(double amount, BankAccount acct) { 
+    Money withdrawal = Money.dollar(amount);
+    Money acctBalance = acct.getBalance();
+    boolean result = (acctBalance.greaterThan(withdrawal) || acctBalance.equalsTo(withdrawal)) ? true : false;
+    return result;
+  }
+  
+  public boolean quitEarly(double amount, BankAccount acct) {
+    boolean result = false;
+    if (amountIsZero(amount) || amountLessThanZero(amount)) {
+      result = true;
+    } else if (accountExists(acct) && acctHasFunds(amount, acct)) {
+      result = false;
+    }
+    return result;
+  }
 
   public boolean withdraw(double amount) {
-    if (amount == 0)  { return true; }
-    if (amount < 0)   { return cancelProcess("Withdrawal Unsuccessful"); }
-    if (!hasFunds(amount)) { 
-      logMessage("Withdrawal Unsuccessful", amount, getFilePath());
-    }
-    balance -= amount;
+    if (quitEarly(amount, this)) { return cancelProcess("Withdrawal Unsuccessful"); }
+    Transaction newTransaction = new Transaction(this.balance, Money.dollar(amount));
+    updateBalance(newTransaction.withdrawFunds("USD"));
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
 	}
 
   public boolean transferTo (double amount, BankAccount target) { 
-    if (amount == 0) { return true; }
-    if (target == null || amount < 0) { return cancelProcess("Transfer Failed"); }
-    if (!hasFunds(amount)) { 
-      logMessage("Transfer Failed" + amount, getFilePath()); 
-      return false;
-    } 
-    setBalance(balance -= amount);
-    target.setBalance(target.getBalance() + amount);
+    if (quitEarly(amount, this) || !accountExists(target)) { 
+      return cancelProcess("Transfer Failed");
+    }
+    Transaction acct = new Transaction(this.balance, Money.dollar(amount));
+    Transaction targ = new Transaction(target.balance, Money.dollar(amount));
+    updateBalance(acct.withdrawFunds("USD"));
+    target.updateBalance(targ.depositFunds("USD"));
     logMessage(this, target, amount, getFilePath());
     return true; 
   }
 
   public boolean checkPswd(String pass) {
     boolean result = (pass.equals(this.pswd)) ? true : false;
-    return result;
-  }
-
-  public boolean hasFunds(double amount) {
-    boolean result = (getBalance() >= amount) ? true : false;
     return result;
   }
 
@@ -92,7 +105,7 @@ public class BankAccount {
 
   void setFName(String fName) { this.fName = fName; }
   void setLName(String lName) { this.lName = lName; }
-  void setBalance(double newBalance) { this.balance = newBalance; }
+  void updateBalance(Money newBalance) { this.balance = newBalance; }
 
   private static int genRandNum(int len) { 
     Random randGen = new Random();
@@ -119,7 +132,7 @@ public class BankAccount {
     return result;
   }
 
-    public double getBalance() { return this.balance; }
+    public Money getBalance() { return this.balance; }
     public int getAcctNum() { return this.acctNum; }
     public String getFName() { return this.fName; }
     public String getLName() { return this.lName; }

@@ -3,6 +3,7 @@ package test.bankaccount;
 import static app.utils.csv.CSV.*;
 import static app.utils.log.Log.*;
 import app.bankAccount.*;
+import app.money.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
@@ -47,7 +48,7 @@ public class BankAccountTests {
   @Test
   public void BankAccount_IfInitialized_ReturnsBankAccount() {
     assertNotNull(newAcct.getAcctNum());
-    assertEquals(0, newAcct.getBalance());
+    assertEquals(Money.dollar(0), newAcct.getBalance());
     assertEquals("Patrick", newAcct.getFName());
     assertEquals("Bateman", newAcct.getLName());
   }
@@ -89,8 +90,8 @@ public class BankAccountTests {
   public void transferTo_Acct1000_ReturnsTrue() {
     bankAccount.deposit(1000);
     assertEquals(true, bankAccount.transferTo(500, targAccount), "Transaction was processed");
-    assertEquals(500.0, bankAccount.getBalance()); 
-    assertEquals(500.0, targAccount.getBalance());
+    assertEquals(Money.dollar(500.0), bankAccount.getBalance()); 
+    assertEquals(Money.dollar(500.0), targAccount.getBalance()); 
     assertEquals("Transfer [$500.0 to account " + targAccount.getAcctNum() + "]", searchLog("Transfer", bankAccount.getFilePath() ));
     assertEquals("Transfer [$500.0 received from account " + bankAccount.getAcctNum() + "]", searchLog("Transfer", targAccount.getFilePath() ));
   }

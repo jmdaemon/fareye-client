@@ -15,8 +15,6 @@ public class Data extends CryptUtils {
   private static byte[] salt;
   private static SecretKey key;
 
-  public Data () { }
-
   public Data(byte[] iv, byte[] salt, SecretKey key) { 
     Data.iv = iv;
     Data.salt = salt;

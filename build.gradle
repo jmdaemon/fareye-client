@@ -18,6 +18,7 @@ dependencies {
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
         testCompile 'org.mockito:mockito-core:2.+'
         compile 'org.unix4j:unix4j-command:0.5'
+        compile 'org.javamoney:moneta:1.4.2'
 
 }
 
@@ -52,22 +53,31 @@ jar {
     }
 }
 
-sourceSets {
+ext {
+    src = "src/main/java"
+    //ext.org = 'com/github/jmd' 
+    test = "src/test/java"
+
+}
+
+sourceSets.all { 
+ext.src = src
+ext.test = test
+}
+
+sourceSets { 
     main {
          java {
-            //srcDirs = ['src']
-            //srcDirs = ['src/main/java/encryption']
-            //srcDirs = ['src/main/java/interface/']
-            srcDirs = ['src/main/java/bankaccount']
+            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
+            srcDirs = [ "$src/bankaccount", "$src/money"]
          }
 
     }
 
     test {
         java {
-            //srcDirs = ['src/test/java/encryption']
-            //srcDirs = ['src/test/java/interface']
-            srcDirs = ['src/test/java/bankaccount']
+            //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
+            srcDirs = [ "$test/bankaccount", "$test/money"]
         }
     }
 }
