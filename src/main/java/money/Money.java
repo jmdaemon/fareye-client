@@ -41,6 +41,36 @@ public class Money extends Expression {
       && currency().equals(money.currency());
   }
 
+  public boolean greaterThan(Money money) {
+    int result = this.amount.compareTo(money.amount);
+    switch(result) {
+      case -1: return false;
+      case  0: return false;
+      case  1: return true;
+      default: return false;
+    }
+  }
+
+  public boolean lessThan(Money money) {
+    int result = this.amount.compareTo(money.amount);
+    switch(result) {
+      case -1: return true;
+      case  0: return false;
+      case  1: return false;
+      default: return false;
+    }
+  }
+
+  public boolean equalsTo(Money money) {
+    int result = this.amount.compareTo(money.amount);
+    switch(result) {
+      case -1: return false;
+      case  0: return true;
+      case  1: return false;
+      default: return false;
+    }
+  }
+
   public static Money dollar(int amount) {
     return new Money(amount, "USD");
   }
