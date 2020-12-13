@@ -18,7 +18,7 @@ import java.lang.InterruptedException;
 
 public class Http extends Connection {
 
-  public String get(String to, String params) throws IOException, InterruptedException {
+  public String get(String to) throws IOException, InterruptedException {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(to))
