@@ -28,7 +28,8 @@ public class UI extends Application {
       primaryStage.setTitle("My First JavaFX App");
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
       GridPane root = loader.load();
-      Scene scene = new Scene(root, 640, 480);
+      //Scene scene = new Scene(root, 640, 480);
+      Scene scene = new Scene(root, 600, 400);
 
       primaryStage.setScene(scene);
       primaryStage.show();
