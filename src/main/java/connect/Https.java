@@ -11,28 +11,15 @@ public class Https extends Connection {
 
   boolean portIsNull(int port) {
     return (port != 0) ? true : false;
-  }
-
-  //URL checkPort(String site, int port) {
-    //URL url = null;
-    //if (portIsNull(port)) {
-      //url = new URL(site);
-    //} else 
-      //url = new URL(site + ":" + port);
-    //return url;
-  //}
-
-    public BufferedReader connectTo(String site) {
+  } 
+  public BufferedReader connectTo(String site) throws IOException { 
     URL url = formRequest(site);
     BufferedReader br = null;
-    try {
-      HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-      InputStream is = conn.getInputStream();
-      InputStreamReader isr = new InputStreamReader(is);
-      br = new BufferedReader(isr);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+    InputStream is = conn.getInputStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    br = new BufferedReader(isr);
+
     return br;
   }
 
@@ -48,18 +35,14 @@ public class Https extends Connection {
   }
   
 
-  public String ping(String url) {
+  public String ping(String url) throws IOException {
       String input = null;
       StringBuilder response = new StringBuilder();
       BufferedReader br = connectTo(url);
 
-      try {
         while ((input = br.readLine()) != null) {
           response.append(input);
-        }
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      } 
       return response.toString();
   }
 }
