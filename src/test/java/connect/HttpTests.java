@@ -21,20 +21,18 @@ public class HttpTests {
   }
 
   @Test
-  public void sendGET_ToGoogle_ReturnResponse() throws Exception {
+  public void sendGET_ToSite_ReturnResponse() throws Exception {
     Http conn = new Http();
     String response = conn.get(getFrom);
-    //System.out.println(response);
     assertNotNull(response);
   }
 
   @Test
-  public void sendPOST_ToGoogle_ReturnResponse() throws Exception {
+  public void sendPOST_ToSite_ReturnResponse() throws Exception {
     Http conn = new Http(); 
     var objectMapper = new ObjectMapper(); 
     String requestBody = objectMapper.writeValueAsString(values);
     String response = conn.post(postTo, requestBody);
-    //System.out.println(response);
     assertNotNull(response);
   }
   
