@@ -6,7 +6,7 @@ import javax.net.ssl.HttpsURLConnection;
 import java.net.MalformedURLException;
 import java.lang.StringBuilder;
 
-public class HttpsConnection {
+public class Https extends Connection {
 
   boolean portIsNull(int port) {
     return (port != 0) ? true : false;
@@ -21,17 +21,6 @@ public class HttpsConnection {
     //return url;
   //}
 
-  URL formRequest(String site) {
-    URL url = null;
-    try {
-      url = new URL(site);
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-    return url;
-  }
-
     public BufferedReader connectTo(String site) {
     URL url = formRequest(site);
     BufferedReader br = null;
@@ -44,6 +33,14 @@ public class HttpsConnection {
       e.printStackTrace();
     }
     return br;
+  }
+
+  public String get(String to, String params) {
+    return "";
+  }
+
+  public String post(String to, String params) {
+    return "";
   }
   
 
