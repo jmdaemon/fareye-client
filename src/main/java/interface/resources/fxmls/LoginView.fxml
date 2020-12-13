@@ -48,7 +48,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <VBox fx:id="LoginController" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
