@@ -26,17 +26,6 @@ public class UI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
       primaryStage.setTitle("My First JavaFX App");
-      //primaryStage.show();
-      //String javaVersion = System.getProperty("java.version");
-      //String javafxVersion = System.getProperty("javafx.version");
-      //Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-      //Scene scene = new Scene(new StackPane(l), 640, 480); 
-      //Scene scene = new Scene(root, 640, 480); 
-
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/LoginView.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("fxmls/LoginView.fxml"));
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
       GridPane root = loader.load();
       Scene scene = new Scene(root, 640, 480);
