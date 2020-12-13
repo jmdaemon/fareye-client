@@ -44,40 +44,5 @@ public class Http extends Connection {
     return response.body();
   }
 
-  //public String getResponse(HttpURLConnection conn) throws IOException {
-    //BufferedReader in = null;
-    //StringBuilder response = null;
-    //in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-    //String input;
 
-    //response = new StringBuilder();
-    //while ((input = in.readLine()) != null) {
-      //response.append(input);
-    //} 
-    //in.close();
-    //return response.toString(); 
-  //}
-
-  //public void sendRequest(HttpURLConnection conn, String requestType, String params) throws ProtocolException, IOException {
-    //conn.setRequestMethod(requestType);
-    //conn.setDoOutput(true);
-    //DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-    //wr.writeBytes(params);
-    //wr.flush();
-    //wr.close();
-  //}
-
-	//public String get(String to, String params) throws IOException {
-    //URL url = formRequest(to);
-    //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-    //sendRequest(conn, "GET", params);
-		//return getResponse(conn);
-	//}
-	
-	//public String post(String to, String params) throws ProtocolException, IOException {
-    //URL url = formRequest(to);
-    //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-    //sendRequest(conn, "POST", params);
-    //return getResponse(conn);
-	//}
 }
