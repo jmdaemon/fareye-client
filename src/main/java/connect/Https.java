@@ -5,6 +5,7 @@ import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 import java.net.MalformedURLException;
 import java.lang.StringBuilder;
+import java.util.HashMap;
 
 public class Https extends Connection {
 
@@ -35,10 +36,13 @@ public class Https extends Connection {
     return br;
   }
 
-  public String get(String to, String params) {
+  public String get(String to) {
     return "";
   }
 
+  //public String post(String to, HashMap<String, String>) {
+    //return "";
+  //}
   public String post(String to, String params) {
     return "";
   }

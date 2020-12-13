@@ -15,6 +15,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import java.lang.InterruptedException;
+import java.util.HashMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Http extends Connection {
 
@@ -24,15 +27,21 @@ public class Http extends Connection {
             .uri(URI.create(to))
             .build();
 
-    HttpResponse<String> response = client.send(request,
-            HttpResponse.BodyHandlers.ofString());
-
-    //System.out.println(response.body());
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     return response.body();
   }
 
-  public String post(String to, String params) {
-    return "";
+  public String post(String to, String requestBody) throws IOException, InterruptedException {
+    //String requestBody = objectMapper.writeValueAsString(values);
+
+    HttpClient client = HttpClient.newHttpClient();
+    HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(to))
+            .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+            .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    return response.body();
   }
 
   //public String getResponse(HttpURLConnection conn) throws IOException {
