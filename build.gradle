@@ -36,6 +36,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(14)
     }
+    modularity.inferModulePath = true
 }
 
 javafx {
@@ -57,16 +58,23 @@ ext {
     src = "src/main/java"
     //ext.org = 'com/github/jmd' 
     test = "src/test/java"
+    resources = "src/main/java/interface/resources"
 
 }
 
 sourceSets.all { 
 ext.src = src
 ext.test = test
+ext.resources = resources
 }
 
 sourceSets { 
     main {
+        resources { 
+            srcDirs = [ "$src/interface/" ]
+            //includes = [ "$resources/fxmls/*.fxml" ]
+            includes = [ "**/*.fxml" ]
+        }
          java {
             //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
             //srcDirs = [ "$src/bankaccount", "$src/money"]
