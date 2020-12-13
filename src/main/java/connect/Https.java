@@ -23,18 +23,6 @@ public class Https extends Connection {
     return br;
   }
 
-  public String get(String to) {
-    return "";
-  }
-
-  //public String post(String to, HashMap<String, String>) {
-    //return "";
-  //}
-  public String post(String to, String params) {
-    return "";
-  }
-  
-
   public String ping(String url) throws IOException {
       String input = null;
       StringBuilder response = new StringBuilder();
@@ -45,4 +33,15 @@ public class Https extends Connection {
       } 
       return response.toString();
   }
+
+  public String get(String to) {
+    return "";
+  }
+
+  public String post(String to, String params) {
+    return "";
+  }
+  
+
+
 }
