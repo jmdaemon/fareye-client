@@ -22,6 +22,8 @@ public abstract class Connection {
     return url;
   }
 
-  public abstract String get(String to, String params) throws IOException;
-  public abstract String post(String to, String params) throws IOException;
+  //public abstract String get(String to, String params) throws IOException;
+  //public abstract String post(String to, String params) throws IOException;
+  public abstract String get(String to, String params) throws Exception;
+  public abstract String post(String to, String params) throws Exception;
 }
