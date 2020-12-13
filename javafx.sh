@@ -1,3 +1,3 @@
 #!/bin/bash
 
-jar -jar build/libs/BankApp.jar
+java -jar ./build/libs/BankApp.jar
