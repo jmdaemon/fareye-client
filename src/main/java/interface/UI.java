@@ -1,5 +1,7 @@
 package app.ui;
 
+//import java.util.HashMap;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -29,6 +31,10 @@ public class UI extends Application {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
       GridPane root = loader.load();
       //Scene scene = new Scene(root, 640, 480);
+      //HashMap<String, String> userCred = loader.<LoginController>getController().onClick();
+      //String userName = userCred.get("userName");
+      //String password = userCred.get("password");
+      //System.out.println(userName + " " + password);
       Scene scene = new Scene(root, 600, 400);
 
       primaryStage.setScene(scene);
