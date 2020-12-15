@@ -30,19 +30,10 @@ public class UI extends Application {
       primaryStage.setTitle("My First JavaFX App");
       //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
-      //loader.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
       GridPane root = loader.load();
       root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
-      //root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
-      //Scene scene = new Scene(root, 640, 480);
-      //HashMap<String, String> userCred = loader.<LoginController>getController().onClick();
-      //String userName = userCred.get("userName");
-      //String password = userCred.get("password");
-      //System.out.println(userName + " " + password);
+
       Scene scene = new Scene(root, 600, 400);
-      //scene.setUserAgentStylesheet(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
-      //scene.getStylesheets().add(getClass().getResource("resources/assets/Dashboard.css").toExternalForm());
-      //scene.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
 
       primaryStage.setScene(scene);
       primaryStage.show();
