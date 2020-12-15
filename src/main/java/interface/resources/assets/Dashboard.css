@@ -17,10 +17,12 @@
     -fx-opacity: 0.4;
 }
 
-#avatar .ikonli-font-icon {
-    -fx-icon-code: "bx-user-circle";
-    -fx-icon-color: blue;
-    -fx-icon-size: 1.2em;
+/*#avatar .ikonli-font-icon {*/
+/*[>#avatar {<]*/
+    /*-fx-icon-code: "bx-user-circle";*/
+    /*[>-fx-graphic: "bx-user-circle";<]*/
+    /*-fx-icon-size: 1.6em;*/
+    /*-fx-icon-color: blue;*/
 
+/*}*/
 
-}
