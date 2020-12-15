@@ -81,7 +81,8 @@ sourceSets {
         resources { 
             srcDirs = [ "$src/interface/" ]
             //includes = [ "$resources/fxmls/*.fxml" ]
-            includes = [ "**/*.fxml" ]
+            includes = [ "**/*.fxml" , "**/*.css" ]
+            //includes = [ "**/*.css" ]
         }
          java {
             //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
