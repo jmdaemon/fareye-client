@@ -88,7 +88,8 @@ sourceSets {
             //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
             //srcDirs = [ "$src/bankaccount", "$src/money"]
             //srcDirs = [ "$src/connect/" ]
-            srcDirs = [ "$src/interface/" ]
+            //srcDirs = [ "$src/interface/" ]
+            srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
          }
 
     }
@@ -98,7 +99,7 @@ sourceSets {
             //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
             //srcDirs = [ "$test/bankaccount", "$test/money"]
             //srcDirs = [ "$test/connect/" ]
-            srcDirs = [ "$test/interface/" ]
+            srcDirs = [ "$src/bankaccount", "$src/money", "$test/interface/" ]
         }
     }
 }

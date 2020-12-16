@@ -1,5 +1,7 @@
 package app.ui;
 
+import app.bankAccount.*;
+
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.net.URL;
@@ -21,7 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.InputEvent;
 
 public class LoginController implements Initializable {
-  private HashMap<String, String> userCreds;
+  //private HashMap<String, String> userCreds;
 
   @FXML
   private Button enter;
@@ -44,11 +46,13 @@ public class LoginController implements Initializable {
   }
 
   public void processCredentials(InputEvent event) {
-    userCreds = new HashMap<String, String>();
-    userCreds.put("userName", getUserName());
-    userCreds.put("password", getPassword());
-
+    //userCreds = new HashMap<String, String>();
+    // Check creds to see if they match a user
+    //userCreds.put("userName", getUserName());
+    //userCreds.put("password", getPassword());
+    BankAccount user = new BankAccount(getUserName(), getPassword());
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    ((Node)event.getSource()).setUserData(user);
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
     GridPane root = null;
     try { 
@@ -62,9 +66,9 @@ public class LoginController implements Initializable {
     stage.setScene(scene);
   } 
 
-  public HashMap<String, String> getUserCreds() {
-    return this.userCreds;
-  }
+  //public HashMap<String, String> getUserCreds() {
+    //return this.userCreds;
+  //}
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
