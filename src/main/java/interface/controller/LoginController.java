@@ -16,7 +16,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent; 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.InputEvent;
@@ -78,7 +77,6 @@ public class LoginController implements Initializable {
     password.setOnKeyPressed(event -> {
       if (event.getCode().equals(KeyCode.ENTER)){  
         processCredentials(event);
-        //handleMouseClick(event);
       } 
     });
   } 
