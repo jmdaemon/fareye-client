@@ -8,8 +8,6 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//import javafx.fxml.FXML;
-//import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent; 
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.InputEvent;
 
 public class LoginController implements Initializable {
   private HashMap<String, String> userCreds;
@@ -45,7 +44,9 @@ public class LoginController implements Initializable {
     return password.getText();
   }
 
-  public void handleMouseClick (MouseEvent event) throws IOException {
+  //public void handleMouseClick (MouseEvent event) throws IOException {
+  //public void handleMouseClick (ActionEvent event) throws IOException {
+  public void handleMouseClick (InputEvent event) throws IOException {
     userCreds = new HashMap<String, String>();
     userCreds.put("userName", getUserName());
     userCreds.put("password", getPassword());
@@ -59,24 +60,29 @@ public class LoginController implements Initializable {
     stage.setScene(scene);
   } 
 
-  //public void handleEnterUserName(ActionEvent event) { 
-
-  //}
-
-  //public void handleEnterCredentials(ActionEvent event) {
-    //handleMouseClick((MouseEvent) event);
-  //}
-
   public HashMap<String, String> getUserCreds() {
     return this.userCreds;
   }
 
   @Override
-  public void initialize(URL url, ResourceBundle rb) { 
+  public void initialize(URL url, ResourceBundle rb) {
     userName.setOnKeyPressed(event -> {
     if(event.getCode().equals(KeyCode.ENTER)){
         password.requestFocus(); 
     } 
     }); 
+
+    password.setOnKeyPressed(event -> {
+      if (event.getCode().equals(KeyCode.ENTER)){  
+        try {
+        handleMouseClick(event);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        //handleMouseClick((MouseEvent) event);
+      } 
+    });
+  //public void handleEnterCredentials(ActionEvent event) {
+  //}
   } 
 }
