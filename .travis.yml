@@ -1,5 +1,4 @@
 ---
 language: java
-before_install:
-  - source sdkman.sh
-  - sdk install gradle 6.7.1
+jdk:
+  - openjdk14
