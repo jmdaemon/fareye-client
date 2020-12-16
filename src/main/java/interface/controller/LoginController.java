@@ -52,14 +52,20 @@ public class LoginController implements Initializable {
     //userCreds.put("password", getPassword());
     BankAccount user = new BankAccount(getUserName(), getPassword());
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    ((Node)event.getSource()).setUserData(user);
+    //((Node)event.getSource()).setUserData(user);
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
+
     GridPane root = null;
     try { 
       root = loader.load();
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    loader.<DashboardController>getController().setUserData(user);
+    //DashboardController controller = loader.<DashboardController>getController();
+    //controller.setUserData(user);
+
     root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
 
     Scene scene = new Scene(root, 600, 400); 

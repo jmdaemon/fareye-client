@@ -1,17 +1,20 @@
 package app.ui;
 
+import app.bankAccount.*;
+
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javafx.application.Platform;
-import javafx.fxml.Initializable;
+import javafx.application.Platform; import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class DashboardController implements Initializable {
+  private BankAccount user;
+
   @FXML
   private URL url;
   @FXML
@@ -39,6 +42,11 @@ public class DashboardController implements Initializable {
 
   @FXML
   private Label acct_balance;
+
+  public void setUserData(BankAccount acct) {
+    this.user = acct;
+  }
+
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
