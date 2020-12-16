@@ -1,13 +1,16 @@
 package app.ui;
 
 import java.util.HashMap;
+import java.util.ResourceBundle;
+import java.net.URL;
 import java.io.IOException;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+//import javafx.fxml.FXML;
+//import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -17,8 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent; 
+import javafx.scene.input.KeyCode;
 
-public class LoginController {
+public class LoginController implements Initializable {
   private HashMap<String, String> userCreds;
 
   @FXML
@@ -53,10 +57,10 @@ public class LoginController {
 
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
-  }
+  } 
 
-  //public void handleEnterUserName(ActionEvent event) {
-    ////handleMouseClick(event);
+  //public void handleEnterUserName(ActionEvent event) { 
+
   //}
 
   //public void handleEnterCredentials(ActionEvent event) {
@@ -66,5 +70,13 @@ public class LoginController {
   public HashMap<String, String> getUserCreds() {
     return this.userCreds;
   }
-  
+
+  @Override
+  public void initialize(URL url, ResourceBundle rb) { 
+    userName.setOnKeyPressed(event -> {
+    if(event.getCode().equals(KeyCode.ENTER)){
+        password.requestFocus(); 
+    } 
+    }); 
+  } 
 }
