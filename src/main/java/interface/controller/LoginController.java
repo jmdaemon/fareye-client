@@ -1,7 +1,6 @@
 package app.ui;
 
 import java.util.HashMap;
-//import javafx.collections.ObservableMap;
 import java.io.IOException;
 
 import javafx.scene.Node;
@@ -21,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 
 public class LoginController {
   private HashMap<String, String> userCreds;
-  //private ObservableMap<String, String> userCreds;
 
   @FXML
   private Button enter;
@@ -43,12 +41,10 @@ public class LoginController {
     return password.getText();
   }
 
-  //public void handleMouseClick (MouseEvent event) {
   public void handleMouseClick (MouseEvent event) throws IOException {
     userCreds = new HashMap<String, String>();
     userCreds.put("userName", getUserName());
     userCreds.put("password", getPassword());
-    //System.out.println(userCreds.get("userName") + " " + userCreds.get("password")); 
 
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
@@ -57,8 +53,15 @@ public class LoginController {
 
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
-    //stage.setScene(new Scene(new Pane()));
   }
+
+  //public void handleEnterUserName(ActionEvent event) {
+    ////handleMouseClick(event);
+  //}
+
+  //public void handleEnterCredentials(ActionEvent event) {
+    //handleMouseClick((MouseEvent) event);
+  //}
 
   public HashMap<String, String> getUserCreds() {
     return this.userCreds;
