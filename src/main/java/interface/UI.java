@@ -14,7 +14,6 @@ public class UI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
       primaryStage.setTitle("My First JavaFX App");
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
       GridPane root = loader.load();
       root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
