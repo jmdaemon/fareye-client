@@ -44,16 +44,19 @@ public class LoginController implements Initializable {
     return password.getText();
   }
 
-  //public void handleMouseClick (MouseEvent event) throws IOException {
-  //public void handleMouseClick (ActionEvent event) throws IOException {
-  public void handleMouseClick (InputEvent event) throws IOException {
+  public void processCredentials(InputEvent event) {
     userCreds = new HashMap<String, String>();
     userCreds.put("userName", getUserName());
     userCreds.put("password", getPassword());
 
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
-    GridPane root = loader.load();
+    GridPane root = null;
+    try { 
+      root = loader.load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
 
     Scene scene = new Scene(root, 600, 400); 
@@ -74,15 +77,9 @@ public class LoginController implements Initializable {
 
     password.setOnKeyPressed(event -> {
       if (event.getCode().equals(KeyCode.ENTER)){  
-        try {
-        handleMouseClick(event);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        //handleMouseClick((MouseEvent) event);
+        processCredentials(event);
+        //handleMouseClick(event);
       } 
     });
-  //public void handleEnterCredentials(ActionEvent event) {
-  //}
   } 
 }
