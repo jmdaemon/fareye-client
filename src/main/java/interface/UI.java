@@ -37,6 +37,8 @@ public class UI extends Application {
 
       primaryStage.setScene(scene);
       primaryStage.show();
+      //DashboardController.timer.setDaemon(true);
+      //DashboardController.timer.start();
       //ScenicView.show(scene);
     }
 
