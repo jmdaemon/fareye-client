@@ -10,7 +10,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
-//import javafx.event.MouseEvent;
 import javafx.scene.input.MouseEvent; 
 
 public class LoginController {
@@ -43,6 +42,10 @@ public class LoginController {
     userCreds.put("userName", getUserName());
     userCreds.put("password", getPassword());
     System.out.println(userCreds.get("userName") + " " + userCreds.get("password"));
+  }
+
+  public HashMap<String, String> getUserCreds() {
+    return this.userCreds;
   }
   
 }
