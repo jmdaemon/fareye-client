@@ -39,3 +39,6 @@ tags
 
 # Misc
 *.log 
+
+# Ignore ScenicView libraries
+libs/scenicview

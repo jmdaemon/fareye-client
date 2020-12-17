@@ -15,21 +15,15 @@ public class BankAccount {
   private Money balance;
   private String fName, mName, lName, pswd, filepath;
 
-  public BankAccount() {
-    createAccount();
-  }
+  public BankAccount() { createAccount(null, null); }
 
-  public BankAccount(String firstName, String lastName) {
-    createAccount();
-    this.fName = firstName;
-    this.lName = lastName;
-  }
+  public BankAccount(String firstName, String lastName) { createAccount(firstName, lastName); }
 
-  private void createAccount() {
+  private void createAccount(String firstName, String lastName) {
     this.acctNum = genAcctNum(MAX_ACCTNUM_LENGTH);
     this.balance = Money.dollar(0);
-    this.fName = null;
-    this.lName = null;
+    this.fName = firstName;
+    this.lName = lastName;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
     this.filepath = ("./" + acctNum + "-transaction_history.csv");
     initLog("New Bank Account Created", getFilePath());
