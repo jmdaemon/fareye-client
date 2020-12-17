@@ -69,8 +69,9 @@ public class LoginController implements Initializable {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    stage.setUserData(user);
-    loader.<DashboardController>getController().setStage(stage);
+    //stage.setUserData(user);
+    //loader.<DashboardController>getController().setStage(stage);
+    loader.<DashboardController>getController().setUser(user);
 
     //loader.<DashboardController>getController().setUserData(getUserName(), getPassword());
     //loader.<DashboardController>getController().setUserData(user);

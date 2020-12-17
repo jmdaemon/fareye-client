@@ -71,6 +71,11 @@ public class DashboardController implements Initializable {
      acct_number.setText(String.valueOf(this.user.getAcctNum()));
   }
 
+  public void setUser(BankAccount user) {
+    this.user = user;
+    acct_number.setText(String.valueOf(this.user.getAcctNum()));
+  }
+
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     timer.setDaemon(true);
