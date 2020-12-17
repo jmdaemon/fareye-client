@@ -52,8 +52,16 @@ public class LoginController implements Initializable {
     //userCreds.put("password", getPassword());
     BankAccount user = new BankAccount(getUserName(), getPassword());
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    //Stage stage = (Stage) node.getScene().getWindow();
+    //stage.close();
     //((Node)event.getSource()).setUserData(user);
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
+    //loader.<DashboardController>getController().setUserData(user);
+    //stage.setUserData(user);
+    //loader.<DashboardController>getController().setStage(stage);
+    //DashboardController controller = loader.<DashboardController>getController();
+    //controller.setAcctNum(user);
+    //controller.setBalance(user);
 
     GridPane root = null;
     try { 
@@ -61,14 +69,24 @@ public class LoginController implements Initializable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    stage.setUserData(user);
+    loader.<DashboardController>getController().setStage(stage);
 
-    loader.<DashboardController>getController().setUserData(user);
+    //loader.<DashboardController>getController().setUserData(getUserName(), getPassword());
+    //loader.<DashboardController>getController().setUserData(user);
+    //loader.<DashboardController(user)>getController();
+    //DashboardController cont = loader.getController(); //
+    //cont.setUserData(user);
+    //loader.getController().setUserData(user);
+    //loader.<DashboardController>getController().setUserData(String userName, String password);
     //DashboardController controller = loader.<DashboardController>getController();
     //controller.setUserData(user);
 
     root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
 
     Scene scene = new Scene(root, 600, 400); 
+    //scene.setUserData(user);
+    //loader.<DashboardController>getController().setUserData(getUserName(), getPassword());
     stage.setScene(scene);
   } 
 
