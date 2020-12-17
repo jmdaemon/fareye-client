@@ -47,6 +47,7 @@ public class DashboardController implements Initializable {
   public void setUser(BankAccount user) {
     this.user = user;
     acct_number.setText("Account " + String.valueOf(this.user.getAcctNum()));
+    acct_balance.setText(this.user.getBalance().toString());
   }
 
   @Override
