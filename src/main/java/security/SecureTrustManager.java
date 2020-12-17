@@ -22,9 +22,9 @@ public class SecureTrustManager {
   private static final String TMF_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm(); // TrustManagerFactoryAlgorithm
   private static final String KEYSTORE_TYPE = KeyStore.getDefaultType();
 
-  public Certificate loadCertificates() throws CertificateException, FileNotFoundException, IOException{
+  public static Certificate loadCertificates(String certPath) throws CertificateException, FileNotFoundException, IOException {
     CertificateFactory cf = CertificateFactory.getInstance("X.509");
-    InputStream caInput = new BufferedInputStream(new FileInputStream("load-der.crt"));
+    InputStream caInput = new BufferedInputStream(new FileInputStream(certPath));
     Certificate certAuth = null;
     try {
         certAuth = cf.generateCertificate(caInput);
@@ -37,10 +37,11 @@ public class SecureTrustManager {
     return certAuth;
   }
 
-  public void createKeyStore(Certificate certAuth) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+  public KeyStore createKeyStore(Certificate certAuth) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
     KeyStore keyStore = KeyStore.getInstance(KEYSTORE_TYPE);
     keyStore.load(null, null);
     keyStore.setCertificateEntry("ca", certAuth); 
+    return keyStore;
   }
 
   public void createTrustManager(KeyStore keyStore) throws KeyStoreException, NoSuchAlgorithmException {
