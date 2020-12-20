@@ -3,6 +3,7 @@ plugins {
         id 'java-library'
         id "com.scuilion.syntastic" version "0.3.8"
         id 'org.openjfx.javafxplugin' version '0.0.9'
+        id 'org.springframework.boot' version '2.4.1'
         //id 'checkstyle'
 }
 
@@ -19,7 +20,6 @@ dependencies {
         testCompile 'org.mockito:mockito-core:2.+'
         compile 'org.unix4j:unix4j-command:0.5'
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0'
-        //implementation files('libs/scenicview.jar')
 
         //implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
         implementation platform('org.kordamp.ikonli:ikonli-bom:12.0.0')
@@ -62,6 +62,10 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+}
+
+springBoot {
+    mainClassName = 'app.security'
 }
 
 ext {
