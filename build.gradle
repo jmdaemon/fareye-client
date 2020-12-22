@@ -33,6 +33,11 @@ dependencies {
         testImplementation("org.mock-server:mockserver-netty:5.11.2")
         testImplementation("org.mock-server:mockserver-client-java:5.11.2")
         testImplementation("org.mock-server:mockserver-junit-jupiter:5.11.2")
+
+        //testCompile "com.github.tomakehurst:wiremock-jre8:2.27.2"
+        // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
+
 }
 
 test {
@@ -97,7 +102,8 @@ sourceSets {
             //srcDirs = [ "$src/connect/" ]
             //srcDirs = [ "$src/interface/" ]
             //srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
-            srcDirs = [ "$src/security" ]
+            //srcDirs = [ "$src/security" ]
+            srcDirs = [ "$src/security", "$src/connect/"]
          }
 
     }
@@ -108,7 +114,8 @@ sourceSets {
             //srcDirs = [ "$test/bankaccount", "$test/money"]
             //srcDirs = [ "$test/connect/" ]
             //srcDirs = [ "$src/bankaccount", "$src/money", "$test/interface/" ]
-            srcDirs = [ "$test/security" ]
+            //srcDirs = [ "$test/security" ]
+            srcDirs = [ "$test/security", "$test/connect/"]
         }
     }
 }
