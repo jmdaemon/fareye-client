@@ -2,6 +2,7 @@ package app.security;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -24,7 +25,10 @@ public class SecureTrustManager {
 
   public static Certificate loadCertificates(String certPath) throws CertificateException, FileNotFoundException, IOException {
     CertificateFactory cf = CertificateFactory.getInstance("X.509");
+    //File filepath = new File (certPath);
     InputStream caInput = new BufferedInputStream(new FileInputStream(certPath));
+    //InputStream caInput = new BufferedInputStream(new FileInputStream(filepath));
+    //InputStream caInput = this.getClass().getResourceAsStream(certPath);
     Certificate certAuth = null;
     try {
         certAuth = cf.generateCertificate(caInput);
