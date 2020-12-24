@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.lang.StringBuilder;
 import java.util.HashMap;
 
+import javax.net.ssl.SSLContext;
+
 public class Https extends Connection {
 
   boolean portIsNull(int port) {
@@ -41,7 +43,28 @@ public class Https extends Connection {
   public String post(String to, String params) {
     return "";
   }
-  
 
+  //public void connectWithSSL() { 
+    //URL url = new URL("https://certs.cac.washington.edu/CAtest/");
+    //HttpsURLConnection urlConnection = (HttpsURLConnection)url.openConnection();
+    //urlConnection.setSSLSocketFactory(context.getSocketFactory());
+    //InputStream in = urlConnection.getInputStream();
+    //copyInputStreamToOutputStream(in, System.out); 
+  //} 
+
+  public String getWithSSL(String to, SSLContext context) throws Exception {
+    URL url = new URL(to);
+    HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+    urlConnection.setSSLSocketFactory(context.getSocketFactory());
+    InputStream is = urlConnection.getInputStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    BufferedReader br = new BufferedReader(isr);
+    String input = null;
+    StringBuilder response = new StringBuilder();
+      while ((input = br.readLine()) != null) {
+        response.append(input);
+    } 
+    return response.toString();
+  } 
 
 }

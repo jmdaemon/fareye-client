@@ -50,6 +50,22 @@ public class HttpTests {
           );
   }
 
+  //public void createPostExpectation() {
+    //new ClientAndServer("localhost", 1080)
+      //.when(
+          //request()
+          //.withMethod("POST")
+          //.withPath("/login")
+          //.withBody("{username: 'foo', password: 'bar'}"),
+          //exactly(1))
+      //.respond(
+          //response()
+          //.withStatusCode(302)
+          //.withCookie("sessionId", "2By8LOhBmaW5nZXJwcmludCIlMDAzMW")
+          //.withHeader("Location", "https://www.mock-server.com")
+          //);
+  //}
+
   @Test
   public void sendGET_ToSite_ReturnResponse() throws Exception {
     Http conn = new Http();
