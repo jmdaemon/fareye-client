@@ -20,24 +20,12 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.SSLContext;
 
 public class SSLManager { 
-  private static final String TMF_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm(); // TrustManagerFactoryAlgorithm
+  private static final String TMF_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm();
   private static final String KEYSTORE_TYPE = KeyStore.getDefaultType();
 
   public static Certificate loadCertificates(String certPath) throws CertificateException, FileNotFoundException, IOException {
-    CertificateFactory cf = CertificateFactory.getInstance("X.509");
-    //File filepath = new File (certPath);
-    InputStream caInput = new BufferedInputStream(new FileInputStream(certPath));
-    //InputStream caInput = new BufferedInputStream(new FileInputStream(filepath));
-    //InputStream caInput = this.getClass().getResourceAsStream(certPath);
-    Certificate certAuth = null;
-    try {
-        certAuth = cf.generateCertificate(caInput);
-        //System.out.println("ca=" + ((X509Certificate) certAuth).getSubjectDN());
-    } catch (Exception e ) {
-      e.printStackTrace();
-    } finally {
-        caInput.close();
-    }
+    CertificateFactory cf = CertificateFactory.getInstance("X.509"); 
+    Certificate certAuth = cf.generateCertificate(new BufferedInputStream(new FileInputStream(certPath)));
     return certAuth;
   }
 
