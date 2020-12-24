@@ -1,6 +1,7 @@
 package test.security;
 
-import static app.security.SecureTrustManager.*;
+//import static app.security.SecureTrustManager.*;
+import static app.security.SSLManager.*;
 import app.security.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
@@ -18,11 +19,12 @@ import org.mockserver.logging.MockServerLogger;
 import org.mockserver.socket.PortFactory;
 import org.mockserver.socket.tls.KeyStoreFactory;
 
-public class SecureTrustManagerTests {
+public class SSLManagerTests {
   private static ClientAndServer mockServer;
 
   private static final String certPath = "config/keytool/certs/server/server-cert.pem";
-  private SecureTrustManager stm;
+  //private SecureTrustManager stm;
+  private SSLManager stm;
   private Certificate certAuth;
 
   @BeforeAll
@@ -34,7 +36,8 @@ public class SecureTrustManagerTests {
   @BeforeEach
   public void setUp() throws Exception {
     this.certAuth = loadCertificates(certPath);
-    this.stm = new SecureTrustManager();
+    this.stm = new SSLManager();
+    //this.stm = new SecureTrustManager();
   }
 
   @AfterAll

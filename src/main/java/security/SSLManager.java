@@ -19,7 +19,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.SSLContext;
 
-public class SecureTrustManager { 
+public class SSLManager { 
   private static final String TMF_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm(); // TrustManagerFactoryAlgorithm
   private static final String KEYSTORE_TYPE = KeyStore.getDefaultType();
 

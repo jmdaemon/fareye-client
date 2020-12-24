@@ -1,6 +1,6 @@
 package app.connect;
 
-import static app.security.SecureTrustManager.*;
+import static app.security.SSLManager.*;
 import app.security.*;
 
 import static org.junit.jupiter.api.Assertions.*; 
@@ -28,7 +28,7 @@ import static org.mockserver.matchers.Times.exactly;
 public class HttpsTests { 
   private static ClientAndServer mockServer;
 
-  private SecureTrustManager stm;
+  private SSLManager stm;
   private Certificate certAuth;
 
   private static final String clientCert = "config/keytool/certs/client/client-cert.pem";
@@ -46,7 +46,7 @@ public class HttpsTests {
   @BeforeEach
   public void setUp() throws Exception {
     this.certAuth = loadCertificates(caCert);
-    this.stm = new SecureTrustManager();
+    this.stm = new SSLManager();
   } 
 
   @AfterAll
