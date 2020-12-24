@@ -17,7 +17,7 @@ dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
-        testCompile 'org.mockito:mockito-core:2.+'
+        //testCompile 'org.mockito:mockito-core:2.+'
         compile 'org.unix4j:unix4j-command:0.5'
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0'
 
@@ -34,7 +34,6 @@ dependencies {
         testImplementation("org.mock-server:mockserver-client-java:5.11.2")
         testImplementation("org.mock-server:mockserver-junit-jupiter:5.11.2")
 
-        //testCompile "com.github.tomakehurst:wiremock-jre8:2.27.2"
         // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
         compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
 
@@ -119,3 +118,6 @@ sourceSets {
         }
     }
 }
+
+System.setProperty('javax.net.ssl.trustStore', 'cacerts')
+System.setProperty('javax.net.ssl.trustStorePassword', 'changeit')
