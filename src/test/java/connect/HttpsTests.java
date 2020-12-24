@@ -114,7 +114,7 @@ public class HttpsTests {
     context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null); 
 
     String result = conn.getWithSSL("https://localhost:1080", context); 
-    System.out.println(result);
+    System.out.println("mockServer Response: " + result);
     assertNotNull(result);
   }
 
