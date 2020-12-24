@@ -32,7 +32,7 @@ public class SecureTrustManager {
     Certificate certAuth = null;
     try {
         certAuth = cf.generateCertificate(caInput);
-        System.out.println("ca=" + ((X509Certificate) certAuth).getSubjectDN());
+        //System.out.println("ca=" + ((X509Certificate) certAuth).getSubjectDN());
     } catch (Exception e ) {
       e.printStackTrace();
     } finally {
@@ -41,28 +41,31 @@ public class SecureTrustManager {
     return certAuth;
   }
 
-  public KeyStore createKeyStore(Certificate certAuth) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+  public static KeyStore createKeyStore(Certificate certAuth) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
     KeyStore keyStore = KeyStore.getInstance(KEYSTORE_TYPE);
     keyStore.load(null, null);
     keyStore.setCertificateEntry("ca", certAuth); 
     return keyStore;
   }
 
-  public void createTrustManager(KeyStore keyStore) throws KeyStoreException, NoSuchAlgorithmException {
+  public static TrustManagerFactory createTrustManager(KeyStore keyStore) throws KeyStoreException, NoSuchAlgorithmException {
     TrustManagerFactory tmf = TrustManagerFactory.getInstance(TMF_ALGORITHM);
     tmf.init(keyStore);
+    return tmf;
   } 
 
-  public void createSSLContext(TrustManagerFactory tmf) throws KeyManagementException, NoSuchAlgorithmException {
+  public static SSLContext createSSLContext(TrustManagerFactory tmf) throws KeyManagementException, NoSuchAlgorithmException {
     SSLContext context = SSLContext.getInstance("TLS");
     context.init(null, tmf.getTrustManagers(), null); 
+    return context;
   }
 
-  //public void connectWithSSL() { 
-    //URL url = new URL("https://certs.cac.washington.edu/CAtest/");
-    //HttpsURLConnection urlConnection = (HttpsURLConnection)url.openConnection();
-    //urlConnection.setSSLSocketFactory(context.getSocketFactory());
-    //InputStream in = urlConnection.getInputStream();
-    //copyInputStreamToOutputStream(in, System.out); 
-  //} 
+  public static SSLContext initSSL(String certPath) throws Exception {
+    Certificate cert = loadCertificates(certPath);
+    KeyStore keyStore = createKeyStore(cert);
+    TrustManagerFactory tmf = createTrustManager(keyStore);
+    SSLContext context = createSSLContext(tmf);
+    return context;
+  }
+
 }
