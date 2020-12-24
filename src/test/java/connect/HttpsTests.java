@@ -28,30 +28,23 @@ import static org.mockserver.matchers.Times.exactly;
 public class HttpsTests { 
   private static ClientAndServer mockServer;
 
-  private SSLManager stm;
+  private SSLManager sm;
   private Certificate certAuth;
 
-  private static final String clientCert = "config/keytool/certs/client/client-cert.pem";
-  private static final String serverCert = "config/keytool/certs/server/server-cert.pem";
+  private static final String CLIENT_KEYSTORE = "./config/keytool/client_truststore.jks";
   private static final String caCert = "config/keytool/ca/cacert.pem";
-
-  
   private static final char[] PASSWORD="password".toCharArray();
 
   @BeforeAll
-  public static void startMockServer() {
-    mockServer = startClientAndServer(1080);
-    } 
+  public static void startMockServer() { mockServer = startClientAndServer(1080); } 
+
+  @AfterAll
+  public static void stopMockServer() { mockServer.stop(); } 
 
   @BeforeEach
   public void setUp() throws Exception {
     this.certAuth = loadCertificates(caCert);
-    this.stm = new SSLManager();
-  } 
-
-  @AfterAll
-  public static void stopMockServer() {
-      mockServer.stop();
+    this.sm= new SSLManager();
   } 
 
   public void createSecurePingExpectation() {
@@ -99,10 +92,9 @@ public class HttpsTests {
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {
     Https conn = new Https();
     createSecurePingExpectation();
-    String KEYSTORE = "./config/keytool/client_truststore.jks";
 
     KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-    ks.load((this.getClass().getClassLoader().getResourceAsStream(KEYSTORE)), PASSWORD);
+    ks.load((this.getClass().getClassLoader().getResourceAsStream(CLIENT_KEYSTORE)), PASSWORD);
     ks.setCertificateEntry("ca", certAuth);
 
     KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
