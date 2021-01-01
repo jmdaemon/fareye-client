@@ -36,6 +36,14 @@ public class SSLManager {
     return keyStore;
   }
 
+  public static KeyStore createKeyStore(String clientKeystore, char[] keyStorePassword, Certificate certAuth) 
+      throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+    KeyStore result = KeyStore.getInstance(KeyStore.getDefaultType());
+    result.load((SSLManager.class.getResourceAsStream(clientKeystore)), keyStorePassword);
+    result.setCertificateEntry("ca", certAuth);
+    return result;
+    }
+
   public static TrustManagerFactory createTrustManager(KeyStore keyStore) throws KeyStoreException, NoSuchAlgorithmException {
     TrustManagerFactory tmf = TrustManagerFactory.getInstance(TMF_ALGORITHM);
     tmf.init(keyStore);

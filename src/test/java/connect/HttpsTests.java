@@ -19,6 +19,7 @@ import org.mockserver.integration.ClientAndServer;
 import org.mockserver.logging.MockServerLogger;
 import org.mockserver.socket.PortFactory;
 import org.mockserver.socket.tls.KeyStoreFactory;
+
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -44,7 +45,7 @@ public class HttpsTests {
   @BeforeEach
   public void setUp() throws Exception {
     this.certAuth = loadCertificates(caCert);
-    this.sm= new SSLManager();
+    this.sm = new SSLManager();
   } 
 
   public void createSecurePingExpectation() {
@@ -93,9 +94,10 @@ public class HttpsTests {
     Https conn = new Https();
     createSecurePingExpectation();
 
-    KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-    ks.load((this.getClass().getClassLoader().getResourceAsStream(CLIENT_KEYSTORE)), PASSWORD);
-    ks.setCertificateEntry("ca", certAuth);
+    //KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+    //ks.load((this.getClass().getClassLoader().getResourceAsStream(CLIENT_KEYSTORE)), PASSWORD);
+    //ks.setCertificateEntry("ca", certAuth);
+    KeyStore ks = createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
 
     KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
     TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509"); 
@@ -106,8 +108,7 @@ public class HttpsTests {
     context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null); 
 
     String result = conn.getWithSSL("https://localhost:1080", context); 
-    System.out.println("mockServer Response: " + result);
+    //System.out.println("mockServer Response: " + result);
     assertNotNull(result);
   }
-
 }
