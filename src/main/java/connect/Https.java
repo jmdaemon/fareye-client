@@ -53,10 +53,7 @@ public class Https extends Connection {
     //copyInputStreamToOutputStream(in, System.out); 
   //} 
 
-  public String getWithSSL(String to, SSLContext context) throws Exception {
-    URL url = new URL(to);
-    HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-    urlConnection.setSSLSocketFactory(context.getSocketFactory());
+  public String getResponseBody(HttpsURLConnection urlConnection) throws Exception { 
     InputStream is = urlConnection.getInputStream();
     InputStreamReader isr = new InputStreamReader(is);
     BufferedReader br = new BufferedReader(isr);
@@ -67,7 +64,14 @@ public class Https extends Connection {
     } 
     responseCode = urlConnection.getResponseCode();
     return response.toString();
-  } 
+  }
+
+  public String getWithSSL(String to, SSLContext context) throws Exception {
+    URL url = new URL(to);
+    HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+    urlConnection.setSSLSocketFactory(context.getSocketFactory());
+    return getResponseBody(urlConnection);
+    } 
 
   public int getResponseCode() { return responseCode; }
 
