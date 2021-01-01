@@ -99,17 +99,16 @@ public class HttpsTests {
     //assertNotNull(response);
   //}
 
-  //@Test
-  //public void sendPOST_ToSite_ReturnResponse() throws Exception {
-    ////var objectMapper = new ObjectMapper(); 
-    ////String requestBody = objectMapper.writeValueAsString(values);
-    ////String response = conn.post(postTo, requestBody);
-    ////System.out.println(response);
-    //Keystore ks = createKeyStore(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
-    //SSLContext context = createSSLContext(ks, PASSWORD);
-    //conn.postWithSSL("http://localhost:1080", context);
-    //assertNotNull(response);
-  //}
+  @Test
+  public void sendPOST_ToSite_ReturnResponse() throws Exception {
+    //var objectMapper = new ObjectMapper(); 
+    //String requestBody = objectMapper.writeValueAsString(values);
+    //String response = conn.post(postTo, requestBody);
+    //System.out.println(response);
+    createSecurePostExpectation();
+    String response = conn.postWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    assertNotNull(response);
+  }
 
   @Test
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {

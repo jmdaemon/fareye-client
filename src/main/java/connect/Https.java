@@ -14,7 +14,8 @@ public class Https extends Connection {
 
   boolean portIsNull(int port) {
     return (port != 0) ? true : false;
-  } 
+  }
+
   public BufferedReader connectTo(String site) throws IOException { 
     URL url = formRequest(site);
     BufferedReader br = null;
@@ -52,6 +53,8 @@ public class Https extends Connection {
     //InputStream in = urlConnection.getInputStream();
     //copyInputStreamToOutputStream(in, System.out); 
   //} 
+  
+  public int getResponseCode() { return responseCode; }
 
   public String getResponseBody(HttpsURLConnection urlConnection) throws Exception { 
     InputStream is = urlConnection.getInputStream();
@@ -69,10 +72,17 @@ public class Https extends Connection {
   public String getWithSSL(String to, SSLContext context) throws Exception {
     URL url = new URL(to);
     HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+    //urlConnection.setRequestMethod("GET");
     urlConnection.setSSLSocketFactory(context.getSocketFactory());
     return getResponseBody(urlConnection);
-    } 
+  } 
 
-  public int getResponseCode() { return responseCode; }
+  public String postWithSSL(String to, SSLContext context) throws Exception {
+    URL url = new URL(to);
+    HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+    urlConnection.setSSLSocketFactory(context.getSocketFactory());
+    urlConnection.setRequestMethod("POST");
+    return getResponseBody(urlConnection);
+  }
 
 }
