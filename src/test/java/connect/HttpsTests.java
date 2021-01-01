@@ -35,6 +35,7 @@ public class HttpsTests {
   private static final String CLIENT_KEYSTORE = "./config/keytool/client_truststore.jks";
   private static final String caCert = "config/keytool/ca/cacert.pem";
   private static final char[] PASSWORD="password".toCharArray();
+  private static final String SERVER_ADDRESS = "https://localhost:1080";
 
   @BeforeAll
   public static void startMockServer() { mockServer = startClientAndServer(1080); } 
@@ -48,7 +49,7 @@ public class HttpsTests {
     this.sm = new SSLManager();
   } 
 
-  public void createSecurePingExpectation() {
+  public void createSecureGetExpectation() {
     this.mockServer
       .withSecure(true)
       .when(
@@ -62,6 +63,23 @@ public class HttpsTests {
           .withBody("Successfully pinged server")
           );
   }
+
+  public void createSecurePostExpectation() {
+    this.mockServer
+      .withSecure(true)
+      .when(
+          request()
+          .withMethod("POST"),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200)
+          .withBody("Sent POST to mockServer")
+          );
+  }
+
+  //public void createSecureLoginExpectation() {
+  //}
 
   //@Test
   //public void ping_Google_ReturnsResult() throws Exception {
@@ -82,18 +100,21 @@ public class HttpsTests {
   //@Test
   //public void sendPOST_ToSite_ReturnResponse() throws Exception {
     //Https conn = new Https(); 
-    //var objectMapper = new ObjectMapper(); 
-    //String requestBody = objectMapper.writeValueAsString(values);
-    //String response = conn.post(postTo, requestBody);
+    ////var objectMapper = new ObjectMapper(); 
+    ////String requestBody = objectMapper.writeValueAsString(values);
+    ////String response = conn.post(postTo, requestBody);
     ////System.out.println(response);
+    //Keystore ks = createKeyStore(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
+    //SSLContext context = createSSLContext(ks, PASSWORD);
+    //conn.postWithSSL("http://localhost:1080");
     //assertNotNull(response);
   //}
 
   @Test
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {
     Https conn = new Https();
-    createSecurePingExpectation();
+    createSecureGetExpectation();
     //System.out.println("mockServer Response: " + result);
-    assertNotNull(conn.getWithSSL("https://localhost:1080", createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD)));
+    assertNotNull(conn.getWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD)));
   }
 }
