@@ -101,14 +101,13 @@ public class HttpsTests {
 
   //@Test
   //public void sendPOST_ToSite_ReturnResponse() throws Exception {
-    //Https conn = new Https(); 
     ////var objectMapper = new ObjectMapper(); 
     ////String requestBody = objectMapper.writeValueAsString(values);
     ////String response = conn.post(postTo, requestBody);
     ////System.out.println(response);
     //Keystore ks = createKeyStore(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
     //SSLContext context = createSSLContext(ks, PASSWORD);
-    //conn.postWithSSL("http://localhost:1080");
+    //conn.postWithSSL("http://localhost:1080", context);
     //assertNotNull(response);
   //}
 
@@ -116,6 +115,9 @@ public class HttpsTests {
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {
     createSecureGetExpectation();
     //System.out.println("mockServer Response: " + result);
-    assertNotNull(conn.getWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD)));
+    String response = conn.getWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    assertNotNull(response);
+    assertEquals("Successfully pinged server", response);
+    assertEquals(200, conn.getResponseCode());
   }
 }

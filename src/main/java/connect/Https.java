@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.net.ssl.SSLContext;
 
 public class Https extends Connection {
+  private int responseCode;
 
   boolean portIsNull(int port) {
     return (port != 0) ? true : false;
@@ -64,7 +65,10 @@ public class Https extends Connection {
       while ((input = br.readLine()) != null) {
         response.append(input);
     } 
+    responseCode = urlConnection.getResponseCode();
     return response.toString();
   } 
+
+  public int getResponseCode() { return responseCode; }
 
 }
