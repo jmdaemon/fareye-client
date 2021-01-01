@@ -31,6 +31,7 @@ public class HttpsTests {
 
   private SSLManager sm;
   private Certificate certAuth;
+  private Https conn;
 
   private static final String CLIENT_KEYSTORE = "./config/keytool/client_truststore.jks";
   private static final String caCert = "config/keytool/ca/cacert.pem";
@@ -47,6 +48,7 @@ public class HttpsTests {
   public void setUp() throws Exception {
     this.certAuth = loadCertificates(caCert);
     this.sm = new SSLManager();
+    this.conn = new Https();
   } 
 
   public void createSecureGetExpectation() {
@@ -112,7 +114,6 @@ public class HttpsTests {
 
   @Test
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {
-    Https conn = new Https();
     createSecureGetExpectation();
     //System.out.println("mockServer Response: " + result);
     assertNotNull(conn.getWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD)));
