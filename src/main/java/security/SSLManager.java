@@ -58,19 +58,19 @@ public class SSLManager {
     return context;
   }
 
-  public static KeyStore createKeyStore(String clientKeystore, char[] keyStorePassword, Certificate certAuth) 
+  public static KeyStore createKeyStore(String clientKeystore, String keyStorePassword, Certificate certAuth) 
       throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
     KeyStore result = KeyStore.getInstance(KeyStore.getDefaultType());
-    result.load((SSLManager.class.getResourceAsStream(clientKeystore)), keyStorePassword);
+    result.load((SSLManager.class.getResourceAsStream(clientKeystore)), keyStorePassword.toCharArray());
     result.setCertificateEntry("ca", certAuth);
     return result;
     }
 
-  public static SSLContext createSSLContext(KeyStore keyStore, char[] password) 
+  public static SSLContext createSSLContext(KeyStore keyStore, String password) 
       throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException {
     KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
     TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509"); 
-    kmf.init(keyStore, password);
+    kmf.init(keyStore, password.toCharArray());
     tmf.init(keyStore);
 
     SSLContext result = SSLContext.getInstance("TLS");

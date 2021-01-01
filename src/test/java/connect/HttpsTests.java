@@ -35,7 +35,7 @@ public class HttpsTests {
 
   private static final String CLIENT_KEYSTORE = "./config/keytool/client_truststore.jks";
   private static final String caCert = "config/keytool/ca/cacert.pem";
-  private static final char[] PASSWORD="password".toCharArray();
+  private static final String PASSWORD = "password";
   private static final String SERVER_ADDRESS = "https://localhost:1080";
 
   @BeforeAll
@@ -57,7 +57,6 @@ public class HttpsTests {
       .when(
           request()
           .withMethod("GET"),
-          //.withPath("/index.html"),
           exactly(1))
       .respond(
           response()
@@ -101,19 +100,16 @@ public class HttpsTests {
 
   @Test
   public void sendPOST_ToSite_ReturnResponse() throws Exception {
-    //var objectMapper = new ObjectMapper(); 
-    //String requestBody = objectMapper.writeValueAsString(values);
-    //String response = conn.post(postTo, requestBody);
-    //System.out.println(response);
     createSecurePostExpectation();
     String response = conn.postWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
     assertNotNull(response);
+    assertEquals("Sent POST to mockServer", response);
+    assertEquals(200, conn.getResponseCode());
   }
 
   @Test
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {
     createSecureGetExpectation();
-    //System.out.println("mockServer Response: " + result);
     String response = conn.getWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
     assertNotNull(response);
     assertEquals("Successfully pinged server", response);
