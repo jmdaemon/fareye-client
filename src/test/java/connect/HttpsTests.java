@@ -93,22 +93,7 @@ public class HttpsTests {
   public void getWithSSL_Localhost_ReturnsResult() throws Exception {
     Https conn = new Https();
     createSecurePingExpectation();
-
-    //KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-    //ks.load((this.getClass().getClassLoader().getResourceAsStream(CLIENT_KEYSTORE)), PASSWORD);
-    //ks.setCertificateEntry("ca", certAuth);
-    KeyStore ks = createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
-
-    KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-    TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509"); 
-    kmf.init(ks, PASSWORD);
-    tmf.init(ks);
-
-    SSLContext context = SSLContext.getInstance("TLS");
-    context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null); 
-
-    String result = conn.getWithSSL("https://localhost:1080", context); 
     //System.out.println("mockServer Response: " + result);
-    assertNotNull(result);
+    assertNotNull(conn.getWithSSL("https://localhost:1080", createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD)));
   }
 }

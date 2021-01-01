@@ -13,11 +13,13 @@ import java.security.cert.X509Certificate;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import javax.net.ssl.KeyManagerFactory;
 import java.security.KeyManagementException;
 import javax.net.ssl.X509TrustManager;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.SSLContext;
+import java.security.UnrecoverableKeyException;
 
 public class SSLManager { 
   private static final String TMF_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm();
@@ -35,14 +37,6 @@ public class SSLManager {
     keyStore.setCertificateEntry("ca", certAuth); 
     return keyStore;
   }
-
-  public static KeyStore createKeyStore(String clientKeystore, char[] keyStorePassword, Certificate certAuth) 
-      throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-    KeyStore result = KeyStore.getInstance(KeyStore.getDefaultType());
-    result.load((SSLManager.class.getResourceAsStream(clientKeystore)), keyStorePassword);
-    result.setCertificateEntry("ca", certAuth);
-    return result;
-    }
 
   public static TrustManagerFactory createTrustManager(KeyStore keyStore) throws KeyStoreException, NoSuchAlgorithmException {
     TrustManagerFactory tmf = TrustManagerFactory.getInstance(TMF_ALGORITHM);
@@ -64,4 +58,23 @@ public class SSLManager {
     return context;
   }
 
+  public static KeyStore createKeyStore(String clientKeystore, char[] keyStorePassword, Certificate certAuth) 
+      throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+    KeyStore result = KeyStore.getInstance(KeyStore.getDefaultType());
+    result.load((SSLManager.class.getResourceAsStream(clientKeystore)), keyStorePassword);
+    result.setCertificateEntry("ca", certAuth);
+    return result;
+    }
+
+  public static SSLContext createSSLContext(KeyStore keyStore, char[] password) 
+      throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException {
+    KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+    TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509"); 
+    kmf.init(keyStore, password);
+    tmf.init(keyStore);
+
+    SSLContext result = SSLContext.getInstance("TLS");
+    result.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null); 
+    return result;
+  } 
 }
