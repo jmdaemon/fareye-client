@@ -33,10 +33,10 @@ public class HttpsTests {
   private Certificate certAuth;
   private Https conn;
 
-  private static final String CLIENT_KEYSTORE = "./config/keytool/client_truststore.jks";
-  private static final String caCert = "config/keytool/ca/cacert.pem";
-  private static final String PASSWORD = "password";
-  private static final String SERVER_ADDRESS = "https://localhost:1080";
+  private static final String CLIENT_KEYSTORE = "config/keytool/client_truststore.jks";
+  private static final String CA_CERT         = "config/keytool/ca/cacert.pem";
+  private static final String PASSWORD        = "password";
+  private static final String SERVER_ADDRESS  = "https://localhost:1080";
 
   @BeforeAll
   public static void startMockServer() { mockServer = startClientAndServer(1080); } 
@@ -46,7 +46,7 @@ public class HttpsTests {
 
   @BeforeEach
   public void setUp() throws Exception {
-    this.certAuth = loadCertificates(caCert);
+    this.certAuth = loadCertificates(CA_CERT);
     this.sm = new SSLManager();
     this.conn = new Https();
   } 
@@ -78,6 +78,8 @@ public class HttpsTests {
           .withBody("Sent POST to mockServer")
           );
   }
+
+  //public void createSecurePostExpectationWith
 
   //public void createSecureLoginExpectation() {
   //}

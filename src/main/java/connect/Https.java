@@ -69,18 +69,21 @@ public class Https extends Connection {
     return response.toString();
   }
 
-  public String getWithSSL(String to, SSLContext context) throws Exception {
+  public HttpsURLConnection createSecureConnection(String to, SSLContext context) throws Exception {
     URL url = new URL(to);
     HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-    //urlConnection.setRequestMethod("GET");
     urlConnection.setSSLSocketFactory(context.getSocketFactory());
+    return urlConnection;
+  }
+
+  public String getWithSSL(String to, SSLContext context) throws Exception {
+    HttpsURLConnection urlConnection = createSecureConnection(to, context);
+    urlConnection.setRequestMethod("GET");
     return getResponseBody(urlConnection);
   } 
 
   public String postWithSSL(String to, SSLContext context) throws Exception {
-    URL url = new URL(to);
-    HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-    urlConnection.setSSLSocketFactory(context.getSocketFactory());
+    HttpsURLConnection urlConnection = createSecureConnection(to, context);
     urlConnection.setRequestMethod("POST");
     return getResponseBody(urlConnection);
   }
