@@ -106,11 +106,12 @@ public class HttpTests {
   //}
 
   @Test
-  public void sendGET_ToSite_ReturnResponse() throws Exception {
+  public void sendGET_Localhost_ReturnResponse() throws Exception {
     createGetExpectation();
     String response = conn.get(HTTP_SERVER_ADDRESS);
     assertNotNull(response);
     assertEquals("Successfully pinged server", response);
+    assertEquals(200, conn.getResponseCode());
   }
 
   @Test
@@ -119,6 +120,7 @@ public class HttpTests {
     String response = conn.post(HTTP_SERVER_ADDRESS, "");
     assertNotNull(response);
     assertEquals("Successfully sent POST request", response);
+    assertEquals(200, conn.getResponseCode());
   }
 
   @Test
@@ -126,6 +128,7 @@ public class HttpTests {
     createLoginExpectation();
     String response = conn.get(ADDRESS_PARAMS);
     assertNotNull(response);
+    assertEquals(200, conn.getResponseCode());
   }
 
   //@Test

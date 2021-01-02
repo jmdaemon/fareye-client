@@ -34,6 +34,7 @@ public class Http {
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    responseCode = response.statusCode();
     return response.body();
   }
 
@@ -45,6 +46,7 @@ public class Http {
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    responseCode = response.statusCode();
     return response.body();
   }
 
