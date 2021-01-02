@@ -4,9 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.*;
 
-import java.util.HashMap;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockserver.junit.jupiter.*;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
@@ -89,22 +86,6 @@ public class HttpTests {
           );
   }
 
-  //public void createPostExpectation() {
-    //new ClientAndServer("localhost", 1080)
-      //.when(
-          //request()
-          //.withMethod("POST")
-          //.withPath("/login")
-          //.withBody("{username: 'foo', password: 'bar'}"),
-          //exactly(1))
-      //.respond(
-          //response()
-          //.withStatusCode(302)
-          //.withCookie("sessionId", "2By8LOhBmaW5nZXJwcmludCIlMDAzMW")
-          //.withHeader("Location", "https://www.mock-server.com")
-          //);
-  //}
-
   @Test
   public void sendGET_Localhost_ReturnResponse() throws Exception {
     createGetExpectation();
@@ -130,14 +111,5 @@ public class HttpTests {
     assertNotNull(response);
     assertEquals(200, conn.getResponseCode());
   }
-
-  //@Test
-  //public void sendPOST_ToSite_ReturnResponse() throws Exception {
-    //Http conn = new Http(); 
-    //var objectMapper = new ObjectMapper(); 
-    //String requestBody = objectMapper.writeValueAsString(values);
-    //String response = conn.post(postTo, requestBody);
-    //assertNotNull(response);
-  //}
   
 }
