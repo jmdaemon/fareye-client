@@ -41,6 +41,7 @@ public class HttpsTests {
   private SSLManager sm;
   private Certificate certAuth;
   private Https conn;
+  private Map<String, String> params;
 
   private static final String CLIENT_KEYSTORE = "config/keytool/client_truststore.jks";
   private static final String CA_CERT         = "config/keytool/ca/cacert.pem";
@@ -59,6 +60,13 @@ public class HttpsTests {
     this.certAuth = loadCertificates(CA_CERT);
     this.sm = new SSLManager();
     this.conn = new Https();
+    params = Map.ofEntries(
+        entry("username", "123456"),
+        entry("password", "AABBCC"),
+        entry("balance", "0.0"),
+        entry("firstName", "Richard"),
+        entry("middleName", " "),
+        entry("lastName", "Lewis"));
   } 
 
   public void createSecureGetExpectation() {
@@ -140,29 +148,29 @@ public class HttpsTests {
             );
   }
 
-  public void createSecureSignUpExpectationJSON() {
-    this.mockServer
-      .withSecure(true)
-      .when(
-          request()
-          .withMethod("POST")
-          .withPath("/register") 
-          .withBody(
-              json(
-                "{" + System.lineSeparator() +
-                "   \"username\": 123456," + System.lineSeparator() +
-                "   \"password\": \"AABBCC\"," + System.lineSeparator() +
-                "   \"balance\": 0.0," + System.lineSeparator() +
-                "   \"name\": [\"Richard\", \" \", \"Lewis\"]" + System.lineSeparator() +
-                "}", STRICT
-                )),
-          exactly(1))
-      .respond(
-          response()
-          .withStatusCode(200)
-          .withBody("Successfully registered new user")
-            );
-  }
+  //public void createSecureSignUpExpectationJSON() {
+    //this.mockServer
+      //.withSecure(true)
+      //.when(
+          //request()
+          //.withMethod("POST")
+          //.withPath("/register") 
+          //.withBody(
+              //json(
+                //"{" + System.lineSeparator() +
+                //"   \"username\": 123456," + System.lineSeparator() +
+                //"   \"password\": \"AABBCC\"," + System.lineSeparator() +
+                //"   \"balance\": 0.0," + System.lineSeparator() +
+                //"   \"name\": [\"Richard\", \" \", \"Lewis\"]" + System.lineSeparator() +
+                //"}", STRICT
+                //)),
+          //exactly(1))
+      //.respond(
+          //response()
+          //.withStatusCode(200)
+          //.withBody("Successfully registered new user")
+            //);
+  //}
   //public void createSecureLoginExpectationJSON() {
   //}
 
@@ -195,18 +203,21 @@ public class HttpsTests {
   @Test
   public void sendPOST_LocalhostWithLogin_ReturnResponse() throws Exception {
     createSecureSignUpExpectation();
-    Map<String, String> params = Map.ofEntries(
-        entry("username", "123456"),
-        entry("password", "AABBCC"),
-        entry("balance", "0.0"),
-        entry("firstName", "Richard"),
-        entry("middleName", " "),
-        entry("lastName", "Lewis"));
     String response = conn.sendPostCreds(SERVER_ADDRESS + "/register", params, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
     System.out.println(response);
     assertNotNull(response);
     assertEquals("Successfully registered new user", response);
     assertEquals(200, conn.getResponseCode());
   }
+  
+  //@Test
+  //public void sendPOST_LocalhostWithLoginJSON_ReturnResponse {
+    //createSecureSignUpExpectationJSON();
+    //String response = conn.sendPostCredsJSON(SERVER_ADDRESS + "/register", params, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    //System.out.println(response);
+    //assertNotNull(response);
+    //assertEquals("Successfully registered new user", response);
+    //assertEquals(200, conn.getResponseCode()); 
+  //}
 
 }
