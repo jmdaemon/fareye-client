@@ -176,6 +176,21 @@ public class HttpsTests {
   //}
 
   @Test
+  public void createTrustManager_FromKeyStore_ReturnsTMF() throws Exception {
+    KeyStore keyStore = sm.createKeyStore(certAuth);
+    TrustManagerFactory tmf = createTrustManager(keyStore);
+    assertNotNull(tmf.getTrustManagers());
+  }
+
+  @Test
+  public void createSSLContext_FromTMF_ReturnsContext() throws Exception {
+    KeyStore keyStore = sm.createKeyStore(certAuth);
+    TrustManagerFactory tmf = createTrustManager(keyStore);
+    SSLContext context = createSSLContext(tmf);
+    assertNotNull(context);
+  }
+
+  @Test
   public void sendPOST_ToSite_ReturnResponse() throws Exception {
     createSecurePostExpectation();
     String response = conn.postWithSSL(SERVER_ADDRESS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
@@ -210,6 +225,7 @@ public class HttpsTests {
     assertEquals("Successfully registered new user", response);
     assertEquals(200, conn.getResponseCode());
   }
+
   
   //@Test
   //public void sendPOST_LocalhostWithLoginJSON_ReturnResponse {
