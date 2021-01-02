@@ -18,30 +18,27 @@ import static org.mockserver.model.Parameter.param;
 import static org.mockserver.matchers.Times.exactly;
 
 public class HttpTests {
-
   private static ClientAndServer mockServer;
+  private Http conn;
 
-  private static final String mockServerURL = "http://127.0.0.1"; 
-  private static final String mockServerPORT = "1080";
-  private static final String getFrom = "http://webcode.me";
-  private static final String postTo  = "https://httpbin.org/post";
+  private static final String HTTP_SERVER_ADDRESS = "http://127.0.0.1:1080";
 
   @BeforeAll
-  public static void startMockServer() {
-      mockServer = startClientAndServer(1080);
-  }
+  public static void startMockServer() { mockServer = startClientAndServer(1080); }
 
   @AfterAll
-  public static void stopMockServer() {
-      mockServer.stop();
-  } 
+  public static void stopMockServer() { mockServer.stop(); } 
+
+  @BeforeEach
+  public void startUp() {
+    conn = new Http();
+  }
 
   public void createPingExpectation() {
-    new ClientAndServer("localhost", 1080)
+    this.mockServer
       .when(
           request()
           .withMethod("GET"),
-          //.withPath("/index.html"),
           exactly(1))
       .respond(
           response()
@@ -68,9 +65,8 @@ public class HttpTests {
 
   @Test
   public void sendGET_ToSite_ReturnResponse() throws Exception {
-    Http conn = new Http();
     createPingExpectation();
-    String response = conn.get(mockServerURL + ":" + mockServerPORT);
+    String response = conn.get(HTTP_SERVER_ADDRESS);
     assertNotNull(response);
   }
 
