@@ -6,7 +6,7 @@ import app.security.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
 
-//import java.util.Map; 
+//import java.util.Map;
 //import java.util.HashMap;
 import java.io.FileInputStream;
 import javax.net.ssl.HttpsURLConnection;
@@ -44,9 +44,7 @@ public class HttpsTests {
   private static final String CA_CERT         = "config/keytool/ca/cacert.pem";
   private static final String PASSWORD        = "password";
   private static final String SERVER_ADDRESS  = "https://localhost:1080";
-  //private static final String ADDRESS_PARAMS  = "https://localhost?username=112233&password=\"aabbcc\":1080";
-  private static final String ADDRESS_PARAMS  = "https://localhost:1080/?username=112233&password=aabbcc";
-  //private static final String ADDRESS_PARAMS  = "https://localhost:1080";
+  private static final String ADDRESS_PARAMS  = SERVER_ADDRESS + "/?username=112233&password=aabbcc";
 
   @BeforeAll
   public static void startMockServer() { mockServer = startClientAndServer(1080); } 
@@ -95,11 +93,6 @@ public class HttpsTests {
       .when(
           request()
           .withMethod("GET")
-          //.withPath("/login")
-          //.withHeaders(
-            //header("Content-Type", "application/x-www-form-urlencoded"))
-          //.withBody(
-            //params(
           .withQueryStringParameters(
               param("username", "112233"),
               param("password", "aabbcc")),
@@ -118,6 +111,32 @@ public class HttpsTests {
             )
           );
   }
+
+  //public void createSecureSignUpExpectation() {
+    //this.mockServer
+      //.withSecure(true)
+      //.when(
+          //request()
+          //.withMethod("POST")
+          //.withPath("/register")
+          //.withHeaders(
+            //header("Content-Type", "application/x-www-form-urlencoded"))
+          //.withBody(
+            //params(
+              //param("username", "123456"),
+              //param("password", "AABBCC"),
+              //param("balance", "0.0"),
+              //param("name[]", "\"Richard\"")
+              //param("name[]", "\" \"")
+              //param("name[]", "\"Lewis\"")
+              //)),
+          //exactly(1))
+      //.respond(
+          //response()
+          //.withStatusCode(200)
+          //.withBody("Successfully registered new user")
+            //);
+  //}
 
   //public void createSecureLoginExpectationJSON() {
   //}
@@ -159,8 +178,18 @@ public class HttpsTests {
   @Test
   public void sendGET_LocalhostWithLogin_ReturnResponse() throws Exception {
     createSecureLoginExpectation(); 
-    //Map<String, String> params = new HashMap<String, String>{{"username", "112233"}, {"password", "aabbcc"}};
     String response = conn.getWithSSL(ADDRESS_PARAMS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    System.out.println(response);
     assertNotNull(response);
   }
+
+  //@Test
+  //public void sendPOST_LocalhostWithLogin_ReturnResponse() throws Exception {
+    //createSecureSignUpExpectation()
+    //Map<String, String> params = new HashMap<String, String>{{"username", "123456"}, {"password", "AABBCC"}, {"balance", 0.0}, {"name", {"Richard", "", "Lewis"} }};
+    //String response = conn.registerAccount(ADDRESS_PARAMS, params, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    //System.out.println(response);
+    //assertNotNull(response);
+  //}
+
 }
