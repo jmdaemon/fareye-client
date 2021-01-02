@@ -48,6 +48,7 @@ public class HttpsTests {
   private static final String PASSWORD        = "password";
   private static final String SERVER_ADDRESS  = "https://localhost:1080";
   private static final String ADDRESS_PARAMS  = SERVER_ADDRESS + "/?username=112233&password=aabbcc";
+  private static final String HTTP_SERVER_ADDRESS = "http://127.0.0.1:1080";
 
   @BeforeAll
   public static void startMockServer() { mockServer = startClientAndServer(1080); } 
@@ -173,6 +174,27 @@ public class HttpsTests {
   //}
   //public void createSecureLoginExpectationJSON() {
   //}
+
+  public void createPingExpectation() {
+    this.mockServer
+      .when(
+          request()
+          .withMethod("GET"),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200)
+          .withBody("Successfully pinged server")
+          );
+  }
+
+  @Test
+  public void sendGET_ToSite_ReturnResponse() throws Exception {
+    Http conn = new Http();
+    createPingExpectation();
+    String response = conn.get(HTTP_SERVER_ADDRESS);
+    assertNotNull(response);
+  } 
 
   @Test
   public void sendPOST_ToSite_ReturnResponse() throws Exception {

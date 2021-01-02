@@ -34,7 +34,7 @@ public class HttpTests {
     conn = new Http();
   }
 
-  public void createPingExpectation() {
+  public void createGetExpectation() {
     this.mockServer
       .when(
           request()
@@ -44,6 +44,32 @@ public class HttpTests {
           response()
           .withStatusCode(200)
           .withBody("Successfully pinged server")
+          );
+  }
+
+  public void createPostExpectation() {
+    this.mockServer
+      .when(
+          request()
+          .withMethod("POST"),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200)
+          .withBody("Successfully sent POST request")
+          );
+  }
+
+  public void createLoginExpectation() {
+    this.mockServer
+      .when(
+          request()
+          .withMethod("POST"),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200)
+          .withBody("Successfully sent POST request")
           );
   }
 
@@ -65,9 +91,18 @@ public class HttpTests {
 
   @Test
   public void sendGET_ToSite_ReturnResponse() throws Exception {
-    createPingExpectation();
+    createGetExpectation();
     String response = conn.get(HTTP_SERVER_ADDRESS);
     assertNotNull(response);
+    assertEquals("Successfully pinged server", response);
+  }
+
+  @Test
+  public void sendPOST_Localhost_ReturnResponse() throws Exception {
+    createPostExpectation();
+    String response = conn.post(HTTP_SERVER_ADDRESS, "");
+    assertNotNull(response);
+    assertEquals("Successfully sent POST request", response);
   }
 
   //@Test
