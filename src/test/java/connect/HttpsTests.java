@@ -175,27 +175,6 @@ public class HttpsTests {
   //public void createSecureLoginExpectationJSON() {
   //}
 
-  public void createPingExpectation() {
-    this.mockServer
-      .when(
-          request()
-          .withMethod("GET"),
-          exactly(1))
-      .respond(
-          response()
-          .withStatusCode(200)
-          .withBody("Successfully pinged server")
-          );
-  }
-
-  @Test
-  public void sendGET_ToSite_ReturnResponse() throws Exception {
-    Http conn = new Http();
-    createPingExpectation();
-    String response = conn.get(HTTP_SERVER_ADDRESS);
-    assertNotNull(response);
-  } 
-
   @Test
   public void sendPOST_ToSite_ReturnResponse() throws Exception {
     createSecurePostExpectation();

@@ -11,7 +11,11 @@ import java.net.MalformedURLException;
 import java.lang.InterruptedException;
 import java.util.HashMap;
 
-public class Http{
+public class Http {
+  private int responseCode;
+
+  public int getResponseCode() { return responseCode; }
+
   URL formRequest(String site) {
     URL url = null;
     try {
