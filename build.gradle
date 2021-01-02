@@ -17,13 +17,10 @@ dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
-        //testCompile 'org.mockito:mockito-core:2.+'
         compile 'org.unix4j:unix4j-command:0.5'
-        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0'
 
-        //implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
+        implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
         implementation platform('org.kordamp.ikonli:ikonli-bom:12.0.0')
-        implementation 'org.kordamp.ikonli:ikonli-javafx'
         implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack'
         implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
@@ -31,10 +28,7 @@ dependencies {
         testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
 
         testImplementation("org.mock-server:mockserver-netty:5.11.2")
-        testImplementation("org.mock-server:mockserver-client-java:5.11.2")
-        testImplementation("org.mock-server:mockserver-junit-jupiter:5.11.2")
 
-        // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
         compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
 
 }

@@ -205,7 +205,6 @@ public class HttpsTests {
     assertEquals("Successfully registered new user", response);
     assertEquals(200, conn.getResponseCode());
   }
-
   
   //@Test
   //public void sendPOST_LocalhostWithLoginJSON_ReturnResponse {
