@@ -94,9 +94,9 @@ sourceSets {
             //srcDirs = [ "$src/bankaccount", "$src/money"]
             //srcDirs = [ "$src/connect/" ]
             //srcDirs = [ "$src/interface/" ]
-            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+            srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
             //srcDirs = [ "$src/security" ]
-            srcDirs = [ "$src/security", "$src/connect/"]
+            //srcDirs = [ "$src/security", "$src/connect/"]
          }
 
     }
@@ -106,9 +106,9 @@ sourceSets {
             //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
             //srcDirs = [ "$test/bankaccount", "$test/money"]
             //srcDirs = [ "$test/connect/" ]
-            //srcDirs = [ "$src/bankaccount", "$src/money", "$test/interface/" ]
+            srcDirs = [ "$src/bankaccount", "$src/money", "$test/interface/" ]
             //srcDirs = [ "$test/security" ]
-            srcDirs = [ "$test/security", "$test/connect/"]
+            //srcDirs = [ "$test/security", "$test/connect/"]
         }
     }
 }
