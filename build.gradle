@@ -3,6 +3,7 @@ plugins {
         id 'java-library'
         id "com.scuilion.syntastic" version "0.3.8"
         id 'org.openjfx.javafxplugin' version '0.0.9'
+        id 'org.springframework.boot' version '2.4.1'
         //id 'checkstyle'
 }
 
@@ -16,19 +17,19 @@ dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
-        testCompile 'org.mockito:mockito-core:2.+'
         compile 'org.unix4j:unix4j-command:0.5'
-        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0'
-        //implementation files('libs/scenicview.jar')
 
-        //implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
+        implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
         implementation platform('org.kordamp.ikonli:ikonli-bom:12.0.0')
-        implementation 'org.kordamp.ikonli:ikonli-javafx'
         implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack'
         implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
         testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
         testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
+
+        testImplementation("org.mock-server:mockserver-netty:5.11.2")
+
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
 
 }
 
@@ -64,6 +65,10 @@ jar {
     }
 }
 
+springBoot {
+    mainClassName = 'app.security'
+}
+
 ext {
     src = "src/main/java"
     //ext.org = 'com/github/jmd' 
@@ -89,7 +94,9 @@ sourceSets {
             //srcDirs = [ "$src/bankaccount", "$src/money"]
             //srcDirs = [ "$src/connect/" ]
             //srcDirs = [ "$src/interface/" ]
-            srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+            //srcDirs = [ "$src/security" ]
+            srcDirs = [ "$src/security", "$src/connect/"]
          }
 
     }
@@ -99,7 +106,9 @@ sourceSets {
             //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
             //srcDirs = [ "$test/bankaccount", "$test/money"]
             //srcDirs = [ "$test/connect/" ]
-            srcDirs = [ "$src/bankaccount", "$src/money", "$test/interface/" ]
+            //srcDirs = [ "$src/bankaccount", "$src/money", "$test/interface/" ]
+            //srcDirs = [ "$test/security" ]
+            srcDirs = [ "$test/security", "$test/connect/"]
         }
     }
 }
