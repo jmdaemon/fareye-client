@@ -177,9 +177,7 @@ public class HttpsTests {
 
   @Test
   public void createSSLContext_FromTMF_ReturnsContext() throws Exception {
-    KeyStore keyStore = sm.createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
-    assertNotNull(createTrustManager(keyStore).getTrustManagers());
-    SSLContext context = createSSLContext(keyStore, PASSWORD);
+    SSLContext context = createSSLContext(sm.createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD);
     assertNotNull(context);
   }
 
