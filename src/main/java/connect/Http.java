@@ -9,7 +9,6 @@ import java.net.http.HttpResponse;
 
 import java.net.MalformedURLException;
 import java.lang.InterruptedException;
-import java.util.HashMap;
 
 public class Http {
   private int responseCode;

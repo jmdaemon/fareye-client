@@ -8,20 +8,10 @@ import org.junit.jupiter.api.*;
 
 import static java.util.Map.entry;
 import java.util.Map;
-import java.util.HashMap;
-import java.io.FileInputStream;
 import javax.net.ssl.HttpsURLConnection;
 import java.security.cert.Certificate;
-import java.security.KeyStore;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.SSLContext;
 
 import org.mockserver.integration.ClientAndServer;
-import org.mockserver.logging.MockServerLogger;
-import org.mockserver.socket.PortFactory;
-import org.mockserver.socket.tls.KeyStoreFactory;
 
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
@@ -177,8 +167,7 @@ public class HttpsTests {
 
   @Test
   public void createSSLContext_FromTMF_ReturnsContext() throws Exception {
-    SSLContext context = createSSLContext(sm.createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD);
-    assertNotNull(context);
+    assertNotNull(createSSLContext(sm.createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
   }
 
   @Test

@@ -2,24 +2,21 @@ package app.security;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.security.cert.CertificateException;
+
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.security.KeyStore;
+import java.security.cert.CertificateException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import javax.net.ssl.KeyManagerFactory;
 import java.security.KeyManagementException;
-import javax.net.ssl.X509TrustManager;
+import java.security.UnrecoverableKeyException;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.SSLContext;
-import java.security.UnrecoverableKeyException;
 
 public class SSLManager { 
   private static final String TMF_ALGORITHM = TrustManagerFactory.getDefaultAlgorithm();

@@ -3,7 +3,6 @@ package app.connect;
 import java.net.URL;
 import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
-import java.net.MalformedURLException;
 import java.lang.StringBuilder;
 import java.util.Map;
 import java.util.HashMap;

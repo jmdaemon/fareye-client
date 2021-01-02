@@ -1,13 +1,9 @@
 package app.connect;
 
 import static org.junit.jupiter.api.Assertions.*; 
-import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.*;
 
-import org.mockserver.junit.jupiter.*;
-import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
-
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
