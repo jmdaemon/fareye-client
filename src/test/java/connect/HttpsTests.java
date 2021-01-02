@@ -163,25 +163,7 @@ public class HttpsTests {
           .withBody("Successfully registered new user")
             );
   }
-
-
   //public void createSecureLoginExpectationJSON() {
-  //}
-
-  //@Test
-  //public void ping_Google_ReturnsResult() throws Exception {
-    //Https conn = new Https();
-    ////String result = conn.ping("https://google.com");
-    //String result = conn.ping("127.0.0.1:1080");
-    //assertNotNull(result);
-  //}
-
-  //@Test
-  //public void sendGET_ToSite_ReturnResponse() throws Exception {
-    //Https conn = new Https();
-    //String response = conn.get(getFrom);
-    //System.out.println(response);
-    //assertNotNull(response);
   //}
 
   @Test
@@ -223,6 +205,8 @@ public class HttpsTests {
     String response = conn.sendPostCreds(SERVER_ADDRESS + "/register", params, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
     System.out.println(response);
     assertNotNull(response);
+    assertEquals("Successfully registered new user", response);
+    assertEquals(200, conn.getResponseCode());
   }
 
 }
