@@ -5,6 +5,7 @@ import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 import java.net.MalformedURLException;
 import java.lang.StringBuilder;
+import java.util.Map;
 import java.util.HashMap;
 
 import javax.net.ssl.SSLContext;
@@ -87,5 +88,35 @@ public class Https extends Connection {
     urlConnection.setRequestMethod("POST");
     return getResponseBody(urlConnection);
   }
+
+  //public String sendGetLogin(String to, HashMap<String, String> params, SSLContext context) throws Exception {
+    ////String urlParameters  = "username=" + acctNumber + "&password=" + password;
+    //String urlParameters = "username=" + params.get("username") + "&password=" + params.get("password");
+    //byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+    //int    postDataLength = postData.length;
+    //HttpsURLConnection urlConnection = createSecureConnection(to, context);
+    //urlConnection.setRequestMethod("GET");
+    //urlConnection.setRequestProperty("charset", "utf-8");
+
+
+  //}
+
+  //public String sendPostLogin(String to, SSLContext context, String acctNumber, string password) throws Exception {
+    //String urlParameters  = "username=" + acctNumber + "&password=" + password;
+    //byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+    //int    postDataLength = postData.length;
+    //HttpsURLConnection urlConnection = createSecureConnection(to, context);
+    //urlConnection.setDoOutput(true);
+    //urlConnection.setInstanceFollowRedirects(false);
+    //urlConnection.setRequestMethod("GET");
+    //urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); 
+    //urlConnection.setRequestProperty("charset", "utf-8");
+    //urlConnection.setRequestProperty("Content-Length", String(postDataLength));
+    //urlConnection.setUseCaches(false);
+    //try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) { 
+      //wr.write( postData ); 
+    //}
+    
+  //}
 
 }

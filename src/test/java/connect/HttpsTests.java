@@ -6,6 +6,8 @@ import app.security.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
 
+//import java.util.Map; 
+//import java.util.HashMap;
 import java.io.FileInputStream;
 import javax.net.ssl.HttpsURLConnection;
 import java.security.cert.Certificate;
@@ -25,6 +27,11 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import static org.mockserver.model.Parameter.param;
 import static org.mockserver.matchers.Times.exactly;
+import static org.mockserver.model.Headers.*;
+import static org.mockserver.model.Header.*;
+import static org.mockserver.model.Parameter.*;
+import static org.mockserver.model.ParameterBody.*;
+import static org.mockserver.model.JsonBody.*;
 
 public class HttpsTests { 
   private static ClientAndServer mockServer;
@@ -37,6 +44,9 @@ public class HttpsTests {
   private static final String CA_CERT         = "config/keytool/ca/cacert.pem";
   private static final String PASSWORD        = "password";
   private static final String SERVER_ADDRESS  = "https://localhost:1080";
+  //private static final String ADDRESS_PARAMS  = "https://localhost?username=112233&password=\"aabbcc\":1080";
+  private static final String ADDRESS_PARAMS  = "https://localhost:1080/?username=112233&password=aabbcc";
+  //private static final String ADDRESS_PARAMS  = "https://localhost:1080";
 
   @BeforeAll
   public static void startMockServer() { mockServer = startClientAndServer(1080); } 
@@ -79,9 +89,37 @@ public class HttpsTests {
           );
   }
 
-  //public void createSecurePostExpectationWith
+  public void createSecureLoginExpectation() {
+    this.mockServer
+      .withSecure(true)
+      .when(
+          request()
+          .withMethod("GET")
+          //.withPath("/login")
+          //.withHeaders(
+            //header("Content-Type", "application/x-www-form-urlencoded"))
+          //.withBody(
+            //params(
+          .withQueryStringParameters(
+              param("username", "112233"),
+              param("password", "aabbcc")),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200) 
+          .withBody(
+            json(
+              "{" + System.lineSeparator() + 
+                "   \"username\": 112233," + System.lineSeparator() +
+                "   \"password\": \"aabbcc\"," + System.lineSeparator() +
+                "   \"balance\": 0.0," + System.lineSeparator() + 
+                "   \"name\": [\"Patrick\", \" \", \"Bateman\"]" + System.lineSeparator() +
+                "}")
+            )
+          );
+  }
 
-  //public void createSecureLoginExpectation() {
+  //public void createSecureLoginExpectationJSON() {
   //}
 
   //@Test
@@ -116,5 +154,13 @@ public class HttpsTests {
     assertNotNull(response);
     assertEquals("Successfully pinged server", response);
     assertEquals(200, conn.getResponseCode());
+  }
+
+  @Test
+  public void sendGET_LocalhostWithLogin_ReturnResponse() throws Exception {
+    createSecureLoginExpectation(); 
+    //Map<String, String> params = new HashMap<String, String>{{"username", "112233"}, {"password", "aabbcc"}};
+    String response = conn.getWithSSL(ADDRESS_PARAMS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    assertNotNull(response);
   }
 }
