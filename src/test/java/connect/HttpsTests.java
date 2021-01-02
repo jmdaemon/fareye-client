@@ -6,8 +6,9 @@ import app.security.*;
 import static org.junit.jupiter.api.Assertions.*; 
 import org.junit.jupiter.api.*;
 
-//import java.util.Map;
-//import java.util.HashMap;
+import static java.util.Map.entry;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.FileInputStream;
 import javax.net.ssl.HttpsURLConnection;
 import java.security.cert.Certificate;
@@ -32,6 +33,7 @@ import static org.mockserver.model.Header.*;
 import static org.mockserver.model.Parameter.*;
 import static org.mockserver.model.ParameterBody.*;
 import static org.mockserver.model.JsonBody.*;
+import static org.mockserver.matchers.MatchType.*;
 
 public class HttpsTests { 
   private static ClientAndServer mockServer;
@@ -112,31 +114,56 @@ public class HttpsTests {
           );
   }
 
-  //public void createSecureSignUpExpectation() {
-    //this.mockServer
-      //.withSecure(true)
-      //.when(
-          //request()
-          //.withMethod("POST")
-          //.withPath("/register")
-          //.withHeaders(
-            //header("Content-Type", "application/x-www-form-urlencoded"))
-          //.withBody(
-            //params(
-              //param("username", "123456"),
-              //param("password", "AABBCC"),
-              //param("balance", "0.0"),
-              //param("name[]", "\"Richard\"")
-              //param("name[]", "\" \"")
-              //param("name[]", "\"Lewis\"")
-              //)),
-          //exactly(1))
-      //.respond(
-          //response()
-          //.withStatusCode(200)
-          //.withBody("Successfully registered new user")
-            //);
-  //}
+  public void createSecureSignUpExpectation() {
+    this.mockServer
+      .withSecure(true)
+      .when(
+          request()
+          .withMethod("POST")
+          .withPath("/register")
+          .withHeaders(
+            header("Content-Type", "application/x-www-form-urlencoded"))
+          .withBody(
+            params(
+              param("username", "123456"),
+              param("password", "AABBCC"),
+              param("balance", "0.0"),
+              param("firstName", "Richard"),
+              param("middleName", " "),
+              param("lastName", "Lewis")
+              )),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200)
+          .withBody("Successfully registered new user")
+            );
+  }
+
+  public void createSecureSignUpExpectationJSON() {
+    this.mockServer
+      .withSecure(true)
+      .when(
+          request()
+          .withMethod("POST")
+          .withPath("/register") 
+          .withBody(
+              json(
+                "{" + System.lineSeparator() +
+                "   \"username\": 123456," + System.lineSeparator() +
+                "   \"password\": \"AABBCC\"," + System.lineSeparator() +
+                "   \"balance\": 0.0," + System.lineSeparator() +
+                "   \"name\": [\"Richard\", \" \", \"Lewis\"]" + System.lineSeparator() +
+                "}", STRICT
+                )),
+          exactly(1))
+      .respond(
+          response()
+          .withStatusCode(200)
+          .withBody("Successfully registered new user")
+            );
+  }
+
 
   //public void createSecureLoginExpectationJSON() {
   //}
@@ -183,13 +210,19 @@ public class HttpsTests {
     assertNotNull(response);
   }
 
-  //@Test
-  //public void sendPOST_LocalhostWithLogin_ReturnResponse() throws Exception {
-    //createSecureSignUpExpectation()
-    //Map<String, String> params = new HashMap<String, String>{{"username", "123456"}, {"password", "AABBCC"}, {"balance", 0.0}, {"name", {"Richard", "", "Lewis"} }};
-    //String response = conn.registerAccount(ADDRESS_PARAMS, params, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
-    //System.out.println(response);
-    //assertNotNull(response);
-  //}
+  @Test
+  public void sendPOST_LocalhostWithLogin_ReturnResponse() throws Exception {
+    createSecureSignUpExpectation();
+    Map<String, String> params = Map.ofEntries(
+        entry("username", "123456"),
+        entry("password", "AABBCC"),
+        entry("balance", "0.0"),
+        entry("firstName", "Richard"),
+        entry("middleName", " "),
+        entry("lastName", "Lewis"));
+    String response = conn.sendPostCreds(SERVER_ADDRESS + "/register", params, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
+    System.out.println(response);
+    assertNotNull(response);
+  }
 
 }
