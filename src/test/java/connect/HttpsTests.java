@@ -176,17 +176,10 @@ public class HttpsTests {
   //}
 
   @Test
-  public void createTrustManager_FromKeyStore_ReturnsTMF() throws Exception {
-    KeyStore keyStore = sm.createKeyStore(certAuth);
-    TrustManagerFactory tmf = createTrustManager(keyStore);
-    assertNotNull(tmf.getTrustManagers());
-  }
-
-  @Test
   public void createSSLContext_FromTMF_ReturnsContext() throws Exception {
-    KeyStore keyStore = sm.createKeyStore(certAuth);
-    TrustManagerFactory tmf = createTrustManager(keyStore);
-    SSLContext context = createSSLContext(tmf);
+    KeyStore keyStore = sm.createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth);
+    assertNotNull(createTrustManager(keyStore).getTrustManagers());
+    SSLContext context = createSSLContext(keyStore, PASSWORD);
     assertNotNull(context);
   }
 

@@ -31,12 +31,12 @@ public class SSLManager {
     return certAuth;
   }
 
-  public static KeyStore createKeyStore(Certificate certAuth) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-    KeyStore keyStore = KeyStore.getInstance(KEYSTORE_TYPE);
-    keyStore.load(null, null);
-    keyStore.setCertificateEntry("ca", certAuth); 
-    return keyStore;
-  }
+  //public static KeyStore createKeyStore(Certificate certAuth) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+    //KeyStore keyStore = KeyStore.getInstance(KEYSTORE_TYPE);
+    //keyStore.load(null, null);
+    //keyStore.setCertificateEntry("ca", certAuth); 
+    //return keyStore;
+  //}
 
   public static TrustManagerFactory createTrustManager(KeyStore keyStore) throws KeyStoreException, NoSuchAlgorithmException {
     TrustManagerFactory tmf = TrustManagerFactory.getInstance(TMF_ALGORITHM);
@@ -44,19 +44,19 @@ public class SSLManager {
     return tmf;
   } 
 
-  public static SSLContext createSSLContext(TrustManagerFactory tmf) throws KeyManagementException, NoSuchAlgorithmException {
-    SSLContext context = SSLContext.getInstance("TLS");
-    context.init(null, tmf.getTrustManagers(), null); 
-    return context;
-  }
+  //public static SSLContext createSSLContext(TrustManagerFactory tmf) throws KeyManagementException, NoSuchAlgorithmException {
+    //SSLContext context = SSLContext.getInstance("TLS");
+    //context.init(null, tmf.getTrustManagers(), null); 
+    //return context;
+  //}
 
-  public static SSLContext initSSL(String certPath) throws Exception {
-    Certificate cert = loadCertificates(certPath);
-    KeyStore keyStore = createKeyStore(cert);
-    TrustManagerFactory tmf = createTrustManager(keyStore);
-    SSLContext context = createSSLContext(tmf);
-    return context;
-  }
+  //public static SSLContext initSSL(String certPath) throws Exception {
+    //Certificate cert = loadCertificates(certPath);
+    //KeyStore keyStore = createKeyStore(cert);
+    //TrustManagerFactory tmf = createTrustManager(keyStore);
+    //SSLContext context = createSSLContext(tmf);
+    //return context;
+  //}
 
   public static KeyStore createKeyStore(String clientKeystore, String keyStorePassword, Certificate certAuth) 
       throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
