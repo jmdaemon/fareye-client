@@ -9,6 +9,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.DashboardController">
    <columnConstraints>
@@ -26,8 +29,8 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <VBox id="sidebar" maxWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #ece9ec;" GridPane.rowSpan="2147483647" />
-      <HBox maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" style="-fx-background-color: #ece9ec;" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
+      <VBox id="sidebar" maxWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" styleClass="vbox" GridPane.rowSpan="2147483647" />
+      <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
       <Label fx:id="acct_number" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets left="20.0" top="60.0" />
@@ -64,18 +67,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" text="Button" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <Button fx:id="back" mnemonicParsing="false" text="Button" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#loadDepositView" text="Deposit" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+            <Button mnemonicParsing="false" onMouseClicked="#loadDepositView" text="Deposit" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" />
                </GridPane.margin>
             </Button>
+            <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <Label fx:id="date" text="Date" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
@@ -86,7 +91,7 @@
             <Insets left="20.0" top="20.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="backButton" mnemonicParsing="false" text="Back" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Button id="1" fx:id="backButton" mnemonicParsing="false" text="Back" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets right="20.0" top="20.0" />
          </GridPane.margin>
