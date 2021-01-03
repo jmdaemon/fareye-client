@@ -10,6 +10,17 @@
     -fx-background-color: #E8E8E8;
 }
 
+#balance {
+    -fx-font-weight: bold;
+    -fx-opacity: 0.4;
+}
+
+.headerLabel {
+    -fx-font-size: 16px;
+    -fx-font-family: "DejaVu Sans Mono";
+    color: #01c1f3;
+}
+
 #headerbar {
     -fx-padding: 18px;
     /*-fx-background-color: teal;*/

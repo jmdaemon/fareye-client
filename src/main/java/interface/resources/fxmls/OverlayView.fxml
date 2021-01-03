@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -31,7 +32,7 @@
    <children>
       <VBox id="sidebar" maxWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" styleClass="vbox" GridPane.rowSpan="2147483647" />
       <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
-      <Label fx:id="acct_number" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+      <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets left="20.0" top="60.0" />
          </GridPane.margin>
@@ -39,15 +40,19 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="balance" styleClass="balance" text="Balance" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <Label fx:id="balance" text="Balance" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <font>
             <Font size="16.0" />
          </font>
          <GridPane.margin>
             <Insets right="20.0" top="20.0" />
          </GridPane.margin>
+         <styleClass>
+            <String fx:value="balance" />
+            <String fx:value="headerLabel" />
+         </styleClass>
       </Label>
-      <Label fx:id="acct_balance" text="Number" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <Label id="acctBalance" fx:id="acct_balance" styleClass="headerLabel" text="Number" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <font>
             <Font size="16.0" />
          </font>
@@ -80,10 +85,9 @@
                   <Insets bottom="20.0" left="20.0" />
                </GridPane.margin>
             </Button>
-            <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
-      <Label fx:id="date" text="Date" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+      <Label id="date" fx:id="date" styleClass="headerLabel" text="Date" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
          <font>
             <Font size="16.0" />
          </font>
@@ -96,5 +100,10 @@
             <Insets right="20.0" top="20.0" />
          </GridPane.margin>
       </Button>
+      <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets right="20.0" top="20.0" />
+         </GridPane.margin>
+      </FontIcon>
    </children>
 </GridPane>
