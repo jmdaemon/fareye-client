@@ -45,7 +45,7 @@
       <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
       <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
          <GridPane.margin>
-            <Insets left="20.0" top="60.0" />
+            <Insets top="60.0" />
          </GridPane.margin>
          <font>
             <Font size="16.0" />
@@ -56,7 +56,7 @@
             <Font size="16.0" />
          </font>
          <GridPane.margin>
-            <Insets right="20.0" top="20.0" />
+            <Insets top="20.0" />
          </GridPane.margin>
          <styleClass>
             <String fx:value="balance" />
@@ -68,7 +68,7 @@
             <Font size="16.0" />
          </font>
          <GridPane.margin>
-            <Insets right="20.0" top="60.0" />
+            <Insets top="60.0" />
          </GridPane.margin>
       </Label>
       <Label id="date" fx:id="date" styleClass="headerLabel" text="Date" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
@@ -76,7 +76,7 @@
             <Font size="16.0" />
          </font>
          <GridPane.margin>
-            <Insets left="20.0" top="20.0" />
+            <Insets top="20.0" />
          </GridPane.margin>
       </Label>
       <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
