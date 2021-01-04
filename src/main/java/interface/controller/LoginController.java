@@ -22,7 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.InputEvent;
 
-public class LoginController implements Initializable {
+public class LoginController extends GridPane implements Initializable {
 
   @FXML
   private Button enter;
@@ -44,6 +44,14 @@ public class LoginController implements Initializable {
     return password.getText();
   }
 
+  //LoginController() throws IOException {
+      //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
+      //loader.setRoot(this);
+      //loader.setController(this);
+      //loader.load();
+
+  //}
+
   public void processCredentials(InputEvent event) {
     BankAccount user = new BankAccount(getUserName(), getPassword());
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -57,8 +65,9 @@ public class LoginController implements Initializable {
     }
 
     loader.<DashboardController>getController().setUser(user);
-    root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
     Scene scene = new Scene(root, 600, 400); 
+    //scene.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
+    //root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
     stage.setScene(scene);
   } 
 

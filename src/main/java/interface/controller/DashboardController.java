@@ -2,10 +2,8 @@ package app.ui;
 
 import app.bankAccount.*;
 
-
-
 import java.util.ResourceBundle;
-import java.net.URL;
+//import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.IOException;
@@ -22,24 +20,30 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.InputEvent;
 
+//import org.kordamp.ikonli.javafx.IkonResolver.*;
+//import org.kordamp.ikonli.*;
+//import org.kordamp.ikonli.javafx.FontIcon.*;
+//import org.kordamp.ikonli.fontawesome5.*;
+import org.kordamp.ikonli.*;
+import org.kordamp.ikonli.javafx.*;
+import org.kordamp.ikonli.fontawesome5.*;
+
 public class DashboardController {
   private BankAccount user;
 
   @FXML
-  private URL url;
-  @FXML
-  private ResourceBundle resources;
+  private OverlayController overlayController;
 
-  private Thread timer = new Thread(() -> {
-    Platform.runLater(()-> {
-        this.date.setText(getDateAndTime()); 
-    });
-  }); 
+  //private Thread timer = new Thread(() -> {
+    //Platform.runLater(()-> {
+        //this.date.setText(getDateAndTime()); 
+    //});
+  //}); 
 
-  private String getDateAndTime() {
-    SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
-    return date.format(new Date());
-  }
+  //private String getDateAndTime() {
+    //SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
+    //return date.format(new Date());
+  //}
 
   @FXML
   private Label date;
@@ -58,37 +62,40 @@ public class DashboardController {
 
   public void setUser(BankAccount user) {
     this.user = user;
-    acct_number.setText("Account " + String.valueOf(this.user.getAcctNum()));
-    acct_balance.setText(this.user.getBalance().toString());
+    ////acct_number.setText("Account " + String.valueOf(this.user.getAcctNum()));
+    overlayController.setUser(user);
+    ////acct_balance.setText(this.user.getBalance().toString());
   }
 
   public void loadDepositView(InputEvent event) {
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DepositView.fxml"));
-    FXMLLoader loadOverlay = new FXMLLoader(getClass().getResource("/resources/fxmls/OverlayView.fxml"));
+    //FXMLLoader loadOverlay = new FXMLLoader(getClass().getResource("/resources/fxmls/OverlayView.fxml"));
     GridPane root = null;
-    GridPane overlay = null;
+    //GridPane overlay = null;
     try { 
       root = loader.load();
-      overlay = loadOverlay.load();
-      DepositController controller = loader.getController();
+      //overlay = loadOverlay.load();
+      //DepositController controller = loader.getController();
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    overlay.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
-    root.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
-    root.getChildren().addAll(overlay);
+    //overlay.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
+    //root.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm();
+    //root.getChildren().addAll(overlay);
+    //root.getChildren().add(overlay);
     Scene scene = new Scene(root, 600, 400); 
+    scene.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
     stage.setScene(scene);
 
   }
 
   //@Override
   //public void initialize(URL url, ResourceBundle rb) {
-  @FXML
-  private void initialize() {
-    timer.setDaemon(true);
-    timer.start(); 
-  }
+  //@FXML
+  //private void initialize() {
+    //timer.setDaemon(true);
+    //timer.start(); 
+  //}
 }

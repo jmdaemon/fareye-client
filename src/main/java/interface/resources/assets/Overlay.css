@@ -2,7 +2,7 @@
 
 #sidebar { 
     /*background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);*/
-    -fx-background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+    /*-fx-background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);*/
     /*-fx-border-color: #E8E8E8 transparent transparent transparent;*/
     /*-fx-background-color: #ece9ec;*/
     /*-fx-background-color: #E8E8E8;*/
@@ -36,4 +36,8 @@
     -fx-icon-code: far-user-circle;
     -fx-icon-size: 64px;
     -fx-icon-color: blue;
+}
+
+#footerBar {
+    -fx-background-color: #373737;
 }
