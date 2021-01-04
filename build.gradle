@@ -5,6 +5,7 @@ plugins {
         id 'org.openjfx.javafxplugin' version '0.0.9'
         //id 'org.springframework.boot' version '2.4.1'
         //id 'checkstyle'
+        id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 repositories {
@@ -19,10 +20,13 @@ dependencies {
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
         compile 'org.unix4j:unix4j-command:0.5'
 
-        implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
-        implementation platform('org.kordamp.ikonli:ikonli-bom:12.0.0')
-        implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.1.0' 
+        //implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
+        implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
+        implementation 'org.kordamp.ikonli:ikonli-core'
+        implementation 'org.kordamp.ikonli:ikonli-javafx'
+        implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
         implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
+        //implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
         testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
         testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
@@ -63,6 +67,10 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+}
+
+shadowJar {
+    mergeServiceFiles()
 }
 
 //springBoot {
