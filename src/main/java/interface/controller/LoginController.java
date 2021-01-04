@@ -1,10 +1,5 @@
 package app.ui;
 
-import app.bankAccount.*;
-
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.net.URL;
 import java.io.IOException;
 
 import javafx.scene.Node;
@@ -22,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.InputEvent;
 
-public class LoginController extends GridPane implements Initializable {
+public class LoginController implements Initializable {
 
   @FXML
   private Button enter;
@@ -36,21 +31,9 @@ public class LoginController extends GridPane implements Initializable {
   @FXML
   private Hyperlink resetPassword;
 
-  public String getUserName() {
-    return userName.getText();
-  }
+  public String getUserName() { return userName.getText(); }
 
-  public String getPassword() {
-    return password.getText();
-  }
-
-  //LoginController() throws IOException {
-      //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/LoginView.fxml"));
-      //loader.setRoot(this);
-      //loader.setController(this);
-      //loader.load();
-
-  //}
+  public String getPassword() { return password.getText(); }
 
   public void processCredentials(InputEvent event) {
     BankAccount user = new BankAccount(getUserName(), getPassword());
@@ -66,13 +49,11 @@ public class LoginController extends GridPane implements Initializable {
 
     loader.<DashboardController>getController().setUser(user);
     Scene scene = new Scene(root, 600, 400); 
-    //scene.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
-    //root.getStylesheets().add(getClass().getResource("/resources/assets/Dashboard.css").toExternalForm());
     stage.setScene(scene);
   } 
 
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
+  @FXML
+  public void initialize() {
     userName.setOnKeyPressed(event -> {
     if(event.getCode().equals(KeyCode.ENTER)){
         password.requestFocus(); 
