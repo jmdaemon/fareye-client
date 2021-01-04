@@ -1,11 +1,13 @@
 package app.ui;
 
+import app.bankAccount.*;
+
 import java.io.IOException;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.fxml.Initializable;
+//import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -17,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.InputEvent;
 
-public class LoginController implements Initializable {
+public class LoginController {
 
   @FXML
   private Button enter;
@@ -46,6 +48,8 @@ public class LoginController implements Initializable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    //GridPane overlay = ((GridPane)root.getChildren().get(0));
+    //root.add(overlay, 0, 0, 5, 5);
 
     loader.<DashboardController>getController().setUser(user);
     Scene scene = new Scene(root, 600, 400); 
