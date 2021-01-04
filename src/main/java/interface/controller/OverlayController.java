@@ -2,7 +2,6 @@ package app.ui;
 
 import app.bankAccount.*;
 
-import java.util.ResourceBundle;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.IOException;
@@ -29,29 +28,39 @@ import org.kordamp.ikonli.fontawesome5.*;
 public class OverlayController {
   private BankAccount user;
 
+  @FXML
+  private Button back;
+
+  @FXML
+  private Label acct_number;
+
+  @FXML
+  private Label balance;
+
+  @FXML
+  private Label acct_balance;
+
+  @FXML
+  private Label date;
+
+  private String getDateAndTime() {
+    SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
+    return date.format(new Date());
+  }
+
+  public void setUser(BankAccount user) {
+    this.user = user;
+    acct_number.setText("Account " + String.valueOf(this.user.getAcctNum()));
+    acct_balance.setText(this.user.getBalance().toString());
+  }
   private Thread timer = new Thread(() -> {
     Platform.runLater(()-> {
         this.date.setText(getDateAndTime()); 
     });
   }); 
 
-    @FXML
-    private Button back;
-
-    @FXML
-    private Label acct_number;
-
-    @FXML
-    private Label balance;
-
-    @FXML
-    private Label acct_balance;
-
-    @FXML
-    private Label date;
-
-    @FXML
-    void loadDepositView(MouseEvent event) {
+  @FXML
+  void loadDepositView(MouseEvent event) {
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DepositView.fxml"));
     GridPane root = null;
@@ -63,18 +72,7 @@ public class OverlayController {
     Scene scene = new Scene(root, 600, 400); 
     scene.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
     stage.setScene(scene);
-    }
-
-  private String getDateAndTime() {
-    SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
-    return date.format(new Date());
   }
-
-    public void setUser(BankAccount user) {
-      this.user = user;
-      acct_number.setText("Account " + String.valueOf(this.user.getAcctNum()));
-      acct_balance.setText(this.user.getBalance().toString());
-    }
 
   @FXML
   private void initialize() {
