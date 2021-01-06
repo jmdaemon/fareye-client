@@ -49,22 +49,7 @@ public class LoginController {
   public String getPassword() { return password.getText(); }
 
   public void processCredentials(InputEvent event) {
-  //public void processCredentials(ActionEvent event) {
-    BankAccount user = new BankAccount(getUserName(), getPassword());
-    //Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
-
-    //GridPane root = null;
-    //try { 
-      //root = loader.load();
-    //} catch (IOException e) {
-      //e.printStackTrace();
-    //}
-    //loader.<DashboardController>getController().setUser(user);
-    //Scene scene = new Scene(root, 600, 400); 
-
-    nextPane(event, user);
-    //stage.setScene(scene);
+    nextPane(event, new BankAccount(getUserName(), getPassword()));
   } 
 
   @FXML
