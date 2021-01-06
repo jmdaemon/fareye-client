@@ -43,6 +43,12 @@ public class OverlayController {
   @FXML
   private Label date;
 
+  @FXML
+  private Button deposit;
+
+  @FXML
+  private Button withdraw;
+
   private String getDateAndTime() {
     SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
     return date.format(new Date());

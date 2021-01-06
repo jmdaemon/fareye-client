@@ -42,9 +42,9 @@ public class DashboardController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    //root.setColumnSpan((Node)event.getSource(), GridPane.REMAINING);
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
-
   }
-
 }
