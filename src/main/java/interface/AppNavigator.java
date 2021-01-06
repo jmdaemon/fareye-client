@@ -10,6 +10,7 @@ public class AppNavigator {
   public static final String LOGIN      = "/resources/fxmls/LoginView.fxml";
   public static final String MENU_BAR   = "/resources/fxmls/MenuBar.fxml";
   public static final String MAIN       = "/resources/fxmls/Main.fxml";
+  public static final String DEPOSIT    = "/resources/fxmls/DepositView.fxml";
 
   private static MainController mainController;
 
