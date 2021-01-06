@@ -42,4 +42,9 @@ public class DashboardController {
   public void loadDepositView(InputEvent event) {
     gotoDepositView(event);
   }
+
+  @FXML
+  public void initialize() {
+    setUser(AppNavigator.getUser());
+  }
 }

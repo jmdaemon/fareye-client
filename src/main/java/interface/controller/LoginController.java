@@ -27,6 +27,12 @@ public class LoginController {
   void nextPane(InputEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
 
   @FXML
+  void nextPane(InputEvent event, BankAccount user) { 
+    AppNavigator.loadUser(user);
+    AppNavigator.loadApp(AppNavigator.DASHBOARD); 
+  }
+
+  @FXML
   private Button enter;
 
   @FXML
@@ -44,7 +50,7 @@ public class LoginController {
 
   public void processCredentials(InputEvent event) {
   //public void processCredentials(ActionEvent event) {
-    //BankAccount user = new BankAccount(getUserName(), getPassword());
+    BankAccount user = new BankAccount(getUserName(), getPassword());
     //Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DashboardView.fxml"));
 
@@ -57,7 +63,7 @@ public class LoginController {
     //loader.<DashboardController>getController().setUser(user);
     //Scene scene = new Scene(root, 600, 400); 
 
-    nextPane(event);
+    nextPane(event, user);
     //stage.setScene(scene);
   } 
 

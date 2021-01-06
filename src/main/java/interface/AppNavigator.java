@@ -1,5 +1,7 @@
 package app.ui;
 
+import app.bankAccount.*;
+
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
@@ -24,6 +26,14 @@ public class AppNavigator {
       } catch (IOException e) {
           e.printStackTrace();
       }
+  }
+
+  public static void loadUser(BankAccount user) {
+    mainController.setUser(user);
+  }
+
+  public static BankAccount getUser() {
+    return mainController.getUser();
   }
 
 }
