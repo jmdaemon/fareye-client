@@ -67,6 +67,7 @@ public class OverlayController {
 
   @FXML
   private void initialize() {
+    setUser(AppNavigator.getUser());
     timer.setDaemon(true);
     timer.start(); 
   } 

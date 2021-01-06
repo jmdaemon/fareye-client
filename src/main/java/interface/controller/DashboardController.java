@@ -7,20 +7,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.InputEvent;
 
-import org.kordamp.ikonli.*;
-import org.kordamp.ikonli.javafx.*;
-import org.kordamp.ikonli.fontawesome5.*;
+//import org.kordamp.ikonli.*;
+//import org.kordamp.ikonli.javafx.*;
+//import org.kordamp.ikonli.fontawesome5.*;
 
 public class DashboardController {
-  private BankAccount user;
+  //private BankAccount user;
 
-  @FXML
-  private OverlayController overlayController;
+  //@FXML
+  //private OverlayController overlayController;
 
-  public void setUser(BankAccount user) {
-    this.user = user;
-    overlayController.setUser(user);
-  }
+  //public void setUser(BankAccount user) {
+    //this.user = user;
+    //overlayController.setUser(user);
+  //}
 
   @FXML
   void gotoDepositView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
@@ -29,8 +29,8 @@ public class DashboardController {
     gotoDepositView(event);
   }
 
-  @FXML
-  public void initialize() {
-    setUser(AppNavigator.getUser());
-  }
+  //@FXML
+  //public void initialize() {
+    //setUser(AppNavigator.getUser());
+  //}
 }
