@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 
 <GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.DepositController">
@@ -23,6 +24,7 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -30,22 +32,28 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="depositAmount" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="depositAmtLabel" text="Deposit Amount" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <TextField fx:id="depositAmount" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="depositAmtLabel" text="Deposit Amount" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="12.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="depositButton" mnemonicParsing="false" text="Deposit" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="6.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="currency" text="USD" />
+                  <Button fx:id="depositButton" mnemonicParsing="false" text="Deposit">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
                <GridPane.margin>
-                  <Insets left="12.0" />
+                  <Insets left="12.0" top="18.0" />
                </GridPane.margin>
-            </Button>
-            <Label fx:id="currency" text="USD" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="12.0" />
-               </GridPane.margin>
-            </Label>
+               <padding>
+                  <Insets top="12.0" />
+               </padding>
+            </VBox>
          </children>
       </GridPane>
    </children>
