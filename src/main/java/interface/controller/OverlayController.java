@@ -2,22 +2,15 @@ package app.ui;
 
 import app.bankAccount.*;
 
+import javafx.application.Platform;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.IOException;
 
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -65,19 +58,11 @@ public class OverlayController {
     });
   }); 
 
+  void nextPane(MouseEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
+
   @FXML
   void loadDepositView(MouseEvent event) {
-    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DepositView.fxml"));
-    GridPane root = null;
-    try { 
-      root = loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    Scene scene = new Scene(root, 600, 400); 
-    scene.getStylesheets().add(getClass().getResource("/resources/assets/Overlay.css").toExternalForm());
-    stage.setScene(scene);
+    nextPane(event);
   }
 
   @FXML
