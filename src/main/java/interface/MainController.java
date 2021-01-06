@@ -5,11 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 public class MainController {
-    @FXML
-    private StackPane view;
+  @FXML
+  private StackPane view;
 
-    public void setView(Node node) {
-        view.getChildren().setAll(node);
-    }
+  public void setView(Node node) {
+      view.getChildren().setAll(node);
+  }
 
 }

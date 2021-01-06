@@ -19,25 +19,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.InputEvent;
 import javafx.event.ActionEvent;
 
-//public class LoginController extends ChangeView {
 public class LoginController {
-  //public LoginController(ChangeView next) {
-    //super(next);
-  //}
-
-  //void createView(Node node) {
-    //getChildren().setAll(node);
-  //}
+  @FXML
+  void nextPane(ActionEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
 
   @FXML
-  void nextPane(ActionEvent event) {
-      AppNavigator.loadApp(AppNavigator.DASHBOARD);
-  }
-
-  @FXML
-  void nextPane(InputEvent event) {
-      AppNavigator.loadApp(AppNavigator.DASHBOARD);
-  }
+  void nextPane(InputEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
 
   @FXML
   private Button enter;
