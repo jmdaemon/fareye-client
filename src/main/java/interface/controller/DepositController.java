@@ -10,9 +10,6 @@ import javafx.scene.control.TextField;
 public class DepositController {
   private BankAccount user;
 
-  //@FXML
-  //private OverlayController overlayController;
-
   @FXML
   private Button backButton;
 
@@ -27,15 +24,5 @@ public class DepositController {
 
   @FXML
   private Label currency;
-
-  //public void setUser(BankAccount user) {
-    //this.user = user;
-    //overlayController.setUser(user);
-  //}
-
-  //@FXML
-  //public void initialize() {
-    //setUser(AppNavigator.getUser());
-  //}
   
 }
