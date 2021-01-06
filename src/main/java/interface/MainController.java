@@ -3,6 +3,7 @@ package app.ui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Pane;
 
 
@@ -24,7 +25,7 @@ import javafx.scene.layout.Pane;
 
 public class MainController {
     @FXML
-    private GridPane view;
+    private StackPane view;
 
     public void setView(Node node) {
         view.getChildren().setAll(node);

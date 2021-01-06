@@ -5,9 +5,7 @@
 <!--<?scenebuilder-stylesheet vista.css?>-->
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <!--<VBox prefHeight="200.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="app.ui.MainController">-->
@@ -21,15 +19,6 @@
 <VBox prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.MainController">
   <children>
     <Label fx:id="headerLabel" maxWidth="1.7976931348623157E308" text="Header" VBox.vgrow="NEVER" />
-    <GridPane fx:id="view" VBox.vgrow="ALWAYS">
-         <columnConstraints>
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
-         <children>
-            <Label />
-         </children></GridPane>
+      <StackPane fx:id="view" VBox.vgrow="ALWAYS" />
   </children>
 </VBox>
