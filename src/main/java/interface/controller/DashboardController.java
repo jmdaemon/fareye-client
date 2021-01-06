@@ -34,24 +34,12 @@ public class DashboardController {
   }
 
   @FXML
-  void nextPane(InputEvent event) {
+  void gotoDepositView(InputEvent event) {
       AppNavigator.loadApp(AppNavigator.DEPOSIT);
   }
 
 
   public void loadDepositView(InputEvent event) {
-    //Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    //FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/DepositView.fxml"));
-    //GridPane root = null;
-    //try { 
-      //root = loader.load();
-    //} catch (IOException e) {
-      //e.printStackTrace();
-    //}
-
-    ////root.setColumnSpan((Node)event.getSource(), GridPane.REMAINING);
-    //Scene scene = new Scene(root, 600, 400); 
-    //stage.setScene(scene);
-    nextPane(event);
+    gotoDepositView(event);
   }
 }
