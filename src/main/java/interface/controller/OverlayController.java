@@ -37,12 +37,6 @@ public class OverlayController {
   @FXML
   private Label date;
 
-  //@FXML
-  //private Button deposit;
-
-  //@FXML
-  //private Button withdraw;
-
   private String getDateAndTime() {
     SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
     return date.format(new Date());
@@ -60,19 +54,8 @@ public class OverlayController {
     });
   }); 
 
-  //void nextPane(MouseEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); } 
-  //@FXML
-  //void showDepositView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
-
-  //void loadHome(MouseEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
-  //@FXML
-  //void showHome(InputEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
-
-  //public void loadDashboard(MouseEvent event) { 
   @FXML
   void loadDashboardView(InputEvent event) { 
-    //loadHome(event);
-    //showHome(event);
     AppNavigator.loadApp(AppNavigator.DASHBOARD);
   }
 
@@ -80,11 +63,6 @@ public class OverlayController {
   void loadDepositView(InputEvent event) { 
     AppNavigator.loadApp(AppNavigator.DEPOSIT);
   }
-
-  //@FXML
-  //void loadDepositView(MouseEvent event) {
-    ////nextPane(event); 
-  //}
 
   @FXML
   private void initialize() {

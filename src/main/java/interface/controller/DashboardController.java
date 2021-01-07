@@ -8,12 +8,4 @@ import javafx.scene.control.Label;
 import javafx.scene.input.InputEvent;
 
 public class DashboardController {
-
-  //@FXML
-  //void gotoDepositView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
-
-  //public void loadDepositView(InputEvent event) {
-    //gotoDepositView(event);
-  //}
-
 }
