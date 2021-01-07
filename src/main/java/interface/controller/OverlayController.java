@@ -54,15 +54,8 @@ public class OverlayController {
     });
   }); 
 
-  @FXML
-  void loadDashboardView(InputEvent event) { 
-    AppNavigator.loadApp(AppNavigator.DASHBOARD);
-  }
-
-  @FXML
-  void loadDepositView(InputEvent event) { 
-    AppNavigator.loadApp(AppNavigator.DEPOSIT);
-  }
+  @FXML void loadDashboardView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
+  @FXML void loadDepositView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
 
   @FXML
   private void initialize() {
