@@ -34,6 +34,15 @@
                <children>
                   <HBox prefWidth="200.0">
                      <children>
+                        <Label onMouseClicked="#loadDashboardView" text="Home">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-home" iconSize="32" />
+                           </graphic>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefWidth="200.0">
+                     <children>
                         <Label text="History">
                            <graphic>
                               <FontIcon iconLiteral="fas-history" iconSize="32" />
