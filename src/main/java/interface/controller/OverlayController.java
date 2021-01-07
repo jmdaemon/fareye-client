@@ -9,6 +9,7 @@ import java.util.Date;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.InputEvent;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,11 +37,11 @@ public class OverlayController {
   @FXML
   private Label date;
 
-  @FXML
-  private Button deposit;
+  //@FXML
+  //private Button deposit;
 
-  @FXML
-  private Button withdraw;
+  //@FXML
+  //private Button withdraw;
 
   private String getDateAndTime() {
     SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
@@ -52,18 +53,38 @@ public class OverlayController {
     acct_number.setText("Account " + String.valueOf(this.user.getAcctNum()));
     acct_balance.setText(this.user.getBalance().toString());
   }
+
   private Thread timer = new Thread(() -> {
     Platform.runLater(()-> {
         this.date.setText(getDateAndTime()); 
     });
   }); 
 
-  void nextPane(MouseEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
+  //void nextPane(MouseEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); } 
+  //@FXML
+  //void showDepositView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
+
+  //void loadHome(MouseEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
+  //@FXML
+  //void showHome(InputEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
+
+  //public void loadDashboard(MouseEvent event) { 
+  @FXML
+  void loadDashboardView(InputEvent event) { 
+    //loadHome(event);
+    //showHome(event);
+    AppNavigator.loadApp(AppNavigator.DASHBOARD);
+  }
 
   @FXML
-  void loadDepositView(MouseEvent event) {
-    nextPane(event);
+  void loadDepositView(InputEvent event) { 
+    AppNavigator.loadApp(AppNavigator.DEPOSIT);
   }
+
+  //@FXML
+  //void loadDepositView(MouseEvent event) {
+    ////nextPane(event); 
+  //}
 
   @FXML
   private void initialize() {
