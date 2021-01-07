@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class DepositController {
-  private BankAccount user;
 
   @FXML
   private Button backButton;
@@ -24,5 +23,9 @@ public class DepositController {
 
   @FXML
   private Label currency;
-  
+
+  public void depositMoney() {
+    double amount = Double.parseDouble(depositAmount.getText());
+    (AppNavigator.getUser()).deposit(amount);
+  }
 }

@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.DepositController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -41,7 +40,7 @@
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="6.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="currency" text="USD" />
-                  <Button fx:id="depositButton" mnemonicParsing="false" text="Deposit">
+                  <Button fx:id="depositButton" mnemonicParsing="false" onMouseClicked="#depositMoney" text="Deposit">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
