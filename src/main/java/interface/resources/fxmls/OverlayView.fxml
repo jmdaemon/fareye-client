@@ -107,7 +107,7 @@
                         <String fx:value="headerLabel" />
                      </styleClass>
                   </Label>
-                  <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="Account Number" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                  <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="ID" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -123,7 +123,7 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                  <FontIcon id="depositIcon" iconLiteral="fas-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
