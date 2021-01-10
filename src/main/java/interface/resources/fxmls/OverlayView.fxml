@@ -64,10 +64,13 @@
                   <FontIcon iconLiteral="fas-address-card" iconSize="32" />
                </graphic>
                <VBox.margin>
-                  <Insets bottom="18.0" />
+                  <Insets />
                </VBox.margin>
             </Label>
          </children>
+         <GridPane.margin>
+            <Insets bottom="18.0" />
+         </GridPane.margin>
       </VBox>
       <HBox id="headerbar" alignment="TOP_RIGHT" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
          <GridPane.margin>
@@ -146,6 +149,6 @@
                </padding>
             </GridPane>
          </children></HBox>
-      <HBox id="footerBar" maxHeight="-Infinity" prefHeight="20.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+      <HBox id="footerBar" maxHeight="-Infinity" prefHeight="24.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>
