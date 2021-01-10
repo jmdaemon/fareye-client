@@ -2,6 +2,7 @@ package app.ui;
 
 import app.bankAccount.*;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,8 +25,17 @@ public class DepositController {
   @FXML
   private Label currency;
 
+  private Thread updateAccount = new Thread(()-> { 
+    //BankAccount acct = AppNavigator.getUser();
+       Platform.runLater(() -> { 
+         double amount = Double.parseDouble(depositAmount.getText()); 
+         (AppNavigator.getUser()).deposit(amount);        
+         AppNavigator.loadApp(AppNavigator.DEPOSIT);
+         //acct.deposit(amount);
+       });
+  });
+
   public void depositMoney() {
-    double amount = Double.parseDouble(depositAmount.getText());
-    (AppNavigator.getUser()).deposit(amount);
+    updateAccount.start();
   }
 }
