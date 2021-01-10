@@ -135,7 +135,7 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <FontIcon id="depositIcon" iconLiteral="fas-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                  <FontIcon id="depositIcon" iconLiteral="fas-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
