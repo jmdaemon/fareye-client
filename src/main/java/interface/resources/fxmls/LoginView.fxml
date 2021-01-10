@@ -35,7 +35,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <FontIcon iconLiteral="far-user-circle" iconSize="64" text="" />
+                  <FontIcon iconLiteral="fas-user-circle" iconSize="64" text="" />
                   <TextField fx:id="userName" promptText="Username" />
                   <PasswordField fx:id="password" promptText="Password" />
                   <Hyperlink alignment="CENTER" prefWidth="393.0" text="Click to reset your password" />
