@@ -61,7 +61,7 @@
             </Label>
             <Label text="Account">
                <graphic>
-                  <FontIcon iconLiteral="fas-id-card" iconSize="32" />
+                  <FontIcon iconLiteral="fas-address-card" iconSize="32" />
                </graphic>
                <VBox.margin>
                   <Insets bottom="18.0" />
@@ -80,6 +80,7 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
