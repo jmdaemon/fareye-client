@@ -7,135 +7,131 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.OverlayController">
+
+<GridPane hgap="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../assets/Overlay.css" vgap="6.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.OverlayController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
    <children>
-      <GridPane hgap="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../assets/Overlay.css" vgap="6.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <VBox id="sidebar" alignment="BOTTOM_LEFT" maxWidth="-Infinity" prefHeight="50.0" prefWidth="150.0" spacing="6.0" styleClass="vbox" GridPane.rowSpan="2147483647">
          <children>
-            <VBox id="sidebar" alignment="BOTTOM_LEFT" maxWidth="-Infinity" prefHeight="50.0" prefWidth="150.0" spacing="6.0" styleClass="vbox" GridPane.rowSpan="2147483647">
+            <HBox prefWidth="200.0">
                <children>
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <Label onMouseClicked="#loadDashboardView" text="Home">
-                           <graphic>
-                              <FontIcon iconLiteral="fas-home" iconSize="32" />
-                           </graphic>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <Label text="History">
-                           <graphic>
-                              <FontIcon iconLiteral="fas-history" iconSize="32" />
-                           </graphic>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Label text="Transfer">
+                  <Label onMouseClicked="#loadDashboardView" text="Home">
                      <graphic>
-                        <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+                        <FontIcon iconLiteral="fas-home" iconSize="32" />
                      </graphic>
                   </Label>
-                  <Label text="Withdraw">
-                     <graphic>
-                        <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
-                     </graphic>
-                  </Label>
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <Label onMouseClicked="#loadDepositView" text="Deposit">
-                           <graphic>
-                              <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
-                           </graphic>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <Label text="Settings">
-                           <graphic>
-                              <FontIcon iconLiteral="fas-cog" iconSize="32" />
-                           </graphic>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label text="Account">
-                           <graphic>
-                              <FontIcon iconLiteral="fas-user-circle" iconSize="32" />
-                           </graphic>
-                        </Label>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="18.0" />
-                     </VBox.margin>
-                  </HBox>
                </children>
-            </VBox>
-            <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
-            <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets top="60.0" />
-               </GridPane.margin>
-               <font>
-                  <Font size="16.0" />
-               </font>
+            </HBox>
+            <HBox prefWidth="200.0">
+               <children>
+                  <Label text="History">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-history" iconSize="32" />
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+            <Label text="Transfer">
+               <graphic>
+                  <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+               </graphic>
             </Label>
-            <Label fx:id="balance" text="Balance" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="20.0" />
-               </GridPane.margin>
-               <styleClass>
-                  <String fx:value="balance" />
-                  <String fx:value="headerLabel" />
-               </styleClass>
+            <Label text="Withdraw">
+               <graphic>
+                  <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+               </graphic>
             </Label>
-            <Label id="acctBalance" fx:id="acct_balance" styleClass="headerLabel" text="Number" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="60.0" />
-               </GridPane.margin>
-            </Label>
-            <Label id="date" fx:id="date" styleClass="headerLabel" text="Date" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="20.0" />
-               </GridPane.margin>
-            </Label>
-            <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets right="20.0" top="20.0" />
-               </GridPane.margin>
-            </FontIcon>
-            <HBox id="footerBar" maxHeight="-Infinity" prefHeight="20.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+            <HBox prefWidth="200.0">
+               <children>
+                  <Label onMouseClicked="#loadDepositView" text="Deposit">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefWidth="200.0">
+               <children>
+                  <Label text="Settings">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-cog" iconSize="32" />
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Account">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-user-circle" iconSize="32" />
+                     </graphic>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="18.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-      </GridPane>
+      </VBox>
+      <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
+      <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="60.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="balance" text="Balance" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
+         <styleClass>
+            <String fx:value="balance" />
+            <String fx:value="headerLabel" />
+         </styleClass>
+      </Label>
+      <Label id="acctBalance" fx:id="acct_balance" styleClass="headerLabel" text="Number" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets top="60.0" />
+         </GridPane.margin>
+      </Label>
+      <Label id="date" fx:id="date" styleClass="headerLabel" text="Date" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
+      </Label>
+      <FontIcon id="depositIcon" iconLiteral="far-user-circle" iconSize="32" selectionEnd="1" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets right="20.0" top="20.0" />
+         </GridPane.margin>
+      </FontIcon>
+      <HBox id="footerBar" maxHeight="-Infinity" prefHeight="20.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
    </children>
-</StackPane>
+</GridPane>
