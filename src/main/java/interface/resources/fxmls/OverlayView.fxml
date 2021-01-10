@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
 <GridPane hgap="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../assets/Overlay.css" vgap="6.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.OverlayController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -30,24 +29,16 @@
    <children>
       <VBox id="sidebar" alignment="BOTTOM_LEFT" maxWidth="-Infinity" prefHeight="50.0" prefWidth="150.0" spacing="6.0" styleClass="vbox" GridPane.rowSpan="2147483647">
          <children>
-            <HBox prefWidth="200.0">
-               <children>
-                  <Label onMouseClicked="#loadDashboardView" text="Home">
-                     <graphic>
-                        <FontIcon iconLiteral="fas-home" iconSize="32" />
-                     </graphic>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox prefWidth="200.0">
-               <children>
-                  <Label text="History">
-                     <graphic>
-                        <FontIcon iconLiteral="fas-history" iconSize="32" />
-                     </graphic>
-                  </Label>
-               </children>
-            </HBox>
+            <Label onMouseClicked="#loadDashboardView" text="Home">
+               <graphic>
+                  <FontIcon iconLiteral="fas-home" iconSize="32" />
+               </graphic>
+            </Label>
+            <Label text="History">
+               <graphic>
+                  <FontIcon iconLiteral="fas-history" iconSize="32" />
+               </graphic>
+            </Label>
             <Label text="Transfer">
                <graphic>
                   <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
@@ -58,39 +49,30 @@
                   <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
                </graphic>
             </Label>
-            <HBox prefWidth="200.0">
-               <children>
-                  <Label onMouseClicked="#loadDepositView" text="Deposit">
-                     <graphic>
-                        <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
-                     </graphic>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox prefWidth="200.0">
-               <children>
-                  <Label text="Settings">
-                     <graphic>
-                        <FontIcon iconLiteral="fas-cog" iconSize="32" />
-                     </graphic>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label text="Account">
-                     <graphic>
-                        <FontIcon iconLiteral="fas-user-circle" iconSize="32" />
-                     </graphic>
-                  </Label>
-               </children>
+            <Label onMouseClicked="#loadDepositView" text="Deposit">
+               <graphic>
+                  <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+               </graphic>
+            </Label>
+            <Label text="Settings">
+               <graphic>
+                  <FontIcon iconLiteral="fas-cog" iconSize="32" />
+               </graphic>
+            </Label>
+            <Label text="Account">
+               <graphic>
+                  <FontIcon iconLiteral="fas-user-circle" iconSize="32" />
+               </graphic>
                <VBox.margin>
                   <Insets bottom="18.0" />
                </VBox.margin>
-            </HBox>
+            </Label>
          </children>
       </VBox>
-      <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP" />
+      <HBox id="headerbar" maxHeight="-Infinity" prefHeight="100.0" prefWidth="50.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></HBox>
       <Label id="acctNumber" fx:id="acct_number" styleClass="headerLabel" text="Account Number" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="60.0" />
