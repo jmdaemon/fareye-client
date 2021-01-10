@@ -16,9 +16,11 @@
 <!--</children>-->
 <!--</VBox>-->
 
-<VBox prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.MainController">
-    <children> 
-        <!--<Label fx:id="headerLabel" maxWidth="1.7976931348623157E308" text="Header" VBox.vgrow="NEVER" />-->
-      <StackPane fx:id="view" VBox.vgrow="ALWAYS" />
-  </children>
-</VBox>
+<!--<VBox prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.MainController">-->
+    <!--<children> -->
+        <!--[><Label fx:id="headerLabel" maxWidth="1.7976931348623157E308" text="Header" VBox.vgrow="NEVER" /><]-->
+      <!--<StackPane fx:id="view" VBox.vgrow="ALWAYS" />-->
+  <!--</children>-->
+<!--</VBox>-->
+
+<StackPane fx:id="view" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.MainController"/>
