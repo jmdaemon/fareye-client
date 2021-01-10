@@ -41,17 +41,17 @@
             </Label>
             <Label text="Transfer">
                <graphic>
-                  <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+                  <FontIcon iconLiteral="fas-arrow-alt-circle-up" iconSize="32" />
                </graphic>
             </Label>
             <Label text="Withdraw">
                <graphic>
-                  <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+                  <FontIcon iconLiteral="fas-arrow-alt-circle-left" iconSize="32" />
                </graphic>
             </Label>
             <Label onMouseClicked="#loadDepositView" text="Deposit">
                <graphic>
-                  <FontIcon iconLiteral="fas-money-bill" iconSize="32" />
+                  <FontIcon iconLiteral="fas-arrow-alt-circle-right" iconSize="32" />
                </graphic>
             </Label>
             <Label text="Settings">
