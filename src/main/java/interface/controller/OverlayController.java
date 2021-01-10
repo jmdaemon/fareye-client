@@ -5,6 +5,7 @@ import app.bankAccount.*;
 import javafx.application.Platform;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.lang.InterruptedException; 
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,18 +49,39 @@ public class OverlayController {
     acct_balance.setText(this.user.getBalance().toString());
   }
 
+  private volatile boolean enough = false;
   private Thread timer = new Thread(() -> {
-    Platform.runLater(()-> {
+    while (!enough) {
+      try { 
+        Thread.sleep(1000); 
+      } catch (InterruptedException e) {} 
+      Platform.runLater(()-> { 
         this.date.setText(getDateAndTime()); 
-    });
+        //AppNavigator.loadApp(AppNavigator.OVERLAY);
+      });
+    }
   }); 
 
-  @FXML void loadDashboardView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DASHBOARD); }
-  @FXML void loadDepositView(InputEvent event) { AppNavigator.loadApp(AppNavigator.DEPOSIT); }
+  String loadScreen = null;
+
+  private Thread update = new Thread(() -> {
+    Platform.runLater(() -> {
+    AppNavigator.loadApp(loadScreen);
+    });
+  });
+
+  private void refreshScreen(String fxml) { 
+    loadScreen = fxml;
+    update.start(); 
+  }
+
+  @FXML void loadDashboardView(InputEvent event) { refreshScreen(AppNavigator.DASHBOARD); }
+  @FXML void loadDepositView(InputEvent event) { refreshScreen(AppNavigator.DEPOSIT); }
 
   @FXML
   private void initialize() {
     setUser(AppNavigator.getUser());
+    //date.textProperty().bind();
     timer.setDaemon(true);
     timer.start(); 
   } 
