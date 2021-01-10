@@ -61,7 +61,7 @@
             </Label>
             <Label text="Account">
                <graphic>
-                  <FontIcon iconLiteral="fas-user-circle" iconSize="32" />
+                  <FontIcon iconLiteral="fas-id-card" iconSize="32" />
                </graphic>
                <VBox.margin>
                   <Insets bottom="18.0" />
