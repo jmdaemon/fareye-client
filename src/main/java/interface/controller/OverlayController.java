@@ -52,12 +52,11 @@ public class OverlayController {
   private volatile boolean enough = false;
   private Thread timer = new Thread(() -> {
     while (!enough) {
-      try { 
+      try {
         Thread.sleep(1000); 
       } catch (InterruptedException e) {} 
       Platform.runLater(()-> { 
         this.date.setText(getDateAndTime()); 
-        //AppNavigator.loadApp(AppNavigator.OVERLAY);
       });
     }
   }); 
@@ -81,7 +80,6 @@ public class OverlayController {
   @FXML
   private void initialize() {
     setUser(AppNavigator.getUser());
-    //date.textProperty().bind();
     timer.setDaemon(true);
     timer.start(); 
   } 
