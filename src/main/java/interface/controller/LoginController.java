@@ -48,7 +48,7 @@ public class LoginController {
   public String getPassword() { return password.getText(); }
 
   public void processCredentials(InputEvent event) { 
-    BankAccount user = new BankAccount(getUserName(), getPassword());
+    //BankAccount user = new BankAccount(getUserName(), getPassword());
     //nextPane(event, new BankAccount(getUserName(), getPassword()));
     //GridPane root = null;
     //Stage stage = null;
@@ -69,10 +69,14 @@ public class LoginController {
     GridPane root = null;
     try { 
       root = loader.load();
+      //loader.load();
+      //root = loader.getRoot();
     } catch (IOException e) {
       e.printStackTrace();
     }
     //loader.<DashboardController>getController().setUser(user); 
+    //Context.getInstance().currentCountry().setCountry("Belgium");
+    Context.getInstance().setUser(getUserName(), getPassword());
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
 
