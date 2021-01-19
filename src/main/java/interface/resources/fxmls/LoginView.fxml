@@ -40,7 +40,7 @@
                   <PasswordField fx:id="password" promptText="Password" />
                   <Hyperlink alignment="CENTER" prefWidth="393.0" text="Click to reset your password" />
                   <!--<Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#processCredentials" text="Enter" />-->
-                  <Button fx:id="enter" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#nextPane" text="Enter" />
+                  <Button fx:id="enter" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#processCredentials" text="Enter" />
                </children>
             </VBox>
          </children>

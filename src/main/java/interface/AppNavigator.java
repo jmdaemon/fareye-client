@@ -2,6 +2,7 @@ package app.ui;
 
 import app.bankAccount.*;
 
+import java.util.EventObject;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -41,8 +42,12 @@ public class AppNavigator {
     return mainController.getUser();
   }
 
-  public static FXMLLoader getLoader(ActionEvent event, GridPane root, String fxml) { 
-    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+  //public static FXMLLoader getLoader(ActionEvent event, GridPane root, String fxml) { 
+  //public static <T> FXMLLoader getLoader(T event, GridPane root, Stage stage, String fxml) { 
+  //public static FXMLLoader getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
+  public static Object[] getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
+    //Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     //FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
     FXMLLoader loader = new FXMLLoader(AppNavigator.class.getResource(fxml));
 
@@ -52,8 +57,9 @@ public class AppNavigator {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return loader;
+    //return loader;
     //loader.<DashboardController>getController().setUser(user);
+    return new Object[]{loader, stage, root};
   }
 
   public static void setScene(Stage stage, GridPane root) {
