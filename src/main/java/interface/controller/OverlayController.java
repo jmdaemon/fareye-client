@@ -3,6 +3,7 @@ package app.ui;
 import app.bankAccount.*;
 
 import javafx.application.Platform;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.lang.InterruptedException; 
@@ -13,8 +14,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.InputEvent;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 import org.kordamp.ikonli.*;
 import org.kordamp.ikonli.javafx.*;
@@ -74,8 +80,43 @@ public class OverlayController {
     update.start(); 
   }
 
-  @FXML void loadDashboardView(InputEvent event) { refreshScreen(AppNavigator.DASHBOARD); }
-  @FXML void loadDepositView(InputEvent event) { refreshScreen(AppNavigator.DEPOSIT); }
+  //@FXML void loadDashboardView(InputEvent event) { refreshScreen(AppNavigator.DASHBOARD); }
+  //@FXML void loadDepositView(InputEvent event) { refreshScreen(AppNavigator.DEPOSIT); }
+  @FXML void loadDashboardView(InputEvent event) { 
+    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(AppNavigator.DASHBOARD));
+    //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
+    GridPane root = null;
+    try { 
+      //root = (GridPane) loader.load();
+      root = loader.load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    //loader.<DashboardController>getController().setUser(user); 
+    //Context.getInstance().setUser(getUserName(), getPassword());
+    Scene scene = new Scene(root, 600, 400); 
+    stage.setScene(scene);
+    stage.show();
+  }
+  @FXML void loadDepositView(InputEvent event) { 
+    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(AppNavigator.DEPOSIT));
+    //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
+    GridPane root = null;
+    try { 
+      //root = (GridPane) loader.load();
+      root = loader.load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    //loader.<DashboardController>getController().setUser(user); 
+    //Context.getInstance().setUser(getUserName(), getPassword());
+    Scene scene = new Scene(root, 600, 400); 
+    stage.setScene(scene);
+    stage.show();
+
+  }
 
   @FXML
   private void initialize() {
