@@ -9,11 +9,13 @@ import javafx.scene.input.InputEvent;
 
 public class DashboardController {
   @FXML 
+  //private OverlayController overlay;
   private OverlayController overlayController;
 
-  public void setUser(BankAccount acct) {
-    overlayController.setUser(acct);
-  }
+  //public void setUser(BankAccount acct) {
+    //overlay.setUser(acct);
+    ////overlayController.setUser(acct);
+  //}
 
   @FXML
   public void initialize() { }

@@ -36,11 +36,13 @@ public class LoginController {
 
   public String getPassword() { return password.getText(); }
 
-  public void processCredentials(InputEvent event) { 
+  public void processCredentials(InputEvent event) {
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
     FXMLLoader loader = new FXMLLoader(getClass().getResource(AppNavigator.DASHBOARD));
+    //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
     GridPane root = null;
     try { 
+      //root = (GridPane) loader.load();
       root = loader.load();
     } catch (IOException e) {
       e.printStackTrace();

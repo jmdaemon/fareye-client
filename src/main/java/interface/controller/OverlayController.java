@@ -80,9 +80,9 @@ public class OverlayController {
   @FXML
   private void initialize() {
     //setUser(AppNavigator.getUser());
-    setUser(Context.getInstance().currentUser());
-    timer.setDaemon(true);
-    timer.start(); 
+    //setUser(Context.getInstance().currentUser());
+    //timer.setDaemon(true);
+    //timer.start(); 
   } 
 }
 
