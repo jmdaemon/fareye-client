@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
 
 public class DepositController {
   @FXML
@@ -31,14 +32,15 @@ public class DepositController {
     //BankAccount acct = AppNavigator.getUser();
        Platform.runLater(() -> { 
          double amount = Double.parseDouble(depositAmount.getText()); 
-         (Navigator.getUser()).deposit(amount);        
-         Navigator.loadApp(Navigator.DEPOSIT);
-         //acct.deposit(amount);
+         (Context.getInstance().currentUser()).deposit(amount);
        });
   });
 
-  public void depositMoney() {
+  public void depositMoney(InputEvent event) {
     updateAccount.start();
+    //Platform.runLater(() -> {
+      //Navigator.loadScene(event, Navigator.DEPOSIT);
+    //});
   }
 
   @FXML

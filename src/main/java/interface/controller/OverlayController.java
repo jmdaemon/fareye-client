@@ -27,6 +27,7 @@ import org.kordamp.ikonli.javafx.*;
 import org.kordamp.ikonli.fontawesome5.*;
 
 public class OverlayController {
+  @FXML
   private BankAccount user;
 
   @FXML
@@ -86,7 +87,7 @@ public class OverlayController {
   @FXML
   private void initialize() {
     //setUser(AppNavigator.getUser());
-    //setUser(Context.getInstance().currentUser());
+    setUser(Context.getInstance().currentUser());
     timer.setDaemon(true);
     timer.start(); 
   } 

@@ -56,7 +56,8 @@ public class Navigator {
   }
 
   public static void loadScene(EventObject event, String fxml, String userName, String password) { 
-    Context.getInstance().setUser(userName, password); 
+    //Context.getInstance().setUser(userName, password); 
+    Context.getInstance().setUser(new BankAccount(userName, password)); 
     loadScene(event, fxml);
   }
 
