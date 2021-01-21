@@ -42,12 +42,7 @@ public class Navigator {
     return mainController.getUser();
   }
 
-  //public static FXMLLoader getLoader(ActionEvent event, GridPane root, String fxml) { 
-  //public static <T> FXMLLoader getLoader(T event, GridPane root, Stage stage, String fxml) { 
-  //public static FXMLLoader getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
-  //public static Object[] getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
-  //public static void loadScene(EventObject event, GridPane root, Stage stage, String fxml) { 
-  public static void loadScene(EventObject event, String fxml, String userName, String password) { 
+  public static void loadScene(EventObject event, String fxml) { 
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(fxml));
 
@@ -57,19 +52,17 @@ public class Navigator {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    Context.getInstance().setUser(userName, password);
     setScene(stage, root);
+  }
 
-    //return loader;
-    //loader.<DashboardController>getController().setUser(user);
-    //return new Object[]{loader, stage, root};
+  public static void loadScene(EventObject event, String fxml, String userName, String password) { 
+    Context.getInstance().setUser(userName, password); 
+    loadScene(event, fxml);
   }
 
   public static void setScene(Stage stage, GridPane root) {
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
     stage.show();
-  }
-  
-
+  } 
 }

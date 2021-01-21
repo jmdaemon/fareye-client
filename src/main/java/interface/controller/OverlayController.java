@@ -80,43 +80,8 @@ public class OverlayController {
     update.start(); 
   }
 
-  //@FXML void loadDashboardView(InputEvent event) { refreshScreen(AppNavigator.DASHBOARD); }
-  //@FXML void loadDepositView(InputEvent event) { refreshScreen(AppNavigator.DEPOSIT); }
-  @FXML void loadDashboardView(InputEvent event) { 
-    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(Navigator.DASHBOARD));
-    //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
-    GridPane root = null;
-    try { 
-      //root = (GridPane) loader.load();
-      root = loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    //loader.<DashboardController>getController().setUser(user); 
-    //Context.getInstance().setUser(getUserName(), getPassword());
-    Scene scene = new Scene(root, 600, 400); 
-    stage.setScene(scene);
-    stage.show();
-  }
-  @FXML void loadDepositView(InputEvent event) { 
-    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(Navigator.DEPOSIT));
-    //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
-    GridPane root = null;
-    try { 
-      //root = (GridPane) loader.load();
-      root = loader.load();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    //loader.<DashboardController>getController().setUser(user); 
-    //Context.getInstance().setUser(getUserName(), getPassword());
-    Scene scene = new Scene(root, 600, 400); 
-    stage.setScene(scene);
-    stage.show();
-
-  }
+  @FXML public void loadDashboardView(InputEvent event) { Navigator.loadScene(event, Navigator.DASHBOARD); }
+  @FXML public void loadDepositView(InputEvent event) { Navigator.loadScene(event, Navigator.DEPOSIT); }
   
   @FXML
   private void initialize() {
