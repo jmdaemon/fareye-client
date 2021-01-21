@@ -71,7 +71,7 @@ public class OverlayController {
 
   private Thread update = new Thread(() -> {
     Platform.runLater(() -> {
-    AppNavigator.loadApp(loadScreen);
+    //AppNavigator.loadApp(loadScreen);
     });
   });
 
@@ -84,7 +84,7 @@ public class OverlayController {
   //@FXML void loadDepositView(InputEvent event) { refreshScreen(AppNavigator.DEPOSIT); }
   @FXML void loadDashboardView(InputEvent event) { 
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(AppNavigator.DASHBOARD));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Navigator.DASHBOARD));
     //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
     GridPane root = null;
     try { 
@@ -101,7 +101,7 @@ public class OverlayController {
   }
   @FXML void loadDepositView(InputEvent event) { 
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow(); 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(AppNavigator.DEPOSIT));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Navigator.DEPOSIT));
     //FXMLLoader loader = FXMLLoader.load(getClass().getResource(AppNavigator.DASHBOARD));
     GridPane root = null;
     try { 
@@ -117,13 +117,13 @@ public class OverlayController {
     stage.show();
 
   }
-
+  
   @FXML
   private void initialize() {
     //setUser(AppNavigator.getUser());
     //setUser(Context.getInstance().currentUser());
-    //timer.setDaemon(true);
-    //timer.start(); 
+    timer.setDaemon(true);
+    timer.start(); 
   } 
 }
 

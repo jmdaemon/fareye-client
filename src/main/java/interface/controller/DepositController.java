@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class DepositController {
+  @FXML
+  private OverlayController overlayController;
 
   @FXML
   private Button backButton;
@@ -29,13 +31,17 @@ public class DepositController {
     //BankAccount acct = AppNavigator.getUser();
        Platform.runLater(() -> { 
          double amount = Double.parseDouble(depositAmount.getText()); 
-         (AppNavigator.getUser()).deposit(amount);        
-         AppNavigator.loadApp(AppNavigator.DEPOSIT);
+         (Navigator.getUser()).deposit(amount);        
+         Navigator.loadApp(Navigator.DEPOSIT);
          //acct.deposit(amount);
        });
   });
 
   public void depositMoney() {
     updateAccount.start();
+  }
+
+  @FXML
+  public void initialize() {
   }
 }

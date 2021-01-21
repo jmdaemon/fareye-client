@@ -11,7 +11,7 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
 
-public class AppNavigator {
+public class Navigator {
 
   public static final String DASHBOARD  = "/resources/fxmls/DashboardView.fxml";
   public static final String OVERLAY    = "/resources/fxmls/OverlayView.fxml";
@@ -23,12 +23,12 @@ public class AppNavigator {
   private static MainController mainController;
 
   public static void setMainController(MainController mainController) {
-      AppNavigator.mainController = mainController;
+      Navigator.mainController = mainController;
   }
 
   public static void loadApp(String fxml) { 
     try { 
-      mainController.setView(FXMLLoader.load(AppNavigator.class.getResource(fxml)));
+      mainController.setView(FXMLLoader.load(Navigator.class.getResource(fxml)));
       } catch (IOException e) {
           e.printStackTrace();
       }
@@ -45,26 +45,31 @@ public class AppNavigator {
   //public static FXMLLoader getLoader(ActionEvent event, GridPane root, String fxml) { 
   //public static <T> FXMLLoader getLoader(T event, GridPane root, Stage stage, String fxml) { 
   //public static FXMLLoader getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
-  public static Object[] getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
-    //Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    //FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-    FXMLLoader loader = new FXMLLoader(AppNavigator.class.getResource(fxml));
+  //public static Object[] getLoader(EventObject event, GridPane root, Stage stage, String fxml) { 
+  //public static void loadScene(EventObject event, GridPane root, Stage stage, String fxml) { 
+  public static void loadScene(EventObject event, String fxml, String userName, String password) { 
+    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(fxml));
 
-    //GridPane root = null;
+    GridPane root = null;
     try { 
       root = loader.load();
     } catch (IOException e) {
       e.printStackTrace();
     }
+    Context.getInstance().setUser(userName, password);
+    setScene(stage, root);
+
     //return loader;
     //loader.<DashboardController>getController().setUser(user);
-    return new Object[]{loader, stage, root};
+    //return new Object[]{loader, stage, root};
   }
 
   public static void setScene(Stage stage, GridPane root) {
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
+    stage.show();
   }
+  
 
 }
