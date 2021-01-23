@@ -28,16 +28,23 @@ public class DepositController {
   @FXML
   private Label currency;
 
-  private Thread updateAccount = new Thread(()-> { 
-    //BankAccount acct = AppNavigator.getUser();
-       Platform.runLater(() -> { 
-         double amount = Double.parseDouble(depositAmount.getText()); 
-         (Context.getInstance().currentUser()).deposit(amount);
-       });
-  });
+  //private Thread updateAccount = new Thread(()-> { 
+    ////BankAccount acct = AppNavigator.getUser();
+       //Platform.runLater(() -> { 
+         //double amount = Double.parseDouble(depositAmount.getText()); 
+         //(Context.getInstance().currentUser()).deposit(amount);
+       //});
+  //});
+   private Thread updateAccount = new Thread(() -> { 
+     double amount = Double.parseDouble(depositAmount.getText()); 
+     Platform.runLater(() -> { 
+       (Context.getInstance().currentUser()).deposit(amount); 
+     });
+   });
 
-  public void depositMoney(InputEvent event) {
+  public void depositMoney(InputEvent event) { 
     updateAccount.start();
+    //updateAccount.start();
     //Platform.runLater(() -> {
       //Navigator.loadScene(event, Navigator.DEPOSIT);
     //});
