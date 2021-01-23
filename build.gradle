@@ -20,7 +20,6 @@ dependencies {
         testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
         compile 'org.unix4j:unix4j-command:0.5'
 
-        //implementation 'org.kordamp.ikonli:ikonli-javafx:12.0.0'
         implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
         implementation 'org.kordamp.ikonli:ikonli-core'
         implementation 'org.kordamp.ikonli:ikonli-javafx'
@@ -28,11 +27,7 @@ dependencies {
         implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
         testImplementation("org.mock-server:mockserver-netty:5.11.2")
-        //implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
-
-        //testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
-        //testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
-
+        
         compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1' 
         compile group: 'com.airhacks', name:'afterburner.fx', version: '1.7.0'
 }
@@ -43,8 +38,7 @@ test {
         testLogging {
 		events "failed"
 		exceptionFormat "full"
-                showStandardStreams = true
-	}
+                showStandardStreams = true }
 }
 
 java {
