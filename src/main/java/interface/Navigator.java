@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.AnchorPane;
 
 public class Navigator {
 
@@ -46,7 +47,7 @@ public class Navigator {
     Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
     FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(fxml));
 
-    GridPane root = null;
+    AnchorPane root = null;
     try { 
       root = loader.load();
     } catch (IOException e) {
@@ -61,7 +62,8 @@ public class Navigator {
     loadScene(event, fxml);
   }
 
-  public static void setScene(Stage stage, GridPane root) {
+  //public static void setScene(Stage stage, GridPane root) {
+  public static void setScene(Stage stage, AnchorPane root) {
     Scene scene = new Scene(root, 600, 400); 
     stage.setScene(scene);
     stage.show();

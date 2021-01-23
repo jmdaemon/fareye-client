@@ -28,68 +28,81 @@ import org.kordamp.ikonli.fontawesome5.*;
 
 public class OverlayController {
   @FXML
-  private BankAccount user;
+  private HeaderController headerController;
 
   @FXML
-  private Button back;
+  private FooterController footerController;
 
   @FXML
-  private Label acct_number;
+  private SidebarController sidebarController;
 
-  @FXML
-  private Label balance;
 
-  @FXML
-  private Label acct_balance;
+  //@FXML
+  //private BankAccount user;
 
-  @FXML
-  private Label date;
+  //@FXML
+  //private Button back;
 
-  private String getDateAndTime() {
-    SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
-    return date.format(new Date());
-  }
+  //@FXML
+  //private Label acct_number;
 
-  public void setUser(BankAccount user) {
-    this.user = user;
-    acct_number.setText(String.valueOf(this.user.getAcctNum()));
-    acct_balance.setText(this.user.getBalance().toString());
-  }
+  //@FXML
+  //private Label balance;
 
-  private volatile boolean enough = false;
-  private Thread timer = new Thread(() -> {
-    while (!enough) {
-      try {
-        Thread.sleep(1000); 
-      } catch (InterruptedException e) {} 
-      Platform.runLater(()-> { 
-        this.date.setText(getDateAndTime()); 
-      });
-    }
-  }); 
+  //@FXML
+  //private Label acct_balance;
 
-  String loadScreen = null;
+  //@FXML
+  //private Label date;
 
-  private Thread update = new Thread(() -> {
-    Platform.runLater(() -> {
-    //AppNavigator.loadApp(loadScreen);
-    });
-  });
+  //private String getDateAndTime() {
+    //SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
+    //return date.format(new Date());
+  //}
 
-  private void refreshScreen(String fxml) { 
-    loadScreen = fxml;
-    update.start(); 
-  }
+  //public void setUser(BankAccount user) {
+    //this.user = user;
+    //acct_number.setText(String.valueOf(this.user.getAcctNum()));
+    //acct_balance.setText(this.user.getBalance().toString());
+  //}
 
-  @FXML public void loadDashboardView(InputEvent event) { Navigator.loadScene(event, Navigator.DASHBOARD); }
-  @FXML public void loadDepositView(InputEvent event) { Navigator.loadScene(event, Navigator.DEPOSIT); }
+  //private volatile boolean enough = false;
+  //private Thread timer = new Thread(() -> {
+    //while (!enough) {
+      //try {
+        //Thread.sleep(1000); 
+      //} catch (InterruptedException e) {} 
+      //Platform.runLater(()-> { 
+        //this.date.setText(getDateAndTime()); 
+      //});
+    //}
+  //}); 
+
+  //String loadScreen = null;
+
+  //private Thread update = new Thread(() -> {
+    //Platform.runLater(() -> {
+    ////AppNavigator.loadApp(loadScreen);
+    //});
+  //});
+
+  //private void refreshScreen(String fxml) { 
+    //loadScreen = fxml;
+    //update.start(); 
+  //}
+
+  //@FXML public void loadDashboardView(InputEvent event) { Navigator.loadScene(event, Navigator.DASHBOARD); }
+  //@FXML public void loadDepositView(InputEvent event) { Navigator.loadScene(event, Navigator.DEPOSIT); }
   
+  //@FXML
+  //private void initialize() {
+    ////setUser(AppNavigator.getUser());
+    //setUser(Context.getInstance().currentUser());
+    //timer.setDaemon(true);
+    //timer.start(); 
+  //} 
   @FXML
   private void initialize() {
-    //setUser(AppNavigator.getUser());
-    setUser(Context.getInstance().currentUser());
-    timer.setDaemon(true);
-    timer.start(); 
-  } 
+  }
 }
 

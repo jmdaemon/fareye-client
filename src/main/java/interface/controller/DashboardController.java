@@ -9,13 +9,15 @@ import javafx.scene.input.InputEvent;
 
 public class DashboardController {
   @FXML
-  private HeaderController headerController;
+  private OverlayController overlayController;
+  //@FXML
+  //private HeaderController headerController;
 
-  @FXML
-  private FooterController footerController;
+  //@FXML
+  //private FooterController footerController;
 
-  @FXML
-  private SidebarController sidebarController;
+  //@FXML
+  //private SidebarController sidebarController;
 
   @FXML
   public void initialize() { }
