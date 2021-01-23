@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash libs/scenicview/bin/scenicView/
+bash libs/scenicview/bin/scenicView

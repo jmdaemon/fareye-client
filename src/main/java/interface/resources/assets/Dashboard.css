@@ -1,28 +1,12 @@
 
-/*GridPane {*/
-    /*font-family: "Roboto";*/
-    /*[>font-weight: 400;<]*/
-/*}*/
-
 .label {
     -fx-font-size: 16px;
-    /*-fx-font-family: "DejaVu Sans";*/
     -fx-font-family: "DejaVu Sans Mono";
     color: #01c1f3;
-    /*-fx-text-fill: #333333;*/
 }
 
 #balance {
     -fx-font-weight: bold;
     -fx-opacity: 0.4;
 }
-
-/*#avatar .ikonli-font-icon {*/
-/*[>#avatar {<]*/
-    /*-fx-icon-code: "bx-user-circle";*/
-    /*[>-fx-graphic: "bx-user-circle";<]*/
-    /*-fx-icon-size: 1.6em;*/
-    /*-fx-icon-color: blue;*/
-
-/*}*/
 
