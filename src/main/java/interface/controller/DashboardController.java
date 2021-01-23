@@ -8,14 +8,14 @@ import javafx.scene.control.Label;
 import javafx.scene.input.InputEvent;
 
 public class DashboardController {
-  @FXML 
-  //private OverlayController overlay;
-  private OverlayController overlayController;
+  @FXML
+  private HeaderController headerController;
 
-  //public void setUser(BankAccount acct) {
-    //overlay.setUser(acct);
-    ////overlayController.setUser(acct);
-  //}
+  @FXML
+  private FooterController footerController;
+
+  @FXML
+  private SidebarController sidebarController;
 
   @FXML
   public void initialize() { }
