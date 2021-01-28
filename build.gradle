@@ -73,10 +73,9 @@ shadowJar {
 
 ext {
     src = "src/main/java"
-    //ext.org = 'com/github/jmd' 
+    org = 'com/github/jmd' 
     test = "src/test/java"
     resources = "src/main/java/interface/resources"
-
 }
 
 sourceSets.all { 
