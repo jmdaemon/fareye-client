@@ -15,6 +15,7 @@ public class BankAccount {
   private Money balance;
   private String fName, mName, lName, pswd, filepath;
 
+  public BankAccount() { createAccount("", "", true); }
   public BankAccount(String firstName, String lastName) { createAccount(firstName, lastName, false); }
   public BankAccount(String firstName, String lastName, boolean makeLog) { createAccount(firstName, lastName, makeLog); }
 

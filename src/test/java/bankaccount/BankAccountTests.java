@@ -20,9 +20,9 @@ public class BankAccountTests {
 
   @BeforeEach
   public void setUp() {
-    this.bankAccount = new BankAccount("Paul", "Allen");
-    this.targAccount = new BankAccount("Timothy", "Price"); 
-    this.newAcct = new BankAccount("Patrick", "Bateman");
+    this.bankAccount = new BankAccount("Paul", "Allen", true);
+    this.targAccount = new BankAccount("Timothy", "Price", true); 
+    this.newAcct = new BankAccount("Patrick", "Bateman", true);
   }
 
   @AfterEach
