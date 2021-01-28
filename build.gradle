@@ -1,6 +1,6 @@
 plugins {
 	id 'java' 
-        id 'java-library'
+        id 'java-library' 
         id "com.scuilion.syntastic" version "0.3.8"
         id 'org.openjfx.javafxplugin' version '0.0.9'
         //id 'org.springframework.boot' version '2.4.1'
@@ -43,7 +43,7 @@ test {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(14)
+        languageVersion = JavaLanguageVersion.of(15)
     }
     modularity.inferModulePath = true
 }
