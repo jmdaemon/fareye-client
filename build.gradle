@@ -86,32 +86,8 @@ ext.resources = resources
 }
 
 checkstyle { 
-    //toolVersion '8.2'
-    //toolVersion '7.8.1'
-    //toolVersion '7.9'
-    //toolVersion '8.3'
-    //configFile file("config/checkstyle/checkstyle.xml")
-    //configFile file("config/checkstyle/checkstyle.xml")
-    //configDirectory "config/checkstyle/checkstyle.xml"
-    //configFile file("config/checkstyle/sun_checks.xml")
-    //sourceSets [ "$src/bankaccount", "$src/money", "$src/interface/" ]
-    //sourceSets { 
-    //["$src/bankaccount", "$src/money", "$src/interface/", "$test/bankaccount", "$test/money", "$test/interface/"]
-    //}
-    //source = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
-    //sourceSets [ "$src/bankaccount", "$src/money", "$src/interface/" ]
-    configFile file("config/checkstyle/sun_checks.xml")
-    
+    configFile file("checkstyle/sun_checks.xml")
 }
-//checkstyleMain {
-    ////toolVersion '8.2'
-    ////source = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
-    ////sourceSets [ "$src/bankaccount", "$src/money", "$src/interface/" ]
-//}
-//checkstyleTest {
-    ////source = [ "$test/bankaccount", "$test/money", "$test/interface/" ]
-    //sourceSets [ "$test/bankaccount", "$test/money", "$test/interface/" ]
-//}
 
 sourceSets { 
     main {
