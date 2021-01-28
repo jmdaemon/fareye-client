@@ -1,10 +1,10 @@
 plugins {
 	id 'java' 
         id 'java-library' 
+        id 'checkstyle'
         id "com.scuilion.syntastic" version "0.3.8"
         id 'org.openjfx.javafxplugin' version '0.0.9'
         //id 'org.springframework.boot' version '2.4.1'
-        //id 'checkstyle'
         id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
@@ -84,6 +84,34 @@ ext.src = src
 ext.test = test
 ext.resources = resources
 }
+
+checkstyle { 
+    //toolVersion '8.2'
+    //toolVersion '7.8.1'
+    //toolVersion '7.9'
+    //toolVersion '8.3'
+    //configFile file("config/checkstyle/checkstyle.xml")
+    //configFile file("config/checkstyle/checkstyle.xml")
+    //configDirectory "config/checkstyle/checkstyle.xml"
+    //configFile file("config/checkstyle/sun_checks.xml")
+    //sourceSets [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+    //sourceSets { 
+    //["$src/bankaccount", "$src/money", "$src/interface/", "$test/bankaccount", "$test/money", "$test/interface/"]
+    //}
+    //source = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+    //sourceSets [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+    configFile file("config/checkstyle/sun_checks.xml")
+    
+}
+//checkstyleMain {
+    ////toolVersion '8.2'
+    ////source = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+    ////sourceSets [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+//}
+//checkstyleTest {
+    ////source = [ "$test/bankaccount", "$test/money", "$test/interface/" ]
+    //sourceSets [ "$test/bankaccount", "$test/money", "$test/interface/" ]
+//}
 
 sourceSets { 
     main {
