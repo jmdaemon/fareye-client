@@ -35,15 +35,20 @@ public class DepositController {
          //(Context.getInstance().currentUser()).deposit(amount);
        //});
   //});
-   private Thread updateAccount = new Thread(() -> { 
-     double amount = Double.parseDouble(depositAmount.getText()); 
-     Platform.runLater(() -> { 
-       (Context.getInstance().currentUser()).deposit(amount); 
-     });
-   });
+   //private Thread updateAccount = new Thread(() -> { 
+     //double amount = Double.parseDouble(depositAmount.getText()); 
+     ////(Context.getInstance().currentUser()).deposit(amount); 
+     //Platform.runLater(() -> { 
+       //(Context.getInstance().currentUser()).deposit(amount); 
+     //});
+   //});
 
   public void depositMoney(InputEvent event) { 
-    updateAccount.start();
+     double amount = Double.parseDouble(depositAmount.getText()); 
+     (Context.getInstance().currentUser()).deposit(amount); 
+     //Platform.runLater(() -> { 
+       //(Context.getInstance().currentUser()).deposit(amount); 
+    //updateAccount.start();
     //updateAccount.start();
     //Platform.runLater(() -> {
       //Navigator.loadScene(event, Navigator.DEPOSIT);
