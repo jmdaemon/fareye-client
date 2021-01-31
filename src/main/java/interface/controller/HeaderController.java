@@ -65,6 +65,9 @@ public class HeaderController {
     accounts.addAccount(Context.getInstance().currentUser());
     accountsList = new ListView<BankAccount>(accounts.getAccounts());
     accountsList.setItems(accounts.getAccounts());
+
+    acct_number.setText(String.valueOf(this.accountsList.getItems().get(0).getAcctNum()));
+    acct_balance.setText(this.accountsList.getItems().get(0).getBalance().toString());
     timer.setDaemon(true);
     timer.start(); 
   } 
