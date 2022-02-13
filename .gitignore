@@ -42,3 +42,4 @@ tags
 
 # Ignore ScenicView libraries
 libs/scenicview
+.syntastic_javac_config
