@@ -84,8 +84,7 @@ sourceSets.all {
 }
 
 checkstyle { 
-    configFile file("checkstyle/sun_checks.xml") 
-    // Ignore checks for style
+    configFile file("config/checkstyle/sun_checks.xml") 
     checkstyleMain.enabled = true
     checkstyleTest.enabled = true
 }

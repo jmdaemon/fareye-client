@@ -3,7 +3,7 @@ package app.connect;
 import static app.security.SSLManager.*;
 import app.security.*;
 
-import static org.junit.jupiter.api.Assertions.*; 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 import static java.util.Map.entry;
@@ -25,7 +25,7 @@ import static org.mockserver.model.ParameterBody.*;
 import static org.mockserver.model.JsonBody.*;
 import static org.mockserver.matchers.MatchType.*;
 
-public class HttpsTests { 
+public class HttpsTests {
   private static ClientAndServer mockServer;
 
   private SSLManager sm;
@@ -33,18 +33,18 @@ public class HttpsTests {
   private Https conn;
   private Map<String, String> params;
 
-  private static final String CLIENT_KEYSTORE = "config/keytool/client_truststore.jks";
-  private static final String CA_CERT         = "config/keytool/ca/cacert.pem";
+  private static final String CLIENT_KEYSTORE = "crypt/keytool/client_truststore.jks";
+  private static final String CA_CERT         = "crypt/keytool/ca/cacert.pem";
   private static final String PASSWORD        = "password";
   private static final String SERVER_ADDRESS  = "https://localhost:1080";
   private static final String ADDRESS_PARAMS  = SERVER_ADDRESS + "/?username=112233&password=aabbcc";
   private static final String HTTP_SERVER_ADDRESS = "http://127.0.0.1:1080";
 
   @BeforeAll
-  public static void startMockServer() { mockServer = startClientAndServer(1080); } 
+  public static void startMockServer() { mockServer = startClientAndServer(1080); }
 
   @AfterAll
-  public static void stopMockServer() { mockServer.stop(); } 
+  public static void stopMockServer() { mockServer.stop(); }
 
   @BeforeEach
   public void setUp() throws Exception {
@@ -58,7 +58,7 @@ public class HttpsTests {
         entry("firstName", "Richard"),
         entry("middleName", " "),
         entry("lastName", "Lewis"));
-  } 
+  }
 
   public void createSecureGetExpectation() {
     this.mockServer
@@ -100,13 +100,13 @@ public class HttpsTests {
           exactly(1))
       .respond(
           response()
-          .withStatusCode(200) 
+          .withStatusCode(200)
           .withBody(
             json(
-              "{" + System.lineSeparator() + 
+              "{" + System.lineSeparator() +
                 "   \"username\": 112233," + System.lineSeparator() +
                 "   \"password\": \"aabbcc\"," + System.lineSeparator() +
-                "   \"balance\": 0.0," + System.lineSeparator() + 
+                "   \"balance\": 0.0," + System.lineSeparator() +
                 "   \"name\": [\"Patrick\", \" \", \"Bateman\"]" + System.lineSeparator() +
                 "}")
             )
@@ -145,7 +145,7 @@ public class HttpsTests {
       //.when(
           //request()
           //.withMethod("POST")
-          //.withPath("/register") 
+          //.withPath("/register")
           //.withBody(
               //json(
                 //"{" + System.lineSeparator() +
@@ -190,7 +190,7 @@ public class HttpsTests {
 
   @Test
   public void sendGET_LocalhostWithLogin_ReturnResponse() throws Exception {
-    createSecureLoginExpectation(); 
+    createSecureLoginExpectation();
     String response = conn.getWithSSL(ADDRESS_PARAMS, createSSLContext(createKeyStore(CLIENT_KEYSTORE, PASSWORD, certAuth), PASSWORD));
     System.out.println(response);
     assertNotNull(response);
@@ -205,7 +205,7 @@ public class HttpsTests {
     assertEquals("Successfully registered new user", response);
     assertEquals(200, conn.getResponseCode());
   }
-  
+
   //@Test
   //public void sendPOST_LocalhostWithLoginJSON_ReturnResponse {
     //createSecureSignUpExpectationJSON();
@@ -213,7 +213,7 @@ public class HttpsTests {
     //System.out.println(response);
     //assertNotNull(response);
     //assertEquals("Successfully registered new user", response);
-    //assertEquals(200, conn.getResponseCode()); 
+    //assertEquals(200, conn.getResponseCode());
   //}
 
 }
