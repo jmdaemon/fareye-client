@@ -65,23 +65,10 @@ def AppEntryPoint = 'ui.UI'
 
 mainClassName = AppEntryPoint
 
-jar {
-    //manifest {
-        //attributes 'Main-Class': AppEntryPoint
-    //}
-    //from {
-        //configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    //}
-}
-
 shadowJar {
     // https://stackoverflow.com/questions/32887966/shadow-plugin-gradle-what-does-mergeservicefiles-do
     mergeServiceFiles()
 }
-
-//springBoot {
-    //mainClassName = 'app.security'
-//}
 
 ext {
     src = "src/main/java"
