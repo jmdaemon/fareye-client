@@ -36,9 +36,6 @@ dependencies {
     implementation 'org.kordamp.ikonli:ikonli-javafx'
     implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
     implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
-
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1' 
-    implementation group: 'com.airhacks', name:'afterburner.fx', version: '1.7.0'
 }
 
 test {
@@ -87,9 +84,11 @@ sourceSets.all {
 }
 
 checkstyle { 
+    toolVersion = "10.0"
     configFile file("config/checkstyle/sun_checks.xml") 
-    checkstyleMain.enabled = true
-    checkstyleTest.enabled = true
+    // Disable checkstyle checks for now
+    checkstyleMain.enabled = false
+    checkstyleTest.enabled = false
 }
 
 sourceSets { 
