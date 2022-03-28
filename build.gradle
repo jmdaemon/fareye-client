@@ -14,19 +14,28 @@ repositories {
 
 dependencies {
 
+    // Unit Testing
+
+    // Test Framework
     testImplementation (platform('org.junit:junit-bom:5.7.0'))
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
+
+    // Mocking
+    testImplementation("org.mock-server:mockserver-netty:5.11.2")
+
+    // Logging
     implementation 'org.unix4j:unix4j-command:0.5'
 
+    // Graphics
+
+    // Icons
     implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
     implementation 'org.kordamp.ikonli:ikonli-core'
     implementation 'org.kordamp.ikonli:ikonli-javafx'
     implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
     implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
-
-    testImplementation("org.mock-server:mockserver-netty:5.11.2")
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1' 
     implementation group: 'com.airhacks', name:'afterburner.fx', version: '1.7.0'
@@ -44,7 +53,7 @@ test {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(15)
+        languageVersion = JavaLanguageVersion.of(17)
     }
     modularity.inferModulePath = true
 }
