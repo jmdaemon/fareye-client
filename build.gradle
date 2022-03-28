@@ -2,9 +2,8 @@ plugins {
 	id 'java'
   id 'java-library'
   id 'checkstyle'
-  id "com.scuilion.syntastic" version "0.3.8"
   id 'org.openjfx.javafxplugin' version '0.0.9'
-  //id 'org.springframework.boot' version '2.4.1'
+  //id "com.scuilion.syntastic" version "0.3.8"
   id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
@@ -19,7 +18,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
-    compile 'org.unix4j:unix4j-command:0.5'
+    implementation 'org.unix4j:unix4j-command:0.5'
 
     implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
     implementation 'org.kordamp.ikonli:ikonli-core'
@@ -29,8 +28,8 @@ dependencies {
 
     testImplementation("org.mock-server:mockserver-netty:5.11.2")
 
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1' 
-    compile group: 'com.airhacks', name:'afterburner.fx', version: '1.7.0'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1' 
+    implementation group: 'com.airhacks', name:'afterburner.fx', version: '1.7.0'
 }
 
 test {
