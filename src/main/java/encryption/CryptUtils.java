@@ -36,7 +36,7 @@ public class CryptUtils implements CryptSpecs {
 
   public static String bytesToString(byte[] hash) {
     String result = new String(hash, UTF_8);
-    return result; 
+    return result;
   }
 
 }

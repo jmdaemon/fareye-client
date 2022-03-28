@@ -17,19 +17,19 @@ public class CSV implements Delims {
 
   public static boolean fileExists(String filepath) {
     File f = new File(filepath);
-    if (f.exists() && !f.isDirectory()) { 
-      return true; 
-    } 
+    if (f.exists() && !f.isDirectory()) {
+      return true;
+    }
     return false;
   }
- 
+
   public static List<Line> grepFile(String keyword, String filepath) {
     File file = new File(filepath);
-    List<Line> results = Unix4j.grep(keyword, file).toLineList(); 
+    List<Line> results = Unix4j.grep(keyword, file).toLineList();
     return results;
   }
 
-  public static String cutTimeStamp(String line) { 
+  public static String cutTimeStamp(String line) {
     String[] slicedLine = line.split(COMMA_DELIM);
     return slicedLine[1];
   }
@@ -39,7 +39,7 @@ public class CSV implements Delims {
     String result = cutTimeStamp(entries.get(0).getContent());
     return result;
   }
-  
+
   public static String[] searchLogAll(String keyword, String filepath) {
     List<Line> entries = grepFile(keyword, filepath);
     String[] lines = new String[entries.size()];
@@ -63,12 +63,12 @@ public class CSV implements Delims {
     BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
     writer.append(entry);
     writer.close();
-  } 
+  }
 
-  public static void initializeLog(String initMSG, String filepath) throws IOException { 
+  public static void initializeLog(String initMSG, String filepath) throws IOException {
     String entry = msgToCSV(initMSG);
-    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath)); 
-    writer.write(entry); 
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+    writer.write(entry);
     writer.close();
   }
 }

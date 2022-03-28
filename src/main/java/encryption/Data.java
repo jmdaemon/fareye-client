@@ -15,14 +15,14 @@ public class Data extends CryptUtils {
   private static byte[] salt;
   private static SecretKey key;
 
-  public Data(byte[] iv, byte[] salt, SecretKey key) { 
+  public Data(byte[] iv, byte[] salt, SecretKey key) {
     Data.iv = iv;
     Data.salt = salt;
     Data.key = key;
   }
 
   public static byte[] genHeader(byte[] ciphertext) throws IOException {
-    ByteArrayOutputStream output = new ByteArrayOutputStream(); 
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
     output.write(Data.iv);
     if (Data.salt != null) { output.write(Data.salt); }
     output.write(ciphertext);
@@ -57,7 +57,7 @@ public class Data extends CryptUtils {
 
   public static byte[] decodeCiphertext(String ciphertextWithHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
     byte[] decodedCiphertext = decodeBase64(ciphertextWithHeader);
-    byte[] result = parseHeader(decodedCiphertext); 
+    byte[] result = parseHeader(decodedCiphertext);
     return result;
   }
 
@@ -70,8 +70,8 @@ public class Data extends CryptUtils {
     setKey(key);
   }
 
-  public static byte[] getIV()      { return Data.iv; } 
-  public static byte[] getSalt()    { return Data.salt; } 
+  public static byte[] getIV()      { return Data.iv; }
+  public static byte[] getSalt()    { return Data.salt; }
   public static SecretKey getKey()  { return Data.key; }
 
 }

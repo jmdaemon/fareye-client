@@ -24,13 +24,13 @@ public class Http {
       System.exit(1);
     }
     return url;
-  } 
+  }
 
   public String get(String to) throws IOException, InterruptedException {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(to))
-            .build();
+      .uri(URI.create(to))
+      .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     responseCode = response.statusCode();
@@ -40,9 +40,9 @@ public class Http {
   public String post(String to, String requestBody) throws IOException, InterruptedException {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(to))
-            .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-            .build();
+      .uri(URI.create(to))
+      .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+      .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     responseCode = response.statusCode();

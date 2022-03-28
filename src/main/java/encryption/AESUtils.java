@@ -31,21 +31,21 @@ public class AESUtils implements AESSpecs {
 
   public AESUtils() { }
 
-  public AESUtils(CIPHER_MODE mode) { 
-    switch(mode) { 
-      case IV_ONLY:   createDataIV();   break; 
-      case IV_SALT:   createDataSalt(); break; 
+  public AESUtils(CIPHER_MODE mode) {
+    switch(mode) {
+      case IV_ONLY:   createDataIV();   break;
+      case IV_SALT:   createDataSalt(); break;
       default:        createDataIV();   break;
-    } 
+    }
 
-    //try { 
-      //switch(mode) { 
-        //case IV_ONLY:   createDataIV();   break;
-        //case IV_SALT:   createDataSalt(); break;
-        //default:        createDataIV();   break;
-      //} 
+    //try {
+    //switch(mode) {
+    //case IV_ONLY:   createDataIV();   break;
+    //case IV_SALT:   createDataSalt(); break;
+    //default:        createDataIV();   break;
+    //}
     //} catch (Exception e) {
-      //e.printStackTrace();
+    //e.printStackTrace();
     //}
   }
 
@@ -54,7 +54,7 @@ public class AESUtils implements AESSpecs {
     //try {
     //createData(pswd);
     //} catch (Exception e) {
-      //e.printStackTrace();
+    //e.printStackTrace();
     //}
   }
 
@@ -80,22 +80,22 @@ public class AESUtils implements AESSpecs {
   //public static SecretKey genPswdKey(String pswd, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
   public static SecretKey genPswdKey(String pswd, byte[] salt) {
     SecretKey result = null;
-    try { 
+    try {
       result = new SecretKeySpec(genPswdHash(pswd, salt), "AES");
     } catch (Exception e) {
       e.printStackTrace();
-    } 
+    }
     if (isNull(result)) { System.exit(1); }
     return result;
   }
-  
+
   private Cipher initCipher(int cipherMode) throws Exception {
     Cipher result = Cipher.getInstance(AES_ALGORITHM);
     result.init(cipherMode, getKey(), new GCMParameterSpec(TAG_LENGTH_BIT, getIV()));
     return result;
   }
 
-  public byte[] encrypt(String plaintext) throws Exception { 
+  public byte[] encrypt(String plaintext) throws Exception {
     Cipher cipher = initCipher(Cipher.ENCRYPT_MODE);
     byte[] result = cipher.doFinal(stringToBytes(plaintext));
     return result;
@@ -105,14 +105,14 @@ public class AESUtils implements AESSpecs {
     byte[] ciphertext = encrypt(plaintext);
     byte[] result = data.genHeader(ciphertext);
     return data.encodeBase64(result);
-    }
+  }
 
-  public String decrypt(byte[] ciphertext) throws Exception { 
+  public String decrypt(byte[] ciphertext) throws Exception {
     Cipher cipher = initCipher(Cipher.DECRYPT_MODE);
     byte[] result = cipher.doFinal(ciphertext);
     return new String(result, UTF_8);
   }
-  
+
   public String decryptWithHeader(String ciphertextWithHeader) throws Exception {
     byte[] ciphertext = data.decodeCiphertext(ciphertextWithHeader);
     String result = decrypt(ciphertext);
@@ -120,16 +120,16 @@ public class AESUtils implements AESSpecs {
   }
 
   public void createDataIV()    { this.data = new Data(genIV(), null, genKey()); }
-  public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); } 
+  public void createDataSalt()  { this.data = new Data(genIV(), genSalt(), genKey()); }
   public void createData(String pswd) { this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt())); }
 
   //public void createData(String pswd) throws NoSuchAlgorithmException, InvalidKeySpecException {
-    //this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
+  //this.data = new Data (genIV(), genSalt(), genPswdKey(pswd, getSalt()));
   //}
- 
+
   public byte[] getSalt()   { return data.getSalt();  }
   public byte[] getIV()     { return data.getIV();    }
   public SecretKey getKey() { return data.getKey();   }
 
   public void setKey(SecretKey key) { data.setKey(key); }
-}
+  }

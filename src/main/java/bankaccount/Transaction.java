@@ -15,7 +15,7 @@ public class Transaction {
   }
 
   public static Transaction processPayment (BankAccount acct, double amount) {
-    
+
     Money accountFunds = acct.getBalance();
     Money fundsTo = Money.dollar(amount);
     return new Transaction(accountFunds, fundsTo);
@@ -27,7 +27,7 @@ public class Transaction {
 
   }
 
-  public Money depositFunds(String to) { 
+  public Money depositFunds(String to) {
     return bank.reduce(new Sum(this.accountFunds, this.fundsTo), to);
   }
 }

@@ -8,7 +8,7 @@ import app.money.*;
 
 import java.util.Random;
 
-public class BankAccount { 
+public class BankAccount {
   private final int MAX_ACCTNUM_LENGTH = 10000;
   private final int DEFAULT_PASS_LENGTH = 32;
   private int acctNum;
@@ -26,7 +26,7 @@ public class BankAccount {
     this.lName = lastName;
     this.pswd = genPswd(DEFAULT_PASS_LENGTH);
     this.filepath = ("./" + acctNum + "-transaction_history.csv");
-    if (makeLog) 
+    if (makeLog)
       initLog("New Bank Account Created", getFilePath());
   }
 
@@ -39,12 +39,12 @@ public class BankAccount {
   public boolean amountLessThanZero(double amount)    { return (amount < 0)   ? true : false;   }
   public boolean accountExists(BankAccount acct)      { return (acct != null) ? true : false;   }
 
-  public boolean acctHasFunds(double amount, BankAccount acct) { 
+  public boolean acctHasFunds(double amount, BankAccount acct) {
     Money acctBalance = acct.getBalance();
     boolean result = (acctBalance.greaterThan(amount) || acctBalance.equalsTo(amount)) ? true : false;
     return result;
   }
-  
+
   public boolean quitEarly(double amount, BankAccount acct) {
     boolean result = false;
     if (amountIsZero(amount) || amountLessThanZero(amount)) {
@@ -55,13 +55,13 @@ public class BankAccount {
     return result;
   }
 
-	public boolean deposit(double amount) {
+  public boolean deposit(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Deposit Unsuccessful"); }
 
     updateBalance((processPayment(this, amount)).depositFunds("USD"));
     logMessage("Deposit Successful", amount, getFilePath());
     return true;
-	}
+  }
 
   public boolean withdraw(double amount) {
     if (quitEarly(amount, this)) { return cancelProcess("Withdrawal Unsuccessful"); }
@@ -69,16 +69,16 @@ public class BankAccount {
     updateBalance((processPayment(this, amount)).withdrawFunds("USD"));
     logMessage("Withdrawal Successful", amount, getFilePath());
     return true;
-	}
+  }
 
-  public boolean transferTo (double amount, BankAccount target) { 
-    if (quitEarly(amount, this) || !accountExists(target)) { 
+  public boolean transferTo (double amount, BankAccount target) {
+    if (quitEarly(amount, this) || !accountExists(target)) {
       return cancelProcess("Transfer Failed");
     }
     updateBalance((processPayment(this, amount)).withdrawFunds("USD"));
     target.updateBalance((processPayment(target, amount)).depositFunds("USD"));
     logMessage(this, target, amount, getFilePath());
-    return true; 
+    return true;
   }
 
   public boolean checkPswd(String pass) {
@@ -97,7 +97,7 @@ public class BankAccount {
   void setLName(String lName) { this.lName = lName; }
   void updateBalance(Money newBalance) { this.balance = newBalance; }
 
-  private static int genRandNum(int len) { 
+  private static int genRandNum(int len) {
     Random randGen = new Random();
     int result = randGen.nextInt(len);
     return result;
@@ -108,7 +108,7 @@ public class BankAccount {
       throw new IllegalArgumentException("upperBound cannot be less than or equal to 1");
     }
     int result = genRandNum(upperBound-1) + 1;
-		return result;
+    return result;
   }
 
   private static String genPswd(int len) {
@@ -122,13 +122,13 @@ public class BankAccount {
     return result;
   }
 
-    public Money getBalance() { return this.balance; }
-    public int getAcctNum() { return this.acctNum; }
-    public String getFName() { return this.fName; }
-    public String getLName() { return this.lName; }
-    public String getFilePath() { return this.filepath; }
+  public Money getBalance() { return this.balance; }
+  public int getAcctNum() { return this.acctNum; }
+  public String getFName() { return this.fName; }
+  public String getLName() { return this.lName; }
+  public String getFilePath() { return this.filepath; }
 
-  public void display() { 
+  public void display() {
     System.out.println("Account #: " +  getAcctNum());
     System.out.println("Balance: " +    getBalance());
     System.out.println("First Name: " + getFName());
@@ -138,4 +138,4 @@ public class BankAccount {
       System.out.println(entry);
     }
   }
-} 
+}

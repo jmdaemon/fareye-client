@@ -14,15 +14,15 @@ public class Https {
 
   public int getResponseCode() { return responseCode; }
 
-  public String getResponseBody(HttpsURLConnection urlConnection) throws Exception { 
+  public String getResponseBody(HttpsURLConnection urlConnection) throws Exception {
     InputStream is = urlConnection.getInputStream();
     InputStreamReader isr = new InputStreamReader(is);
     BufferedReader br = new BufferedReader(isr);
     String input = null;
     StringBuilder response = new StringBuilder();
-      while ((input = br.readLine()) != null) {
-        response.append(input);
-    } 
+    while ((input = br.readLine()) != null) {
+      response.append(input);
+    }
     responseCode = urlConnection.getResponseCode();
     return response.toString();
   }
@@ -38,7 +38,7 @@ public class Https {
     HttpsURLConnection urlConnection = createSecureConnection(to, context);
     urlConnection.setRequestMethod("GET");
     return getResponseBody(urlConnection);
-  } 
+  }
 
   public String postWithSSL(String to, SSLContext context) throws Exception {
     HttpsURLConnection urlConnection = createSecureConnection(to, context);
@@ -47,8 +47,8 @@ public class Https {
   }
 
   public String sendPostCreds(String to, Map<String, String> params, SSLContext context) throws Exception {
-    String urlParameters  = "username=" + params.get("username") + 
-      "&password=" + params.get("password") + "&balance=" + params.get("balance") + 
+    String urlParameters  = "username=" + params.get("username") +
+      "&password=" + params.get("password") + "&balance=" + params.get("balance") +
       "&firstName=" + params.get("firstName") + "&middleName=" + params.get("middleName") + "&lastName=" + params.get("lastName");
 
     byte[] postData       = urlParameters.getBytes("UTF-8");
@@ -57,15 +57,15 @@ public class Https {
     urlConnection.setDoOutput(true);
     urlConnection.setInstanceFollowRedirects(false);
     urlConnection.setRequestMethod("GET");
-    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); 
+    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
     urlConnection.setRequestProperty("charset", "utf-8");
     urlConnection.setRequestProperty("Content-Length", String.valueOf(postDataLength));
     urlConnection.setUseCaches(false);
-    try( DataOutputStream wr = new DataOutputStream( urlConnection.getOutputStream())) { 
-      wr.write( postData ); 
+    try( DataOutputStream wr = new DataOutputStream( urlConnection.getOutputStream())) {
+      wr.write( postData );
     }
     return getResponseBody(urlConnection);
-    
+
   }
 
 }

@@ -1,4 +1,4 @@
-package app.utils.log; 
+package app.utils.log;
 
 import static app.utils.csv.CSV.*;
 import app.bankAccount.*;
@@ -11,12 +11,12 @@ public class Log implements Delims {
 
   public static String genTimeStamp() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy.mm.dd.HH.mm.sss");
-    Date date = new Date();  
+    Date date = new Date();
     return (formatter.format(date));
   }
 
   public static void logAppend(String msg, String filepath) {
-    try { 
+    try {
       writeToFile(msg + "\t\n", filepath);
     } catch (Exception e) {
       e.printStackTrace();
@@ -24,14 +24,14 @@ public class Log implements Delims {
   }
 
   public static void initLog(String initMSG, String filepath) {
-    try { 
+    try {
       initializeLog(genTimeStamp() + "\t" + initMSG + "\t\n", filepath);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  public static void logMessage(String msg, String filepath) { 
+  public static void logMessage(String msg, String filepath) {
     logAppend(genTimeStamp() + "\t" + msg, filepath);
   }
 
@@ -49,6 +49,6 @@ public class Log implements Delims {
   }
 
   public static void logMessage(BankAccount receiver, double amount, String filepath) {
-    logMessage(composeMsg("Transfer Failed", amount, "to account", receiver), filepath); 
+    logMessage(composeMsg("Transfer Failed", amount, "to account", receiver), filepath);
   }
 }

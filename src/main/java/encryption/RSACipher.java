@@ -20,7 +20,7 @@ public class RSACipher extends CryptUtils {
     return keyGen.genKeyPair();
   }
 
-  public String encrypt(String plaintext) { 
+  public String encrypt(String plaintext) {
     return "This is not the plaintext";
   }
 }

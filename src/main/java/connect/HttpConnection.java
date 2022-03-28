@@ -19,9 +19,9 @@ public class HttpConnection extends Connection {
     response = new StringBuilder();
     while ((input = in.readLine()) != null) {
       response.append(input);
-    } 
+    }
     in.close();
-    return response.toString(); 
+    return response.toString();
   }
 
   public void sendRequest(HttpURLConnection conn, String requestType, String params) throws ProtocolException, IOException {
@@ -39,7 +39,7 @@ public class HttpConnection extends Connection {
     sendRequest(conn, "GET", "");
     return getResponse(conn);
   }
-  
+
   public String post(String to, String params) throws ProtocolException, IOException {
     URL url = formRequest(to);
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
