@@ -1,11 +1,9 @@
 plugins {
-    id 'application'
-    //id 'java'
-    //id 'java-library'
+    id 'java'
     id 'checkstyle'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
-    //id "com.scuilion.syntastic" version "0.3.8"
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    //id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 repositories {
@@ -14,7 +12,6 @@ repositories {
 }
 
 dependencies {
-
     // Unit Testing
 
     // Test Framework
@@ -60,7 +57,7 @@ java {
 }
 
 javafx {
-    version = "17"
+    version = "17.0.1"
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
 }
 
@@ -69,14 +66,14 @@ jar {
     manifest {
         attributes 'Main-Class': 'app.ui.Launcher'
     }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    //from {
+        //configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    //}
 }
 
-shadowJar {
-    mergeServiceFiles()
-}
+//shadowJar {
+    //mergeServiceFiles()
+//}
 
 //springBoot {
     //mainClassName = 'app.security'
