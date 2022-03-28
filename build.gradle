@@ -70,6 +70,7 @@ shadowJar {
     mergeServiceFiles()
 }
 
+// Set custom source sets to compile certain files in certain directories only
 ext {
     src = "src/main/java"
     org = 'com/github/jmd' 
@@ -78,16 +79,16 @@ ext {
 }
 
 sourceSets.all { 
-ext.src = src
-ext.test = test
-ext.resources = resources
+    ext.src = src
+    ext.test = test
+    ext.resources = resources
 }
 
 checkstyle { 
     configFile file("checkstyle/sun_checks.xml") 
     // Ignore checks for style
-    checkstyleMain.enabled = false
-    checkstyleTest.enabled = false
+    checkstyleMain.enabled = true
+    checkstyleTest.enabled = true
 }
 
 sourceSets { 
