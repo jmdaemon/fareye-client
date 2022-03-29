@@ -20,5 +20,9 @@ public class OverlayController {
   @FXML
   private void initialize() {
   }
+
+  //public void show() {
+    //this.show();
+  //}
 }
 
