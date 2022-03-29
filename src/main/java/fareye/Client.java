@@ -1,5 +1,7 @@
 package app.fareye;
 
+import static app.utility.Random.generateRandomNumber;
+
 public class Client {
   /**
     * Client stores information for a Fareye Financial client
@@ -28,18 +30,6 @@ public class Client {
   public void setLastName(String lname)   { this.lastName = lname; }
 
   /**
-    * Generate a random number between lower-upper
-    * @param lower The minimum number that could be generated (inclusive).
-    * @param upper The maximum number that could be generated (inclusive).
-    * @return A random number inbetween lower and upper (inclusive).
-    */
-  private static int genRandNum(int lower, int upper) {
-    Random randGen = new Random();
-    int result = randGen.nextInt(upper) + lower;
-    return result;
-  }
-
-  /**
     * Generates secure, random passwords.
     * @param len The length of the password to generate
     */
@@ -49,7 +39,7 @@ public class Client {
 
     char[] password = new char[len];
     for (int i = 0; i < len; i++) {
-      password[i] = charset.charAt(genRandNum(charset.length()));
+      password[i] = charset.charAt(generateRandomNumber(charset.length()));
     }
     String result = String.valueOf(password);
     return result;
