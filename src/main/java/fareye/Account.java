@@ -70,13 +70,14 @@ public class Account extends Client {
     * Returns true if the amount is valid and false otherwise
     * @param transactionMessage A message containing the status of the attempted transaction
     */
-  public boolean amountIsValid(BigDecimal amount, String transactionMessage) {
+
+  public boolean amountIsNotValid(BigDecimal amount, String transactionMessage) {
     // Check if amount is valid
-    if (this.getBalance().compareTo(amount) == -1) {
+    if (!hasFunds(amount)) {
       // Log deposit
-      return false; // Return error code
+      return true; // Return error code
     } // Assume the amount is valid
-    return true;
+    return false;
   }
 
   /**
@@ -85,7 +86,7 @@ public class Account extends Client {
     * @return True if the transaction was successful and False if there was an error
    */
   public boolean deposit(BigDecimal amount) {
-    if (!amountIsValid(amount, "Deposit Unsuccessful")) return false;
+    if (amountIsNotValid(amount, "Deposit Unsuccessful")) return false;
 
     // Complete the deposit
     this.getBalance().add(amount);
@@ -98,7 +99,7 @@ public class Account extends Client {
     * @return True if the transaction was successful and False if there was an error
    */
   public boolean withdraw(BigDecimal amount) {
-    if (!amountIsValid(amount, "Withdrawal Unsuccessful")) return false;
+    if (amountIsNotValid(amount, "Withdrawal Unsuccessful")) return false;
 
     // Complete withdrawal
     this.getBalance().subtract(amount);
@@ -113,12 +114,14 @@ public class Account extends Client {
     * @return True if the transaction was successful and False if there was an error
     */
   public boolean transferTo(BigDecimal amount, Account target) {
-    if ((target == null) // If the account does not exist
-        || !amountIsValid(target.getBalance(), "Transfer Failed")) // Or the amount isn't valid
+    // If the target account doesn't exist or if we don't have money to transfer
+    if ((target == null) || !hasFunds(this)) {
+      // Log message "Transfer Failed"
       return false;
+    }
     this.withdraw(amount);
     target.deposit(amount);
-    // Log message
+    // Log message of successful transaction
     return true;
   }
 }
