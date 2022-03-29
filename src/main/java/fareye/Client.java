@@ -54,4 +54,13 @@ public class Client {
     String result = String.valueOf(password);
     return result;
   }
+
+  /**
+    * Check if password matches the user's password
+    */
+  public boolean checkPassword(String pass) {
+    boolean result = (this.password.equals(pass)) ? true : false;
+    return result;
+  }
+
 }
