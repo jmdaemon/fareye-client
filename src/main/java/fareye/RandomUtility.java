@@ -2,7 +2,7 @@ package app.utility;
 
 import java.util.Random;
 
-public class Random {
+public class RandomUtility {
   /**
     * Generate a random number between lower-upper
     * @param lower The minimum number that could be generated (inclusive).

@@ -1,6 +1,6 @@
 package app.fareye;
 
-import static app.utility.Random.generateRandomNumber;
+import static app.utility.RandomUtility.generateRandomNumber;
 
 public class Client {
   /**
@@ -33,13 +33,13 @@ public class Client {
     * Generates secure, random passwords.
     * @param len The length of the password to generate
     */
-  private static String generatePassword(int len) {
+  public static String generatePassword(int len) {
     // Our given character set to choose from
     final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
     char[] password = new char[len];
     for (int i = 0; i < len; i++) {
-      password[i] = charset.charAt(generateRandomNumber(charset.length()));
+      password[i] = charset.charAt(generateRandomNumber(0, charset.length()));
     }
     String result = String.valueOf(password);
     return result;
