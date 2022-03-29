@@ -60,7 +60,7 @@ javafx {
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
 }
 
-def AppEntryPoint = 'ui.UI'
+def AppEntryPoint = 'app.javafx.App'
 
 mainClassName = AppEntryPoint
 
@@ -74,7 +74,8 @@ ext {
     src = "src/main/java"
     org = 'com/github/jmd' 
     test = "src/test/java"
-    resources = "src/main/java/interface/resources"
+    //resources = "src/main/java/interface/resources"
+    resources = "${ext.src}/interface/resources"
 }
 
 sourceSets.all { 
@@ -94,7 +95,9 @@ checkstyle {
 sourceSets { 
     main {
         resources { 
-            srcDirs = [ "$src/interface/" ]
+            //srcDirs = [ "$src/interface/javafx" ]
+            //srcDirs = [ "$src/interface" ]
+            srcDirs = [ "$src/ui" ]
             includes = [ "**/*.fxml" , "**/*.css" , "**/*.properties"]
         }
          java {
@@ -102,7 +105,8 @@ sourceSets {
             //srcDirs = [ "$src/bankaccount", "$src/money"]
             //srcDirs = [ "$src/connect/" ]
             //srcDirs = [ "$src/interface/" ]
-            srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface/" ]
+            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface" ]
+            srcDirs = [ "$src/bankaccount", "$src/money", "$src/ui/javafx" ]
             //srcDirs = [ "$src/security" ]
             //srcDirs = [ "$src/security", "$src/connect/"]
          }
@@ -114,7 +118,8 @@ sourceSets {
             //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
             //srcDirs = [ "$test/bankaccount", "$test/money"]
             //srcDirs = [ "$test/connect/" ]
-            srcDirs = [ "$test/bankaccount", "$test/money", "$test/interface/" ]
+            //srcDirs = [ "$test/bankaccount", "$test/money", "$test/interface" ]
+            srcDirs = [ "$test/bankaccount", "$test/money", "$test/ui/javafx" ]
             //srcDirs = [ "$test/security" ]
             //srcDirs = [ "$test/security", "$test/connect/"]
         }
