@@ -39,6 +39,7 @@ dependencies {
 
     // My Custom Dependencies
     implementation 'io.github.jmdaemon:toolbox:0.1.2'
+    implementation 'io.github.jmdaemon:crypt:0.1.0'
 }
 
 test {
