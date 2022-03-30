@@ -1,6 +1,6 @@
 package app.fareye;
 
-import static app.utility.RandomUtility.generateRandomNumber;
+import static toolbox.RandomUtility.generateRandomNumber;
 
 public class Client {
   /**
