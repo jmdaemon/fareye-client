@@ -14,7 +14,6 @@ include('src')
 
 sourceControl {
     gitRepository("https://github.com/jmdaemon/toolbox.git") {
-        //producesModule('io.github.jmdaemon:toolbox')
-        producesModule('io.github.jmdaemon.toolbox:lib')
+        producesModule('io.github.jmdaemon:toolbox')
     }
 }
