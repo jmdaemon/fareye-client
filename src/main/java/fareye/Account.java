@@ -11,7 +11,7 @@ public class Account extends Client {
     *
     * Attributes:
     *
-    * accountNumber: The account id used for transferring funds to an account
+    * pin: The account id used for transferring funds to an account
     * balance: The current balance in the account
     * transactionLogId: The transaction log id used to lookup past transaction histories
     */
@@ -24,32 +24,32 @@ public class Account extends Client {
   private static final int DEFAULT_PASS_LENGTH = 32;
 
 
-  private int accountNumber;
+  private int pin;
   private BigDecimal balance;
   private String transactionLogId;
 
   public Account(String fname, String mname, String lname) {
     super(fname, mname, lname, generatePassword(DEFAULT_PASS_LENGTH));
-    this.accountNumber = 0;
+    this.pin = 0;
     this.balance = new BigDecimal(0);
   }
 
   public Account(String fname, String mname, String lname, String password,
       int acctNum, BigDecimal bal) {
     super(fname, mname, lname, password);
-    this.accountNumber = acctNum;
+    this.pin = acctNum;
     this.balance = bal;
   }
 
   // Getters
-  public int getAccountNumber()       { return this.accountNumber; }
+  public int getPin()                 { return this.pin; }
   public BigDecimal getBalance()      { return this.balance; }
   public String getTransactionLogID() { return this.transactionLogId; }
 
   // Setters
-  public void setAccountNumber(int newNumber) { this.accountNumber = newNumber; }
-  public void setBalance(BigDecimal bal) { this.balance = bal; }
-  public void setTransactionLogID(String id) { this.transactionLogId = id; }
+  public void setPin(int pin)               { this.pin = pin; }
+  public void setBalance(BigDecimal bal)    { this.balance = bal; }
+  public void setTransactionLogID(String id){ this.transactionLogId = id; }
 
   /**
     * Check if the account has enough funds for a transaction
