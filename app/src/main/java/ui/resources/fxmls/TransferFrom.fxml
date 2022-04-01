@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" layoutX="6.0" layoutY="150.0" prefHeight="100.0" prefWidth="200.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+         </padding>
+         <children>
+            <VBox alignment="CENTER" spacing="6.0">
+               <children>
+                  <Label text="Transfer Funds From:" />
+                  <TextField promptText="User's Pin:" />
+                  <TextField promptText="User's Password" />
+                  <Label text="To:" />
+                  <TextField promptText="Your Pin:" />
+                  <TextField promptText="Your Password:" />
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" text="Transfer" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+   </padding>
+</AnchorPane>
