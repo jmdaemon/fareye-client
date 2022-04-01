@@ -1,13 +1,32 @@
 plugins {
-    //id 'java'
-    id 'checkstyle'
     id 'application'
+    id 'checkstyle'
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
+group = 'io.github.jmdaemon'
+version = '0.1.0'
+
+def AppEntryPoint = 'app.ui.javafx.App'
+
+// Set custom source sets to compile certain files in certain directories only
+ext {
+    src = "src/main/java"
+    org = group
+    test = "src/test/java"
+    resources = "${ext.src}/interface/resources"
+}
+
+sourceSets.all { 
+    ext.src = src
+    ext.test = test
+    ext.resources = resources
+}
+
 repositories {
     mavenCentral()
+    // Add jars in app/libs
     flatDir {
         dirs 'libs'
     }
@@ -64,7 +83,6 @@ javafx {
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
 }
 
-def AppEntryPoint = 'app.ui.javafx.App'
 
 application {
     mainClass = AppEntryPoint
@@ -75,22 +93,6 @@ shadowJar {
     mergeServiceFiles()
 }
 
-group = 'io.github.jmdaemon'
-version = '0.1.5'
-
-// Set custom source sets to compile certain files in certain directories only
-ext {
-    src = "src/main/java"
-    org = group
-    test = "src/test/java"
-    resources = "${ext.src}/interface/resources"
-}
-
-sourceSets.all { 
-    ext.src = src
-    ext.test = test
-    ext.resources = resources
-}
 
 checkstyle { 
     toolVersion = "10.0"
@@ -103,37 +105,17 @@ checkstyle {
 sourceSets { 
     main {
         resources { 
-            //srcDirs = [ "$src/interface/javafx" ]
-            //srcDirs = [ "$src/interface" ]
             srcDirs = [ "$src/ui" ]
             includes = [ "**/*.fxml" , "**/*.css" , "**/*.properties"]
         }
         java {
-            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/encryption"]
-            //srcDirs = [ "$src/bankaccount", "$src/money"]
-            //srcDirs = [ "$src/connect/" ]
-            //srcDirs = [ "$src/interface/" ]
-            //srcDirs = [ "$src/bankaccount", "$src/money", "$src/interface" ]
-            //srcDirs = [ "$src/fareye", "$src/money", "$src/ui/javafx" ]
-            //srcDirs = [ "$src/ui/javafx" ]
             srcDirs = [ "$src/ui" ]
-            //srcDirs = [ "$src/security" ]
-            //srcDirs = [ "$src/security", "$src/connect/"]
          }
-
     }
-
     test {
         java {
-            //srcDirs = [ "$test/bankaccount", "$test/money", "$test/encryption"]
-            //srcDirs = [ "$test/bankaccount", "$test/money"]
-            //srcDirs = [ "$test/connect/" ]
-            //srcDirs = [ "$test/bankaccount", "$test/money", "$test/interface" ]
-            //srcDirs = [ "$src/fareye", "$test/money", "$test/ui/javafx" ]
-            //srcDirs = [ "$test/ui/javafx" ]
             srcDirs = [ "$test/ui" ]
-            //srcDirs = [ "$test/security" ]
-            //srcDirs = [ "$test/security", "$test/connect/"]
+
         }
     }
 }
