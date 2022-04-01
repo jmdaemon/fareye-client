@@ -7,11 +7,11 @@
  * in the user manual at https://docs.gradle.org/6.7/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'fareye-client'
+//rootProject.name = 'fareye-client'
+rootProject.name = 'Fareye'
 
 // Look for build.gradle in following dirs
 include('app')  
-//include('src')  
 
 //sourceControl {
     //gitRepository("https://github.com/jmdaemon/toolbox.git") {
@@ -21,6 +21,3 @@ include('app')
         //producesModule('io.github.jmdaemon.crypt:crypt')
     //}
 //}
-
-//includeBuild('../toolbox')
-//includeBuild('../crypt')

@@ -57,8 +57,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
-    //modularity.inferModulePath = true
-
+    modularity.inferModulePath = true
 }
 
 //tasks.register("compile") {
@@ -75,7 +74,7 @@ javafx {
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
 }
 
-def AppEntryPoint = 'app.javafx.App'
+def AppEntryPoint = 'app.ui.javafx.App'
 
 application {
 //mainClassName = AppEntryPoint

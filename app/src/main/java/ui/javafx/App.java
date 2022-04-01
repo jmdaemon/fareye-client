@@ -1,4 +1,4 @@
-package app.javafx;
+package app.ui.javafx;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 
 public class App extends Application {
 
@@ -27,6 +28,25 @@ public class App extends Application {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    // Load the StackPane
+    StackPane stackPane = null;
+    stackPane = (StackPane) scene.getRoot().getChildrenUnmodifiable().get(0);
+    //try {
+      //stackPane = (new FXMLLoader(getClass().getResource("/resources/fxmls/MainWindow.fxml"))).load();
+    //} catch (IOException e) {
+      //e.printStackTrace();
+    //}
+
+    // Load our window
+    AnchorPane homePane = null;
+    try {
+      homePane = (new FXMLLoader(getClass().getResource("/resources/fxmls/NavButtons.fxml"))).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    stackPane.getChildren().add(homePane);
+
     stage.setTitle("Fareye Financial");
     stage.setScene(scene);
     stage.show();
