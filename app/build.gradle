@@ -15,13 +15,14 @@ ext {
     src = "src/main/java"
     org = group
     test = "src/test/java"
-    resources = "${ext.src}/interface/resources"
+    //resources = "${ext.src}/interface/resources"
+    //resources = "${src}/resources"
 }
 
 sourceSets.all { 
     ext.src = src
     ext.test = test
-    ext.resources = resources
+    //ext.resources = resources
 }
 
 repositories {
@@ -105,7 +106,8 @@ checkstyle {
 sourceSets { 
     main {
         resources { 
-            srcDirs = [ "$src/ui" ]
+            //srcDirs = [ "$src/ui" ]
+            //srcDirs = [ "$src/ui" ]
             includes = [ "**/*.fxml" , "**/*.css" , "**/*.properties"]
         }
         java {

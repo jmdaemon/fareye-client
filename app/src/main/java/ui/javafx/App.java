@@ -20,7 +20,9 @@ public class App extends Application {
   public void start(Stage stage) {
     Scene scene = null;
     try {
-    scene = new Scene(((new FXMLLoader(getClass().getResource("/resources/fxmls/MainWindow.fxml"))).load()), 600, 400);
+    //scene = new Scene(((new FXMLLoader(getClass().getResource("/resources/fxmls/MainWindow.fxml"))).load()), 600, 400);
+    //scene = new Scene(((new FXMLLoader(getClass().getResource("/fxmls/MainWindow.fxml"))).load()), 600, 400);
+    scene = new Scene(((new FXMLLoader(getClass().getResource("/fxmls/MainWindow.fxml"))).load()), 600, 400);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -32,7 +34,8 @@ public class App extends Application {
     // Load our window
     AnchorPane homePane = null;
     try {
-      homePane = (new FXMLLoader(getClass().getResource("/resources/fxmls/NavButtons.fxml"))).load();
+      homePane = (new FXMLLoader(getClass().getResource("/fxmls/NavButtons.fxml"))).load();
+      //homePane = (new FXMLLoader(getClass().getResource("/resources/fxmls/NavButtons.fxml"))).load();
     } catch (IOException e) {
       e.printStackTrace();
     }
