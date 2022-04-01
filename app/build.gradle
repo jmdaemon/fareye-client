@@ -40,7 +40,6 @@ dependencies {
     // My Custom Dependencies
     //implementation 'io.github.jmdaemon:toolbox:0.1.2'
     //implementation 'io.github.jmdaemon:crypt:0.1.0'
-    //implementation 'io.github.jmdaemon.crypt:crypt:0.1.0'
 }
 
 test {
@@ -60,15 +59,6 @@ java {
     modularity.inferModulePath = true
 }
 
-//tasks.register("compile") {
-    ////dependsOn gradle.includedBuild('toolbox').task(':toolbox:build')
-    ////dependsOn gradle.includedBuild('crypt').task(':crypt:build')
-
-    //dependsOn gradle.includedBuild('../toolbox').task(':toolbox:build')
-    //dependsOn gradle.includedBuild('../crypt').task(':crypt:build')
-//}
-
-
 javafx {
     version = "17.0.1"
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
@@ -77,7 +67,6 @@ javafx {
 def AppEntryPoint = 'app.ui.javafx.App'
 
 application {
-//mainClassName = AppEntryPoint
     mainClass = AppEntryPoint
 }
 
@@ -94,7 +83,6 @@ ext {
     src = "src/main/java"
     org = group
     test = "src/test/java"
-    //resources = "src/main/java/interface/resources"
     resources = "${ext.src}/interface/resources"
 }
 
