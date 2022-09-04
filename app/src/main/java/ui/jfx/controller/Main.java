@@ -3,10 +3,12 @@ package jfx.controller;
 // Standard Library
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 // JavaFX
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +45,14 @@ public class Main {
     @FXML private Font x3;
     @FXML private Color x4;
 
+    //private static ObservableList<String> FXML = FXCollections.observableArrayList(
+            //"Deposit",
+            //"Withdraw",
+            //"History"
+            //);
+    // HashMap of Displayed Text, FXML resource files
+    private static ObservableMap<String, String> Views = FXCollections.observableHashMap();
+
     //private AnchorPane setupController(String fxmlPath, EventAwareController controller) {
     private AnchorPane setupController(String fxmlPath, Object controller) {
         var loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -75,7 +85,9 @@ public class Main {
         Object controller = null;
         //var pane = setupController(view, controller);
         System.out.println(view);
-        var fxml = "/fxmls/"+ view + ".fxml";
+
+        //var fxml = "/fxmls/"+ view + ".fxml";
+        var fxml = "/fxmls/"+ Views.get(view) + ".fxml";
         //load(view, controller);
         load(fxml, controller);
     }
@@ -83,12 +95,26 @@ public class Main {
     @FXML public void initialize() {
     //this.lv_sidebar.addLi
     // Navigate views using the sidebar
-    ObservableList<String> list = FXCollections.observableArrayList(
-            "Deposit",
-            "Withdraw",
-            "History"
-            );
+    //ObservableList<String> list = FXCollections.observableArrayList(
+            //"Deposit",
+            //"Withdraw",
+            //"History"
+            //);
     //list.add("Deposit");
+    //this.lv_sidebar.setItems(list);
+    //Views.putAll(
+            //Map.of("", ""),
+            //Map.of("", "")
+            //);
+    Views.put("Deposit", "Deposit");
+    Views.put("Withdraw", "Withdraw");
+    Views.put("History", "History");
+    Views.put("Change Password", "ResetPassword");
+
+    //Views.put("Withdraw", "Withdraw");
+
+    // Construct list of displayed names from hashmap keys
+    ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());
     this.lv_sidebar.setItems(list);
     this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
     }
