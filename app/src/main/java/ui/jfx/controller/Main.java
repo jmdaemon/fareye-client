@@ -2,8 +2,6 @@ package jfx.controller;
 
 // Standard Library
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 // JavaFX
 import javafx.collections.FXCollections;
@@ -15,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -80,35 +77,6 @@ public class Main {
     }
 
     @FXML public void initialize() {
-    // Resize the list view
-    //this.lv_sidebar.prefHeightProperty().bind(this.ap_sidebar.heightProperty());
-
-    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.heightProperty());
-    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.heightProperty());
-
-    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.heightProperty());
-    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.heightProperty());
-
-    // Expand the split pane with the main vbox
-
-    //this.splitpane_main.minHeightProperty().bind(this.vb_main.maxHeightProperty());
-    //this.scrollpane_main.minHeightProperty().bind(this.vb_main.maxHeightProperty());
-    //this.ap_sidebar.minHeightProperty().bind(this.vb_main.maxHeightProperty());
-
-    //this.lv_sidebar.minHeightProperty().bind(this.vb_main.maxHeightProperty());
-
-    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.prefHeightProperty());
-    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.prefHeightProperty());
-
-
-    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.maxHeightProperty());
-    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.maxHeightProperty());
-
-    //this.lv_sidebar.prefHeightProperty().bind(this.ap_sidebar.maxHeightProperty());
-
-
-
-
     // Initialize the sidebar
     Views.put("Deposit", "Deposit");
     Views.put("Withdraw", "Withdraw");
