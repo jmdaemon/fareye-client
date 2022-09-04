@@ -13,11 +13,12 @@ rootProject.name = 'Fareye'
 // Look for build.gradle in following dirs
 include('app')  
 
-//sourceControl {
-    //gitRepository("https://github.com/jmdaemon/toolbox.git") {
-        //producesModule('io.github.jmdaemon:toolbox')
-    //}
-    //gitRepository("https://github.com/jmdaemon/crypt.git") {
+sourceControl {
+    gitRepository("https://github.com/jmdaemon/toolbox.git") {
+        producesModule('io.github.jmdaemon:toolbox')
+    }
+    gitRepository("https://github.com/jmdaemon/crypt.git") {
+        producesModule('io.github.jmdaemon:crypt')
         //producesModule('io.github.jmdaemon.crypt:crypt')
-    //}
-//}
+    }
+}
