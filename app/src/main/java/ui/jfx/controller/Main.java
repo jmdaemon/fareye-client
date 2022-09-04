@@ -83,7 +83,10 @@ public class Main {
     @FXML public void initialize() {
     //this.lv_sidebar.addLi
     // Navigate views using the sidebar
-    ObservableList<String> list = FXCollections.observableArrayList("Deposit");
+    ObservableList<String> list = FXCollections.observableArrayList(
+            "Deposit",
+            "Withdraw"
+            );
     //list.add("Deposit");
     this.lv_sidebar.setItems(list);
     this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
