@@ -45,18 +45,15 @@ public class Main {
     @FXML private Font x3;
     @FXML private Color x4;
 
-    //private static ObservableList<String> FXML = FXCollections.observableArrayList(
-            //"Deposit",
-            //"Withdraw",
-            //"History"
-            //);
-    // HashMap of Displayed Text, FXML resource files
+    // HashMap<Sidebar Display Name, FXML Resource Files>
     private static ObservableMap<String, String> Views = FXCollections.observableHashMap();
 
-    //private AnchorPane setupController(String fxmlPath, EventAwareController controller) {
-    private AnchorPane setupController(String fxmlPath, Object controller) {
+    private String getFXMLPath(String displayName) {
+        return "/fxmls/" + Views.get(displayName) + ".fxml";
+    }
+
+    private AnchorPane setupController(String fxmlPath) {
         var loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        //loader.setController(controller);
         AnchorPane pane = null;
         try {
             pane = (AnchorPane) loader.load();
@@ -67,51 +64,30 @@ public class Main {
     }
 
     /** Switches the main stack pane to the new pane */
-    //public void load(String view, EventAwareController controller) {
-    public void load(String view, Object controller) {
+    public void load(String view) {
         // Remove the old view
         System.out.println("Clearing old view");
         this.stackpane_main.getChildren().clear();
 
         // Navigate to new pane
         System.out.println("Showing new view");
-        this.stackpane_main.getChildren().addAll(setupController(view, controller));
+        this.stackpane_main.getChildren().addAll(setupController(view));
     }
 
     @FXML public void navigate(MouseEvent e) {
         var view = this.lv_sidebar.getSelectionModel().getSelectedItem();
         // TODO: Find a way to setup the controllers for the views
-        //EventAwareController controller = null;
-        Object controller = null;
-        //var pane = setupController(view, controller);
         System.out.println(view);
-
-        //var fxml = "/fxmls/"+ view + ".fxml";
-        var fxml = "/fxmls/"+ Views.get(view) + ".fxml";
-        //load(view, controller);
-        load(fxml, controller);
+        load(getFXMLPath(view));
     }
 
     @FXML public void initialize() {
-    //this.lv_sidebar.addLi
-    // Navigate views using the sidebar
-    //ObservableList<String> list = FXCollections.observableArrayList(
-            //"Deposit",
-            //"Withdraw",
-            //"History"
-            //);
-    //list.add("Deposit");
-    //this.lv_sidebar.setItems(list);
-    //Views.putAll(
-            //Map.of("", ""),
-            //Map.of("", "")
-            //);
     Views.put("Deposit", "Deposit");
     Views.put("Withdraw", "Withdraw");
     Views.put("History", "History");
     Views.put("Change Password", "ResetPassword");
-
-    //Views.put("Withdraw", "Withdraw");
+    Views.put("Transfer From", "TransferFrom");
+    Views.put("Transfer To", "TrasnferTo");
 
     // Construct list of displayed names from hashmap keys
     ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());
