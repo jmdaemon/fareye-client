@@ -6,25 +6,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="navAnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="navVBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+            <HBox fx:id="navHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
                <children>
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Withdraw" />
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Deposit" />
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="History" />
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Logout" />
+                  <Button fx:id="withdrawButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Withdraw" />
+                  <Button fx:id="depositButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Deposit" />
+                  <Button fx:id="historyButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="History" />
+                  <Button fx:id="logoutButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Logout" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
                <children>
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Transfer To" />
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Transfer From" />
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Reset Password" />
-                  <Button minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Empty Account" />
+                  <Button fx:id="transferToButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Transfer To" />
+                  <Button fx:id="transferFromButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Transfer From" />
+                  <Button fx:id="resetPasswordButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Reset Password" />
+                  <Button fx:id="emptyAccountButton" minHeight="64.0" minWidth="96.0" mnemonicParsing="false" text="Empty Account" />
                </children>
             </HBox>
          </children>
