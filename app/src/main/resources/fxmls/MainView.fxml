@@ -38,7 +38,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -92,17 +91,13 @@
     </MenuBar>
     <SplitPane fx:id="splitpane_main" dividerPositions="0.2, 0.7506" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-            <ScrollPane fx:id="scrollpane_main" hbarPolicy="NEVER" maxWidth="200.0" minWidth="200.0">
-               <content>
-              <AnchorPane fx:id="ap_sidebar">
-                <children>
-                        <ListView fx:id="lv_sidebar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="586.0" prefWidth="200.0" />
-                </children>
-              </AnchorPane>
-               </content>
-            </ScrollPane>
+            <VBox fx:id="vb_sidebar" maxWidth="200.0" minWidth="200.0">
+               <children>
+                  <ListView fx:id="lv_sidebar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
             <StackPane fx:id="stackpane_main" prefHeight="150.0" prefWidth="200.0" />
-        <AnchorPane fx:id="ap_right">
+        <AnchorPane fx:id="ap_right" maxWidth="600.0" minWidth="200.0">
           <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false">
                      <font>

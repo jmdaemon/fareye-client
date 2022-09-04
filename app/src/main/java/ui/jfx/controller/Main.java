@@ -32,14 +32,13 @@ public class Main {
     @FXML private HBox hb_main;
     @FXML private Label lbl_footer_left;
     @FXML private Label lbl_footer_right;
-    //@FXML private ListView<?> lv_sidebar;
     @FXML private ListView<String> lv_sidebar;
     @FXML private MenuBar mb_main;
     @FXML private Pane pane_footer;
-    @FXML private ScrollPane scrollpane_main;
     @FXML private SplitPane splitpane_main;
     @FXML private StackPane stackpane_main;
     @FXML private VBox vb_main;
+    @FXML private VBox vb_sidebar;
     @FXML private Font x1;
     @FXML private Color x2;
     @FXML private Font x3;
@@ -76,12 +75,41 @@ public class Main {
 
     @FXML public void navigate(MouseEvent e) {
         var view = this.lv_sidebar.getSelectionModel().getSelectedItem();
-        // TODO: Find a way to setup the controllers for the views
         System.out.println(view);
         load(getFXMLPath(view));
     }
 
     @FXML public void initialize() {
+    // Resize the list view
+    //this.lv_sidebar.prefHeightProperty().bind(this.ap_sidebar.heightProperty());
+
+    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.heightProperty());
+    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.heightProperty());
+
+    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.heightProperty());
+    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.heightProperty());
+
+    // Expand the split pane with the main vbox
+
+    //this.splitpane_main.minHeightProperty().bind(this.vb_main.maxHeightProperty());
+    //this.scrollpane_main.minHeightProperty().bind(this.vb_main.maxHeightProperty());
+    //this.ap_sidebar.minHeightProperty().bind(this.vb_main.maxHeightProperty());
+
+    //this.lv_sidebar.minHeightProperty().bind(this.vb_main.maxHeightProperty());
+
+    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.prefHeightProperty());
+    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.prefHeightProperty());
+
+
+    //this.lv_sidebar.minHeightProperty().bind(this.ap_sidebar.maxHeightProperty());
+    //this.lv_sidebar.maxHeightProperty().bind(this.ap_sidebar.maxHeightProperty());
+
+    //this.lv_sidebar.prefHeightProperty().bind(this.ap_sidebar.maxHeightProperty());
+
+
+
+
+    // Initialize the sidebar
     Views.put("Deposit", "Deposit");
     Views.put("Withdraw", "Withdraw");
     Views.put("History", "History");
