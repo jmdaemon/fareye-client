@@ -85,7 +85,8 @@ public class Main {
     // Navigate views using the sidebar
     ObservableList<String> list = FXCollections.observableArrayList(
             "Deposit",
-            "Withdraw"
+            "Withdraw",
+            "History"
             );
     //list.add("Deposit");
     this.lv_sidebar.setItems(list);
