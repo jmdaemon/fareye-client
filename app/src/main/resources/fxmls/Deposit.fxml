@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import ui.jfx.components.TransactionButton?>
 
 <!--<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepositController">-->
 
@@ -13,15 +11,7 @@
    <children>
       <VBox fx:id="vb_deposit" alignment="CENTER" layoutX="223.0" layoutY="106.0" prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox fx:id="hb_deposit" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
-               <children>
-                  <TextField fx:id="tf_amount" promptText="Amount:" />
-                  <Button fx:id="btn_deposit" mnemonicParsing="false" text="Deposit" />
-               </children>
-               <padding>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-               </padding>
-            </HBox>
+            <TransactionButton fx:id="tb_deposit" buttonLabel="Deposit" />
          </children>
       </VBox>
    </children>
