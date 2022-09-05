@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
@@ -28,7 +27,6 @@ public class Login {
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
-    //@FXML private TextField tf_pass;
     @FXML private EnterField ef_pass;
     @FXML private TextField tf_pin;
     @FXML private VBox vb_login;
@@ -58,14 +56,11 @@ public class Login {
         var logger = Global.getLogger();
 
         if (isUser) {
-            //System.out.println();
             logger.info("Login Successful");
-            //Account acct = new Account("", "", "");
             Account acct = Global.getAcct();
             acct.setPin(Integer.parseInt(s_pin));
 
             // Navigate to MainView
-            //System.out.println("Navigating to MainView / Dashboard");
             logger.info("Navigating to MainView / Dashboard");
 
             // Load function
@@ -94,10 +89,5 @@ public class Login {
 
         // Login with enter KeyPress on password field
         this.ef_pass.handleEnter(() -> { this.login(); } );
-        //this.tf_pass.setOnKeyPressed(e -> {
-            //if (e.getCode() == KeyCode.ENTER) {
-                //this.login();
-            //}
-        //});
     }
 }

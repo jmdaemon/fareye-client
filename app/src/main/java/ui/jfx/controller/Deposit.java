@@ -5,7 +5,6 @@ import ui.jfx.components.TransactionButton;
 import ui.jfx.Global;
 
 // JavaFX
-import javafx.scene.input.KeyCode;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -32,17 +31,8 @@ public class Deposit {
 
     @FXML
     public void initialize() {
-        this.tb_deposit.getButton().setOnMouseClicked(e -> {
-            deposit();
-        });
-
-        // On enter, attempt deposit
-        this.tb_deposit.getTextField().setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                this.deposit();
-            }
-        });
-
+        this.tb_deposit.getButton().setOnMouseClicked(e -> { deposit(); });
+        this.tb_deposit.getEnterField().handleEnter(() -> { deposit(); });
     }
 }
 
