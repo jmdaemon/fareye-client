@@ -89,7 +89,7 @@ application {
     //mergeServiceFiles()
 //}
 
-checkstyle { 
+checkstyle {
     toolVersion = "10.0"
     configFile file("config/checkstyle/sun_checks.xml") 
     // Disable checkstyle checks for now
@@ -120,6 +120,27 @@ sourceSets {
             exclude "money"
             exclude "old"
             exclude "ui"
+        }
+    }
+}
+
+tasks.register('showprops') {
+    doLast {
+        //println commandLineProjectProp
+        //println gradlePropertiesProp
+        //println systemProjectProp
+        def logging = System.properties['logging']
+        if (logging) {
+            println "Logging: Enabled"
+        } else {
+            println "Logging: Disabled"
+        }
+
+        def color = System.properties['color']
+        if (color) {
+            println "Colored logging: Enabled"
+        } else {
+            println "Colored logging: Disabled"
         }
     }
 }

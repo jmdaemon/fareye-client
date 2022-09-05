@@ -19,6 +19,5 @@ sourceControl {
     }
     gitRepository("https://github.com/jmdaemon/crypt.git") {
         producesModule('io.github.jmdaemon:crypt')
-        //producesModule('io.github.jmdaemon.crypt:crypt')
     }
 }

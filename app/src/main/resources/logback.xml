@@ -2,18 +2,18 @@
   <!-- Enable logging with colors -->
   <appender name="COLOR" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <!--<pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] [%level] %msg%n</pattern>-->
       <pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] %highlight([%level]) %msg%n</pattern>
     </encoder>
   </appender>
   <appender name="NOCOLOR" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] %highlight([%level]) %msg%n</pattern>
-      <!--<pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] [%level] %msg%n</pattern>-->
-      <!--<pattern>[%date] [%level] [%logger{10} %file:%line] %msg%n</pattern>-->
-  </encoder>
+      <pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] [%level] %msg%n</pattern>
+    </encoder>
   </appender>
 
+  <!-- TODO: Broken at the moment
+    For some reason, even when running with gradle run -Dcolor, the options aren't
+    passed to the binary properly, and as a result, cannot be toggled at runtime. -->
   <root level="debug">
     <if condition='isDefined("color")'>
       <then>
@@ -21,8 +21,7 @@
       </then>
       <else>
         <appender-ref ref="NOCOLOR"/>
-    </else>
-  </if>
-    <!--<appender-ref ref="STDOUT" />-->
+      </else>
+    </if>
   </root>
 </configuration>
