@@ -1,34 +1,22 @@
-//package jfx.controller;
-//package ui.jfx.controller;
-package jfx.controller;
+package ui.jfx.controller;
 
 // Imports
-//import app.fareye.Account;
 import fareye.Account;
 
 // Standard Library
 import java.io.IOException;
-import java.util.List;
 
 // JavaFX Imports
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.stage.Window;
-
-import javafx.event.ActionEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.KeyCode;
-
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
 public class Login {
@@ -57,58 +45,43 @@ public class Login {
         return isUser;
     }
 
-    //@FXML public void login(KeyEvent e) {
-    //}
-
-    //@FXML public void login(MouseEvent e) {
     public void login() {
-    // Parse the inputs
-    String s_pin = tf_pin.getText();
-    String s_pass = tf_pass.getText();
+        // Parse the inputs
+        String s_pin = tf_pin.getText();
+        String s_pass = tf_pass.getText();
 
-    // Validate the inputs
-    var isUser = isValidUser(s_pin, s_pass);
+        // Validate the inputs
+        var isUser = isValidUser(s_pin, s_pass);
 
-    if (isUser) {
-        System.out.println("Login Successful");
-        Account acct = new Account("", "", "");
-        acct.setPin(Integer.parseInt(s_pin));
+        if (isUser) {
+            System.out.println("Login Successful");
+            Account acct = new Account("", "", "");
+            acct.setPin(Integer.parseInt(s_pin));
 
-        // Navigate to MainView
-        System.out.println("Navigating to MainView / Dashboard");
+            // Navigate to MainView
+            System.out.println("Navigating to MainView / Dashboard");
 
-        var loader = (new FXMLLoader(getClass().getResource("/fxmls/MainView.fxml")));
-        VBox root = null;
-        try {
-            root = (VBox) loader.load();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            // Load function
+            var loader = (new FXMLLoader(getClass().getResource("/fxmls/MainView.fxml")));
+            VBox root = null;
+            try {
+                root = (VBox) loader.load();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+
+            Scene scene = this.vb_login_root.getScene();
+            scene.setRoot(root);
+        } else {
+            t_login_status.setText("Login Failed");
+            }
         }
-        //List<Window> open = Stage.getWindows().stream().filter(Window::isShowing);
-        //List<Window> open = Stage.getWindows().get(0).sceneProperty().get();
-        //Stage.getWindows().get(0)
-        //Stage stage = ;
-        //Stage stage = ((Node) this.vb_login_root).getScene();
-        //Stage stage = (Stage) Stage.getWindows().get(0).sceneProperty().get();
-        Scene scene = this.vb_login_root.getScene();
-        scene.setRoot(root);
-        //Stage stage = (Stage) this.vb_login_root.getScene().getWindow();
-        //stage.setScene(new Scene(root, 860, 640));
-        //stage.setTitle("Fareye Financial Client");
-        //stage.show();
-
-    } else {
-        t_login_status.setText("Login Failed");
-        }
-    }
 
     @FXML
     public void initialize() {
-
         // Login using the button
         this.btn_login.setOnMouseClicked(e -> {
             this.login();
-            //this.login(e);
         });
 
         // Login with enter KeyPress on password field

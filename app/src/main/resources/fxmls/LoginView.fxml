@@ -11,10 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<!--<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfx.controller.Login">-->
-<!--<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Login">-->
-
-<VBox fx:id="vb_login_root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfx.controller.Login">
+<VBox fx:id="vb_login_root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Login">
    <children>
       <MenuBar fx:id="vb_menubar">
         <menus>

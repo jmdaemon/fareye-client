@@ -1,5 +1,4 @@
-package jfx.controller;
-//package ui.jfx.controller;
+package ui.jfx.controller;
 
 // Standard Library
 import java.io.IOException;

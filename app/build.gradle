@@ -8,23 +8,7 @@ plugins {
 group = 'io.github.jmdaemon'
 version = '0.1.0'
 
-//def AppEntryPoint = 'app.ui.javafx.App'
-//def AppEntryPoint = 'app.ui.jfx.App'
-def AppEntryPoint = 'jfx.App'
-//def AppEntryPoint = 'ui.jfx.App'
-
-// Set custom source sets to compile certain files in certain directories only
-
-//ext {
-    //src = "src/main/java"
-    //org = group
-    //test = "src/test/java"
-//}
-
-//sourceSets.all { 
-    //ext.src = src
-    //ext.test = test
-//}
+def AppEntryPoint = 'ui.jfx.App'
 
 repositories {
     mavenCentral()
@@ -38,14 +22,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
     // Unit Testing
 
-    // Test Framework
-
-    //testImplementation (platform('org.junit:junit-bom:5.7.0'))
-    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    //testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.7.0"
-
-    // Mocking
+    // Http Mocking Library
     testImplementation("org.mock-server:mockserver-netty:5.11.2")
 
     // Logging
@@ -78,7 +55,6 @@ testing {
 
 test {
     maxHeapSize = '1G'
-    //useJUnitPlatform()
     testLogging {
         events "failed"
         exceptionFormat "full"
@@ -91,7 +67,6 @@ java {
         //languageVersion = JavaLanguageVersion.of(17)
         languageVersion = JavaLanguageVersion.of(18)
     }
-    //moularity.inferModulePath = true
 }
 
 javafx {
@@ -109,7 +84,6 @@ application {
     //mergeServiceFiles()
 //}
 
-
 checkstyle { 
     toolVersion = "10.0"
     configFile file("config/checkstyle/sun_checks.xml") 
@@ -119,37 +93,14 @@ checkstyle {
 }
 
 sourceSets {
-    //ext {
-    //src = "src/main/java"
-    //test = "src/test/java"
-    //}
     main {
         resources {
             includes = [ "**/*.fxml" , "**/*.css" , "**/*.properties"]
-            //srcDirs = [ "$src" ]
-            //exclude "$src/bankaccount"
-            //exclude "$src/interface-old"
-            //exclude "$src/money"
-
             exclude "bankaccount"
             exclude "interface-old"
             exclude "money"
         }
-        //src`
         java {
-            //srcDirs = [ "$src/ui" ]
-            //srcDirs = [ "$src/fareye", "$src/ui/javafx", "$src/ui/javafx/events", "$src/ui/javafx/controllers"]
-            //srcDirs = [ "$src/fareye", "$src/ui", "$src/ui/javafx", "$src/ui/javafx/controllers"]
-            //srcDirs = [ "$src/fareye", "$src/ui", "$src/ui/jfx", "$src/ui/jfx/controllers" ]
-            //exclude = [ "$src/bankaccount", "$src/interface-old", "$src/money" ]
-            //srcDirs = [ "$src" ]
-            //srcDirs = [ "$src/fareye", "$src/ui" ]
-
-            //exclude "$src/bankaccount"
-            //exclude "$src/interface-old"
-            //exclude "$src/money"
-            //srcDirs = [ "$src/fareye", "$src/ui" ]
-
             exclude "bankaccount"
             exclude "interface-old"
             exclude "money"
@@ -157,21 +108,6 @@ sourceSets {
     }
     test {
         java {
-            //srcDirs = [ "$test/ui" ]
-            //srcDirs = [ "$src/fareye", "$test/ui/javafx" ]
-            //srcDirs = [ "$test/fareye" ]
-            //exclude [ "$src/bankaccount", "$src/connect", "$src/encryption", "$src/interface", "$src/money", "$src/old", "$src/ui" ]
-            //exclude = [ "$src/bankaccount", "$src/connect", "$src/encryption", "$src/interface", "$src/money", "$src/old", "$src/ui" ]
-
-            //srcDirs = [ "$test" ]
-            //exclude "$test/bankaccount"
-            //exclude "$test/connect"
-            //exclude "$test/encryption"
-            //exclude "$test/interface"
-            //exclude "$test/money"
-            //exclude "$test/old"
-            //exclude "$test/ui"
-
             exclude "bankaccount"
             exclude "connect"
             exclude "encryption"
@@ -179,7 +115,6 @@ sourceSets {
             exclude "money"
             exclude "old"
             exclude "ui"
-
         }
     }
 }
