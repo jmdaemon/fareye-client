@@ -5,12 +5,8 @@ import fareye.Account;
 import ui.jfx.Global;
 import ui.jfx.components.EnterField;
 
-// Standard Library
-import java.io.IOException;
-
 // JavaFX Imports
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
@@ -64,17 +60,15 @@ public class Login {
             logger.info("Navigating to MainView / Dashboard");
 
             // Load function
-            var loader = (new FXMLLoader(getClass().getResource("/fxmls/MainView.fxml")));
-            VBox root = null;
-            try {
-                root = (VBox) loader.load();
-            } catch (IOException ioe) {
-                logger.error("Could not load view");
-                ioe.printStackTrace();
-            }
+            Global global = new Global();
+            VBox root = (VBox) global.loadFXML("/fxmls/MainView.fxml");
 
-            Scene scene = this.vb_login_root.getScene();
-            scene.setRoot(root);
+            if (root != null) {
+                Scene scene = this.vb_login_root.getScene();
+                scene.setRoot(root);
+            } else {
+                logger.error("Could not load MainView");
+            }
         } else {
             t_login_status.setText("Login Failed");
             }
@@ -83,9 +77,7 @@ public class Login {
     @FXML
     public void initialize() {
         // Login using the button
-        this.btn_login.setOnMouseClicked(e -> {
-            this.login();
-        });
+        this.btn_login.setOnMouseClicked(e -> { this.login(); });
 
         // Login with enter KeyPress on password field
         this.ef_pass.handleEnter(() -> { this.login(); } );

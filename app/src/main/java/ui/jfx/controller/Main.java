@@ -6,15 +6,11 @@ import org.slf4j.Logger;
 // Imports
 import ui.jfx.Global;
 
-// Standard Library
-import java.io.IOException;
-
 // JavaFX
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -56,26 +52,17 @@ public class Main {
         return "/fxmls/" + Views.get(displayName) + ".fxml";
     }
 
-    private AnchorPane setupController(String fxmlPath) {
-        var loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        AnchorPane pane = null;
-        try {
-            pane = (AnchorPane) loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return pane;
-    }
-
     /** Switches the main stack pane to the new pane */
     public void load(String view) {
+        Global global = new Global();
         // Remove the old view
         logger.debug("Clearing old view");
         this.stackpane_main.getChildren().clear();
 
         // Navigate to new pane
         logger.debug("Showing new view");
-        this.stackpane_main.getChildren().addAll(setupController(view));
+        //this.stackpane_main.getChildren().addAll(setupController(view));
+        this.stackpane_main.getChildren().addAll((AnchorPane) global.loadFXML(view));
     }
 
     @FXML public void navigate(MouseEvent e) {

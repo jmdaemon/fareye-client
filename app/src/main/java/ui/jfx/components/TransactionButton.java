@@ -11,7 +11,6 @@ import java.lang.NumberFormatException;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
-//import javafx.scene.control.EnterField;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
