@@ -3,6 +3,7 @@ package ui.jfx.controller;
 // Imports
 import fareye.Account;
 import ui.jfx.Global;
+import ui.jfx.components.EnterField;
 
 // Standard Library
 import java.io.IOException;
@@ -27,7 +28,8 @@ public class Login {
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
-    @FXML private TextField tf_pass;
+    //@FXML private TextField tf_pass;
+    @FXML private EnterField ef_pass;
     @FXML private TextField tf_pin;
     @FXML private VBox vb_login;
     @FXML private VBox vb_login_root;
@@ -49,7 +51,7 @@ public class Login {
     public void login() {
         // Parse the inputs
         String s_pin = tf_pin.getText();
-        String s_pass = tf_pass.getText();
+        String s_pass = ef_pass.getText();
 
         // Validate the inputs
         var isUser = isValidUser(s_pin, s_pass);
@@ -91,10 +93,11 @@ public class Login {
         });
 
         // Login with enter KeyPress on password field
-        this.tf_pass.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                this.login();
-            }
-        });
+        this.ef_pass.handleEnter(() -> { this.login(); } );
+        //this.tf_pass.setOnKeyPressed(e -> {
+            //if (e.getCode() == KeyCode.ENTER) {
+                //this.login();
+            //}
+        //});
     }
 }

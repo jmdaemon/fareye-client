@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import ui.jfx.components.EnterField?>
 
 <VBox fx:id="vb_login_root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Login">
    <children>
@@ -38,7 +39,7 @@
                <children>
                   <ImageView fx:id="iv_avatar" fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
                   <TextField fx:id="tf_pin" promptText="Pin" />
-                  <TextField fx:id="tf_pass" promptText="Password" />
+                  <EnterField fx:id="ef_pass" promptText="Password" />
                   <HBox fx:id="hb_login_status" alignment="CENTER">
                      <children>
                         <Text fx:id="t_login_status" strokeType="OUTSIDE" strokeWidth="0.0" />
