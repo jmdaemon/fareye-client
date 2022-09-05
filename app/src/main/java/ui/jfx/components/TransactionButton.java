@@ -1,5 +1,8 @@
 package ui.jfx.components;
 
+// Imports
+import ui.jfx.Global;
+
 // Standard Library
 import java.math.BigDecimal;
 import java.lang.NumberFormatException;
@@ -20,7 +23,7 @@ public class TransactionButton extends HBox {
     private StringProperty textFieldLabel = new SimpleStringProperty();
     private StringProperty buttonLabel = new SimpleStringProperty();
 
-    // ******************** Constructors **************************************
+    // Constructor
     public TransactionButton() {
         getStylesheets().add(TransactionButton.class.getResource("/fxmls/css/transactionbutton.css").toExternalForm());
         initGraphics();
@@ -42,7 +45,7 @@ public class TransactionButton extends HBox {
     // Return the button to use for setting up callbacks in the components
     public Button getButton() { return button; }
 
-    // ******************** Initialization ************************************
+    // Init
     private void initGraphics() {
         getStyleClass().add("/fxmls/css/transaction-button");
 
@@ -66,20 +69,17 @@ public class TransactionButton extends HBox {
 
     private void registerListeners() { }
 
+    // Methods
     public BigDecimal getAmount() {
+        var logger = Global.getLogger();
         var amount = this.getTextFieldLabel();
         var amt = BigDecimal.valueOf(0);
-        // TODO: Check if amount is properly formatted
         try {
             amt = BigDecimal.valueOf(Integer.parseInt(amount));
+            logger.debug("Amount Entered: " + amt);
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
-            //amt = BigDecimal.valueOf(0);
         }
-        //finally {
-            // Reset value to 0
-            //amt = BigDecimal.valueOf(0);
-        //}
         return amt;
     }
 

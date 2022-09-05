@@ -4,10 +4,6 @@ package ui.jfx.controller;
 import ui.jfx.components.TransactionButton;
 import ui.jfx.Global;
 
-// Standard Library
-//import java.math.BigDecimal;
-//import java.lang.NumberFormatException;
-
 // JavaFX
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -25,7 +21,6 @@ public class Deposit {
         this.tb_deposit.getButton().setOnMouseClicked(e -> {
             var logger = Global.getLogger();
             var amt = tb_deposit.getAmount();
-            logger.debug("Amount Entered: " + amt);
 
             if (!TransactionButton.isZero(amt)) {
                 var acct = Global.getAcct();
