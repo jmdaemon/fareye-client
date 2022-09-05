@@ -4,6 +4,7 @@ package ui.jfx.components;
 import java.util.Locale;
 
 // JavaFX
+import javafx.fxml.FXML;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -16,14 +17,27 @@ public class CombinedControl extends HBox {
     private TextField textField;
     private Button    button;
 
-    //private StringProperty textFieldLabel = new SimpleStringProperty();
-    //private StringProperty buttonLabel = new SimpleStringProperty();
+    private StringProperty textFieldLabel = new SimpleStringProperty();
+    private StringProperty buttonLabel = new SimpleStringProperty();
     // ******************** Constructors **************************************
     public CombinedControl() {
         getStylesheets().add(CombinedControl.class.getResource("/fxmls/css/combined.css").toExternalForm());
         initGraphics();
         registerListeners();
+
     }
+
+    @FXML
+    public void initialize() {
+        textField.textProperty().bindBidirectional(textFieldLabel);
+        button.textProperty().bindBidirectional(buttonLabel);
+    }
+    public String getTextFieldName() { return textFieldLabel.get(); }
+    public StringProperty textFieldProperty() { return textFieldLabel; }
+
+    public String getButtonName() { return buttonLabel.get(); }
+    public StringProperty buttonName() { return buttonLabel; }
+
     // ******************** Initialization ************************************
     private void initGraphics() {
         getStyleClass().add("/fxmls/css/combined-control");
