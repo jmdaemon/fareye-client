@@ -1,11 +1,15 @@
 //package app.ui.javafx;
 //package app.ui.jfx;
+//package jfx;
+//package ui.jfx;
 package jfx;
 
 //import app.ui.javafx.NavButtonsComponent;
 //import app.ui.javafx.controller.AppController;
 //import app.ui.jfx.controller.AppController;
 //import jfx.controller.AppController;
+//import jfx.controller.Main;
+//import ui.jfx.controller.Main;
 import jfx.controller.Main;
 
 import java.io.IOException;
@@ -41,7 +45,8 @@ public class App extends Application {
     //var app = new Main();
     //loader.setController(app);
 
-    var loader = (new FXMLLoader(getClass().getResource("/fxmls/MainView.fxml")));
+    //var loader = (new FXMLLoader(getClass().getResource("/fxmls/MainView.fxml")));
+    var loader = (new FXMLLoader(getClass().getResource("/fxmls/LoginView.fxml")));
     var root = (VBox) loader.load();
     stage.setTitle("Fareye Financial Client");
     stage.setScene(new Scene(root, 860, 640));

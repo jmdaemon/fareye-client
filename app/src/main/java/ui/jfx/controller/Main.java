@@ -1,4 +1,5 @@
 package jfx.controller;
+//package ui.jfx.controller;
 
 // Standard Library
 import java.io.IOException;
@@ -77,17 +78,17 @@ public class Main {
     }
 
     @FXML public void initialize() {
-    // Initialize the sidebar
-    Views.put("Deposit", "Deposit");
-    Views.put("Withdraw", "Withdraw");
-    Views.put("History", "History");
-    Views.put("Change Password", "ResetPassword");
-    Views.put("Transfer From", "TransferFrom");
-    Views.put("Transfer To", "TransferTo");
+        // Initialize the sidebar
+        Views.put("Deposit", "Deposit");
+        Views.put("Withdraw", "Withdraw");
+        Views.put("History", "History");
+        Views.put("Change Password", "ResetPassword");
+        Views.put("Transfer From", "TransferFrom");
+        Views.put("Transfer To", "TransferTo");
 
-    // Construct list of displayed names from hashmap keys
-    ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());
-    this.lv_sidebar.setItems(list);
-    this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
+        // Construct list of displayed names from hashmap keys
+        ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());
+        this.lv_sidebar.setItems(list);
+        this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
     }
 }
