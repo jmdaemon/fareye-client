@@ -8,11 +8,14 @@ import fareye.Account;
 
 // Standard Library
 import java.io.IOException;
+import java.util.List;
 
 // JavaFX Imports
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.stage.Window;
 
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyEvent;
@@ -81,10 +84,18 @@ public class Login {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        Stage stage = new Stage();
-        stage.setTitle("Fareye Financial Client");
-        stage.setScene(new Scene(root, 860, 640));
-        stage.show();
+        //List<Window> open = Stage.getWindows().stream().filter(Window::isShowing);
+        //List<Window> open = Stage.getWindows().get(0).sceneProperty().get();
+        //Stage.getWindows().get(0)
+        //Stage stage = ;
+        //Stage stage = ((Node) this.vb_login_root).getScene();
+        //Stage stage = (Stage) Stage.getWindows().get(0).sceneProperty().get();
+        Scene scene = this.vb_login_root.getScene();
+        scene.setRoot(root);
+        //Stage stage = (Stage) this.vb_login_root.getScene().getWindow();
+        //stage.setScene(new Scene(root, 860, 640));
+        //stage.setTitle("Fareye Financial Client");
+        //stage.show();
 
     } else {
         t_login_status.setText("Login Failed");
