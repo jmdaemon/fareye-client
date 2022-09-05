@@ -14,7 +14,7 @@
   <!-- TODO: Broken at the moment
     For some reason, even when running with gradle run -Dcolor, the options aren't
     passed to the binary properly, and as a result, cannot be toggled at runtime. -->
-  <root level="debug">
+  <root level="all">
     <if condition='isDefined("nocolor")'>
       <then>
         <appender-ref ref="NOCOLOR"/>

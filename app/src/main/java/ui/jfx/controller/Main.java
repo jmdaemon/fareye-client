@@ -1,5 +1,11 @@
 package ui.jfx.controller;
 
+// Third Party Libraries
+import org.slf4j.Logger;
+
+// Imports
+import ui.jfx.Global;
+
 // Standard Library
 import java.io.IOException;
 
@@ -23,6 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Main {
+    private static Logger logger = Global.getLogger();
+
     // Template fields
     @FXML private AnchorPane ap_right;
     @FXML private AnchorPane ap_sidebar;
@@ -62,17 +70,17 @@ public class Main {
     /** Switches the main stack pane to the new pane */
     public void load(String view) {
         // Remove the old view
-        System.out.println("Clearing old view");
+        logger.debug("Clearing old view");
         this.stackpane_main.getChildren().clear();
 
         // Navigate to new pane
-        System.out.println("Showing new view");
+        logger.debug("Showing new view");
         this.stackpane_main.getChildren().addAll(setupController(view));
     }
 
     @FXML public void navigate(MouseEvent e) {
         var view = this.lv_sidebar.getSelectionModel().getSelectedItem();
-        System.out.println(view);
+        logger.debug("Navigating to: " + view);
         load(getFXMLPath(view));
     }
 
