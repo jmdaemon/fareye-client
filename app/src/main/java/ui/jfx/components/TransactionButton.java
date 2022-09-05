@@ -1,5 +1,9 @@
 package ui.jfx.components;
 
+// Standard Library
+import java.math.BigDecimal;
+import java.lang.NumberFormatException;
+
 // JavaFX
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,6 +30,7 @@ public class TransactionButton extends HBox {
         button.textProperty().bindBidirectional(buttonLabel);
     }
 
+    // Properties
     public String getTextFieldLabel() { return textFieldLabel.get(); }
     public StringProperty textFieldProperty() { return textFieldLabel; }
     public void setTextFieldLabel(String label) { textFieldLabel.set(label); }
@@ -59,6 +64,27 @@ public class TransactionButton extends HBox {
         getChildren().addAll(textField, button);
     }
 
-    private void registerListeners() {
+    private void registerListeners() { }
+
+    public BigDecimal getAmount() {
+        var amount = this.getTextFieldLabel();
+        var amt = BigDecimal.valueOf(0);
+        // TODO: Check if amount is properly formatted
+        try {
+            amt = BigDecimal.valueOf(Integer.parseInt(amount));
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            //amt = BigDecimal.valueOf(0);
+        }
+        //finally {
+            // Reset value to 0
+            //amt = BigDecimal.valueOf(0);
+        //}
+        return amt;
+    }
+
+    public static boolean isZero(BigDecimal amt) {
+        boolean result = amt.compareTo(BigDecimal.valueOf(0)) == 0;
+        return result;
     }
 }

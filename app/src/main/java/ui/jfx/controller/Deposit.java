@@ -5,8 +5,8 @@ import ui.jfx.components.TransactionButton;
 import ui.jfx.Global;
 
 // Standard Library
-import java.math.BigDecimal;
-import java.lang.NumberFormatException;
+//import java.math.BigDecimal;
+//import java.lang.NumberFormatException;
 
 // JavaFX
 import javafx.fxml.FXML;
@@ -24,18 +24,10 @@ public class Deposit {
     public void initialize() {
         this.tb_deposit.getButton().setOnMouseClicked(e -> {
             var logger = Global.getLogger();
-            var amount = tb_deposit.getTextFieldLabel();
-            var amt = BigDecimal.valueOf(0);
-            // TODO: Check if amount is properly formatted
-            try {
-                amt = BigDecimal.valueOf(Integer.parseInt(amount));
-                logger.debug("Amount Entered: " + amt);
-            } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
-            }
+            var amt = tb_deposit.getAmount();
+            logger.debug("Amount Entered: " + amt);
 
-            if (amt.compareTo(BigDecimal.valueOf(0)) != 0) {
-                //Integer.parseInt(amount);
+            if (!TransactionButton.isZero(amt)) {
                 var acct = Global.getAcct();
                 acct.deposit(amt);
 
