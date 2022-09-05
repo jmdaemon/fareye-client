@@ -1,4 +1,4 @@
-package app.fareye;
+package fareye;
 
 import java.math.BigDecimal;
 
