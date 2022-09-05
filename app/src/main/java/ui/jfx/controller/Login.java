@@ -2,6 +2,7 @@ package ui.jfx.controller;
 
 // Imports
 import fareye.Account;
+import ui.jfx.Global;
 
 // Standard Library
 import java.io.IOException;
@@ -55,7 +56,8 @@ public class Login {
 
         if (isUser) {
             System.out.println("Login Successful");
-            Account acct = new Account("", "", "");
+            //Account acct = new Account("", "", "");
+            Account acct = Global.getAcct();
             acct.setPin(Integer.parseInt(s_pin));
 
             // Navigate to MainView

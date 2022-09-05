@@ -8,14 +8,15 @@
 <?import javafx.scene.layout.VBox?>
 
 <!--<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepositController">-->
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane fx:id="ap_deposit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Deposit">
    <children>
-      <VBox alignment="CENTER" layoutX="223.0" layoutY="106.0" prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="vb_deposit" alignment="CENTER" layoutX="223.0" layoutY="106.0" prefHeight="200.0" prefWidth="100.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+            <HBox fx:id="hb_deposit" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
                <children>
-                  <TextField promptText="Amount:" />
-                  <Button mnemonicParsing="false" text="Deposit" />
+                  <TextField fx:id="tf_amount" promptText="Amount:" />
+                  <Button fx:id="btn_deposit" mnemonicParsing="false" text="Deposit" />
                </children>
                <padding>
                   <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />

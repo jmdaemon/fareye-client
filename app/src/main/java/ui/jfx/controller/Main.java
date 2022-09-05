@@ -76,7 +76,8 @@ public class Main {
         load(getFXMLPath(view));
     }
 
-    @FXML public void initialize() {
+    @FXML
+    public void initialize() {
         // Initialize the sidebar
         Views.put("Deposit", "Deposit");
         Views.put("Withdraw", "Withdraw");
