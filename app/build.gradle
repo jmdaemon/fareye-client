@@ -99,7 +99,7 @@ checkstyle {
 sourceSets {
     main {
         resources {
-            includes = [ "**/*.fxml" , "**/*.css" , "**/*.properties"]
+            includes = [ "logback.xml", "**/*.fxml" , "**/*.css" , "**/*.properties"]
             exclude "bankaccount"
             exclude "interface-old"
             exclude "money"
