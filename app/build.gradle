@@ -29,6 +29,7 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.6'
     implementation 'ch.qos.logback:logback-core:1.2.6'
     implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'org.codehaus.janino:janino:3.1.8' // Adds conditional directives to logback.xml
 
     implementation 'org.unix4j:unix4j-command:0.5'
 

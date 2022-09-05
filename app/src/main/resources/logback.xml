@@ -1,11 +1,28 @@
 <configuration>
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+  <!-- Enable logging with colors -->
+  <appender name="COLOR" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] [%level] %msg%n</pattern>
+      <!--<pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] [%level] %msg%n</pattern>-->
+      <pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] %highlight([%level]) %msg%n</pattern>
     </encoder>
+  </appender>
+  <appender name="NOCOLOR" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] %highlight([%level]) %msg%n</pattern>
+      <!--<pattern>[%d{HH:mm:ss.SSS}] [%logger{36}] [%file:%line] [%level] %msg%n</pattern>-->
+      <!--<pattern>[%date] [%level] [%logger{10} %file:%line] %msg%n</pattern>-->
+  </encoder>
   </appender>
 
   <root level="debug">
-    <appender-ref ref="STDOUT" />
+    <if condition='isDefined("color")'>
+      <then>
+        <appender-ref ref="COLOR"/>
+      </then>
+      <else>
+        <appender-ref ref="NOCOLOR"/>
+    </else>
+  </if>
+    <!--<appender-ref ref="STDOUT" />-->
   </root>
 </configuration>
