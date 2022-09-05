@@ -5,6 +5,7 @@ import ui.jfx.components.TransactionButton;
 import ui.jfx.Global;
 
 // JavaFX
+import javafx.scene.input.KeyCode;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -16,20 +17,32 @@ public class Deposit {
     @FXML private VBox vb_deposit;
     @FXML private TransactionButton tb_deposit;
 
+    private void deposit() {
+        var logger = Global.getLogger();
+        var amt = tb_deposit.getAmount();
+
+        if (!TransactionButton.isZero(amt)) {
+            var acct = Global.getAcct();
+            acct.deposit(amt);
+
+            // Since we cannot actually see the bank account updates yet, this will do for now.
+            logger.debug("Account Balance: " + Global.currencyFormat(acct.getBalance()));
+        }
+    }
+
     @FXML
     public void initialize() {
         this.tb_deposit.getButton().setOnMouseClicked(e -> {
-            var logger = Global.getLogger();
-            var amt = tb_deposit.getAmount();
+            deposit();
+        });
 
-            if (!TransactionButton.isZero(amt)) {
-                var acct = Global.getAcct();
-                acct.deposit(amt);
-
-                // Since we cannot actually see the bank account updates yet, this will do for now.
-                logger.debug("Account Balance: " + Global.currencyFormat(acct.getBalance()));
+        // On enter, attempt deposit
+        this.tb_deposit.getTextField().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                this.deposit();
             }
         });
+
     }
 }
 

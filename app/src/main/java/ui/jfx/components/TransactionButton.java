@@ -42,8 +42,9 @@ public class TransactionButton extends HBox {
     public StringProperty buttonProperty() { return buttonLabel; }
     public void setButtonLabel(String label) { buttonLabel.set(label); }
 
-    // Return the button to use for setting up callbacks in the components
+    // Return the button, and textField for use in setting up callbacks
     public Button getButton() { return button; }
+    public TextField getTextField() { return textField; }
 
     // Init
     private void initGraphics() {
