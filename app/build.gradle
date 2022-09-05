@@ -84,6 +84,28 @@ application {
     mainClass = AppEntryPoint
 }
 
+//jar {
+    //manifest {
+        //attributes 'CombinedControl': 'ui.jfx.components.CombinedControl'
+    //}
+//}
+
+//archivesBaseName
+
+task jfxcompjar(type: Jar) {
+    archivesBaseName = "jfx.components"
+    //manifest {
+        //attributes 'CombinedControl': 'ui.jfx.components.CombinedControl'
+    //}
+
+    from(sourceSets.main.output) {  
+        //include "ui/jfx/components/**" 
+        includes = [ "ui/jfx/components/**", "**/*.css"] 
+        //project.ext.serverExcludes.addAll(includes)
+        //project.ext.serverExcludes.addAll(includes)
+    }
+}
+
 //shadowJar {
     // https://stackoverflow.com/questions/32887966/shadow-plugin-gradle-what-does-mergeservicefiles-do
     //mergeServiceFiles()
