@@ -11,18 +11,20 @@ version = '0.1.0'
 //def AppEntryPoint = 'app.ui.javafx.App'
 //def AppEntryPoint = 'app.ui.jfx.App'
 def AppEntryPoint = 'jfx.App'
+//def AppEntryPoint = 'ui.jfx.App'
 
 // Set custom source sets to compile certain files in certain directories only
-ext {
-    src = "src/main/java"
-    org = group
-    test = "src/test/java"
-}
 
-sourceSets.all { 
-    ext.src = src
-    ext.test = test
-}
+//ext {
+    //src = "src/main/java"
+    //org = group
+    //test = "src/test/java"
+//}
+
+//sourceSets.all { 
+    //ext.src = src
+    //ext.test = test
+//}
 
 repositories {
     mavenCentral()
@@ -98,7 +100,6 @@ javafx {
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
 }
 
-
 application {
     mainClass = AppEntryPoint
 }
@@ -117,23 +118,67 @@ checkstyle {
     checkstyleTest.enabled = false
 }
 
-sourceSets { 
+sourceSets {
+    //ext {
+    //src = "src/main/java"
+    //test = "src/test/java"
+    //}
     main {
         resources {
             includes = [ "**/*.fxml" , "**/*.css" , "**/*.properties"]
+            //srcDirs = [ "$src" ]
+            //exclude "$src/bankaccount"
+            //exclude "$src/interface-old"
+            //exclude "$src/money"
+
+            exclude "bankaccount"
+            exclude "interface-old"
+            exclude "money"
         }
+        //src`
         java {
             //srcDirs = [ "$src/ui" ]
             //srcDirs = [ "$src/fareye", "$src/ui/javafx", "$src/ui/javafx/events", "$src/ui/javafx/controllers"]
             //srcDirs = [ "$src/fareye", "$src/ui", "$src/ui/javafx", "$src/ui/javafx/controllers"]
             //srcDirs = [ "$src/fareye", "$src/ui", "$src/ui/jfx", "$src/ui/jfx/controllers" ]
-            srcDirs = [ "$src/fareye", "$src/ui" ]
+            //exclude = [ "$src/bankaccount", "$src/interface-old", "$src/money" ]
+            //srcDirs = [ "$src" ]
+            //srcDirs = [ "$src/fareye", "$src/ui" ]
+
+            //exclude "$src/bankaccount"
+            //exclude "$src/interface-old"
+            //exclude "$src/money"
+            //srcDirs = [ "$src/fareye", "$src/ui" ]
+
+            exclude "bankaccount"
+            exclude "interface-old"
+            exclude "money"
          }
     }
     test {
         java {
             //srcDirs = [ "$test/ui" ]
-            srcDirs = [ "$src/fareye", "$test/ui/javafx" ]
+            //srcDirs = [ "$src/fareye", "$test/ui/javafx" ]
+            //srcDirs = [ "$test/fareye" ]
+            //exclude [ "$src/bankaccount", "$src/connect", "$src/encryption", "$src/interface", "$src/money", "$src/old", "$src/ui" ]
+            //exclude = [ "$src/bankaccount", "$src/connect", "$src/encryption", "$src/interface", "$src/money", "$src/old", "$src/ui" ]
+
+            //srcDirs = [ "$test" ]
+            //exclude "$test/bankaccount"
+            //exclude "$test/connect"
+            //exclude "$test/encryption"
+            //exclude "$test/interface"
+            //exclude "$test/money"
+            //exclude "$test/old"
+            //exclude "$test/ui"
+
+            exclude "bankaccount"
+            exclude "connect"
+            exclude "encryption"
+            exclude "interface"
+            exclude "money"
+            exclude "old"
+            exclude "ui"
 
         }
     }
