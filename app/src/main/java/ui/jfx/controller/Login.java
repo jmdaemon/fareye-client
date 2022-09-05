@@ -53,15 +53,18 @@ public class Login {
 
         // Validate the inputs
         var isUser = isValidUser(s_pin, s_pass);
+        var logger = Global.getLogger();
 
         if (isUser) {
-            System.out.println("Login Successful");
+            //System.out.println();
+            logger.info("Login Successful");
             //Account acct = new Account("", "", "");
             Account acct = Global.getAcct();
             acct.setPin(Integer.parseInt(s_pin));
 
             // Navigate to MainView
-            System.out.println("Navigating to MainView / Dashboard");
+            //System.out.println("Navigating to MainView / Dashboard");
+            logger.info("Navigating to MainView / Dashboard");
 
             // Load function
             var loader = (new FXMLLoader(getClass().getResource("/fxmls/MainView.fxml")));
@@ -69,6 +72,7 @@ public class Login {
             try {
                 root = (VBox) loader.load();
             } catch (IOException ioe) {
+                logger.error("Could not load view");
                 ioe.printStackTrace();
             }
 
