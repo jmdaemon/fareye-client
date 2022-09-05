@@ -15,12 +15,12 @@
     For some reason, even when running with gradle run -Dcolor, the options aren't
     passed to the binary properly, and as a result, cannot be toggled at runtime. -->
   <root level="debug">
-    <if condition='isDefined("color")'>
+    <if condition='isDefined("nocolor")'>
       <then>
-        <appender-ref ref="COLOR"/>
+        <appender-ref ref="NOCOLOR"/>
       </then>
       <else>
-        <appender-ref ref="NOCOLOR"/>
+        <appender-ref ref="COLOR"/>
       </else>
     </if>
   </root>
