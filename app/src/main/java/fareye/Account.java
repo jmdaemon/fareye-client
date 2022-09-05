@@ -88,10 +88,7 @@ public class Account extends Client {
   public boolean deposit(BigDecimal amount) {
     //if (amountIsNotValid(amount, "Deposit Unsuccessful")) return false;
 
-    // Complete the deposit
-    BigDecimal newBalance = this.getBalance();
-    newBalance = this.getBalance().add(amount);
-    setBalance(newBalance);
+    setBalance(this.getBalance().add(amount)); // Complete the deposit
     // Log the deposit
     return true;
   }
@@ -104,7 +101,7 @@ public class Account extends Client {
     if (amountIsNotValid(amount, "Withdrawal Unsuccessful")) return false;
 
     // Complete withdrawal
-    this.getBalance().subtract(amount);
+    setBalance(this.getBalance().subtract(amount));
     // Log withdrawal
     return true;
   }
