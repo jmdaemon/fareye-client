@@ -16,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.Scene;
 
 public class Signup {
 
@@ -54,16 +53,7 @@ public class Signup {
     }
 
     public void toLoginPage() {
-        var logger = Global.getLogger();
-        Global global = new Global();
-        VBox root = (VBox) global.loadFXML("/fxmls/LoginView.fxml");
-
-        if (root != null) {
-            Scene scene = this.ap_signup.getScene();
-            scene.setRoot(root);
-        } else {
-            logger.error("Could not load Login Page");
-        }
+        Global.changeScene(this.ap_signup.getScene(), "/fxmls/LoginView.fxml", "Could not load Login Page");
     }
 
     @FXML

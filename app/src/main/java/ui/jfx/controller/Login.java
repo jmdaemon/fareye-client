@@ -7,14 +7,12 @@ import ui.jfx.components.EnterField;
 
 // JavaFX Imports
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
 public class Login {
@@ -61,32 +59,14 @@ public class Login {
             // Navigate to MainView
             logger.info("Navigating to MainView / Dashboard");
 
-            // Load function
-            Global global = new Global();
-            VBox root = (VBox) global.loadFXML("/fxmls/MainView.fxml");
-
-            if (root != null) {
-                Scene scene = this.vb_login_root.getScene();
-                scene.setRoot(root);
-            } else {
-                logger.error("Could not load MainView");
-            }
+            Global.changeScene(this.vb_login_root.getScene(), Global.getFXMLPath(Global.VIEW_HOME), "Could not load MainView");
         } else {
             t_login_status.setText("Login Failed");
             }
-        }
+    }
+
     public void toSignupPage() {
-        var logger = Global.getLogger();
-        Global global = new Global();
-        AnchorPane root = (AnchorPane) global.loadFXML("/fxmls/Signup.fxml");
-
-        if (root != null) {
-            Scene scene = this.vb_login_root.getScene();
-            scene.setRoot(root);
-        } else {
-            logger.error("Could not load SignUp Page");
-        }
-
+        Global.changeScene(this.vb_login_root.getScene(), Global.getFXMLPath(Global.VIEW_SIGNUP),"Could not load SignUp Page");
     }
 
     @FXML

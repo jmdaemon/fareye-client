@@ -65,16 +65,11 @@ public class Main {
     @FXML public void navigate(MouseEvent e) {
         var view = this.lv_sidebar.getSelectionModel().getSelectedItem();
         logger.debug("Navigating to: " + view);
-        //load(Views.get(view));
-        //var fxml = Views.get(view);
-        //logger.debug("FXML: " + fxml);
-        //Global.getFXMLPath(Views.get(view));
-        //load(fxml);
         load(Global.getFXMLPath(Views.get(view)));
     }
 
     public void toLoginPage() {
-        Global.changeScene(this.vb_main.getScene(), "/fxmls/LoginView.fxml", "Could not load Login Page");
+        Global.changeScene(this.vb_main.getScene(), Global.getFXMLPath(Global.VIEW_LOGIN), "Could not load Login Page");
     }
 
     @FXML

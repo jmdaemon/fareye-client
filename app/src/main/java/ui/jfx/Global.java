@@ -33,6 +33,7 @@ public class Global {
   public static String VIEW_PASSWORD  = "ResetPassword";
   public static String VIEW_TRANSFER  = "Transfer";
   public static String VIEW_LOGIN     = "LoginView";
+  public static String VIEW_SIGNUP    = "Signup";
 
   public Global() {
     if (acct == null) acct = new Account("","","");
@@ -56,10 +57,13 @@ public class Global {
   }
 
   // FXML
+
+  /** Returns the FXML file path */
   public static String getFXMLPath(String displayName) {
       return "/fxmls/" + displayName + ".fxml";
   }
 
+  /** Process the fxml template into a Pane */
   public Pane loadFXML(String fxmlPath) {
     var loader = new FXMLLoader(getClass().getResource(fxmlPath));
     Pane pane = null;
@@ -71,15 +75,16 @@ public class Global {
     return pane;
   }
 
-    public static void changeScene(Scene scene, String fxml, String errorMsg) {
-        var logger = Global.getLogger();
-        Global global = new Global();
-        Parent root = global.loadFXML(fxml);
+  /** Load an FXML view and change the scene */
+  public static void changeScene(Scene scene, String fxml, String errorMsg) {
+      var logger = Global.getLogger();
+      Global global = new Global();
+      Parent root = global.loadFXML(fxml);
 
-        if (root != null) {
-            scene.setRoot(root);
-        } else
-            logger.error(errorMsg);
-    }
+      if (root != null) {
+          scene.setRoot(root);
+      } else
+          logger.error(errorMsg);
+  }
 
 }
