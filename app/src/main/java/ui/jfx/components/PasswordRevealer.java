@@ -2,7 +2,6 @@ package ui.jfx.components;
 
 // Imports
 import ui.jfx.components.PassField;
-//import ui.jfx.Global;
 
 // JavaFX
 import javafx.scene.control.CheckBox;

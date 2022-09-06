@@ -3,7 +3,7 @@ package ui.jfx.controller;
 // Imports
 import fareye.Account;
 import ui.jfx.Global;
-import ui.jfx.components.PassField;
+import ui.jfx.components.PasswordRevealer;
 
 // JavaFX Imports
 import javafx.fxml.FXML;
@@ -23,7 +23,7 @@ public class Login {
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
-    @FXML private PassField pf_pass;
+    @FXML private PasswordRevealer pr_passreveal;
     @FXML private TextField tf_pin;
     @FXML private VBox vb_login;
     @FXML private VBox vb_login_root;
@@ -46,7 +46,7 @@ public class Login {
         // Parse the inputs
         String s_pin = tf_pin.getText();
         //String s_pass = pf_pass.getText();
-        String s_pass = pf_pass.getEnterField().getText();
+        String s_pass = pr_passreveal.getPasswordField().getEnterField().getText();
 
         // Validate the inputs
         var isUser = isValidUser(s_pin, s_pass);
@@ -80,7 +80,7 @@ public class Login {
         this.btn_login.setOnMouseClicked(e -> { this.login(); });
 
         // Login with enter KeyPress on password field
-        this.pf_pass.handleEnter(() -> { this.login(); } );
+        this.pr_passreveal.getPasswordField().handleEnter(() -> { this.login(); } );
 
         // Navigate to SignUp page from Login
         this.btn_signup.setOnMouseClicked(e -> { this.toSignupPage(); });

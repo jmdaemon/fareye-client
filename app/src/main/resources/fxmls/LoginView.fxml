@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import ui.jfx.components.PassField?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import ui.jfx.components.PasswordRevealer?>
 
 <VBox fx:id="vb_login_root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Login">
    <children>
@@ -43,7 +41,7 @@
                   <TextField fx:id="tf_pin" promptText="Pin" />
                   <HBox fx:id="hb_login_status" alignment="CENTER">
                      <children>
-                        <PassField fx:id="pf_pass" HBox.hgrow="ALWAYS" />
+                        <PasswordRevealer fx:id="pr_passreveal" />
                         <Text fx:id="t_login_status" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                   </HBox>
