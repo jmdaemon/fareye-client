@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
@@ -22,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.Scene;
 import javafx.scene.text.Font;
 
 public class Main {
@@ -40,6 +42,7 @@ public class Main {
     @FXML private StackPane stackpane_main;
     @FXML private VBox vb_main;
     @FXML private VBox vb_sidebar;
+    @FXML private Button btn_logout;
     @FXML private Font x1;
     @FXML private Color x2;
     @FXML private Font x3;
@@ -71,6 +74,19 @@ public class Main {
         load(getFXMLPath(view));
     }
 
+    public void toLoginPage() {
+        var logger = Global.getLogger();
+        Global global = new Global();
+        VBox root = (VBox) global.loadFXML("/fxmls/LoginView.fxml");
+
+        if (root != null) {
+            Scene scene = this.vb_main.getScene();
+            scene.setRoot(root);
+        } else {
+            logger.error("Could not load Login Page");
+        }
+    }
+
     @FXML
     public void initialize() {
         // Initialize the sidebar
@@ -84,5 +100,8 @@ public class Main {
         ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());
         this.lv_sidebar.setItems(list);
         this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
+
+        // Logout Button
+        this.btn_logout.setOnMouseClicked(e -> { this.toLoginPage(); });
     }
 }
