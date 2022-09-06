@@ -78,8 +78,7 @@ public class Main {
         Views.put("Withdraw", "Withdraw");
         Views.put("History", "History");
         Views.put("Change Password", "ResetPassword");
-        Views.put("Transfer From", "TransferFrom");
-        Views.put("Transfer To", "TransferTo");
+        Views.put("Transfer Funds", "Transfer");
 
         // Construct list of displayed names from hashmap keys
         ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());
