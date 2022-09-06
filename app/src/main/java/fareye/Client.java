@@ -15,19 +15,21 @@ public class Client {
   public Client(String fname, String mname, String lname, String pass) {
     this.firstName = fname;
     this.middleName = mname;
-    this.lastName = lastName;
-    this.password = password;
+    this.lastName = lname;
+    this.password = pass;
   }
 
   // Getters
   public String getFirstName()  { return this.firstName; }
   public String getMiddleName() { return this.middleName; }
   public String getLastName()   { return this.lastName; }
+  public String getPassword() { return this.password; }
 
   // Setters
   public void setFirstName(String fname)  { this.firstName = fname; }
   public void setMiddleName(String mname) { this.middleName = mname; }
   public void setLastName(String lname)   { this.lastName = lname; }
+  public void setPassword(String pass)  { this.password = pass; }
 
   /**
     * Generates secure, random passwords.
