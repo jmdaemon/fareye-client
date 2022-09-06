@@ -1,6 +1,9 @@
 package fareye;
 
+// Standard Library
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Account extends Client {
   /**
@@ -23,15 +26,17 @@ public class Account extends Client {
   private static final int MAX_ACCTNUM_LENGTH = 10000;
   private static final int DEFAULT_PASS_LENGTH = 32;
 
-
   private int pin;
   private BigDecimal balance;
   private String transactionLogId;
+  private List<String> transactions;
 
   public Account(String fname, String mname, String lname) {
     super(fname, mname, lname, generatePassword(DEFAULT_PASS_LENGTH));
     this.pin = 0;
     this.balance = new BigDecimal(0);
+    this.transactions = new ArrayList<String>();
+    transactions.add("New Bank Account Created");
   }
 
   public Account(String fname, String mname, String lname, String password,
@@ -39,17 +44,23 @@ public class Account extends Client {
     super(fname, mname, lname, password);
     this.pin = acctNum;
     this.balance = bal;
+    this.transactions = new ArrayList<String>();
+    transactions.add("New Bank Account Created");
   }
 
   // Getters
-  public int getPin()                 { return this.pin; }
-  public BigDecimal getBalance()      { return this.balance; }
-  public String getTransactionLogID() { return this.transactionLogId; }
+  public int getPin()                   { return this.pin; }
+  public BigDecimal getBalance()        { return this.balance; }
+  public String getTransactionLogID()   { return this.transactionLogId; }
+  public List<String> getTransactions() { return this.transactions; }
 
   // Setters
-  public void setPin(int pin)               { this.pin = pin; }
-  public void setBalance(BigDecimal bal)    { this.balance = bal; }
-  public void setTransactionLogID(String id){ this.transactionLogId = id; }
+  public void setPin(int pin)                     { this.pin = pin; }
+  public void setBalance(BigDecimal bal)          { this.balance = bal; }
+  public void setTransactionLogID(String id)      { this.transactionLogId = id; }
+  public void setTransactions(List<String> msgs)  { this.transactions = msgs; }
+
+  private void logMsg(String msg) { this.transactions.add(msg); }
 
   /**
     * Check if the account has enough funds for a transaction
@@ -58,7 +69,7 @@ public class Account extends Client {
     */
   public boolean hasFunds(BigDecimal amount) {
     int compare = (this.getBalance().compareTo(amount));
-    boolean result = (compare >= 0) ? true : false;
+    var result = (compare >= 0) ? true : false;
     return result;
   }
 
@@ -68,15 +79,15 @@ public class Account extends Client {
 
   /**
     * Returns true if the amount is valid and false otherwise
+    * A valid amount is one that is greater than zero (unsigned)
     * @param transactionMessage A message containing the status of the attempted transaction
     */
 
   public boolean amountIsNotValid(BigDecimal amount, String transactionMessage) {
-    // Check if amount is valid
     if (!hasFunds(amount)) {
-      // Log deposit
-      return true; // Return error code
-    } // Assume the amount is valid
+      logMsg(transactionMessage);
+      return true;
+    }
     return false;
   }
 
@@ -86,10 +97,10 @@ public class Account extends Client {
     * @return True if the transaction was successful and False if there was an error
    */
   public boolean deposit(BigDecimal amount) {
-    //if (amountIsNotValid(amount, "Deposit Unsuccessful")) return false;
+    if (amountIsNotValid(amount, "Deposit Unsuccessful")) return false;
 
-    setBalance(this.getBalance().add(amount)); // Complete the deposit
-    // Log the deposit
+    setBalance(this.getBalance().add(amount));
+    logMsg("Deposit Successful");
     return true;
   }
 
@@ -100,9 +111,8 @@ public class Account extends Client {
   public boolean withdraw(BigDecimal amount) {
     if (amountIsNotValid(amount, "Withdrawal Unsuccessful")) return false;
 
-    // Complete withdrawal
     setBalance(this.getBalance().subtract(amount));
-    // Log withdrawal
+    logMsg("Withdrawal Successful");
     return true;
   }
 
@@ -115,12 +125,23 @@ public class Account extends Client {
   public boolean transferTo(BigDecimal amount, Account target) {
     // If the target account doesn't exist or if we don't have money to transfer
     if ((target == null) || !hasFunds(this)) {
-      // Log message "Transfer Failed"
+      logMsg("Transfer Failed");
       return false;
     }
     this.withdraw(amount);
     target.deposit(amount);
-    // Log message of successful transaction
+    this.logMsg("Transfer of $" + amount + " to account #" + target.getPin());
+    target.logMsg("Transfer of $" + amount + " received from account #" + this.getPin());
+    return true;
+  }
+
+  public boolean changePassword(String oldPass, String newPass) {
+    if (!this.checkPassword(oldPass)) {
+      logMsg("Password Reset Failed");
+      return false;
+    }
+    this.setPassword(newPass);
+    logMsg("Password Successfully Changed");
     return true;
   }
 }
