@@ -5,114 +5,63 @@ import ui.jfx.components.mixins.IEnter;
 
 // JavaFX
 import javafx.beans.property.BooleanProperty;
-import javafx.fxml.FXML;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.PasswordField;
 
-//public class PassField extends PasswordField implements IEnter {
-//public class PassField extends HBox implements IEnter {
 public class PassField extends VBox implements IEnter {
-    private PasswordField maskedPasswordField;
-    private TextField unmaskedPasswordField;
+    private PasswordField password;
+    private TextField plaintext;
 
     // Mixins
     @Override
     //public TextField getEnterField() { return this; }
-    public TextField getEnterField() { return maskedPasswordField; }
+    public TextField getEnterField() { return password; }
 
     @Override
     public void handleEnter(CallbackInterface cb) { IEnter.super.handleEnter(cb); }
 
+    // Properties
+    private StringProperty promptLabel = new SimpleStringProperty();
+
+    // Set field prompt property
+    public String getPromptLabel()              { return promptLabel.get(); }
+    public StringProperty promptLabelProperty() { return promptLabel; }
+    public void setPromptLabel(String label)    { promptLabel.set(label);}
+
+    //public void promptProperty(String label)  { promptLabel.set(label); }
+
+    //public void setPromptText(String prompt) { promptLabel.set("Password"); }
+    //public void setPromptText(String prompt) { promptLabel.set("Password"); }
+
     // Getters
-    public TextField getTextField() { return unmaskedPasswordField; }
+    public TextField getTextField() { return plaintext; }
 
-    private void showUnmaskedPassword() {
-      //this.setVisible(false);      // Hide the nmasked password field
-      maskedPasswordField.setVisible(false);      // Hide the masked password field
-      unmaskedPasswordField.setVisible(true); // Show the unmasked password field
-      //this.visibleProperty().set(false);      // Show the masked password field
-    }
-
-    private void initPasswordField() {
-      // Show the 'Password' prompt initially
-      unmaskedPasswordField.setPromptText("Password ");
-      showUnmaskedPassword();
-    }
-
-    //public PassField() {
-      //super();
-    //}
-
-    //@FXML
-    //public void initialize() {
     public PassField() {
-      //new VBox();
+      // Initialize members
+      plaintext = new TextField();
+      password = new PasswordField();
 
-      unmaskedPasswordField = new TextField();
-      maskedPasswordField = new PasswordField();
+      plaintext.textProperty().bindBidirectional(password.textProperty());
+      plaintext.setManaged(false);
 
-      unmaskedPasswordField.textProperty().bindBidirectional(maskedPasswordField.textProperty());
-      unmaskedPasswordField.setManaged(false);
+      setPromptLabel("Password");
+      password.setVisible(true);
 
-      //unmaskedPasswordField.textProperty().bindBidirectional(this.textProperty());
-      //this.setVisible(false);
-      //unmaskedPasswordField.setVisible(true);
-      //unmaskedPasswordField.setText("");
-      //initPasswordField();
+      getChildren().addAll(plaintext, password);
 
-      maskedPasswordField.setPromptText("Password ");
-      maskedPasswordField.setVisible(true);
-      //unmaskedPasswordField.setPromptText("Password ");
-
-      //unmaskedPasswordField.setPromptText("Password ");
-      //unmaskedPasswordField.setVisible(true); // Show the unmasked password field
-      //maskedPasswordField.setVisible(false);  // Hide the masked password field
-
-      getChildren().addAll(unmaskedPasswordField, maskedPasswordField);
-      //unmaskedPasswordField.setPromptText("Password ");
-
-      //initPasswordField();
-
-      // When the password is empty, show the "Password" prompt
-      //unmaskedPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
-        //if (newValue.isEmpty()) {
-          //initPasswordField();
-        //} else {
-          //showUnmaskedPassword();
-          //// Hide the unmasked password field
-          ////unmaskedPasswordField.setVisible(false);
-          //// Show the masked password field
-          ////this.setVisible(false);
-        //}
-      //});
-
-      //unmaskedPasswordField.onInputMethodTextChangedProperty
-
-     //, and when we start typing, show the masked version
+      // Bind properties
+      password.promptTextProperty().bindBidirectional(promptLabel);
+      plaintext.promptTextProperty().bindBidirectional(promptLabel);
     }
 
     public void setupRevealer(BooleanProperty prop) {
-      //boolean unmaskedVisible = unmaskedPasswordField.visibleProperty().get();
-      //boolean maskedVisible = this.visibleProperty().get();
-      //boolean unmaskedVisible = unmaskedPasswordField.visibleProperty().get();
-      //boolean maskedVisible = maskedPasswordField.visibleProperty().get();
+      plaintext.managedProperty().bind(prop);
+      plaintext.visibleProperty().bind(prop);
 
-      unmaskedPasswordField.managedProperty().bind(prop);
-      unmaskedPasswordField.visibleProperty().bind(prop);
-
-      maskedPasswordField.managedProperty().bind(prop.not());
-      maskedPasswordField.visibleProperty().bind(prop.not());
-
-      //this.managedProperty().bind(prop.not());
-      //this.visibleProperty().bind(prop.not());
-
-      //this.setVisible(maskedVisible);
-      //unmaskedPasswordField.setVisible(unmaskedVisible);
-
-      //maskedPasswordField.setVisible(maskedVisible);
-      //unmaskedPasswordField.setVisible(unmaskedVisible);
-
+      password.managedProperty().bind(prop.not());
+      password.visibleProperty().bind(prop.not());
     }
 }

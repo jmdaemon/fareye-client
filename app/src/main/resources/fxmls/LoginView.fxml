@@ -43,7 +43,6 @@
                   <TextField fx:id="tf_pin" promptText="Pin" />
                   <HBox fx:id="hb_login_status" alignment="CENTER">
                      <children>
-                        <!--<PassField fx:id="pf_pass" promptText="Password" HBox.hgrow="ALWAYS" />-->
                         <PassField fx:id="pf_pass" HBox.hgrow="ALWAYS" />
                         <Text fx:id="t_login_status" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
