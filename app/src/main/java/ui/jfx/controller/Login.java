@@ -45,7 +45,8 @@ public class Login {
     public void login() {
         // Parse the inputs
         String s_pin = tf_pin.getText();
-        String s_pass = pf_pass.getText();
+        //String s_pass = pf_pass.getText();
+        String s_pass = pf_pass.getEnterField().getText();
 
         // Validate the inputs
         var isUser = isValidUser(s_pin, s_pass);
