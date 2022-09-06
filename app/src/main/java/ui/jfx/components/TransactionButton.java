@@ -13,7 +13,6 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 
 public class TransactionButton extends HBox {
@@ -55,8 +54,9 @@ public class TransactionButton extends HBox {
         enterField.setPromptText("Amount: ");
         enterField.setFocusTraversable(false);
         setHgrow(enterField, Priority.ALWAYS);
+
         // Enter only numbers
-        enterField.setTextFormatter(new TextFormatter<>(change -> change.getText().matches("[0-9]*(\\.[0-9]*)?") ? change : null));
+        enterField.setTextFormatter(Global.NumericFormatter);
 
         // Button
         button = new Button("Submit");

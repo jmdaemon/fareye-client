@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TextFormatter;
 
 public class Global {
   // Singletons
@@ -34,6 +35,14 @@ public class Global {
   public static String VIEW_TRANSFER  = "Transfer";
   public static String VIEW_LOGIN     = "LoginView";
   public static String VIEW_SIGNUP    = "Signup";
+
+  // Reusable Components for TextFields
+  public static String NUMERIC_REGEX  = "[0-9]*(\\.[0-9]*)?";
+  public static String NATURALS_REGEX = "[0-9]{0,5}";
+  public static String CHARACTER_REGEX= "[A-Za-z]";
+  public static TextFormatter<String> NaturalsFormatter   = new TextFormatter<String>(change -> change.getText().matches(NATURALS_REGEX) ? change : null);
+  public static TextFormatter<String> NumericFormatter    = new TextFormatter<String>(change -> change.getText().matches(NUMERIC_REGEX) ? change : null);
+  public static TextFormatter<String> CharacterFormatter  = new TextFormatter<String>(change -> change.getText().matches(CHARACTER_REGEX) ? change : null);
 
   public Global() {
     if (acct == null) acct = new Account("","","");

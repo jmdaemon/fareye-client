@@ -52,6 +52,8 @@ public class Login {
         var logger = Global.getLogger();
 
         if (isUser) {
+            // TODO: Find out how to make text green/red
+            t_login_status.setText("Login Successful");
             logger.info("Login Successful");
             Account acct = Global.getAcct();
             acct.setPin(Integer.parseInt(s_pin));
@@ -62,7 +64,7 @@ public class Login {
             Global.changeScene(this.vb_login_root.getScene(), Global.getFXMLPath(Global.VIEW_HOME), "Could not load MainView");
         } else {
             t_login_status.setText("Login Failed");
-            }
+        }
     }
 
     public void toSignupPage() {
@@ -71,6 +73,8 @@ public class Login {
 
     @FXML
     public void initialize() {
+        this.tf_pin.setTextFormatter(Global.NaturalsFormatter); // Filter only valid pin numbers
+
         // Login using the button
         this.btn_login.setOnMouseClicked(e -> { this.login(); });
 
