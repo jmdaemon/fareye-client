@@ -97,7 +97,10 @@ public class Account extends Client {
     * @return True if the transaction was successful and False if there was an error
    */
   public boolean deposit(BigDecimal amount) {
-    if (amountIsNotValid(amount, "Deposit Unsuccessful")) return false;
+    if (!(amount.compareTo(BigDecimal.valueOf(0)) > 0)) {
+      logMsg("Deposit Unsuccessful");
+      return false;
+    }
 
     setBalance(this.getBalance().add(amount));
     logMsg("Deposit Successful");
