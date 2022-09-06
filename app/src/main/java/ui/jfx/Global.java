@@ -38,17 +38,17 @@ public class Global {
   }
 
   public static String currencyFormat(BigDecimal n) {
-      return NumberFormat.getCurrencyInstance().format(n);
+    return NumberFormat.getCurrencyInstance().format(n);
   }
 
   public Pane loadFXML(String fxmlPath) {
-      var loader = new FXMLLoader(getClass().getResource(fxmlPath));
-      Pane pane = null;
-      try {
-          pane = (Pane) loader.load();
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
-      return pane;
+    var loader = new FXMLLoader(getClass().getResource(fxmlPath));
+    Pane pane = null;
+    try {
+        pane = (Pane) loader.load();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return pane;
   }
 }
