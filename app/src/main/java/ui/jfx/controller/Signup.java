@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 // Imports
 import fareye.Account;
 import ui.jfx.components.PasswordRevealer;
+import ui.jfx.ObservableAccount;
 import ui.jfx.Global;
 
 // JavaFX
@@ -45,7 +46,7 @@ public class Signup {
         // TODO: Add button to generate secure passwords for users
         var pin = Account.generatePin(Account.MAX_ACCTNUM_LENGTH);
         var bal = BigDecimal.valueOf(0);
-        var acct = new Account(fname, mname, lname, pass, pin, bal);
+        var acct = new ObservableAccount(fname, mname, lname, pass, pin, bal);
         logger.info("New Account Created");
 
         // TODO: Make this automatically resizeable

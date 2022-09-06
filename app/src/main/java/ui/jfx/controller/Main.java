@@ -59,7 +59,8 @@ public class Main {
 
         // Navigate to new pane
         logger.debug("Showing new view");
-        this.stackpane_main.getChildren().addAll((AnchorPane) global.loadFXML(view));
+        //this.stackpane_main.getChildren().addAll((AnchorPane) global.loadFXML(view));
+        this.stackpane_main.getChildren().addAll(global.loadFXML(view));
     }
 
     @FXML public void navigate(MouseEvent e) {
@@ -81,6 +82,9 @@ public class Main {
         Views.put("History", Global.VIEW_HISTORY);
         Views.put("Change Password", Global.VIEW_PASSWORD);
         Views.put("Transfer Funds", Global.VIEW_TRANSFER);
+
+        // Set MainView to Dashboard
+        load(Global.getFXMLPath(Views.get(Global.VIEW_HOME)));
 
         // Construct list of displayed names from hashmap keys
         ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());

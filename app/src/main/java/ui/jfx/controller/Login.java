@@ -62,7 +62,7 @@ public class Login {
             // Navigate to MainView
             logger.info("Navigating to MainView / Dashboard");
 
-            Global.changeScene(this.vb_login_root.getScene(), Global.getFXMLPath(Global.VIEW_HOME), "Could not load MainView");
+            Global.changeScene(this.vb_login_root.getScene(), Global.getFXMLPath(Global.VIEW_MAIN), "Could not load MainView");
         } else {
             t_login_status.setText("Login Failed");
         }

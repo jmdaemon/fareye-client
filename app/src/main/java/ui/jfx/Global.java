@@ -22,12 +22,15 @@ import javafx.scene.control.TextFormatter;
 
 public class Global {
   // Singletons
-  private static Account acct = null;
+  //private static Account acct = null;
+  //private static ObservableAccount obsAcct = null;
+  private static ObservableAccount acct = null;
   private static Logger logger = null;
 
   // FXML Resource File Names
   // Usage: getFXMLPath(VIEW_DEPOSIT);
-  public static String VIEW_HOME      = "MainView";
+  public static String VIEW_MAIN      = "MainView";
+  public static String VIEW_HOME      = "Home";
   public static String VIEW_DEPOSIT   = "Deposit";
   public static String VIEW_WITHDRAW  = "Withdraw";
   public static String VIEW_HISTORY   = "History";
@@ -51,16 +54,16 @@ public class Global {
   }
 
   public Global() {
-    if (acct == null) acct = new Account("","","");
+    if (acct == null) acct = new ObservableAccount("John","M.","Smith");
     if (logger == null) logger = LoggerFactory.getLogger("app");
   }
 
-  public static Account getAcct() {
-    if (acct == null) acct = new Account("", "", "");
+  public static ObservableAccount getAcct() {
+    if (acct == null) acct = new ObservableAccount("John","M.","Smith");
     return acct;
   }
 
-  public static void setAcct(Account account) { acct = account; }
+  public static void setAcct(ObservableAccount account) { acct = account; }
 
   public static Logger getLogger() {
     if (logger == null) logger = LoggerFactory.getLogger("app");
