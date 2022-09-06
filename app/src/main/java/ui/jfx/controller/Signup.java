@@ -56,7 +56,7 @@ public class Signup {
     public void toLoginPage() {
         var logger = Global.getLogger();
         Global global = new Global();
-        AnchorPane root = (AnchorPane) global.loadFXML("/fxmls/LoginView.fxml");
+        VBox root = (VBox) global.loadFXML("/fxmls/LoginView.fxml");
 
         if (root != null) {
             Scene scene = this.ap_signup.getScene();
