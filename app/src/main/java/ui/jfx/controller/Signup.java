@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 // Imports
 import fareye.Account;
+import ui.jfx.components.PasswordRevealer;
 import ui.jfx.Global;
 
 // JavaFX
@@ -29,7 +30,7 @@ public class Signup {
     @FXML private TextField tf_fname;
     @FXML private TextField tf_lname;
     @FXML private TextField tf_mname;
-    @FXML private TextField tf_pass;
+    @FXML private PasswordRevealer pr_passreveal;
     @FXML private Label tf_status;
     @FXML private VBox vb_signup;
 
@@ -39,21 +40,21 @@ public class Signup {
         var fname = this.tf_fname.getText();
         var mname = this.tf_mname.getText();
         var lname = this.tf_lname.getText();
-        var pass = this.tf_pass.getText();
+        var pass = this.pr_passreveal.getPasswordField().getEnterField().getText();
 
-        //var acct = new Account(fname, mname, lname);
-        //var pin =
-        //var pass = Account.generatePassword(Account.DEFAULT_PASS_LENGTH);
+        // TODO: Add button to generate secure passwords for users
         var pin = Account.generatePin(Account.MAX_ACCTNUM_LENGTH);
         var bal = BigDecimal.valueOf(0);
         var acct = new Account(fname, mname, lname, pass, pin, bal);
         logger.info("New Account Created");
+
+        // TODO: Make this automatically resizeable
         this.tf_status.setText("Account Creation Successful!\nYour new account pin is: #" + pin);
         Global.setAcct(acct);
     }
 
     public void toLoginPage() {
-        Global.changeScene(this.ap_signup.getScene(), "/fxmls/LoginView.fxml", "Could not load Login Page");
+        Global.changeScene(this.ap_signup.getScene(), Global.getFXMLPath(Global.VIEW_LOGIN), "Could not load Login Page");
     }
 
     @FXML
