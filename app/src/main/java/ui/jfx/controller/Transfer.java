@@ -99,4 +99,3 @@ public class Transfer {
         cb_transfer.valueProperty().set(list.get(0));
     }
 }
-
