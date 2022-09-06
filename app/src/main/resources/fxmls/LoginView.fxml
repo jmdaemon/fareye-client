@@ -42,9 +42,9 @@
                   <HBox fx:id="hb_login_status" alignment="CENTER">
                      <children>
                         <PasswordRevealer fx:id="pr_passreveal" />
-                        <Text fx:id="t_login_status" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                   </HBox>
+                  <Text fx:id="t_login_status" strokeType="OUTSIDE" strokeWidth="0.0" />
                   <HBox alignment="CENTER" spacing="6.0">
                      <children>
                         <Button fx:id="btn_login" mnemonicParsing="false" text="Login" />
