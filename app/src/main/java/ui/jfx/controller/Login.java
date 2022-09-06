@@ -7,6 +7,7 @@ import ui.jfx.components.EnterField;
 
 // JavaFX Imports
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
@@ -20,6 +21,7 @@ public class Login {
 
     // Template fields
     @FXML private Button btn_login;
+    @FXML private Button btn_signup;
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
@@ -73,6 +75,19 @@ public class Login {
             t_login_status.setText("Login Failed");
             }
         }
+    public void toSignupPage() {
+        var logger = Global.getLogger();
+        Global global = new Global();
+        AnchorPane root = (AnchorPane) global.loadFXML("/fxmls/Signup.fxml");
+
+        if (root != null) {
+            Scene scene = this.vb_login_root.getScene();
+            scene.setRoot(root);
+        } else {
+            logger.error("Could not load SignUp Page");
+        }
+
+    }
 
     @FXML
     public void initialize() {
@@ -81,5 +96,8 @@ public class Login {
 
         // Login with enter KeyPress on password field
         this.ef_pass.handleEnter(() -> { this.login(); } );
+
+        // Navigate to SignUp page from Login
+        this.btn_signup.setOnMouseClicked(e -> { this.toSignupPage(); });
     }
 }

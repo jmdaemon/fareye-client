@@ -45,7 +45,12 @@
                         <Text fx:id="t_login_status" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                   </HBox>
-                  <Button fx:id="btn_login" mnemonicParsing="false" text="Login" />
+                  <HBox alignment="CENTER" spacing="6.0">
+                     <children>
+                        <Button fx:id="btn_login" mnemonicParsing="false" text="Login" />
+                        <Button fx:id="btn_signup" mnemonicParsing="false" text="Sign Up" />
+                     </children>
+                  </HBox>
                </children>
                <padding>
                   <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />

@@ -32,6 +32,8 @@ public class Global {
     return acct;
   }
 
+  public static void setAcct(Account account) { acct = account; }
+
   public static Logger getLogger() {
     if (logger == null) logger = LoggerFactory.getLogger("app");
     return logger;

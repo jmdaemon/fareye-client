@@ -1,5 +1,7 @@
 package fareye;
 
+// Third Party Libraries
+import static toolbox.RandomUtility.generateRandomNumber;
 // Standard Library
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,8 +25,8 @@ public class Account extends Client {
     * MAX_ACCTNUM_LENGTH: The maximum length of a bank account number
     * DEFAULT_PASS_LENGTH: The default length of a bank account password
    */
-  private static final int MAX_ACCTNUM_LENGTH = 10000;
-  private static final int DEFAULT_PASS_LENGTH = 32;
+  public static final int MAX_ACCTNUM_LENGTH = 10000;
+  public static final int DEFAULT_PASS_LENGTH = 32;
 
   private int pin;
   private BigDecimal balance;
@@ -146,5 +148,10 @@ public class Account extends Client {
     this.setPassword(newPass);
     logMsg("Password Successfully Changed");
     return true;
+  }
+
+  public static int generatePin(int limit) {
+    int pin = generateRandomNumber(0, limit);
+    return pin;
   }
 }
