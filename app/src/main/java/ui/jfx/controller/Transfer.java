@@ -23,6 +23,15 @@ import javafx.scene.layout.VBox;
 import ui.jfx.components.EnterField;
 
 public class Transfer {
+    // TODO:
+    // - Make hstory widget
+    // - Readd dashboard timer widget displaying account balance, name, etc
+    // - Add http call to fareye-server database
+    // - Add icons and themeing
+    // - Remake more barebones version in Swing?
+    // - Finish fareye-server
+    // - Remove old dead code
+    // - Finish unit tests
 
     // Template Fields
     @FXML private AnchorPane ap_transfer;
