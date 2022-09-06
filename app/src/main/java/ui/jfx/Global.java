@@ -14,6 +14,8 @@ import java.text.NumberFormat;
 import java.io.IOException;
 
 // JavaFX
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
 
@@ -53,6 +55,11 @@ public class Global {
     return NumberFormat.getCurrencyInstance().format(n);
   }
 
+  // FXML
+  public static String getFXMLPath(String displayName) {
+      return "/fxmls/" + displayName + ".fxml";
+  }
+
   public Pane loadFXML(String fxmlPath) {
     var loader = new FXMLLoader(getClass().getResource(fxmlPath));
     Pane pane = null;
@@ -63,4 +70,16 @@ public class Global {
     }
     return pane;
   }
+
+    public static void changeScene(Scene scene, String fxml, String errorMsg) {
+        var logger = Global.getLogger();
+        Global global = new Global();
+        Parent root = global.loadFXML(fxml);
+
+        if (root != null) {
+            scene.setRoot(root);
+        } else
+            logger.error(errorMsg);
+    }
+
 }

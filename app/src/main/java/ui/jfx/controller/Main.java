@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -24,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.Scene;
 import javafx.scene.text.Font;
 
 public class Main {
@@ -52,10 +50,6 @@ public class Main {
     // HashMap<Sidebar Display Name, FXML Resource Files>
     private static ObservableMap<String, String> Views = FXCollections.observableHashMap();
 
-    private String getFXMLPath(String displayName) {
-        return "/fxmls/" + Views.get(displayName) + ".fxml";
-    }
-
     /** Switches the main stack pane to the new pane */
     public void load(String view) {
         Global global = new Global();
@@ -65,43 +59,22 @@ public class Main {
 
         // Navigate to new pane
         logger.debug("Showing new view");
-        //this.stackpane_main.getChildren().addAll(setupController(view));
         this.stackpane_main.getChildren().addAll((AnchorPane) global.loadFXML(view));
     }
 
     @FXML public void navigate(MouseEvent e) {
         var view = this.lv_sidebar.getSelectionModel().getSelectedItem();
         logger.debug("Navigating to: " + view);
-        load(getFXMLPath(view));
-    }
-
-    //public void changeScene(Scene scene, Parent value) {
-    //public void changeScene(Scene scene, String fxml, String errorMsg) {
-    public void changeScene(String fxml, String errorMsg) {
-        var logger = Global.getLogger();
-        Global global = new Global();
-        //VBox root = (VBox) global.loadFXML(fxml);
-        Parent root = global.loadFXML(fxml);
-
-        if (root != null) {
-            Scene scene = this.vb_main.getScene();
-            scene.setRoot(root);
-        } else
-            logger.error(errorMsg);
+        //load(Views.get(view));
+        //var fxml = Views.get(view);
+        //logger.debug("FXML: " + fxml);
+        //Global.getFXMLPath(Views.get(view));
+        //load(fxml);
+        load(Global.getFXMLPath(Views.get(view)));
     }
 
     public void toLoginPage() {
-        changeScene("/fxmls/LoginView.fxml", "Could not load Login Page");
-        //var logger = Global.getLogger();
-        //Global global = new Global();
-        //VBox root = (VBox) global.loadFXML("/fxmls/LoginView.fxml");
-
-        //if (root != null) {
-            //Scene scene = this.vb_main.getScene();
-            //scene.setRoot(root);
-        //} else {
-            //logger.error("Could not load Login Page");
-        //}
+        Global.changeScene(this.vb_main.getScene(), "/fxmls/LoginView.fxml", "Could not load Login Page");
     }
 
     @FXML
