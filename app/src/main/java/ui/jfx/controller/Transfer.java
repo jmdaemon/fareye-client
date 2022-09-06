@@ -2,25 +2,21 @@ package ui.jfx.controller;
 
 // Standard Library
 import java.math.BigDecimal;
-import java.lang.NumberFormatException;
 
 // Imports
-//import ui.jfx.components.TransactionButton;
-import ui.jfx.Global;
 import fareye.Account;
+import ui.jfx.Global;
+import ui.jfx.components.TransactionButton;
 
 // JavaFX
 import javafx.collections.FXCollections;
-import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ui.jfx.components.EnterField;
 
 public class Transfer {
     // TODO:
@@ -35,66 +31,72 @@ public class Transfer {
 
     // Template Fields
     @FXML private AnchorPane ap_transfer;
-    @FXML private Button btn_transfer;
-    //@FXML private ComboBox<?> cb_transfer;
     @FXML private ComboBox<String> cb_transfer;
-    @FXML private EnterField ef_transfer; // TODO: Replace this with transaction button
-    @FXML private HBox hb_transfer_amount;
-    @FXML private HBox hb_transfer_choice;
+    @FXML private TransactionButton tb_transfer;
     @FXML private HBox hb_transfer_root;
     @FXML private Label lbl_transfer;
     @FXML private TextField tf_pass;
     @FXML private TextField tf_pin;
     @FXML private VBox vb_transfer_root;
 
-    private void transferTo() {
-        var logger = Global.getLogger();
-        var acct = Global.getAcct();
-        var amount = ef_transfer.getText();
-
-        var amt = BigDecimal.valueOf(0);
-        try {
-            amt = BigDecimal.valueOf(Integer.parseInt(amount));
-            logger.debug("Amount Entered: " + amt);
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
-
-        // Get the other account
+    private Account getTarget() {
         var targetPin = tf_pin.getText();
         var targetPass = tf_pass.getText();
-
         // Retrieve the other fields
         // TODO: Complete http request here to retrieve account
         // TODO: Catch NumberFormatException
         var target = new Account("", "", "", targetPass, Integer.parseInt(targetPin), BigDecimal.valueOf(0));
+        return target;
+    }
+
+    /** Transfers funds from our account to theirs */
+    private void transferTo() {
+        // TODO: Fix duplication with another callback function
+        var logger = Global.getLogger();
+        var acct = Global.getAcct();
+
+        var amt = tb_transfer.getAmount();
+
+        var target = getTarget();
         acct.transferTo(amt, target);
 
         logger.debug("Account Balance: " + Global.currencyFormat(acct.getBalance()));
         logger.debug("Target Balance: " + Global.currencyFormat(target.getBalance()));
     }
-    private void transferFrom() { }
+
+    /** Transfers funds from their account to ours */
+    private void transferFrom() {
+        var logger = Global.getLogger();
+        var acct = Global.getAcct();
+
+        var amt = tb_transfer.getAmount();
+
+        var target = getTarget();
+        target.transferTo(amt, acct);
+
+        logger.debug("Account Balance: " + Global.currencyFormat(acct.getBalance()));
+        logger.debug("Target Balance: " + Global.currencyFormat(target.getBalance()));
+    }
 
     @FXML
     public void initialize() {
         var list = FXCollections.observableArrayList("Transfer To", "Transfer From");
         cb_transfer.setItems(list);
 
-        // Set default to transfer from
+        // Register custom callbacks
         cb_transfer.valueProperty().addListener((obs, from, to) -> {
             // Remove old callbacks on button
-            //this.btn_transfer.removeEventHandler(MouseEvent.MOUSE_CLICKED, transferTo);
-            //this.btn_transfer.removeEventHandler(MouseEvent.MOUSE_CLICKED, transferTo);
-            this.btn_transfer.setOnMouseClicked(null);
+            this.tb_transfer.getButton().setOnMouseClicked(null);
 
             // Switch between transfer from or transfer to
-            if (to == "Transfer To") {
-                this.btn_transfer.setOnMouseClicked(e -> { transferTo(); });
-            } else if (to == "Transfer From") {
-                this.btn_transfer.setOnMouseClicked(e -> { transferFrom(); });
-            }
+            if (to == "Transfer To")
+                this.tb_transfer.getButton().setOnMouseClicked(e -> { transferTo(); });
+            else if (to == "Transfer From")
+                this.tb_transfer.getButton().setOnMouseClicked(e -> { transferFrom(); });
         });
-        //comboBox.setItems(
+
+        // Transfer funds to other accounts by default
+        cb_transfer.valueProperty().set(list.get(0));
     }
 }
 
