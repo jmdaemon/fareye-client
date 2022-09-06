@@ -38,11 +38,17 @@ public class Global {
 
   // Reusable Components for TextFields
   public static String NUMERIC_REGEX  = "[0-9]*(\\.[0-9]*)?";
-  public static String NATURALS_REGEX = "[0-9]{0,5}";
+  //public static String NATURALS_REGEX = "{5}[0-9]";
+  //public static String NATURALS_REGEX = "^(?=.{6}$) *\\d* *$";
+  public static String NATURALS_REGEX = "[0-9]";
   public static String CHARACTER_REGEX= "[A-Za-z]";
-  public static TextFormatter<String> NaturalsFormatter   = new TextFormatter<String>(change -> change.getText().matches(NATURALS_REGEX) ? change : null);
-  public static TextFormatter<String> NumericFormatter    = new TextFormatter<String>(change -> change.getText().matches(NUMERIC_REGEX) ? change : null);
-  public static TextFormatter<String> CharacterFormatter  = new TextFormatter<String>(change -> change.getText().matches(CHARACTER_REGEX) ? change : null);
+  public static TextFormatter<String> NaturalsFormatter   = createTextFormatter(NATURALS_REGEX);
+  public static TextFormatter<String> NumericFormatter    = createTextFormatter(NUMERIC_REGEX);
+  public static TextFormatter<String> CharacterFormatter  = createTextFormatter(CHARACTER_REGEX);
+
+  public static TextFormatter<String> createTextFormatter(final String REGEX) {
+    return new TextFormatter<String>(change -> change.getText().matches(REGEX) ? change : null);
+  }
 
   public Global() {
     if (acct == null) acct = new Account("","","");
