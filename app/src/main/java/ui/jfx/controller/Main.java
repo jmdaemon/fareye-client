@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -74,27 +75,44 @@ public class Main {
         load(getFXMLPath(view));
     }
 
-    public void toLoginPage() {
+    //public void changeScene(Scene scene, Parent value) {
+    //public void changeScene(Scene scene, String fxml, String errorMsg) {
+    public void changeScene(String fxml, String errorMsg) {
         var logger = Global.getLogger();
         Global global = new Global();
-        VBox root = (VBox) global.loadFXML("/fxmls/LoginView.fxml");
+        //VBox root = (VBox) global.loadFXML(fxml);
+        Parent root = global.loadFXML(fxml);
 
         if (root != null) {
             Scene scene = this.vb_main.getScene();
             scene.setRoot(root);
-        } else {
-            logger.error("Could not load Login Page");
-        }
+        } else
+            logger.error(errorMsg);
+    }
+
+    public void toLoginPage() {
+        changeScene("/fxmls/LoginView.fxml", "Could not load Login Page");
+        //var logger = Global.getLogger();
+        //Global global = new Global();
+        //VBox root = (VBox) global.loadFXML("/fxmls/LoginView.fxml");
+
+        //if (root != null) {
+            //Scene scene = this.vb_main.getScene();
+            //scene.setRoot(root);
+        //} else {
+            //logger.error("Could not load Login Page");
+        //}
     }
 
     @FXML
     public void initialize() {
         // Initialize the sidebar
-        Views.put("Deposit", "Deposit");
-        Views.put("Withdraw", "Withdraw");
-        Views.put("History", "History");
-        Views.put("Change Password", "ResetPassword");
-        Views.put("Transfer Funds", "Transfer");
+        Views.put("Home", Global.VIEW_HOME);
+        Views.put("Deposit", Global.VIEW_DEPOSIT);
+        Views.put("Withdraw", Global.VIEW_WITHDRAW);
+        Views.put("History", Global.VIEW_HISTORY);
+        Views.put("Change Password", Global.VIEW_PASSWORD);
+        Views.put("Transfer Funds", Global.VIEW_TRANSFER);
 
         // Construct list of displayed names from hashmap keys
         ObservableList<String> list = FXCollections.observableArrayList(Views.keySet());

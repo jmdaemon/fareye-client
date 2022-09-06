@@ -17,8 +17,8 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 
 public class TransactionButton extends HBox {
-    private EnterField enterField;
-    private Button    button;
+    private EnterField  enterField;
+    private Button      button;
 
     private StringProperty enterFieldLabel = new SimpleStringProperty();
     private StringProperty buttonLabel = new SimpleStringProperty();
@@ -49,8 +49,6 @@ public class TransactionButton extends HBox {
     // Init
     private void initGraphics() {
         getStyleClass().add("/fxmls/css/transaction-button");
-
-        //this.setFillHeight(true);
 
         // EnterField
         enterField = new EnterField();

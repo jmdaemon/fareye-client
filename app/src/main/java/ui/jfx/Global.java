@@ -22,6 +22,16 @@ public class Global {
   private static Account acct = null;
   private static Logger logger = null;
 
+  // FXML Resource File Names
+  // Usage: getFXMLPath(VIEW_DEPOSIT);
+  public static String VIEW_HOME      = "MainView";
+  public static String VIEW_DEPOSIT   = "Deposit";
+  public static String VIEW_WITHDRAW  = "Withdraw";
+  public static String VIEW_HISTORY   = "History";
+  public static String VIEW_PASSWORD  = "ResetPassword";
+  public static String VIEW_TRANSFER  = "Transfer";
+  public static String VIEW_LOGIN     = "LoginView";
+
   public Global() {
     if (acct == null) acct = new Account("","","");
     if (logger == null) logger = LoggerFactory.getLogger("app");
