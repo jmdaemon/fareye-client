@@ -2,7 +2,6 @@ package ui.jfx.components;
 
 // Imports
 import ui.jfx.Global;
-//import static ui.jfx.Global.NumericFormatter;
 
 // Standard Library
 import java.math.BigDecimal;
@@ -18,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class TransactionButton extends HBox {
-    //private static String NUMERIC_REGEX = Global.NUMERIC_REGEX;
     // Required. Scenebuilder cannot detect the ui.jfx.Global import so we must duplicate this field here.
     // The alternative is ensuring that the Globals import is included in every fxml file.
     public static String NUMERIC_REGEX  = "[0-9]*(\\.[0-9]*)?";
@@ -62,10 +60,6 @@ public class TransactionButton extends HBox {
         setHgrow(enterField, Priority.ALWAYS);
 
         // Enter only numbers
-        //var formatter = Global.NumericFormatter;
-        //enterField.setTextFormatter(formatter);
-        //enterField.setTextFormatter(Global.NumericFormatter);
-        //enterField.setTextFormatter(new TextFormatter<String>(change -> change.getText().matches(Global.NUMERIC_REGEX) ? change : null));
         enterField.setTextFormatter(new TextFormatter<String>(change -> change.getText().matches(NUMERIC_REGEX) ? change : null));
 
         // Button
