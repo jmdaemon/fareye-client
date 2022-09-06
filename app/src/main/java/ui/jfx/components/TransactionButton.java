@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.lang.NumberFormatException;
 
 // JavaFX
+import javafx.scene.layout.Priority;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -49,10 +50,13 @@ public class TransactionButton extends HBox {
     private void initGraphics() {
         getStyleClass().add("/fxmls/css/transaction-button");
 
+        //this.setFillHeight(true);
+
         // EnterField
         enterField = new EnterField();
         enterField.setPromptText("Amount: ");
         enterField.setFocusTraversable(false);
+        setHgrow(enterField, Priority.ALWAYS);
         // Enter only numbers
         enterField.setTextFormatter(new TextFormatter<>(change -> change.getText().matches("[0-9]*(\\.[0-9]*)?") ? change : null));
 
@@ -63,6 +67,7 @@ public class TransactionButton extends HBox {
         setFocusTraversable(true);
         setFillHeight(false);
         setAlignment(Pos.CENTER);
+        setHgrow(button, Priority.ALWAYS);
 
         getChildren().addAll(enterField, button);
     }
