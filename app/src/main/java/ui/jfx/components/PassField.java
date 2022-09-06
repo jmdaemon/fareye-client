@@ -1,31 +1,25 @@
 package ui.jfx.components;
 
+// Imports
+import ui.jfx.components.mixins.IEnter;
+
 // JavaFX
 import javafx.beans.property.BooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-public class PassField extends PasswordField implements EnterInterface {
+public class PassField extends PasswordField implements IEnter {
     private TextField unmaskedPasswordField;
 
-    // Used purely for
-    //public TextField getTextField() {
+    // Mixins
     @Override
-    public TextField getEnterField() {
-      //return unmaskedPasswordField;
-      return this;
-    }
+    public TextField getEnterField() { return this; }
 
     @Override
-    public void handleEnter(CallbackInterface cb) {
-        EnterInterface.super.handleEnter(cb);
-    }
+    public void handleEnter(CallbackInterface cb) { IEnter.super.handleEnter(cb); }
 
-    //@Override
-    //public PasswordField getPasswordField() {
-      //return this;
-    //}
+    // Getters
     public TextField getTextField() {
       return unmaskedPasswordField;
     }
@@ -41,7 +35,5 @@ public class PassField extends PasswordField implements EnterInterface {
 
       this.managedProperty().bind(prop.not());
       this.visibleProperty().bind(prop.not());
-
-      //unmaskedPasswordField.textProperty().bindBidirectional(this.textProperty());
     }
 }

@@ -3,7 +3,6 @@ package ui.jfx.controller;
 // Imports
 import fareye.Account;
 import ui.jfx.Global;
-//import ui.jfx.components.EnterField;
 import ui.jfx.components.PassField;
 
 // JavaFX Imports
@@ -24,7 +23,6 @@ public class Login {
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
-    //@FXML private EnterField ef_pass;
     @FXML private PassField pf_pass;
     @FXML private TextField tf_pin;
     @FXML private VBox vb_login;
@@ -47,7 +45,6 @@ public class Login {
     public void login() {
         // Parse the inputs
         String s_pin = tf_pin.getText();
-        //String s_pass = ef_pass.getText();
         String s_pass = pf_pass.getText();
 
         // Validate the inputs
@@ -82,7 +79,6 @@ public class Login {
         this.btn_login.setOnMouseClicked(e -> { this.login(); });
 
         // Login with enter KeyPress on password field
-        //this.ef_pass.handleEnter(() -> { this.login(); } );
         this.pf_pass.handleEnter(() -> { this.login(); } );
 
         // Navigate to SignUp page from Login
