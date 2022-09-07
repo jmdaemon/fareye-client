@@ -9,6 +9,7 @@ import java.net.URL;
 // Imports
 import ui.jfx.ObservableAccount;
 import ui.jfx.components.TimeLabel;
+import ui.jfx.components.NavButton;
 import ui.jfx.Global;
 
 // JavaFX
@@ -28,7 +29,7 @@ public class Home {
     // Template fields
     @FXML private AnchorPane ap_home;
     @FXML private Button btn_avatar;
-    @FXML private Button btn_logout;
+    @FXML private NavButton btn_logout;
     @FXML private Button btn_name;
     @FXML private ComboBox<String> cb_country;
     @FXML private GridPane gp_home;
@@ -107,7 +108,5 @@ public class Home {
         // TODO: Update balance, country flag on country / nationality change
         cb_country.valueProperty().bind(acct.getCountryProperty());
         cb_country.valueProperty().addListener((obs, ov, nv) -> { displayCountry(ov, nv); });
-
-        // TODO: Implement generic logout button
     }
 }
