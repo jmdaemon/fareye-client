@@ -56,7 +56,7 @@ public class Home {
     private static String DEFAULT_AVATAR_IMAGE = "/img/default-user.png";
 
     // Nationality Name, Nation struct
-    private static ObservableMap<String, Nation> Nationalities = FXCollections.observableHashMap();
+    //private static ObservableMap<String, Nation> Nationalities = FXCollections.observableHashMap();
 
     private ChangeListener<String> nameListener = (obs, ov, nv) -> { displayName(); };
 

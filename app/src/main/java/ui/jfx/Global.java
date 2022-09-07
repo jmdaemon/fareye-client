@@ -105,4 +105,8 @@ public class Global {
           logger.error(errorMsg);
   }
 
+  public static void logout(Scene scene) {
+        Global.changeScene(scene, Global.getFXMLPath(Global.VIEW_LOGIN), "Could not load Login Page");
+  }
+
 }

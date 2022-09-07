@@ -69,10 +69,6 @@ public class Main {
         load(Global.getFXMLPath(Views.get(view)));
     }
 
-    public void toLoginPage() {
-        Global.changeScene(this.vb_main.getScene(), Global.getFXMLPath(Global.VIEW_LOGIN), "Could not load Login Page");
-    }
-
     @FXML
     public void initialize() {
         // Initialize the sidebar
@@ -92,6 +88,6 @@ public class Main {
         this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
 
         // Logout Button
-        this.btn_logout.setOnMouseClicked(e -> { this.toLoginPage(); });
+        this.btn_logout.setOnMouseClicked(e -> { Global.logout(this.vb_main.getScene()); });
     }
 }
