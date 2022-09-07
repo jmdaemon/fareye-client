@@ -38,16 +38,19 @@ public class ObservableAccount extends Account {
   public ObservableAccount(String fname, String mname, String lname) {
     super(fname, mname, lname);
     setFirstName(fname);
-    setMiddleName(fname);
-    setLastName(fname);
+    setMiddleName(mname);
+    setLastName(lname);
+    setPassword("");
+    setPin(0);
+    setBalance(BigDecimal.valueOf(0));
   }
 
   public ObservableAccount(String fname, String mname, String lname, String password,
       int acctNum, BigDecimal bal) {
     super(fname, mname, lname, password, acctNum, bal);
     setFirstName(fname);
-    setMiddleName(fname);
-    setLastName(fname);
+    setMiddleName(mname);
+    setLastName(lname);
     setPin(acctNum);
     setPassword(password);
     setBalance(bal);
