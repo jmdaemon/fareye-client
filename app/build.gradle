@@ -2,7 +2,6 @@ plugins {
     id 'application'
     id 'checkstyle'
     id 'org.openjfx.javafxplugin' version '0.0.10'
-    //id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'io.github.jmdaemon'
@@ -33,17 +32,13 @@ dependencies {
 
     implementation 'org.unix4j:unix4j-command:0.5'
 
-    // Graphics
-
     // Icons
+    implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
+    implementation 'org.kordamp.ikonli:ikonli-core'
+    implementation 'org.kordamp.ikonli:ikonli-javafx'
+    implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
+    implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
-    //implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
-    //implementation 'org.kordamp.ikonli:ikonli-core'
-    //implementation 'org.kordamp.ikonli:ikonli-javafx'
-    //implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
-    //implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
-
-    // My Custom Dependencies
     implementation 'io.github.jmdaemon:toolbox:0.1.2'
     implementation 'io.github.jmdaemon:crypt:0.1.0'
 }
@@ -52,7 +47,7 @@ testing {
     suites {
         // Configure the built-in test suite
         test {
-            // Use JUnit Jupiter test framework
+            // Use JUnit 5 Jupiter test framework
             useJUnitJupiter('5.8.1')
         }
     }
@@ -69,7 +64,6 @@ test {
 
 java {
     toolchain {
-        //languageVersion = JavaLanguageVersion.of(17)
         languageVersion = JavaLanguageVersion.of(18)
     }
 }
@@ -90,14 +84,9 @@ task jfxcompjar(type: Jar) {
     archiveVersion = "0.1.0"
 
     from(sourceSets.main.output) {  
-        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "**/*.css", "**/*.png", "**/*.jpg", "**/*.fxml" , "**/*.css" , "**/*.properties"]
+        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "logback.xml", "**/*.css", "**/*.png", "**/*.jpg", "**/*.fxml" , "**/*.css" , "**/*.properties"]
     }
 }
-
-//shadowJar {
-    // https://stackoverflow.com/questions/32887966/shadow-plugin-gradle-what-does-mergeservicefiles-do
-    //mergeServiceFiles()
-//}
 
 checkstyle {
     toolVersion = "10.0"
