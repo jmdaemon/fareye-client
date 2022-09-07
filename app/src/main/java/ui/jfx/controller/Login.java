@@ -4,6 +4,7 @@ package ui.jfx.controller;
 import fareye.Account;
 import ui.jfx.Global;
 import ui.jfx.components.PasswordRevealer;
+import ui.jfx.components.NavButton;
 
 // JavaFX Imports
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ public class Login {
 
     // Template fields
     @FXML private Button btn_login;
-    @FXML private Button btn_signup;
+    @FXML private NavButton btn_signup;
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
@@ -68,10 +69,6 @@ public class Login {
         }
     }
 
-    public void toSignupPage() {
-        Global.changeScene(this.vb_login_root.getScene(), Global.getFXMLPath(Global.VIEW_SIGNUP),"Could not load SignUp Page");
-    }
-
     @FXML
     public void initialize() {
         this.tf_pin.setTextFormatter(Global.NaturalsFormatter); // Filter only valid pin numbers
@@ -81,8 +78,5 @@ public class Login {
 
         // Login with enter KeyPress on password field
         this.pr_passreveal.getPasswordField().handleEnter(() -> { this.login(); } );
-
-        // Navigate to SignUp page from Login
-        this.btn_signup.setOnMouseClicked(e -> { this.toSignupPage(); });
     }
 }
