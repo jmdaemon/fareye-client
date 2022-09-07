@@ -5,6 +5,7 @@ import fareye.Account;
 import ui.jfx.Global;
 import ui.jfx.components.PasswordRevealer;
 import ui.jfx.components.NavButton;
+import ui.jfx.components.filters.NaturalsFilter;
 
 // JavaFX Imports
 import javafx.fxml.FXML;
@@ -71,7 +72,7 @@ public class Login {
 
     @FXML
     public void initialize() {
-        this.tf_pin.setTextFormatter(Global.NaturalsFormatter); // Filter only valid pin numbers
+        this.tf_pin.setTextFormatter(new NaturalsFilter().getFormatter()); // Filter only valid pin numbers
 
         // Login using the button
         this.btn_login.setOnMouseClicked(e -> { this.login(); });
