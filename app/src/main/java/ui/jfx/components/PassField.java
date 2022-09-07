@@ -31,11 +31,6 @@ public class PassField extends VBox implements IEnter {
     public StringProperty promptLabelProperty() { return promptLabel; }
     public void setPromptLabel(String label)    { promptLabel.set(label);}
 
-    //public void promptProperty(String label)  { promptLabel.set(label); }
-
-    //public void setPromptText(String prompt) { promptLabel.set("Password"); }
-    //public void setPromptText(String prompt) { promptLabel.set("Password"); }
-
     // Getters
     public TextField getTextField() { return plaintext; }
 

@@ -5,18 +5,14 @@ import java.io.FileInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 // Imports
 import ui.jfx.ObservableAccount;
+import ui.jfx.components.TimeLabel;
 import ui.jfx.Global;
 
 // JavaFX
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -47,7 +43,7 @@ public class Home {
     @FXML private Label lbl_display_name;
     @FXML private Label lbl_display_balance;
     @FXML private Label lbl_recent;
-    @FXML private Label lbl_time;
+    @FXML private TimeLabel lbl_time;
     @FXML private VBox vb_home;
     @FXML private VBox vb_info;
 
@@ -78,25 +74,6 @@ public class Home {
         // TODO: Implement file chooser widget, get filepath, create Image from file, displayAvatar
     }
 
-    // Helper Functions
-    private String getDateAndTime() {
-        SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
-        return date.format(new Date());
-    }
-
-    private volatile boolean enough = false;
-    private Thread timer = new Thread(() -> {
-        while (!enough) {
-            Platform.runLater(()-> {
-                this.lbl_time.setText(getDateAndTime());
-            });
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) { }
-        }
-    });
-
-
     @FXML
     public void initialize() {
         Image image = null;
@@ -108,10 +85,6 @@ public class Home {
         iv_avatar.setCache(true);
         iv_avatar.imageProperty().bindBidirectional(acct.getAvatarProperty());
         iv_avatar.setVisible(true);
-
-        // Show current date and time
-        timer.setDaemon(true);
-        timer.start();
 
         // Show all the fields
         displayName();
