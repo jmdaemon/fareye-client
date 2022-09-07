@@ -68,7 +68,7 @@
                         <Label fx:id="lbl_home" text="Fareye Banking" GridPane.columnIndex="1" />
                         <Label fx:id="lbl_time" text="Time" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" />
                         <ImageView fx:id="iv_flag" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <TextArea fx:id="ta_recent" prefHeight="101.0" prefWidth="305.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
+                        <TextArea fx:id="ta_recent" editable="false" prefHeight="101.0" prefWidth="305.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
                         <Button fx:id="btn_name" mnemonicParsing="false" text="Change Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
