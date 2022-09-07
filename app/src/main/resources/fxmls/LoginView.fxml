@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Text?>
 <?import ui.jfx.components.NavButton?>
 <?import ui.jfx.components.PasswordRevealer?>
+<?import ui.jfx.components.QuitButton?>
 
 <VBox fx:id="vb_login_root" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Login">
    <children>
@@ -51,6 +52,7 @@
                         <!--<NavButton destination="/fxmls/MainView.fxml" text="Login" />-->
                         <Button fx:id="btn_login" mnemonicParsing="false" text="Login" />
                         <NavButton fx:id="btn_signup" destination="/fxmls/Signup.fxml" mnemonicParsing="false" text="Sign Up" />
+                        <QuitButton fx:id="btn_quit" />
                      </children>
                   </HBox>
                </children>

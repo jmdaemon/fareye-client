@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 
 // Imports
 import ui.jfx.Global;
+import ui.jfx.components.QuitButton;
 
 // JavaFX
 import javafx.collections.FXCollections;
@@ -42,6 +43,7 @@ public class Main {
     @FXML private VBox vb_main;
     @FXML private VBox vb_sidebar;
     @FXML private Button btn_logout;
+    @FXML private QuitButton btn_quit;
     @FXML private Font x1;
     @FXML private Color x2;
     @FXML private Font x3;
@@ -88,6 +90,7 @@ public class Main {
         this.lv_sidebar.setOnMouseClicked(e -> { this.navigate(e); });
 
         // Logout Button
-        this.btn_logout.setOnMouseClicked(e -> { Global.logout(this.vb_main.getScene()); });
+        //this.btn_logout.setOnMouseClicked(e -> { Global.logout(this.vb_main.getScene()); });
+
     }
 }

@@ -5,6 +5,7 @@ import fareye.Account;
 import ui.jfx.Global;
 import ui.jfx.components.PasswordRevealer;
 import ui.jfx.components.NavButton;
+import ui.jfx.components.QuitButton;
 import ui.jfx.components.filters.NaturalsFilter;
 
 // JavaFX Imports
@@ -22,6 +23,7 @@ public class Login {
     // Template fields
     @FXML private Button btn_login;
     @FXML private NavButton btn_signup;
+    @FXML private QuitButton btn_quit;
     @FXML private HBox hb_login_status;
     @FXML private ImageView iv_avatar;
     @FXML private Text t_login_status;
