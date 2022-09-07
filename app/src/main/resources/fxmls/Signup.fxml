@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import ui.jfx.components.PasswordRevealer?>
+<?import ui.jfx.components.NavButton?>
 
 <AnchorPane fx:id="ap_signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.jfx.controller.Signup">
    <children>
@@ -41,7 +42,7 @@
                            <GridPane.margin>
                               <Insets top="3.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="btn_login" mnemonicParsing="false" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <NavButton fx:id="btn_login" destination="/fxmls/LoginView.fxml" mnemonicParsing="false" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label fx:id="tf_status" GridPane.rowIndex="5" />
                      </children>
                      <padding>

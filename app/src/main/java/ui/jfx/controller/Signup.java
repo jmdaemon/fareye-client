@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 // Imports
 import fareye.Account;
 import ui.jfx.components.PasswordRevealer;
+import ui.jfx.components.NavButton;
 import ui.jfx.ObservableAccount;
 import ui.jfx.Global;
 
@@ -23,7 +24,7 @@ public class Signup {
 
     // Template fields
     @FXML private AnchorPane ap_signup;
-    @FXML private Button btn_login;
+    @FXML private NavButton btn_login;
     @FXML private Button btn_signup;
     @FXML private GridPane gp_signup;
     @FXML private HBox hb_signup;
@@ -54,13 +55,8 @@ public class Signup {
         Global.setAcct(acct);
     }
 
-    public void toLoginPage() {
-        Global.changeScene(this.ap_signup.getScene(), Global.getFXMLPath(Global.VIEW_LOGIN), "Could not load Login Page");
-    }
-
     @FXML
     public void initialize() {
         this.btn_signup.setOnMouseClicked(e -> { signup(); });
-        this.btn_login.setOnMouseClicked(e -> { this.toLoginPage(); });
     }
 }
