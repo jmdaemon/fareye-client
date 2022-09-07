@@ -90,7 +90,7 @@ task jfxcompjar(type: Jar) {
     archiveVersion = "0.1.0"
 
     from(sourceSets.main.output) {  
-        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "**/*.css"]
+        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "**/*.css", "**/*.png", "**/*.jpg", "**/*.fxml" , "**/*.css" , "**/*.properties"]
     }
 }
 
@@ -110,7 +110,7 @@ checkstyle {
 sourceSets {
     main {
         resources {
-            includes = [ "logback.xml", "**/*.fxml" , "**/*.css" , "**/*.properties"]
+            includes = [ "**/*.png", "**/*.jpg", "logback.xml", "**/*.fxml" , "**/*.css" , "**/*.properties"]
             exclude "bankaccount"
             exclude "interface-old"
             exclude "money"

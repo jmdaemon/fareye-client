@@ -79,6 +79,7 @@ public class Home {
     public void initialize() {
         Image image = null;
         try {
+            //image = new Image(DEFAULT_AVATAR_IMAGE);
             image = new Image(DEFAULT_AVATAR_IMAGE);
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,6 +87,7 @@ public class Home {
         iv_avatar.setCache(true);
         iv_avatar.imageProperty().bindBidirectional(acct.getAvatarProperty());
         iv_avatar.setVisible(true);
+        iv_avatar.setImage(image);
 
         // Show all the fields
         displayName();
