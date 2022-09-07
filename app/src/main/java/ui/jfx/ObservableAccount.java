@@ -68,6 +68,7 @@ public class ObservableAccount extends Account {
 
   // External properties
   public ObjectProperty<Image> getAvatarProperty() { return avatar; }
+  public void setAvatar(Image image) { avatar.set(image); }
 
   public StringProperty getCountryProperty() { return country; }
   public StringProperty getCurrencyProperty() { return currency; }

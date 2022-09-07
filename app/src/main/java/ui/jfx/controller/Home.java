@@ -99,65 +99,15 @@ public class Home {
 
     @FXML
     public void initialize() {
-        //InputStream stream = null;
-        //getClass().getResource(DEFAULT_AVATAR_IMAGE);
-        //try {
-            //stream = new FileInputStream("app/src/main/resources/default-user.png");
-            //stream = new FileInputStream(getClass().getResource(DEFAULT_AVATAR_IMAGE).getPath());
-            //stream = getClass().getResource(DEFAULT_AVATAR_IMAGE).openStream();
-            //stream = getClass().getResource(DEFAULT_AVATAR_IMAGE).openStream();
-            //stream = new FileInputStream(getClass().getResource(DEFAULT_AVATAR_IMAGE).getPath());
-            //URL avatar = getClass().getResource(DEFAULT_AVATAR_IMAGE);
-            //avatar.getFile();
-            //stream = new FileInputStream(getClass().getResource(DEFAULT_AVATAR_IMAGE).getPath());
-            //stream = new FileInputStream(avatar.getFile());
-            //stream = getClass().getResourceAsStream(DEFAULT_AVATAR_IMAGE);
-        //} catch (Exception e) {
-            //e.printStackTrace();
-        //}
-        //Image image = new Image(stream);
-        //Image image = new Image(DEFAULT_AVATAR_IMAGE);
-        //InputStream stream = null;
-        //try {
-        //stream = new FileInputStream("app/src/main/resources/default-user.png");
-        //} catch (Exception e) {
-            //e.printStackTrace();
-        //}
-        //Image image = new Image("file:home/jmd/mytest/java/fareye-client/app/src/main/resources/img/default-user.png");
-        //Image image = new Image("file:home/jmd/mytest/java/fareye-client/app/src/main/resources/img/avatar-large.png");
-        //Image image = new Image(getClass().getResourceAsStream("/img/avatar-large.png"));
-        //Image image = new Image(getClass().getResourceAsStream("app/src/main/resources/img/avatar-large.png"));
-        //Image image = new Image(getClass().getResourceAsStream("file:/img/avatar-large.jpg"));
-        //Image image = new Image(getClass().getResourceAsStream("app/src/main/resources/img/avatar-large.jpg"));
-        //Image image = new Image(getClass().getResourceAsStream("/img/avatar-large.jpg"));
-        //Image image = new Image(getClass().getResourceAsStream("app/src/main/resources/img/avatar-large.jpg"));
         Image image = null;
-        FileInputStream stream = null;
         try {
-            //image = new Image(getClass().getResourceAsStream("/assets/img/avatar-large.jpg"));
-            //image = new Image(getClass().getResourceAsStream("/assets/img/avatar-large.jpg"));
-            //image = new Image(getClass().getResourceAsStream("file:assets/img/avatar-large.jpg"));
-            //image = new Image(getClass().getResourceAsStream("/img/avatar-large.jpg"));
-            //image = new Image(getClass().getResourceAsStream("/img/default-user.png"));
-            //stream = new FileInputStream("file:app/src/main/resources/img/default-user.png");
-            //File file = new File("/img/default-user.png");
-
-            //File file = new File("app/src/main/resources/img/default-user.png");
-            //if (file.exists()) {
-                //stream = new FileInputStream(file.getAbsoluteFile());
-            //}
-
-            image = new Image("file:default-user.png");
+            image = new Image(DEFAULT_AVATAR_IMAGE);
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
         iv_avatar.setCache(true);
         iv_avatar.imageProperty().bindBidirectional(acct.getAvatarProperty());
         iv_avatar.setVisible(true);
-
-        //iv_avatar.setImage(image);
-        acct.setAvatar(image);
 
         // Show current date and time
         timer.setDaemon(true);
@@ -169,13 +119,6 @@ public class Home {
 
         // Update account pin whenever it changes
         lbl_pin.textProperty().bind(acct.getPinProperty());
-
-        //lbl_name.textProperty().bind(acct.getFNameProperty());
-        //lbl_name.textProperty().or(acct.getFNameProperty());
-            //.or(acct.getMNameProperty());acct.getFNameProperty()
-        //lbl_name.textProperty().bind(
-                //Bindings.or(acct.getFNameProperty(), acct.getMNameProperty()));
-         //ChangeListener<Number> listener = (obs, ov, nv) -> update();
 
         // Update name label on any name changes
         acct.getFNameProperty().addListener(nameListener);
@@ -193,6 +136,5 @@ public class Home {
         cb_country.valueProperty().addListener((obs, ov, nv) -> { displayCountry(ov, nv); });
 
         // TODO: Implement generic logout button
-
     }
 }
