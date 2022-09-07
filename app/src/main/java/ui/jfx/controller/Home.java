@@ -2,17 +2,21 @@ package ui.jfx.controller;
 
 // Standard Library
 import java.io.FileInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // Imports
-//import ui.jfx.ObservableAccount;
+import ui.jfx.ObservableAccount;
 import ui.jfx.Global;
 
 // JavaFX
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,14 +27,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.beans.value.ChangeListener;
-//import javafx.beans.binding.Binding;
-//import javafx.beans.binding.Bindings;
-//import javafx.beans.property.StringProperty;
-//import javafx.beans.property.SimpleStringProperty;
 
 public class Home {
-
     // Template fields
     @FXML private AnchorPane ap_home;
     @FXML private Button btn_avatar;
@@ -53,28 +51,21 @@ public class Home {
     @FXML private VBox vb_home;
     @FXML private VBox vb_info;
 
+    // Static fields
+    private static ObservableAccount acct = Global.getAcct();
+    private static String DEFAULT_AVATAR_IMAGE = "/img/default-user.png";
+
+    // Nationality Name, Nation struct
+    private static ObservableMap<String, Nation> Nationalities = FXCollections.observableHashMap();
+
     private ChangeListener<String> nameListener = (obs, ov, nv) -> { displayName(); };
-    //private ChangeListener<String> avatarListener = (obs, ov, nv) -> { displayAvatar(); };
 
-    // Displaying changes
+    // Diplaying fields
     private void displayName() {
-        var acct = Global.getAcct();
-        this.lbl_name.setText(String.format("%s %s %s",
-                    acct.getFirstName(), acct.getMiddleName(), acct.getLastName()));
-        //var fullName = acct.getFirstName() + " " + acct.getMiddleName() + " " + acct.getLastName();
-        //this.lbl_name.setText(fullName);
-        //this.lbl_name.setText(String.format("%s %s %s",
-//));
+        this.lbl_name.setText(String.format("%s %s %s", acct.getFirstName(), acct.getMiddleName(), acct.getLastName()));
     }
-
-    private void displayAvatar(Image image) {
-        iv_avatar.setImage(image);
-    }
-
-    private void displayBalance() {
-        var acct = Global.getAcct();
-        this.lbl_balance.setText(acct.getBalance().toString());
-    }
+    private void displayAvatar(Image image) { iv_avatar.setImage(image); }
+    private void displayBalance() { this.lbl_balance.setText(acct.getBalance().toString()); }
 
     private void displayCountry(String oldCountry, String newCountry) {
         // TODO: Lookup country flag in resources and set country image
@@ -82,11 +73,12 @@ public class Home {
         // TODO: Lookup new country currency symbol
     }
 
-    // Modifying properties
+    // Modifying fields
     public void changeAvatar() {
         // TODO: Implement file chooser widget, get filepath, create Image from file, displayAvatar
     }
 
+    // Helper Functions
     private String getDateAndTime() {
         SimpleDateFormat date = new SimpleDateFormat("EEEE h:mm a");
         return date.format(new Date());
@@ -103,7 +95,7 @@ public class Home {
             } catch (InterruptedException e) { }
         }
     });
-    private static String DEFAULT_AVATAR_IMAGE = "/img/default-user.png";
+
 
     @FXML
     public void initialize() {
@@ -125,13 +117,53 @@ public class Home {
         //}
         //Image image = new Image(stream);
         //Image image = new Image(DEFAULT_AVATAR_IMAGE);
+        //InputStream stream = null;
+        //try {
+        //stream = new FileInputStream("app/src/main/resources/default-user.png");
+        //} catch (Exception e) {
+            //e.printStackTrace();
+        //}
+        //Image image = new Image("file:home/jmd/mytest/java/fareye-client/app/src/main/resources/img/default-user.png");
+        //Image image = new Image("file:home/jmd/mytest/java/fareye-client/app/src/main/resources/img/avatar-large.png");
+        //Image image = new Image(getClass().getResourceAsStream("/img/avatar-large.png"));
+        //Image image = new Image(getClass().getResourceAsStream("app/src/main/resources/img/avatar-large.png"));
+        //Image image = new Image(getClass().getResourceAsStream("file:/img/avatar-large.jpg"));
+        //Image image = new Image(getClass().getResourceAsStream("app/src/main/resources/img/avatar-large.jpg"));
+        //Image image = new Image(getClass().getResourceAsStream("/img/avatar-large.jpg"));
+        //Image image = new Image(getClass().getResourceAsStream("app/src/main/resources/img/avatar-large.jpg"));
+        Image image = null;
+        FileInputStream stream = null;
+        try {
+            //image = new Image(getClass().getResourceAsStream("/assets/img/avatar-large.jpg"));
+            //image = new Image(getClass().getResourceAsStream("/assets/img/avatar-large.jpg"));
+            //image = new Image(getClass().getResourceAsStream("file:assets/img/avatar-large.jpg"));
+            //image = new Image(getClass().getResourceAsStream("/img/avatar-large.jpg"));
+            //image = new Image(getClass().getResourceAsStream("/img/default-user.png"));
+            //stream = new FileInputStream("file:app/src/main/resources/img/default-user.png");
+            //File file = new File("/img/default-user.png");
+
+            //File file = new File("app/src/main/resources/img/default-user.png");
+            //if (file.exists()) {
+                //stream = new FileInputStream(file.getAbsoluteFile());
+            //}
+
+            image = new Image("file:default-user.png");
+        } catch (Exception e) {
+            //TODO: handle exception
+            e.printStackTrace();
+        }
+        iv_avatar.setCache(true);
+        iv_avatar.imageProperty().bindBidirectional(acct.getAvatarProperty());
+        iv_avatar.setVisible(true);
+
+        //iv_avatar.setImage(image);
+        acct.setAvatar(image);
 
         // Show current date and time
         timer.setDaemon(true);
         timer.start();
 
-        var acct = Global.getAcct();
-
+        // Show all the fields
         displayName();
         displayBalance();
 
