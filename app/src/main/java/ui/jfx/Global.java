@@ -5,9 +5,6 @@ package ui.jfx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// Imports
-import fareye.Account;
-
 // Standard Library
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -18,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextFormatter;
 
 public class Global {
   // Singletons
@@ -38,20 +34,6 @@ public class Global {
   public static String VIEW_TRANSFER  = "Transfer";
   public static String VIEW_LOGIN     = "LoginView";
   public static String VIEW_SIGNUP    = "Signup";
-
-  // Reusable Components for TextFields
-  public static String NUMERIC_REGEX  = "[0-9]*(\\.[0-9]*)?";
-  //public static String NATURALS_REGEX = "{5}[0-9]";
-  //public static String NATURALS_REGEX = "^(?=.{6}$) *\\d* *$";
-  public static String NATURALS_REGEX = "[0-9]";
-  public static String CHARACTER_REGEX= "[A-Za-z]";
-  public static TextFormatter<String> NaturalsFormatter   = createTextFormatter(NATURALS_REGEX);
-  public static TextFormatter<String> NumericFormatter    = createTextFormatter(NUMERIC_REGEX);
-  public static TextFormatter<String> CharacterFormatter  = createTextFormatter(CHARACTER_REGEX);
-
-  public static TextFormatter<String> createTextFormatter(final String REGEX) {
-    return new TextFormatter<String>(change -> change.getText().matches(REGEX) ? change : null);
-  }
 
   public Global() {
     if (acct == null) acct = new ObservableAccount("John","M.","Smith");
