@@ -94,6 +94,14 @@ public class Account extends Client {
     return false;
   }
 
+  public boolean amountIsNegative(BigDecimal amount, String transactionMessage) {
+    if (amount.compareTo(BigDecimal.valueOf(0)) <= 0) {
+      logMsg(transactionMessage);
+      return true;
+    }
+    return false;
+  }
+
   /**
     * Adds additional funds to a bank account
     * @param amount Some number of funds
@@ -115,7 +123,7 @@ public class Account extends Client {
     * @return True if the transaction was successful and False if there was an error
    */
   public boolean withdraw(BigDecimal amount) {
-    if (amountIsNotValid(amount, "Withdrawal Unsuccessful")) return false;
+    if (amountIsNotValid(amount, "Withdrawal Unsuccessful") || (amountIsNegative(amount, "Withdrawal Unsuccessful"))) return false;
 
     setBalance(this.getBalance().subtract(amount));
     logMsg("Withdrawal Successful");

@@ -1,7 +1,4 @@
 package fareye;
-//package test.fareye;
-
-//import fareye.*;
 
 // Standard Library
 import java.math.BigDecimal;
@@ -21,7 +18,6 @@ class AccountTests {
   }
 
   @Test
-  //public static void canDepositPositiveAmount() {
   void canDepositPositiveAmount() {
     var amt = BigDecimal.valueOf(500);
     acct.deposit(amt);
@@ -30,7 +26,6 @@ class AccountTests {
   }
 
   @Test
-  //public static void cantDepositNegativeAmount() {
   void cantDepositNegativeAmount() {
     var amt = BigDecimal.valueOf(-500);
     acct.deposit(amt);
@@ -39,25 +34,49 @@ class AccountTests {
   }
 
   @Test
-  //public static void canWithdrawPositiveAmount() {
   void canWithdrawPositiveAmount() {
+    // Deposit some amount into the account
     var amt = BigDecimal.valueOf(500);
     acct.deposit(amt);
-    assertEquals(acct.getBalance(), amt);
-    assertEquals(acct.getTransactions().get(1), "Withdrawal Successful");
+
+    // Withdraw some of this amount required
+    var withdrawal = BigDecimal.valueOf(50);
+    acct.withdraw(withdrawal);
+    assertEquals(amt.subtract(withdrawal), acct.getBalance());
+    assertEquals("Withdrawal Successful", acct.getTransactions().get(2));
   }
 
   @Test
-  //public static void cantWithdrawNegativeAmount() {
+  void canWithdrawExactAmount() {
+    // Deposit some amount into the account
+    var amt = BigDecimal.valueOf(500);
+    acct.deposit(amt);
+
+    // Withdraw some of this amount required
+    var withdrawal = BigDecimal.valueOf(500);
+    acct.withdraw(withdrawal);
+    assertEquals(acct.getBalance(), amt.subtract(withdrawal));
+    assertEquals(acct.getTransactions().get(2), "Withdrawal Successful");
+  }
+
+  @Test
   void cantWithdrawNegativeAmount() {
     var amt = BigDecimal.valueOf(-500);
-    acct.deposit(amt);
+    acct.withdraw(amt);
+    assertEquals(BigDecimal.valueOf(0), acct.getBalance());
+    assertEquals("Withdrawal Unsuccessful", acct.getTransactions().get(1));
+  }
+
+  @Test
+  void cantOverdrawAmount() {
+    var amt = BigDecimal.valueOf(500);
+    //acct.deposit(amt);
+    acct.withdraw(amt);
     assertEquals(acct.getBalance(), BigDecimal.valueOf(0));
     assertEquals(acct.getTransactions().get(1), "Withdrawal Unsuccessful");
   }
 
   @Test
-  //public static void canTransferToAccounts() {
   void canTransferToAccounts() {
     acct.setPin(1);
     targ.setPin(2);
@@ -71,17 +90,14 @@ class AccountTests {
     assertEquals(targ.getBalance(), transferAmount);
 
     // Check the logs
-    assertEquals(acct.getTransactions().get(1), "Transfer of $10 to account #2");
-    assertEquals(targ.getTransactions().get(1), "Transfer of $10 received from account #1");
+    assertEquals(acct.getTransactions().get(3), "Transfer of $10 to account #2");
+    assertEquals(targ.getTransactions().get(2), "Transfer of $10 received from account #1");
   }
 
   @Test
-  //public static void canGeneratePinNumbers() {
   void canGeneratePinNumbers() {
     int result = Account.generatePin(Account.MAX_ACCTNUM_LENGTH);
     assertNotNull(result);
     assertTrue(result < Account.MAX_ACCTNUM_LENGTH);
-    //assertTrue(false);
-    assertEquals(true, false);
   }
 }
