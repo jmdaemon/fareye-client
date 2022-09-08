@@ -1,13 +1,16 @@
 package fareye;
+//package test.fareye;
+
+//import fareye.*;
 
 // Standard Library
 import java.math.BigDecimal;
 
 // JUnit 5
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class AccountTests {
+class AccountTests {
   private static Account acct = null;
   private static Account targ = null;
 
@@ -18,7 +21,8 @@ public class AccountTests {
   }
 
   @Test
-  public static void canDepositPositiveAmount() {
+  //public static void canDepositPositiveAmount() {
+  void canDepositPositiveAmount() {
     var amt = BigDecimal.valueOf(500);
     acct.deposit(amt);
     assertEquals(acct.getBalance(), amt);
@@ -26,7 +30,8 @@ public class AccountTests {
   }
 
   @Test
-  public static void cantDepositNegativeAmount() {
+  //public static void cantDepositNegativeAmount() {
+  void cantDepositNegativeAmount() {
     var amt = BigDecimal.valueOf(-500);
     acct.deposit(amt);
     assertEquals(acct.getBalance(), BigDecimal.valueOf(0));
@@ -34,7 +39,8 @@ public class AccountTests {
   }
 
   @Test
-  public static void canWithdrawPositiveAmount() {
+  //public static void canWithdrawPositiveAmount() {
+  void canWithdrawPositiveAmount() {
     var amt = BigDecimal.valueOf(500);
     acct.deposit(amt);
     assertEquals(acct.getBalance(), amt);
@@ -42,7 +48,8 @@ public class AccountTests {
   }
 
   @Test
-  public static void cantWithdrawNegativeAmount() {
+  //public static void cantWithdrawNegativeAmount() {
+  void cantWithdrawNegativeAmount() {
     var amt = BigDecimal.valueOf(-500);
     acct.deposit(amt);
     assertEquals(acct.getBalance(), BigDecimal.valueOf(0));
@@ -50,7 +57,8 @@ public class AccountTests {
   }
 
   @Test
-  public static void canTransferToAccounts() {
+  //public static void canTransferToAccounts() {
+  void canTransferToAccounts() {
     acct.setPin(1);
     targ.setPin(2);
     var transferAmount = BigDecimal.valueOf(10);
@@ -68,10 +76,12 @@ public class AccountTests {
   }
 
   @Test
-  public static void canGeneratePinNumbers() {
+  //public static void canGeneratePinNumbers() {
+  void canGeneratePinNumbers() {
     int result = Account.generatePin(Account.MAX_ACCTNUM_LENGTH);
     assertNotNull(result);
     assertTrue(result < Account.MAX_ACCTNUM_LENGTH);
-    assertTrue(false);
+    //assertTrue(false);
+    assertEquals(true, false);
   }
 }

@@ -9,7 +9,6 @@
 
 //rootProject.name = 'fareye-client'
 rootProject.name = 'Fareye'
-
 // Look for build.gradle in following dirs
 include('app')  
 

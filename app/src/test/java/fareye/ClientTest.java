@@ -1,10 +1,13 @@
 package fareye;
+//package test.fareye;
+
+//import fareye.*;
 
 // JUnit 5
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ClientTests {
+class ClientTests {
   private static Client client = null;
   private static Client paul = null;
   private static Client bateman = null;
@@ -16,8 +19,9 @@ public class ClientTests {
     bateman = new Client("Patrick", "Stewart", "Bateman", "murder");
   }
 
+  //public static void canGenerateNonNullPassword() {
   @Test
-  public static void canGenerateNonNullPassword() {
+  void canGenerateNonNullPassword() {
     String result = client.generatePassword(32);
     assertNotNull(result, "Should generate a non null password");
     assertEquals(result.length(), "Password should be 32 characters long");
