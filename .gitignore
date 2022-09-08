@@ -1,3 +1,4 @@
+_archive
 # Gradle
 .gradle
 build/
@@ -26,10 +27,10 @@ tags
 *.html
 
 # Eclipse
-/.classpath
-/.settings/
-/.project
-/bin/
+.classpath
+.settings/
+.project
+bin/
 
 # IntelliJ
 .idea

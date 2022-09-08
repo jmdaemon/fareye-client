@@ -1,0 +1,133 @@
+plugins {
+    id 'application'
+    id 'checkstyle'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs' // Add jars in app/libs
+    }
+}
+
+dependencies {
+    // Unit Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+
+    // Http Mocking Library
+    testImplementation("org.mock-server:mockserver-netty:5.11.2")
+
+    // Logging Library
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation 'ch.qos.logback:logback-core:1.2.6'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'org.codehaus.janino:janino:3.1.8' // Adds conditional directives to logback.xml
+
+    // Icons
+    implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
+    implementation 'org.kordamp.ikonli:ikonli-core'
+    implementation 'org.kordamp.ikonli:ikonli-javafx'
+    implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
+    implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
+
+    // Misc
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'io.github.jmdaemon:toolbox:0.1.2'
+    implementation 'io.github.jmdaemon:crypt:0.1.0'
+}
+
+group = 'io.github.jmdaemon'
+version = '0.1.0'
+
+application {
+    mainClass = 'ui.jfx.App'
+}
+
+test {
+    useJUnitPlatform() 
+    maxHeapSize = '1G'
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = true
+    }
+}
+
+// Create JavaFX components jar for Scenebuilder
+task jfxcompjar(type: Jar) {
+    archivesBaseName = "widgetsfx"
+    archiveVersion = "0.1.0"
+
+    from(sourceSets.main.output) {  
+        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "logback.xml", "**/*.css", "**/*.png", "**/*.jpg", "**/*.fxml" , "**/*.css" , "**/*.properties"]
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(18)
+    }
+}
+
+javafx {
+    //version = "17.0.1"
+    version = "18.0.1"
+    modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
+}
+
+checkstyle {
+    toolVersion = "10.0"
+    configFile file("config/checkstyle/sun_checks.xml") 
+    // Disable checkstyle checks for now
+    checkstyleMain.enabled = false
+    checkstyleTest.enabled = false
+}
+
+sourceSets {
+    main {
+        java {
+            exclude "interface-old"
+        }
+        resources {
+            includes = [ "**/*.png", "**/*.jpg", "logback.xml", "**/*.fxml" , "**/*.css" , "**/*.properties"]
+            exclude "interface-old"
+        }
+
+    }
+}
+
+// Tasks for debugging builds
+task printSourceSetInformation() {
+
+    doLast{
+        sourceSets.each { srcSet ->
+            println "["+srcSet.name+"]"
+            print "-->Source directories: "+srcSet.allJava.srcDirs+"\n"
+            print "-->Output directories: "+srcSet.output.classesDirs.files+"\n"
+            print "-->Compile classpath:\n"
+            srcSet.compileClasspath.files.each { 
+                print "  "+it.path+"\n"
+            }
+            println ""
+        }
+    }
+}
+
+task showprops() {
+    doLast {
+        def logging = System.properties['logging']
+        if (logging) {
+            println "Logging: Enabled"
+        } else {
+            println "Logging: Disabled"
+        }
+
+        def color = System.properties['color']
+        if (color) {
+            println "Colored logging: Enabled"
+        } else {
+            println "Colored logging: Disabled"
+        }
+    }
+}
