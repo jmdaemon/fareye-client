@@ -1,65 +1,19 @@
 plugins {
-    //id 'java-library'
     id 'application'
-    //id 'java'
-    //id 'java-library'
-    id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'checkstyle'
-    //id 'eclipse'    // [Optional] Generates Eclipse project files
-    //id 'idea'       // [Optional] Generate IntelliJ IDEA project files
+    id 'org.openjfx.javafxplugin' version '0.0.10'
 }
-
-//group = 'io.github.jmdaemon'
-//version = '0.1.0'
-
-//def AppEntryPoint = 'ui.jfx.App'
 
 repositories {
     mavenCentral()
-    //google()
     flatDir {
         dirs 'libs' // Add jars in app/libs
     }
 }
 
-//def src = "app/src/main/java"
-//def test = "app/src/test/java"
-//def resources = "app/src/main/resources"
-//sourceSets.all { 
-    //ext.src = "app/src/main/java"
-    //ext.test = "app/src/test/java"
-    //ext.resources = "app/src/main/resources"
-//}
-
-//ext {
-    //src = "app/src/main/java"
-    //org = 'io/github/jmdaemon'
-    //test = "app/src/test/java"
-    //resources = "app/src/main/resources"
-//}
-
-
-
-//ext {
-    //src = "app/src/main/java"
-    //org = 'io/github/jmdaemon'
-    //test = "app/src/test/java"
-    //resources = "app/src/main/resources"
-//}
-
-//sourceSets.all { 
-    //ext.src = src
-    //ext.test = test
-    //ext.resources = resources
-//}
-
 dependencies {
     // Unit Testing
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-    //testImplementation('org.junit.jupiter:junit-jupiter:5.9.0')
-    //testImplementation(platform('org.junit:junit-bom:5.9.0'))
-    //testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
-
 
     // Http Mocking Library
     testImplementation("org.mock-server:mockserver-netty:5.11.2")
@@ -71,63 +25,33 @@ dependencies {
     implementation 'org.codehaus.janino:janino:3.1.8' // Adds conditional directives to logback.xml
 
     // Icons
-    //implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
-    //implementation 'org.kordamp.ikonli:ikonli-core'
-    //implementation 'org.kordamp.ikonli:ikonli-javafx'
-    //implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
-    //implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
+    implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
+    implementation 'org.kordamp.ikonli:ikonli-core'
+    implementation 'org.kordamp.ikonli:ikonli-javafx'
+    implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
+    implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
     // Misc
-    //implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'com.google.guava:guava:31.1-jre'
     implementation 'io.github.jmdaemon:toolbox:0.1.2'
     implementation 'io.github.jmdaemon:crypt:0.1.0'
-
-
-    //testRuntime("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    //testRuntime("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    //testRuntime("org.junit.jupiter:junit-jupiter-params:5.8.1")
-    //testRuntime("org.junit.platform:junit-platform-suite:1.8.1")
-
-    //testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    //testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    //testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.1")
-    //testImplementation("org.junit.platform:junit-platform-suite:1.8.1")
-
-    //implementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    //implementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    //implementation("org.junit.jupiter:junit-jupiter-params:5.8.1")
-    //implementation("org.junit.platform:junit-platform-suite:1.8.1")
-
-
 }
 
 group = 'io.github.jmdaemon'
 version = '0.1.0'
 
 application {
-    //mainClass = AppEntryPoint
-//def AppEntryPoint = 'ui.jfx.App'
     //mainClass = 'ui.jfx.App'
     mainClass = 'fareye.Account'
 }
 
-//testing {
-    //suites {
-        //// Configure the built-in test suite
-        //test {
-            //// Use JUnit 5 Jupiter test framework
-            ////useJUnitJupiter('5.8.1')
-            //useJUnitJupiter('5.9.0')
-            ////useJUnitPlatform()
-        //}
-    //}
-//} 
-
-tasks.named('test') {
+test {
     useJUnitPlatform() 
     maxHeapSize = '1G'
     testLogging {
         events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = true
     }
 }
 
@@ -141,30 +65,10 @@ task jfxcompjar(type: Jar) {
     }
 }
 
-//test {
-    //useJUnitPlatform()
-    //maxHeapSize = '1G'
-    //testLogging {
-        //events "passed", "skipped", "failed"
-    //}
-    ////testClassesDirs = sourceSets.test.output
-    ////classpath = sourceSets.test.runtimeClasspath
-
-    ////testLogging {
-        //////events "failed"
-        ////events "passed", "skipped", "failed"
-        ////exceptionFormat "full"
-        ////showStandardStreams = true
-    ////}
-    ////include 'fareye/**'
-//}
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(18)
     }
-    //modularity.inferModulePath = true
-    //modularity.inferModulePath = false
 }
 
 javafx {
@@ -184,17 +88,6 @@ checkstyle {
 sourceSets {
     main {
         java {
-            //srcDirs "src"
-            //srcDirs = [ "src/main/java/fareye", "src/main/java/ui" ]
-            //srcDirs = [ "src/main/java/fareye", "src/main/java/ui" ]
-            //srcDirs "src"
-            //exclude "interface-old"
-            //exclude "src/main/java/interface-old"
-            //srcDirs "src/main/java"
-
-            //srcDirs = [ "src/main/java/fareye", "src/main/java/ui/jfx" ]
-            //srcDirs "src"
-            //srcDirs = ["$src/fareye"]
             exclude "interface-old"
         }
         resources {
@@ -203,35 +96,6 @@ sourceSets {
         }
 
     }
-
-    //test {
-        //java {
-            //srcDirs = ["$test/fareye"]
-            ////srcDir 'src/test/java/fareye'
-        //}
-    //}
-    //test {
-        //java {
-            //srcDirs = [ "test" ]
-            //srcDirs "test"
-            //srcDirs "src/test/java"
-            //srcDirs = [ "src/main/java/fareye", "src/main/java/ui/jfx", "src/test/java/fareye" ]
-
-            //srcDirs = [ "src/test/java/fareye" ]
-        //}
-    //}
-
-        //sourceSets.test.java.srcDirs = ['tst']
-            //compileClasspath += sourceSets.main.output
-            //runtimeClasspath += sourceSets.main.output
-            //srcDirs('src/test/java')
-            //srcDirs = [ 'src/test/java' ]
-            //srcDirs = [ 'src/test/java/fareye' ]
-            //srcDirs ["./src/test/java/**/*.java"]
-            //srcDirs ["**/*.java"]
-            //srcDirs ["src/test/java/fareye"]
-            //srcDirs [ "app/src/test/java/fareye" ]
-            //srcDirs [ "app/src/test/java/fareye" ]
 }
 
 // Tasks for debugging builds
