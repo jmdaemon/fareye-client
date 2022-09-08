@@ -16,6 +16,7 @@ public class ClientTests {
     bateman = new Client("Patrick", "Stewart", "Bateman", "murder");
   }
 
+  @Test
   public static void canGenerateNonNullPassword() {
     String result = client.generatePassword(32);
     assertNotNull(result, "Should generate a non null password");

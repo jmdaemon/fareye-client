@@ -2,24 +2,25 @@ plugins {
     id 'application'
     id 'checkstyle'
     id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'eclipse'    // [Optional] Generates Eclipse project files
+    id 'idea'       // [Optional] Generate IntelliJ IDEA project files
 }
 
 group = 'io.github.jmdaemon'
 version = '0.1.0'
-
 def AppEntryPoint = 'ui.jfx.App'
 
 repositories {
     mavenCentral()
-    // Add jars in app/libs
     flatDir {
-        dirs 'libs'
+        dirs 'libs' // Add jars in app/libs
     }
 }
 
 dependencies {
-    implementation 'com.google.guava:guava:31.1-jre'
     // Unit Testing
+    testImplementation(platform('org.junit:junit-bom:5.9.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
 
     // Http Mocking Library
     testImplementation("org.mock-server:mockserver-netty:5.11.2")
@@ -30,8 +31,6 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'org.codehaus.janino:janino:3.1.8' // Adds conditional directives to logback.xml
 
-    implementation 'org.unix4j:unix4j-command:0.5'
-
     // Icons
     implementation platform('org.kordamp.ikonli:ikonli-bom:12.1.0')
     implementation 'org.kordamp.ikonli:ikonli-core'
@@ -39,24 +38,43 @@ dependencies {
     implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.0.0'
     implementation 'org.kordamp.ikonli:ikonli-boxicons-pack:12.0.0'
 
+    // Misc
+    implementation 'com.google.guava:guava:31.1-jre'
     implementation 'io.github.jmdaemon:toolbox:0.1.2'
     implementation 'io.github.jmdaemon:crypt:0.1.0'
 }
 
-testing {
-    suites {
-        // Configure the built-in test suite
-        test {
-            // Use JUnit 5 Jupiter test framework
-            useJUnitJupiter('5.8.1')
-        }
+application {
+    mainClass = AppEntryPoint
+}
+
+// Create JavaFX components jar for Scenebuilder
+task jfxcompjar(type: Jar) {
+    archivesBaseName = "widgetsfx"
+    archiveVersion = "0.1.0"
+
+    from(sourceSets.main.output) {  
+        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "logback.xml", "**/*.css", "**/*.png", "**/*.jpg", "**/*.fxml" , "**/*.css" , "**/*.properties"]
     }
-} 
+}
+
+
+//testing {
+    //suites {
+        // Configure the built-in test suite
+        //test {
+            // Use JUnit 5 Jupiter test framework
+            //useJUnitJupiter('5.8.1')
+        //}
+    //}
+//} 
 
 test {
+    useJUnitPlatform()
     maxHeapSize = '1G'
     testLogging {
-        events "failed"
+        //events "failed"
+        events "passed", "skipped", "failed"
         exceptionFormat "full"
         showStandardStreams = true
     }
@@ -74,20 +92,6 @@ javafx {
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' , 'javafx.fxml' ]
 }
 
-application {
-    mainClass = AppEntryPoint
-}
-
-// Create JavaFX components jar for Scenebuilder
-task jfxcompjar(type: Jar) {
-    archivesBaseName = "widgetsfx"
-    archiveVersion = "0.1.0"
-
-    from(sourceSets.main.output) {  
-        includes = [ "ui/jfx/components/**", "ui/jfx/Global.java", "logback.xml", "**/*.css", "**/*.png", "**/*.jpg", "**/*.fxml" , "**/*.css" , "**/*.properties"]
-    }
-}
-
 checkstyle {
     toolVersion = "10.0"
     configFile file("config/checkstyle/sun_checks.xml") 
@@ -100,25 +104,20 @@ sourceSets {
     main {
         resources {
             includes = [ "**/*.png", "**/*.jpg", "logback.xml", "**/*.fxml" , "**/*.css" , "**/*.properties"]
-            exclude "bankaccount"
             exclude "interface-old"
-            exclude "money"
         }
         java {
-            exclude "bankaccount"
             exclude "interface-old"
-            exclude "money"
-         }
+        }
     }
     test {
         java {
-            exclude "bankaccount"
-            exclude "connect"
-            exclude "encryption"
-            exclude "interface"
-            exclude "money"
-            exclude "old"
-            exclude "ui"
+            //srcDirs = ['fareye']
+            //srcDirs ["./src/test/java/**/*.java"]
+            //srcDirs ["**/*.java"]
+            //srcDirs ["src/test/java/fareye"]
+            //srcDirs [ "app/src/test/java/fareye" ]
+            //srcDirs [ "app/src/test/java/fareye" ]
         }
     }
 }

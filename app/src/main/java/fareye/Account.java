@@ -2,6 +2,7 @@ package fareye;
 
 // Third Party Libraries
 import static toolbox.RandomUtility.generateRandomNumber;
+
 // Standard Library
 import java.math.BigDecimal;
 import java.util.List;
