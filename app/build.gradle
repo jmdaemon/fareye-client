@@ -41,8 +41,7 @@ group = 'io.github.jmdaemon'
 version = '0.1.0'
 
 application {
-    //mainClass = 'ui.jfx.App'
-    mainClass = 'fareye.Account'
+    mainClass = 'ui.jfx.App'
 }
 
 test {
@@ -117,9 +116,6 @@ task printSourceSetInformation() {
 
 task showprops() {
     doLast {
-        //println commandLineProjectProp
-        //println gradlePropertiesProp
-        //println systemProjectProp
         def logging = System.properties['logging']
         if (logging) {
             println "Logging: Enabled"
